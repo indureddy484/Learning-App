@@ -1,0 +1,301 @@
+.matching-game {
+  min-height: 100vh;
+  width: 100%;
+  padding: 30px 20px;
+  box-sizing: border-box;
+  text-align: center;
+  background: #f7f5ff;
+}
+
+.matching-game h1 {
+  margin: 0 0 10px;
+  color: #5b3fa3;
+  font-size: 32px;
+}
+
+.instruction {
+  margin: 0 0 25px;
+  font-size: 18px;
+  color: #555;
+}
+
+/* =========================
+   MAIN WORKSHEET
+========================= */
+
+.worksheet {
+  position: relative;
+
+  width: 540px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 220px 220px;
+  column-gap: 100px;
+
+  align-items: start;
+}
+
+/* =========================
+   MATCHING LINES
+========================= */
+
+.matching-lines {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 540px;
+  height: 100%;
+
+  pointer-events: none;
+
+  z-index: 5;
+}
+
+.match-line {
+  stroke: #4caf50;
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+/* =========================
+   COLUMNS
+========================= */
+
+.image-column,
+.name-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  position: relative;
+  z-index: 10;
+}
+
+/* =========================
+   IMAGE CARDS
+========================= */
+
+.image-card {
+  position: relative;
+
+  width: 220px;
+  height: 150px;
+
+  background: white;
+  border: 3px solid #2e1371;
+  border-radius: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.image-card img {
+  width: 130px;
+  height: 130px;
+  object-fit: contain;
+}
+
+.image-card:hover {
+  transform: scale(1.02);
+  border-color: #6f4bbd;
+}
+
+.image-card.selected {
+  border: 4px solid #6f4bbd;
+  background: #eee8ff;
+}
+
+.image-card.matched {
+  border: 3px solid #4caf50;
+  background: #e8f5e9;
+}
+
+/* LEFT CONNECTION DOT */
+
+.left-dot {
+  position: absolute;
+
+  right: -10px;
+  top: 50%;
+
+  width: 18px;
+  height: 18px;
+
+  transform: translateY(-50%);
+
+  background: white;
+  border: 4px solid #6f4bbd;
+  border-radius: 50%;
+
+  box-sizing: border-box;
+}
+
+/* =========================
+   NAME CARDS
+========================= */
+
+.name-card {
+  position: relative;
+
+  width: 220px;
+  height: 150px;
+
+  background: white;
+  border: 3px solid #301960;
+  border-radius: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  font-size: 22px;
+  font-weight: bold;
+  color: #381865;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.name-card:hover {
+  background: #edf8ed;
+  transform: scale(1.02);
+}
+
+.name-card.matched {
+  background: #e8f5e9;
+  border-color: #4caf50;
+  color: #2e7d32;
+}
+
+.name-card.wrong {
+  background: #ffebee;
+  border-color: #f44336;
+}
+
+/* RIGHT CONNECTION DOT */
+
+.right-dot {
+  position: absolute;
+
+  left: -10px;
+  top: 50%;
+
+  width: 18px;
+  height: 18px;
+
+  transform: translateY(-50%);
+
+  background: white;
+  border: 4px solid #6f4bbd;
+  border-radius: 50%;
+
+  box-sizing: border-box;
+}
+
+/* =========================
+   SUCCESS MESSAGE
+========================= */
+
+.success-message {
+  margin: 0 auto 25px;
+
+  padding: 15px 25px;
+
+  width: fit-content;
+
+  background: #e8f5e9;
+  color: #2e7d32;
+
+  border-radius: 12px;
+
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.game-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+
+  margin-top: 35px;
+}
+
+.reset-button,
+.matching-back-button {
+  padding: 10px 25px;
+
+  border: none;
+  border-radius: 10px;
+
+  color: white;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.reset-button {
+  background: #4caf50;
+}
+
+.reset-button:hover {
+  background: #388e3c;
+}
+
+.matching-back-button {
+  background: #6f4bbd;
+}
+
+.matching-back-button:hover {
+  background: #674aab;
+}
+
+/* =========================
+   SMALLER SCREENS
+========================= */
+
+@media (max-width: 700px) {
+
+  .worksheet {
+    width: 430px;
+
+    grid-template-columns: 180px 180px;
+
+    column-gap: 70px;
+  }
+
+  .matching-lines {
+    width: 430px;
+  }
+
+  .image-card,
+  .name-card {
+    width: 180px;
+    height: 130px;
+  }
+
+  .image-card img {
+    width: 110px;
+    height: 110px;
+  }
+
+  .name-card {
+    font-size: 18px;
+  }
+}
