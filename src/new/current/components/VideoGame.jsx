@@ -126,10 +126,14 @@ function VideoGame({ onBack }) {
   const [questionIndex, setQuestionIndex] = useState(0);
 
   const [popupType, setPopupType] = useState(null);
-
   const [gameCompleted, setGameCompleted] = useState(false);
 
   const popupTimer = useRef(null);
+  const nextQuestionTimer = useRef(null);
+
+  // =========================================
+  // AUDIO FILES
+  // =========================================
 
   const successAudio = useRef(
     new Audio("/sounds/success-1-6297.mp3")
@@ -139,20 +143,68 @@ function VideoGame({ onBack }) {
     new Audio("/sounds/fail-2-2777575.mp3")
   );
 
-  const currentVideo = videoData[videoIndex];
-  const currentQuestion = currentVideo.questions[questionIndex];
+  const veryGoodAudio = useRef(
+    new Audio("/sounds/very-good.mp3")
+  );
 
-  // =========================
+  const tryAgainAudio = useRef(
+    new Audio("/sounds/try-again.mp3")
+  );
+
+  const currentVideo = videoData[videoIndex];
+
+  const currentQuestion =
+    currentVideo.questions[questionIndex];
+
+  // =========================================
+  // PLAY AUDIO
+  // =========================================
+
+  const playAudio = (audio) => {
+    audio.currentTime = 0;
+
+    audio.play().catch(() => {});
+  };
+
+  // =========================================
+  // CORRECT AUDIO
+  // =========================================
+
+  const playCorrectSounds = () => {
+    // First play success sound
+    playAudio(successAudio.current);
+
+    // Then play "Very good"
+    setTimeout(() => {
+      playAudio(veryGoodAudio.current);
+    }, 500);
+  };
+
+  // =========================================
+  // WRONG AUDIO
+  // =========================================
+
+  const playWrongSounds = () => {
+    // First play fail sound
+    playAudio(failAudio.current);
+
+    // Then play "Try again"
+    setTimeout(() => {
+      playAudio(tryAgainAudio.current);
+    }, 500);
+  };
+
+  // =========================================
   // VIDEO FINISHED
-  // =========================
+  // =========================================
 
   const handleVideoEnd = () => {
     setVideoFinished(true);
   };
 
-  // =========================
-  // PLAY POPUP
-  // =========================
+  // =========================================
+  // SHOW POPUP
+  // =========================================
 
   const showResultPopup = (type) => {
     if (popupTimer.current) {
@@ -161,49 +213,50 @@ function VideoGame({ onBack }) {
 
     setPopupType(type);
 
-    if (type === "success") {
-      successAudio.current.currentTime = 0;
-      successAudio.current.play().catch(() => {});
-    } else {
-      failAudio.current.currentTime = 0;
-      failAudio.current.play().catch(() => {});
-    }
-
     popupTimer.current = setTimeout(() => {
       setPopupType(null);
     }, 2500);
   };
 
-  // =========================
+  // =========================================
   // ANSWER
-  // =========================
+  // =========================================
 
   const handleAnswer = (answer) => {
-    // Prevent clicking while popup is showing
+    // Don't allow another click while popup is showing
     if (popupType) {
       return;
     }
 
-    // =========================
+    // =========================================
     // WRONG ANSWER
-    // =========================
+    // =========================================
 
     if (answer !== currentQuestion.answer) {
       showResultPopup("wrong");
 
+      playWrongSounds();
+
+      // Stay on the same question
       return;
     }
 
-    // =========================
+    // =========================================
     // CORRECT ANSWER
-    // =========================
+    // =========================================
 
     showResultPopup("success");
 
-    setTimeout(() => {
+    playCorrectSounds();
+
+    // Wait for popup before moving ahead
+    nextQuestionTimer.current = setTimeout(() => {
       setPopupType(null);
 
+      // -----------------------------------------
       // More questions in current video
+      // -----------------------------------------
+
       if (
         questionIndex <
         currentVideo.questions.length - 1
@@ -215,7 +268,11 @@ function VideoGame({ onBack }) {
         return;
       }
 
+      // -----------------------------------------
       // Current video completed
+      // Go to next video
+      // -----------------------------------------
+
       if (videoIndex < videoData.length - 1) {
         setVideoIndex(
           (previous) => previous + 1
@@ -223,23 +280,31 @@ function VideoGame({ onBack }) {
 
         setQuestionIndex(0);
 
+        // New video should play
         setVideoFinished(false);
 
         return;
       }
 
-      // Everything completed
+      // -----------------------------------------
+      // All videos completed
+      // -----------------------------------------
+
       setGameCompleted(true);
     }, 2500);
   };
 
-  // =========================
-  // RESET
-  // =========================
+  // =========================================
+  // RESET GAME
+  // =========================================
 
   const resetGame = () => {
     if (popupTimer.current) {
       clearTimeout(popupTimer.current);
+    }
+
+    if (nextQuestionTimer.current) {
+      clearTimeout(nextQuestionTimer.current);
     }
 
     setVideoIndex(0);
@@ -247,11 +312,22 @@ function VideoGame({ onBack }) {
     setVideoFinished(false);
     setPopupType(null);
     setGameCompleted(false);
+
+    // Stop currently playing sounds
+    successAudio.current.pause();
+    failAudio.current.pause();
+    veryGoodAudio.current.pause();
+    tryAgainAudio.current.pause();
+
+    successAudio.current.currentTime = 0;
+    failAudio.current.currentTime = 0;
+    veryGoodAudio.current.currentTime = 0;
+    tryAgainAudio.current.currentTime = 0;
   };
 
-  // =========================
-  // COMPLETED
-  // =========================
+  // =========================================
+  // COMPLETED SCREEN
+  // =========================================
 
   if (gameCompleted) {
     return (
@@ -307,10 +383,14 @@ function VideoGame({ onBack }) {
     );
   }
 
+  // =========================================
+  // MAIN SCREEN
+  // =========================================
+
   return (
     <div className="video-game">
 
-      {/* TOP BUTTONS */}
+      {/* TOP BACK BUTTON */}
 
       <button
         className="video-back-button top-left"
@@ -318,6 +398,8 @@ function VideoGame({ onBack }) {
       >
         ← BACK
       </button>
+
+      {/* TOP RESET BUTTON */}
 
       <button
         className="video-reset-button top-right"
@@ -337,7 +419,9 @@ function VideoGame({ onBack }) {
         {videoData.length}
       </div>
 
-      {/* VIDEO */}
+      {/* =====================================
+          VIDEO
+      ====================================== */}
 
       <div className="video-container">
 
@@ -362,7 +446,9 @@ function VideoGame({ onBack }) {
 
       </div>
 
-      {/* QUESTIONS */}
+      {/* =====================================
+          QUESTIONS
+      ====================================== */}
 
       {videoFinished && (
         <div className="question-container">
@@ -386,7 +472,9 @@ function VideoGame({ onBack }) {
                   onClick={() =>
                     handleAnswer(option)
                   }
-                  disabled={popupType !== null}
+                  disabled={
+                    popupType !== null
+                  }
                 >
                   {option}
                 </button>
@@ -398,7 +486,9 @@ function VideoGame({ onBack }) {
         </div>
       )}
 
-      {/* WAITING MESSAGE */}
+      {/* =====================================
+          WAITING MESSAGE
+      ====================================== */}
 
       {!videoFinished && (
         <p className="question-wait-message">
@@ -406,9 +496,9 @@ function VideoGame({ onBack }) {
         </p>
       )}
 
-      {/* =========================
+      {/* =====================================
           RESULT POPUP
-      ========================= */}
+      ====================================== */}
 
       {popupType && (
         <div className="result-popup-overlay">
