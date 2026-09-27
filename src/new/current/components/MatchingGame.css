@@ -226,13 +226,30 @@
 /* =========================
    BUTTONS
 ========================= */
+/* =========================
+   TOP BUTTONS
+========================= */
 
 .game-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
+  position: fixed;
 
-  margin-top: 35px;
+  top: 20px;
+  left: 0;
+  right: 0;
+
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 30px;
+
+  box-sizing: border-box;
+
+  z-index: 1000;
+
+  pointer-events: none;
 }
 
 .reset-button,
@@ -248,8 +265,25 @@
   font-weight: bold;
 
   cursor: pointer;
+
+  pointer-events: auto;
 }
 
+.matching-back-button {
+  background: #6f4bbd;
+}
+
+.matching-back-button:hover {
+  background: #674aab;
+}
+
+.reset-button {
+  background: #4caf50;
+}
+
+.reset-button:hover {
+  background: #388e3c;
+}
 .reset-button {
   background: #4caf50;
 }

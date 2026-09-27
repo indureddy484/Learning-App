@@ -1,9 +1,7 @@
-import MatchingGame from "./components/MatchingGame";
+import NewHome from "./pages/NewHome";
 
 function NewApp({ onBack }) {
-  return (
-    <MatchingGame onBack={onBack} />
-  );
+  return <NewHome onBack={onBack} />;
 }
 
 export default NewApp;

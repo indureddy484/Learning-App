@@ -171,21 +171,21 @@ function MatchingGame({ onBack }) {
 
       <div className="game-buttons">
 
-        <button
-          className="reset-button"
-          onClick={resetGame}
-        >
-          🔄 RESET GAME
-        </button>
+  <button
+    className="matching-back-button"
+    onClick={onBack}
+  >
+    ← BACK
+  </button>
 
-        <button
-          className="matching-back-button"
-          onClick={onBack}
-        >
-          ← BACK
-        </button>
+  <button
+    className="reset-button"
+    onClick={resetGame}
+  >
+    🔄 RESET GAME
+  </button>
 
-      </div>
+</div>
 
     </div>
   );
