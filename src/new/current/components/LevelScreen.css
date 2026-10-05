@@ -1,0 +1,195 @@
+.level-screen {
+  min-height: 100vh;
+
+  background: #f7f5ff;
+
+  padding: 90px 30px 50px;
+
+  box-sizing: border-box;
+
+  text-align: center;
+}
+
+/* =========================
+   BACK BUTTON
+========================= */
+
+.level-back-button {
+  position: fixed;
+
+  top: 25px;
+  left: 30px;
+
+  z-index: 20;
+
+  border: none;
+
+  background: #7046c6;
+
+  color: white;
+
+  padding: 12px 22px;
+
+  border-radius: 10px;
+
+  font-size: 17px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.level-back-button:hover {
+  background: #5934a3;
+
+  transform: translateY(-2px);
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.level-main-title {
+  margin: 10px 0 5px;
+
+  color: #56369b;
+
+  font-size: 40px;
+}
+
+.level-subtitle {
+  margin: 0 0 35px;
+
+  color: #777;
+
+  font-size: 20px;
+}
+
+/* =========================
+   LEVEL GRID
+========================= */
+
+.level-grid {
+  width: min(900px, 90%);
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 30px;
+}
+
+/* =========================
+   LEVEL CARD
+========================= */
+
+.level-card {
+  min-height: 250px;
+
+  background: white;
+
+  border: 3px solid #7046c6;
+
+  border-radius: 25px;
+
+  padding: 30px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 20px rgba(70, 40, 120, 0.12);
+
+  transition: 0.25s;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+.level-card:hover {
+  transform: translateY(-6px);
+
+  background: #faf8ff;
+
+  box-shadow:
+    0 12px 25px rgba(70, 40, 120, 0.18);
+}
+
+/* =========================
+   LEVEL NUMBER
+========================= */
+
+.level-number {
+  color: #56369b;
+
+  font-size: 32px;
+
+  font-weight: 800;
+}
+
+/* =========================
+   TOPIC
+========================= */
+
+.level-topic {
+  margin-top: 5px;
+
+  color: #7046c6;
+
+  font-size: 22px;
+
+  font-weight: 600;
+}
+
+/* =========================
+   ICON
+========================= */
+
+.level-icon {
+  margin-top: 20px;
+
+  font-size: 65px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 650px) {
+
+  .level-screen {
+    padding: 80px 15px 40px;
+  }
+
+  .level-main-title {
+    font-size: 32px;
+  }
+
+  .level-grid {
+    grid-template-columns: 1fr;
+
+    width: 95%;
+  }
+
+  .level-card {
+    min-height: 210px;
+  }
+
+  .level-back-button {
+    left: 15px;
+
+    top: 15px;
+
+    padding: 10px 17px;
+
+    font-size: 15px;
+  }
+}

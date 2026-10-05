@@ -1,15 +1,28 @@
 import { useState } from "react";
+
 import MatchingGame from "../components/MatchingGame";
 import VideoGame from "../components/VideoGame";
+import DayQuiz from "../components/DayQuiz";
+import BirthdayQuiz from "../components/BirthdayQuiz";
+import LevelScreen from "../components/LevelScreen";
+
 import "./NewHome.css";
 
 function NewHome({ onBack }) {
   const [selectedSubject, setSelectedSubject] = useState(null);
+
   const [selectedGame, setSelectedGame] = useState(null);
 
-  // =========================
+  const [selectedMathsGame, setSelectedMathsGame] =
+    useState(null);
+
+  const [selectedLevel, setSelectedLevel] =
+    useState(null);
+
+  // =====================================================
   // MATCHING GAME
-  // =========================
+  // =====================================================
+
   if (selectedGame === "match") {
     return (
       <MatchingGame
@@ -18,9 +31,10 @@ function NewHome({ onBack }) {
     );
   }
 
-  // =========================
+  // =====================================================
   // VIDEO GAME
-  // =========================
+  // =====================================================
+
   if (selectedGame === "video") {
     return (
       <VideoGame
@@ -29,64 +43,190 @@ function NewHome({ onBack }) {
     );
   }
 
-  // =========================
+  // =====================================================
+  // MATHS - LEVEL SCREEN
+  // =====================================================
+
+  if (
+    selectedMathsGame === "levels" &&
+    selectedLevel === null
+  ) {
+    return (
+      <LevelScreen
+        onBack={() => {
+          setSelectedMathsGame(null);
+        }}
+        onSelectLevel={(level) => {
+          // IMPORTANT:
+          // Leave the Level Screen
+          setSelectedMathsGame(null);
+
+          // Open the selected level
+          setSelectedLevel(level);
+        }}
+      />
+    );
+  }
+
+  // =====================================================
+  // MATHS - LEVEL 1
+  // =====================================================
+
+  if (selectedLevel === "level1") {
+    return (
+      <DayQuiz
+        onBack={() => {
+          setSelectedLevel(null);
+          setSelectedMathsGame("levels");
+        }}
+      />
+    );
+  }
+
+  // =====================================================
+  // MATHS - LEVEL 2
+  // =====================================================
+
+  if (selectedLevel === "level2") {
+    return (
+      <BirthdayQuiz
+        onBack={() => {
+          setSelectedLevel(null);
+          setSelectedMathsGame("levels");
+        }}
+      />
+    );
+  }
+
+  // =====================================================
   // SUBJECT SELECTED
-  // =========================
+  // =====================================================
+
   if (selectedSubject) {
     return (
       <div className="new-page">
 
+        {/* =================================================
+            BACK TO SUBJECTS
+        ================================================= */}
+
         <button
           className="top-back-button"
-          onClick={() => setSelectedSubject(null)}
+          onClick={() => {
+            setSelectedSubject(null);
+            setSelectedGame(null);
+            setSelectedMathsGame(null);
+            setSelectedLevel(null);
+          }}
         >
           ← BACK
         </button>
 
+        {/* SUBJECT TITLE */}
+
         <h1>{selectedSubject}</h1>
 
-        {/* EVS GAMES */}
+        {/* =================================================
+            EVS GAMES
+        ================================================= */}
+
         {selectedSubject === "EVS" ? (
           <div className="game-tabs">
 
             {/* MATCH GAME */}
+
             <button
               className="game-card"
-              onClick={() => setSelectedGame("match")}
+              onClick={() =>
+                setSelectedGame("match")
+              }
             >
-              <div className="game-icon">🧩</div>
+              <div className="game-icon">
+                🧩
+              </div>
 
-              <span>Match Game</span>
+              <span>
+                Match Game
+              </span>
             </button>
 
             {/* VIDEO GAME */}
+
             <button
               className="game-card"
-              onClick={() => setSelectedGame("video")}
+              onClick={() =>
+                setSelectedGame("video")
+              }
             >
-              <div className="game-icon">🎬</div>
+              <div className="game-icon">
+                🎬
+              </div>
 
-              <span>Video Game</span>
+              <span>
+                Video Game
+              </span>
             </button>
 
           </div>
+
+        ) : selectedSubject === "Maths" ? (
+
+          /* =================================================
+             MATHS
+          ================================================= */
+
+          <div className="game-tabs">
+
+            {/* DAY QUIZ */}
+
+            <button
+              className="game-card"
+              onClick={() => {
+                setSelectedMathsGame("levels");
+                setSelectedLevel(null);
+              }}
+            >
+              <div className="game-icon">
+                📅
+              </div>
+
+              <span>
+                Day Quiz
+              </span>
+            </button>
+
+          </div>
+
         ) : (
+
+          /* =================================================
+             OTHER SUBJECTS
+          ================================================= */
+
           <div className="coming-soon">
+
             <p>
               Games for {selectedSubject} will be added here.
             </p>
+
           </div>
+
         )}
 
       </div>
     );
   }
 
-  // =========================
-  // NEW HOME - SUBJECTS
-  // =========================
+  // =====================================================
+  // NEW HOME - SUBJECT SELECTION
+  // =====================================================
+
   return (
     <div className="new-home">
+
+      {/* =================================================
+          BACK TO VERSION SCREEN
+      ================================================= */}
 
       <button
         className="top-back-button"
@@ -95,16 +235,29 @@ function NewHome({ onBack }) {
         ← BACK
       </button>
 
+      {/* =================================================
+          MAIN TITLE
+      ================================================= */}
+
       <h1 className="new-title">
         Learning App
       </h1>
 
+      {/* =================================================
+          SUBJECT GRID
+      ================================================= */}
+
       <div className="subject-grid">
 
-        {/* TELUGU */}
+        {/* =================================================
+            TELUGU
+        ================================================= */}
+
         <button
           className="subject-card"
-          onClick={() => setSelectedSubject("Telugu")}
+          onClick={() =>
+            setSelectedSubject("Telugu")
+          }
         >
           <span className="subject-icon">
             తెలుగు
@@ -115,10 +268,15 @@ function NewHome({ onBack }) {
           </span>
         </button>
 
-        {/* ENGLISH */}
+        {/* =================================================
+            ENGLISH
+        ================================================= */}
+
         <button
           className="subject-card"
-          onClick={() => setSelectedSubject("English")}
+          onClick={() =>
+            setSelectedSubject("English")
+          }
         >
           <span className="subject-icon">
             A B C
@@ -129,10 +287,15 @@ function NewHome({ onBack }) {
           </span>
         </button>
 
-        {/* MATHS */}
+        {/* =================================================
+            MATHS
+        ================================================= */}
+
         <button
           className="subject-card"
-          onClick={() => setSelectedSubject("Maths")}
+          onClick={() =>
+            setSelectedSubject("Maths")
+          }
         >
           <span className="subject-icon">
             123
@@ -143,10 +306,15 @@ function NewHome({ onBack }) {
           </span>
         </button>
 
-        {/* EVS */}
+        {/* =================================================
+            EVS
+        ================================================= */}
+
         <button
           className="subject-card"
-          onClick={() => setSelectedSubject("EVS")}
+          onClick={() =>
+            setSelectedSubject("EVS")
+          }
         >
           <span className="subject-icon">
             🌱

@@ -1,0 +1,469 @@
+.birthday-quiz {
+  min-height: 100vh;
+
+  background: #f7f5ff;
+
+  padding: 85px 30px 50px;
+
+  box-sizing: border-box;
+
+  text-align: center;
+}
+
+/* =========================
+   BACK
+========================= */
+
+.birthday-back-button {
+  position: fixed;
+
+  top: 25px;
+  left: 30px;
+
+  z-index: 20;
+
+  border: none;
+
+  background: #7046c6;
+
+  color: white;
+
+  padding: 12px 22px;
+
+  border-radius: 10px;
+
+  font-size: 17px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.birthday-back-button:hover {
+  background: #5934a3;
+}
+
+/* =========================
+   LEVEL HEADING
+========================= */
+
+.birthday-level-title {
+  margin: 10px 0 0;
+
+  color: #56369b;
+
+  font-size: 40px;
+}
+
+.birthday-level-topic {
+  margin-top: 3px;
+
+  color: #7046c6;
+
+  font-size: 25px;
+
+  font-weight: 600;
+}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.birthday-progress {
+  margin: 20px 0 25px;
+
+  color: #777;
+
+  font-size: 18px;
+}
+
+/* =========================
+   QUESTION
+========================= */
+
+.birthday-question-card {
+  width: min(800px, 90%);
+
+  margin: 0 auto;
+
+  padding: 35px;
+
+  background: white;
+
+  border: 3px solid #56369b;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 8px 20px rgba(70, 40, 120, 0.12);
+
+  box-sizing: border-box;
+}
+
+.birthday-question-card h2 {
+  margin: 0 0 30px;
+
+  color: #333;
+
+  font-size: 27px;
+
+  line-height: 1.5;
+}
+
+/* =========================
+   OPTIONS
+========================= */
+
+.birthday-options {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 18px;
+}
+
+.birthday-option {
+  padding: 18px;
+
+  border: 2px solid #7046c6;
+
+  border-radius: 14px;
+
+  background: #faf8ff;
+
+  color: #402777;
+
+  font-size: 20px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.birthday-option:hover:not(:disabled) {
+  background: #eee7ff;
+
+  transform: translateY(-2px);
+}
+
+.birthday-option:disabled {
+  cursor: default;
+}
+
+.birthday-option.correct {
+  background: #d8f5df;
+
+  border-color: #2e9d4d;
+
+  color: #23753a;
+}
+
+.birthday-option.wrong {
+  background: #ffe0e0;
+
+  border-color: #d83b3b;
+
+  color: #b02020;
+}
+
+/* =========================
+   POPUP
+========================= */
+
+.birthday-popup {
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.25);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  z-index: 200;
+}
+
+/* =========================
+   WRONG
+========================= */
+
+.birthday-wrong-box {
+  position: relative;
+
+  width: 330px;
+
+  padding: 35px;
+
+  background: white;
+
+  border: 4px solid #e05252;
+
+  border-radius: 25px;
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.25);
+
+  animation: birthdayPopup 0.35s ease;
+}
+
+.birthday-popup-icon {
+  font-size: 60px;
+}
+
+.birthday-wrong-box h2 {
+  color: #d33;
+
+  font-size: 28px;
+
+  margin: 10px 0 5px;
+}
+
+.birthday-wrong-box p {
+  color: #666;
+
+  font-size: 18px;
+
+  margin: 0;
+}
+
+/* =========================
+   SUCCESS
+========================= */
+
+.birthday-success-box {
+  position: relative;
+
+  width: 330px;
+
+  padding: 35px 30px;
+
+  background: white;
+
+  border: 4px solid #7046c6;
+
+  border-radius: 25px;
+
+  box-shadow:
+    0 12px 35px rgba(70, 40, 120, 0.3);
+
+  animation: birthdayPopup 0.35s ease;
+}
+
+.birthday-success-icon {
+  font-size: 65px;
+
+  animation: birthdayBounce 0.8s infinite alternate;
+}
+
+.birthday-success-box h2 {
+  margin: 10px 0 5px;
+
+  color: #7046c6;
+
+  font-size: 32px;
+}
+
+.birthday-success-box p {
+  margin: 0;
+
+  color: #555;
+
+  font-size: 18px;
+
+  font-weight: 600;
+}
+
+/* =========================
+   CELEBRATIONS
+========================= */
+
+.birthday-celebration {
+  position: absolute;
+
+  font-size: 28px;
+
+  animation:
+    birthdayFloat 1.2s ease-in-out infinite alternate;
+}
+
+.birthday-c1 {
+  top: 20px;
+  left: 30px;
+}
+
+.birthday-c2 {
+  top: 20px;
+  right: 30px;
+
+  animation-delay: 0.2s;
+}
+
+.birthday-c3 {
+  bottom: 30px;
+  left: 35px;
+
+  animation-delay: 0.4s;
+}
+
+.birthday-c4 {
+  bottom: 30px;
+  right: 35px;
+
+  animation-delay: 0.6s;
+}
+
+/* =========================
+   COMPLETE
+========================= */
+
+.birthday-complete-box {
+  width: min(600px, 90%);
+
+  margin: 100px auto;
+
+  padding: 50px;
+
+  background: white;
+
+  border: 3px solid #7046c6;
+
+  border-radius: 25px;
+
+  box-shadow:
+    0 10px 25px rgba(70, 40, 120, 0.15);
+}
+
+.birthday-complete-icon {
+  font-size: 70px;
+}
+
+.birthday-complete-box h1 {
+  color: #56369b;
+
+  font-size: 36px;
+}
+
+.birthday-complete-box p {
+  color: #555;
+
+  font-size: 20px;
+}
+
+.birthday-back-level {
+  margin-top: 20px;
+
+  padding: 14px 28px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: #7046c6;
+
+  color: white;
+
+  font-size: 17px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes birthdayPopup {
+  0% {
+    transform: scale(0.6);
+
+    opacity: 0;
+  }
+
+  70% {
+    transform: scale(1.08);
+
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+
+    opacity: 1;
+  }
+}
+
+@keyframes birthdayBounce {
+  from {
+    transform: scale(1) rotate(-5deg);
+  }
+
+  to {
+    transform: scale(1.12) rotate(5deg);
+  }
+}
+
+@keyframes birthdayFloat {
+  from {
+    transform: translateY(0) rotate(-10deg);
+
+    opacity: 0.7;
+  }
+
+  to {
+    transform: translateY(-10px) rotate(10deg);
+
+    opacity: 1;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 650px) {
+
+  .birthday-quiz {
+    padding: 80px 15px 40px;
+  }
+
+  .birthday-level-title {
+    font-size: 32px;
+  }
+
+  .birthday-level-topic {
+    font-size: 21px;
+  }
+
+  .birthday-question-card {
+    width: 95%;
+
+    padding: 25px 18px;
+  }
+
+  .birthday-question-card h2 {
+    font-size: 21px;
+  }
+
+  .birthday-options {
+    grid-template-columns: 1fr;
+  }
+
+  .birthday-back-button {
+    left: 15px;
+    top: 15px;
+
+    padding: 10px 17px;
+
+    font-size: 15px;
+  }
+
+  .birthday-complete-box {
+    padding: 35px 20px;
+  }
+}
