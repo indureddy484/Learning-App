@@ -1,0 +1,548 @@
+.level3-quiz {
+  min-height: 100vh;
+
+  background: #f8f6ff;
+
+  padding: 30px;
+
+  text-align: center;
+
+  box-sizing: border-box;
+}
+
+/* =====================================================
+   BACK
+===================================================== */
+
+.level3-back {
+  position: absolute;
+
+  left: 32px;
+  top: 30px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  padding: 12px 24px;
+
+  background: #7046c6;
+
+  color: white;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.level3-back:hover {
+  background: #5934a3;
+
+  transform: translateY(-2px);
+}
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+.level3-quiz h1 {
+  margin-top: 65px;
+
+  margin-bottom: 5px;
+
+  color: #56369b;
+
+  font-family: Georgia, serif;
+
+  font-size: 42px;
+}
+
+.level3-quiz h2 {
+  margin: 0 0 20px;
+
+  color: #7046c6;
+
+  font-size: 25px;
+}
+
+/* =====================================================
+   LANGUAGE
+===================================================== */
+
+.level3-language {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  margin: 15px 0;
+}
+
+.level3-language button {
+  padding: 10px 24px;
+
+  border: 2px solid #7046c6;
+
+  border-radius: 12px;
+
+  background: white;
+
+  color: #7046c6;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.level3-language button:hover {
+  background: #f0eaff;
+
+  transform: translateY(-2px);
+}
+
+.level3-language button.active {
+  background: #7046c6;
+
+  color: white;
+
+  box-shadow:
+    0 4px 10px
+    rgba(70, 40, 120, 0.2);
+}
+
+/* =====================================================
+   PROGRESS
+===================================================== */
+
+.level3-progress {
+  color: #777;
+
+  font-weight: 700;
+
+  margin-bottom: 15px;
+}
+
+/* =====================================================
+   QUESTION CARD
+===================================================== */
+
+.level3-card {
+  width: min(800px, 90%);
+
+  margin: 0 auto;
+
+  padding: 35px;
+
+  background: white;
+
+  border: 3px solid #7046c6;
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 8px 20px
+    rgba(70, 40, 120, 0.12);
+
+  box-sizing: border-box;
+}
+
+.level3-card h3 {
+  font-size: 25px;
+
+  color: #333;
+
+  line-height: 1.5;
+
+  margin: 0 0 30px;
+}
+
+/* =====================================================
+   OPTIONS
+===================================================== */
+
+.level3-options {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 15px;
+}
+
+.level3-option {
+  padding: 16px;
+
+  border: 2px solid #ddd;
+
+  border-radius: 14px;
+
+  background: white;
+
+  font-size: 18px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.level3-option:hover {
+  border-color: #7046c6;
+
+  background: #f5f0ff;
+
+  transform: translateY(-2px);
+}
+
+.level3-option.correct {
+  background: #dff7e5;
+
+  border-color: #3ca55c;
+
+  color: #26753d;
+}
+
+.level3-option.wrong {
+  background: #ffe0e0;
+
+  border-color: #e04444;
+
+  color: #b52e2e;
+}
+
+/* =====================================================
+   PRINT BUTTON
+===================================================== */
+
+.level3-print {
+  margin-top: 30px;
+
+  padding: 14px 28px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: #7046c6;
+
+  color: white;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.level3-print:hover {
+  background: #5934a3;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 6px 14px
+    rgba(70, 40, 120, 0.2);
+}
+
+/* =====================================================
+   POPUP OVERLAY
+===================================================== */
+
+.quiz-popup,
+.print-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background:
+    rgba(0, 0, 0, 0.45);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  z-index: 1000;
+}
+
+/* =====================================================
+   POPUP BOXES
+===================================================== */
+
+.wrong-box,
+.success-box,
+.print-box {
+  background: white;
+
+  border-radius: 22px;
+
+  padding: 35px;
+
+  text-align: center;
+
+  box-shadow:
+    0 15px 40px
+    rgba(0, 0, 0, 0.25);
+}
+
+/* =====================================================
+   WRONG
+===================================================== */
+
+.wrong-box {
+  border: 4px solid #e04444;
+}
+
+.wrong-box > div {
+  font-size: 55px;
+}
+
+.wrong-box h2 {
+  color: #e04444;
+}
+
+/* =====================================================
+   SUCCESS
+===================================================== */
+
+.success-box {
+  border: 4px solid #49a963;
+}
+
+.success-box > div {
+  font-size: 55px;
+}
+
+.success-box h2 {
+  color: #49a963;
+}
+
+.success-box p {
+  color: #555;
+
+  font-size: 16px;
+}
+
+/* =====================================================
+   PRINT POPUP
+===================================================== */
+
+.print-box {
+  width: min(420px, 90%);
+
+  position: relative;
+
+  box-sizing: border-box;
+}
+
+.print-close {
+  position: absolute;
+
+  top: 10px;
+
+  right: 15px;
+
+  border: none;
+
+  background: transparent;
+
+  font-size: 30px;
+
+  color: #777;
+
+  cursor: pointer;
+
+  line-height: 1;
+}
+
+.print-close:hover {
+  color: #333;
+}
+
+.print-icon {
+  font-size: 50px;
+
+  margin-bottom: 10px;
+}
+
+.print-box h2 {
+  margin: 5px 0 10px;
+
+  color: #56369b;
+
+  font-size: 27px;
+}
+
+.print-box p {
+  color: #555;
+
+  font-size: 16px;
+
+  line-height: 1.5;
+}
+
+.print-box input {
+  width: 130px;
+
+  padding: 12px;
+
+  border: 2px solid #7046c6;
+
+  border-radius: 10px;
+
+  outline: none;
+
+  text-align: center;
+
+  font-size: 22px;
+
+  font-weight: 700;
+
+  color: #56369b;
+
+  box-sizing: border-box;
+}
+
+.print-box input:focus {
+  box-shadow:
+    0 0 0 3px
+    rgba(112, 70, 198, 0.15);
+}
+
+.print-info {
+  color: #777;
+
+  font-size: 14px !important;
+}
+
+.print-buttons {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 15px;
+
+  margin-top: 20px;
+}
+
+.print-buttons button {
+  padding: 11px 22px;
+
+  border-radius: 10px;
+
+  border: 2px solid #7046c6;
+
+  background: white;
+
+  color: #7046c6;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.print-buttons button:hover {
+  background: #f0eaff;
+
+  transform: translateY(-1px);
+}
+
+.print-buttons button:last-child {
+  background: #7046c6;
+
+  color: white;
+}
+
+.print-buttons button:last-child:hover {
+  background: #5934a3;
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .level3-quiz {
+    padding: 20px 15px 35px;
+  }
+
+  .level3-back {
+    position: static;
+
+    margin-bottom: 25px;
+
+    font-size: 16px;
+  }
+
+  .level3-quiz h1 {
+    margin-top: 5px;
+
+    font-size: 34px;
+  }
+
+  .level3-quiz h2 {
+    font-size: 21px;
+  }
+
+  .level3-language {
+    gap: 8px;
+  }
+
+  .level3-language button {
+    padding: 9px 18px;
+
+    font-size: 15px;
+  }
+
+  .level3-card {
+    width: 90%;
+
+    padding: 20px;
+  }
+
+  .level3-card h3 {
+    font-size: 21px;
+  }
+
+  .level3-options {
+    grid-template-columns: 1fr;
+  }
+
+  .level3-option {
+    font-size: 17px;
+
+    padding: 14px;
+  }
+
+  .level3-print {
+    width: 90%;
+
+    font-size: 16px;
+  }
+
+  .print-box {
+    width: 90%;
+
+    padding: 30px 20px;
+  }
+
+  .print-buttons {
+    gap: 10px;
+  }
+}

@@ -1,6 +1,51 @@
 import "./LevelScreen.css";
 
 function LevelScreen({ onBack, onSelectLevel }) {
+  const levels = [
+  {
+    id: "level1",
+    title: "Level 1",
+    subtitle: "(Today)",
+    icon: "📅",
+  },
+  {
+    id: "level2",
+    title: "Level 2",
+    subtitle: "(Ninna, Today)",
+    icon: "🗓️",
+  },
+  {
+    id: "level3",
+    title: "Level 3",
+    subtitle: "(Days Before / After)",
+    icon: "🔄",
+  },
+  {
+    id: "level4",
+    title: "Level 4",
+    subtitle: "(Days & Months)",
+    icon: "📆",
+  },
+  {
+    id: "level5",
+    title: "Level 5",
+    subtitle: "(Birthdays / Events)",
+    icon: "🎂",
+  },
+  {
+    id: "level6",
+    title: "Level 6",
+    subtitle: "(Calendar)",
+    icon: "📅",
+  },
+  {
+    id: "level7",
+    title: "Level 7",
+    subtitle: "(Memory Book)",
+    icon: "📖",
+  },
+];
+
   return (
     <div className="level-screen">
 
@@ -12,53 +57,32 @@ function LevelScreen({ onBack, onSelectLevel }) {
         ← BACK
       </button>
 
-      {/* TITLE */}
-      <h1 className="level-main-title">
-        Day & Date
-      </h1>
+      {/* HEADER */}
+      <div className="level-header">
+        <h1>Day & Date</h1>
+        <p>Choose a Level</p>
+      </div>
 
-      <p className="level-subtitle">
-        Choose a Level
-      </p>
+      {/* LEVELS */}
+      <div className="levels-grid">
 
-      {/* LEVEL CARDS */}
-      <div className="level-grid">
+        {levels.map((level) => (
+          <div
+            key={level.id}
+            className="level-card"
+            onClick={() =>
+              onSelectLevel(level.id)
+            }
+          >
+            <h2>{level.title}</h2>
 
-        {/* LEVEL 1 */}
-        <button
-          className="level-card"
-          onClick={() => onSelectLevel("level1")}
-        >
-          <div className="level-number">
-            Level 1
+            <h3>{level.subtitle}</h3>
+
+            <div className="level-icon">
+              {level.icon}
+            </div>
           </div>
-
-          <div className="level-topic">
-            (Days & Dates)
-          </div>
-
-          <div className="level-icon">
-            📅
-          </div>
-        </button>
-
-        {/* LEVEL 2 */}
-        <button
-          className="level-card"
-          onClick={() => onSelectLevel("level2")}
-        >
-          <div className="level-number">
-            Level 2
-          </div>
-
-          <div className="level-topic">
-            (Birthdays)
-          </div>
-
-          <div className="level-icon">
-            🎂
-          </div>
-        </button>
+        ))}
 
       </div>
 
