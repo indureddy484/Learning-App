@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from "react";
 import "./Level1Today.css";
 
@@ -13,10 +14,7 @@ const days = [
 
 function getDay(day, offset) {
   const index = days.indexOf(day);
-
-  return days[
-    (index + offset + days.length) % days.length
-  ];
+  return days[(index + offset + days.length) % days.length];
 }
 
 function shuffleArray(array) {
@@ -24,11 +22,7 @@ function shuffleArray(array) {
 
   for (let i = newArray.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-
-    [newArray[i], newArray[j]] = [
-      newArray[j],
-      newArray[i],
-    ];
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
   }
 
   return newArray;
@@ -39,25 +33,12 @@ function createOptions(answer) {
     days.filter((day) => day !== answer)
   ).slice(0, 3);
 
-  return shuffleArray([
-    answer,
-    ...wrongAnswers,
-  ]);
+  return shuffleArray([answer, ...wrongAnswers]);
 }
 
-// =====================================================
-// LEVEL 1 QUESTION
-// ONLY:
-// Ivvala Monday aithe, repu em day?
-// Ivvala Monday aithe, ninna em day?
-// =====================================================
-
 function createQuestion() {
-  const today =
-    days[Math.floor(Math.random() * days.length)];
-
-  const askTomorrow =
-    Math.random() < 0.5;
+  const today = days[Math.floor(Math.random() * days.length)];
+  const askTomorrow = Math.random() < 0.5;
 
   const answer = askTomorrow
     ? getDay(today, 1)
@@ -66,55 +47,34 @@ function createQuestion() {
   return {
     question: {
       telugu: askTomorrow
-        ? `Ivvala ${today} aithe, repu em day avtadi?`
-        : `Ivvala ${today} aithe, ninna emi day padindi?`,
-
+        ? `Okavela ivvala ${today} aithe, repu em day avtadi?`
+        : `Okavela ivvala ${today} aithe, ninna emi day padindi?`,
       english: askTomorrow
         ? `If today is ${today}, what day is tomorrow?`
         : `If today is ${today}, what day was yesterday?`,
     },
-
     options: createOptions(answer),
-
     answer,
   };
 }
 
-// =====================================================
-// PRINT QUESTIONS
-// =====================================================
-
 function createPrintQuestions(count, language) {
-  return Array.from(
-    { length: count },
-    (_, index) => {
-      const question = createQuestion();
+  return Array.from({ length: count }, (_, index) => {
+    const question = createQuestion();
 
-      return {
-        ...question,
-        number: index + 1,
-        text: question.question[language],
-      };
-    }
-  );
+    return {
+      ...question,
+      number: index + 1,
+      text: question.question[language],
+    };
+  });
 }
 
-// =====================================================
-// PRINT PAPER
-// =====================================================
-
-function printQuestions(questions, language) {
-  const printWindow = window.open(
-    "",
-    "_blank",
-    "width=900,height=700"
-  );
+function printQuestions(questions) {
+  const printWindow = window.open("", "_blank", "width=900,height=700");
 
   if (!printWindow) {
-    alert(
-      "Please allow pop-ups to print the question paper."
-    );
-
+    alert("Please allow pop-ups to print the question paper.");
     return;
   }
 
@@ -122,26 +82,21 @@ function printQuestions(questions, language) {
     .map(
       (question) => `
         <div class="question">
-
           <div class="question-text">
             ${question.number}. ${question.text}
           </div>
 
           <div class="options">
-
             ${question.options
               .map(
                 (option, index) => `
                   <div class="option">
-                    ${String.fromCharCode(65 + index)})
-                    ${option}
+                    ${String.fromCharCode(65 + index)}) ${option}
                   </div>
                 `
               )
               .join("")}
-
           </div>
-
         </div>
       `
     )
@@ -149,18 +104,14 @@ function printQuestions(questions, language) {
 
   printWindow.document.write(`
     <!DOCTYPE html>
-
     <html>
-
     <head>
-
       <title>Level 1 - Today</title>
 
       <style>
-
         @page {
           size: A4;
-          margin: 15mm;
+          margin: 12mm;
         }
 
         * {
@@ -170,14 +121,9 @@ function printQuestions(questions, language) {
         body {
           margin: 0;
           padding: 0;
-
-          font-family:
-            Arial,
-            Helvetica,
-            sans-serif;
-
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: 18px;
           color: #111;
-
           background: white;
         }
 
@@ -187,135 +133,94 @@ function printQuestions(questions, language) {
 
         .header {
           text-align: center;
-
-          border-bottom:
-            2px solid #222;
-
-          padding-bottom: 12px;
-
-          margin-bottom: 20px;
+          border-bottom: 2px solid #222;
+          padding-bottom: 14px;
+          margin-bottom: 24px;
         }
 
         .header h1 {
-          margin: 0 0 5px;
-
-          font-size: 24px;
+          margin: 0 0 8px;
+          font-size: 26px;
+          font-weight: bold;
         }
 
         .header h2 {
           margin: 0;
-
-          font-size: 16px;
-
+          font-size: 21px;
           font-weight: normal;
         }
 
         .student-info {
           display: grid;
-
-          grid-template-columns:
-            1fr 1fr;
-
+          grid-template-columns: 1fr 1fr;
           gap: 30px;
-
-          margin-bottom: 25px;
+          margin-bottom: 28px;
         }
 
         .line {
-          border-bottom:
-            1px solid #222;
-
-          padding-bottom: 6px;
-
-          font-size: 14px;
+          border-bottom: 1px solid #222;
+          padding-bottom: 8px;
+          font-size: 19px;
+          min-height: 32px;
         }
 
         .instructions {
-          font-size: 14px;
-
+          font-size: 19px;
           font-weight: bold;
-
-          margin-bottom: 20px;
+          margin-bottom: 24px;
         }
 
         .question {
-          margin-bottom: 22px;
-
+          margin-bottom: 30px;
           page-break-inside: avoid;
         }
 
         .question-text {
-          font-size: 15px;
-
+          font-size: 21px;
           font-weight: 600;
-
-          line-height: 1.5;
-
-          margin-bottom: 9px;
+          line-height: 1.6;
+          margin-bottom: 14px;
         }
 
         .options {
           display: grid;
-
-          grid-template-columns:
-            1fr 1fr;
-
-          gap: 7px;
-
-          margin-left: 20px;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+          margin-left: 22px;
         }
 
         .option {
-          font-size: 14px;
-
-          line-height: 1.4;
+          font-size: 19px;
+          line-height: 1.6;
         }
 
         .footer {
           margin-top: 30px;
-
           padding-top: 10px;
-
-          border-top:
-            1px solid #999;
-
+          border-top: 1px solid #999;
           text-align: center;
-
-          font-size: 11px;
-
+          font-size: 12px;
           color: #666;
         }
 
+        @media print {
+          .question {
+            break-inside: avoid;
+          }
+        }
       </style>
-
     </head>
 
     <body>
-
       <div class="paper">
-
         <div class="header">
-
-          <h1>
-            Day & Date Quiz
-          </h1>
-
-          <h2>
-            Level 1 - Today
-          </h2>
-
+          <h1>Day &amp; Date Quiz</h1>
+          <h2>Level 1 - Today</h2>
         </div>
 
         <div class="student-info">
-
-          <div class="line">
-            Name:
-          </div>
-
-          <div class="line">
-            Date:
-          </div>
-
+          <div class="line">Name:</div>
+          <div class="line">Date:</div>
         </div>
 
         <div class="instructions">
@@ -327,82 +232,42 @@ function printQuestions(questions, language) {
         <div class="footer">
           Level 1 - Today
         </div>
-
       </div>
 
       <script>
-
-        window.onload = function() {
-
-          setTimeout(function() {
+        window.onload = function () {
+          setTimeout(function () {
             window.print();
           }, 300);
-
         };
-
       </script>
-
     </body>
-
     </html>
   `);
 
   printWindow.document.close();
 }
 
-// =====================================================
-// COMPONENT
-// =====================================================
-
 function Level1Today({ onBack }) {
-
-  const [language, setLanguage] =
-    useState("telugu");
-
-  const [currentQuestion, setCurrentQuestion] =
-    useState(createQuestion());
-
-  const [questionNumber, setQuestionNumber] =
-    useState(1);
-
-  const [selectedAnswer, setSelectedAnswer] =
-    useState(null);
-
-  const [showWrong, setShowWrong] =
-    useState(false);
-
-  const [showSuccess, setShowSuccess] =
-    useState(false);
-
-  const [showPrintPopup, setShowPrintPopup] =
-    useState(false);
-
-  const [printCount, setPrintCount] =
-    useState("10");
+  const [language, setLanguage] = useState("telugu");
+  const [currentQuestion, setCurrentQuestion] = useState(createQuestion);
+  const [questionNumber, setQuestionNumber] = useState(1);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [showWrong, setShowWrong] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showPrintPopup, setShowPrintPopup] = useState(false);
+  const [printCount, setPrintCount] = useState("10");
 
   const locked = useRef(false);
-
   const timers = useRef([]);
-
   const audioRef = useRef(null);
 
   if (!audioRef.current) {
     audioRef.current = {
-      success: new Audio(
-        "/sounds/success-1-6297.mp3"
-      ),
-
-      fail: new Audio(
-        "/sounds/fail-2-2777575.mp3"
-      ),
-
-      veryGood: new Audio(
-        "/sounds/very-good.mp3"
-      ),
-
-      tryAgain: new Audio(
-        "/sounds/try-again.mp3"
-      ),
+      success: new Audio("/sounds/success-1-6297.mp3"),
+      fail: new Audio("/sounds/fail-2-2777575.mp3"),
+      veryGood: new Audio("/sounds/very-good.mp3"),
+      tryAgain: new Audio("/sounds/try-again.mp3"),
     };
   }
 
@@ -410,26 +275,21 @@ function Level1Today({ onBack }) {
     return () => {
       timers.current.forEach(clearTimeout);
 
-      Object.values(audioRef.current).forEach(
-        (audio) => {
-          audio.pause();
-          audio.currentTime = 0;
-        }
-      );
+      Object.values(audioRef.current).forEach((audio) => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
     };
   }, []);
 
   const schedule = (callback, delay) => {
     const id = setTimeout(callback, delay);
-
     timers.current.push(id);
   };
 
   const playAudio = (audio) => {
     audio.pause();
-
     audio.currentTime = 0;
-
     audio.play().catch(() => {});
   };
 
@@ -437,9 +297,7 @@ function Level1Today({ onBack }) {
     playAudio(audioRef.current.success);
 
     schedule(() => {
-      playAudio(
-        audioRef.current.veryGood
-      );
+      playAudio(audioRef.current.veryGood);
     }, 500);
   };
 
@@ -447,57 +305,38 @@ function Level1Today({ onBack }) {
     playAudio(audioRef.current.fail);
 
     schedule(() => {
-      playAudio(
-        audioRef.current.tryAgain
-      );
+      playAudio(audioRef.current.tryAgain);
     }, 500);
   };
 
   const nextQuestion = () => {
     setCurrentQuestion(createQuestion());
-
-    setQuestionNumber(
-      (previous) => previous + 1
-    );
-
+    setQuestionNumber((previous) => previous + 1);
     setSelectedAnswer(null);
   };
 
   const handleAnswer = (answer) => {
-    if (locked.current) {
-      return;
-    }
+    if (locked.current) return;
 
     locked.current = true;
-
     setSelectedAnswer(answer);
 
-    if (
-      answer ===
-      currentQuestion.answer
-    ) {
+    if (answer === currentQuestion.answer) {
       playCorrectSounds();
-
       setShowSuccess(true);
 
       schedule(() => {
         setShowSuccess(false);
-
         nextQuestion();
-
         locked.current = false;
       }, 2500);
-
     } else {
       playWrongSounds();
-
       setShowWrong(true);
 
       schedule(() => {
         setShowWrong(false);
-
         setSelectedAnswer(null);
-
         locked.current = false;
       }, 2500);
     }
@@ -506,266 +345,143 @@ function Level1Today({ onBack }) {
   const handlePrint = () => {
     const count = Number(printCount);
 
-    if (
-      !Number.isInteger(count) ||
-      count < 1 ||
-      count > 200
-    ) {
-      alert(
-        "Please enter a number between 1 and 200."
-      );
-
+    if (!Number.isInteger(count) || count < 1 || count > 200) {
+      alert("Please enter a number between 1 and 200.");
       return;
     }
 
-    const questions =
-      createPrintQuestions(
-        count,
-        language
-      );
+    const questions = createPrintQuestions(count, language);
 
     setShowPrintPopup(false);
-
-    printQuestions(
-      questions,
-      language
-    );
+    printQuestions(questions);
   };
 
-  const displayedQuestion =
-    currentQuestion.question[language];
+  const displayedQuestion = currentQuestion.question[language];
 
   return (
     <div className="level1-quiz">
-
-      <button
-        className="level1-back"
-        onClick={onBack}
-      >
+      <button className="level1-back" onClick={onBack}>
         ← BACK
       </button>
 
-      <h1>
-        Day & Date
-      </h1>
-
-      <h2>
-        Level 1 - Today
-      </h2>
-
-      {/* LANGUAGE */}
+      <h1>Day &amp; Date</h1>
+      <h2>Level 1 - Today</h2>
 
       <div className="level1-language">
-
         <button
-          className={
-            language === "telugu"
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setLanguage("telugu")
-          }
+          className={language === "telugu" ? "active" : ""}
+          onClick={() => setLanguage("telugu")}
         >
           తెలుగు
         </button>
 
         <button
-          className={
-            language === "english"
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setLanguage("english")
-          }
+          className={language === "english" ? "active" : ""}
+          onClick={() => setLanguage("english")}
         >
           English
         </button>
-
       </div>
 
       <div className="level1-progress">
         Question {questionNumber}
       </div>
 
-      {/* QUESTION */}
-
       <div className="level1-card">
-
-        <h3>
-          {displayedQuestion}
-        </h3>
+        <h3>{displayedQuestion}</h3>
 
         <div className="level1-options">
+          {currentQuestion.options.map((option) => {
+            let className = "level1-option";
 
-          {currentQuestion.options.map(
-            (option) => {
-
-              let className =
-                "level1-option";
-
-              if (
-                selectedAnswer === option
-              ) {
-                if (
-                  option ===
-                  currentQuestion.answer
-                ) {
-                  className +=
-                    " correct";
-                } else {
-                  className +=
-                    " wrong";
-                }
-              }
-
-              return (
-                <button
-                  key={option}
-                  className={className}
-                  onClick={() =>
-                    handleAnswer(option)
-                  }
-                  disabled={
-                    selectedAnswer !== null
-                  }
-                >
-                  {option}
-                </button>
-              );
+            if (selectedAnswer === option) {
+              className +=
+                option === currentQuestion.answer ? " correct" : " wrong";
             }
-          )}
 
+            return (
+              <button
+                key={option}
+                className={className}
+                onClick={() => handleAnswer(option)}
+                disabled={selectedAnswer !== null}
+              >
+                {option}
+              </button>
+            );
+          })}
         </div>
-
       </div>
-
-      {/* PRINT */}
 
       <button
         className="level1-print"
-        onClick={() =>
-          setShowPrintPopup(true)
-        }
+        onClick={() => setShowPrintPopup(true)}
       >
         🖨️ PRINT QUESTIONS
       </button>
 
-      {/* WRONG */}
-
       {showWrong && (
         <div className="quiz-popup">
-
           <div className="wrong-box">
-
             <div>❌</div>
-
             <h2>
-              {language === "telugu"
-                ? "Malli try cheyu!"
-                : "Try again!"}
+              {language === "telugu" ? "Malli try cheyu!" : "Try again!"}
             </h2>
-
           </div>
-
         </div>
       )}
 
-      {/* SUCCESS */}
-
       {showSuccess && (
         <div className="quiz-popup">
-
           <div className="success-box">
-
-            <div>
-              🎉
-            </div>
-
-            <h2>
-              VERY GOOD!
-            </h2>
-
+            <div>🎉</div>
+            <h2>VERY GOOD!</h2>
             <p>
               {language === "telugu"
                 ? "Super! Correct answer!"
                 : "Great! Correct answer!"}
             </p>
-
           </div>
-
         </div>
       )}
 
-      {/* PRINT POPUP */}
-
       {showPrintPopup && (
         <div className="print-overlay">
-
           <div className="print-box">
-
             <button
               className="print-close"
-              onClick={() =>
-                setShowPrintPopup(false)
-              }
+              onClick={() => setShowPrintPopup(false)}
             >
               ×
             </button>
 
-            <div className="print-icon">
-              🖨️
-            </div>
+            <div className="print-icon">🖨️</div>
+            <h2>Print Questions</h2>
 
-            <h2>
-              Print Questions
-            </h2>
-
-            <p>
-              How many questions do you want
-              to print?
-            </p>
+            <p>How many questions do you want to print?</p>
 
             <input
               type="number"
               min="1"
               max="200"
               value={printCount}
-              onChange={(event) =>
-                setPrintCount(
-                  event.target.value
-                )
-              }
+              onChange={(event) => setPrintCount(event.target.value)}
             />
 
-            <p className="print-info">
-              A4 format • No answers
-            </p>
+            <p className="print-info">A4 format • No answers</p>
 
             <div className="print-buttons">
-
-              <button
-                onClick={() =>
-                  setShowPrintPopup(false)
-                }
-              >
+              <button onClick={() => setShowPrintPopup(false)}>
                 CANCEL
               </button>
 
-              <button
-                onClick={handlePrint}
-              >
+              <button onClick={handlePrint}>
                 PRINT
               </button>
-
             </div>
-
           </div>
-
         </div>
       )}
-
     </div>
   );
 }

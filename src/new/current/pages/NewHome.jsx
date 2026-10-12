@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 
 import MatchingGame from "../components/MatchingGame";
@@ -8,23 +9,19 @@ import Level2NinnaToday from "../components/Level2NinnaToday";
 import Level3DaysBeforeAfter from "../components/Level3DaysBeforeAfter";
 import Level4DaysMonths from "../components/Level4DaysMonths";
 import Level5SpecialDays from "../components/Level5SpecialDays";
+import MixedLevel from "../components/MixedLevel";
 
 import LevelScreen from "../components/LevelScreen";
+import MoneyLevel1 from "../components/MoneyLevel1";
 
 import "./NewHome.css";
 
 function NewHome({ onBack }) {
-  const [selectedSubject, setSelectedSubject] =
-    useState(null);
-
-  const [selectedGame, setSelectedGame] =
-    useState(null);
-
-  const [selectedMathsGame, setSelectedMathsGame] =
-    useState(null);
-
-  const [selectedLevel, setSelectedLevel] =
-    useState(null);
+  const [selectedSubject, setSelectedSubject] = useState(null);
+  const [selectedGame, setSelectedGame] = useState(null);
+  const [selectedMathsGame, setSelectedMathsGame] = useState(null);
+  const [selectedLevel, setSelectedLevel] = useState(null);
+  const [selectedMoneyGame, setSelectedMoneyGame] = useState(false);
 
   /* =========================
      EVS - MATCHING GAME
@@ -51,7 +48,7 @@ function NewHome({ onBack }) {
   }
 
   /* =========================
-     MATHS - LEVEL SCREEN
+     MATHS - DAY QUIZ LEVEL SCREEN
   ========================= */
 
   if (
@@ -71,7 +68,7 @@ function NewHome({ onBack }) {
   }
 
   /* =========================
-     MATHS - LEVEL 1
+     MATHS - DAY QUIZ LEVEL 1
   ========================= */
 
   if (selectedLevel === "level1") {
@@ -86,7 +83,7 @@ function NewHome({ onBack }) {
   }
 
   /* =========================
-     MATHS - LEVEL 2
+     MATHS - DAY QUIZ LEVEL 2
   ========================= */
 
   if (selectedLevel === "level2") {
@@ -101,7 +98,7 @@ function NewHome({ onBack }) {
   }
 
   /* =========================
-     MATHS - LEVEL 3
+     MATHS - DAY QUIZ LEVEL 3
   ========================= */
 
   if (selectedLevel === "level3") {
@@ -116,7 +113,7 @@ function NewHome({ onBack }) {
   }
 
   /* =========================
-     MATHS - LEVEL 4
+     MATHS - DAY QUIZ LEVEL 4
   ========================= */
 
   if (selectedLevel === "level4") {
@@ -131,19 +128,48 @@ function NewHome({ onBack }) {
   }
 
   /* =========================
-   MATHS - LEVEL 5
-========================= */
+     MATHS - DAY QUIZ LEVEL 5
+  ========================= */
 
-if (selectedLevel === "level5") {
-  return (
-    <Level5SpecialDays
-      onBack={() => {
-        setSelectedLevel(null);
-        setSelectedMathsGame("levels");
-      }}
-    />
-  );
-}
+  if (selectedLevel === "level5") {
+    return (
+      <Level5SpecialDays
+        onBack={() => {
+          setSelectedLevel(null);
+          setSelectedMathsGame("levels");
+        }}
+      />
+    );
+  }
+
+  /* =========================
+     MATHS - MIXED LEVEL
+  ========================= */
+
+  if (selectedLevel === "mixed") {
+    return (
+      <MixedLevel
+        onBack={() => {
+          setSelectedLevel(null);
+          setSelectedMathsGame("levels");
+        }}
+      />
+    );
+  }
+
+  /* =========================
+     MATHS - MONEY LEVEL 1
+  ========================= */
+
+  if (selectedMoneyGame) {
+    return (
+      <MoneyLevel1
+        onBack={() => {
+          setSelectedMoneyGame(false);
+        }}
+      />
+    );
+  }
 
   /* =========================
      SUBJECT PAGE
@@ -152,7 +178,6 @@ if (selectedLevel === "level5") {
   if (selectedSubject) {
     return (
       <div className="new-page">
-
         <button
           className="top-back-button"
           onClick={() => {
@@ -160,6 +185,7 @@ if (selectedLevel === "level5") {
             setSelectedGame(null);
             setSelectedMathsGame(null);
             setSelectedLevel(null);
+            setSelectedMoneyGame(false);
           }}
         >
           ← BACK
@@ -173,81 +199,63 @@ if (selectedLevel === "level5") {
 
         {selectedSubject === "EVS" ? (
           <div className="game-tabs">
-
             <button
               className="game-card"
-              onClick={() =>
-                setSelectedGame("match")
-              }
+              onClick={() => setSelectedGame("match")}
             >
-              <div className="game-icon">
-                🧩
-              </div>
-
-              <span>
-                Match Game
-              </span>
+              <div className="game-icon">🧩</div>
+              <span>Match Game</span>
             </button>
 
             <button
               className="game-card"
-              onClick={() =>
-                setSelectedGame("video")
-              }
+              onClick={() => setSelectedGame("video")}
             >
-              <div className="game-icon">
-                🎬
-              </div>
-
-              <span>
-                Video Game
-              </span>
+              <div className="game-icon">🎬</div>
+              <span>Video Game</span>
             </button>
-
           </div>
-
         ) : selectedSubject === "Maths" ? (
-
           /* =========================
              MATHS
           ========================= */
 
           <div className="game-tabs">
-
             <button
               className="game-card"
               onClick={() => {
                 setSelectedMathsGame("levels");
                 setSelectedLevel(null);
+                setSelectedMoneyGame(false);
               }}
             >
-              <div className="game-icon">
-                📅
-              </div>
-
-              <span>
-                Day Quiz
-              </span>
+              <div className="game-icon">📅</div>
+              <span>Day Quiz</span>
             </button>
 
+            <button
+              className="game-card"
+              onClick={() => {
+                setSelectedMoneyGame(true);
+                setSelectedMathsGame(null);
+                setSelectedLevel(null);
+              }}
+            >
+              <div className="game-icon">💰</div>
+              <span>Money</span>
+            </button>
           </div>
-
         ) : (
-
           /* =========================
              TELUGU / ENGLISH
           ========================= */
 
           <div className="coming-soon">
-
             <p>
-              Games for {selectedSubject} will be
-              added here.
+              Games for {selectedSubject} will be added here.
             </p>
-
           </div>
         )}
-
       </div>
     );
   }
@@ -258,7 +266,6 @@ if (selectedLevel === "level5") {
 
   return (
     <div className="new-home">
-
       <button
         className="top-back-button"
         onClick={onBack}
@@ -271,14 +278,11 @@ if (selectedLevel === "level5") {
       </h1>
 
       <div className="subject-grid">
-
         {/* TELUGU */}
 
         <button
           className="subject-card"
-          onClick={() =>
-            setSelectedSubject("Telugu")
-          }
+          onClick={() => setSelectedSubject("Telugu")}
         >
           <span className="subject-icon">
             తెలుగు
@@ -293,9 +297,7 @@ if (selectedLevel === "level5") {
 
         <button
           className="subject-card"
-          onClick={() =>
-            setSelectedSubject("English")
-          }
+          onClick={() => setSelectedSubject("English")}
         >
           <span className="subject-icon">
             A B C
@@ -310,9 +312,7 @@ if (selectedLevel === "level5") {
 
         <button
           className="subject-card"
-          onClick={() =>
-            setSelectedSubject("Maths")
-          }
+          onClick={() => setSelectedSubject("Maths")}
         >
           <span className="subject-icon">
             123
@@ -327,9 +327,7 @@ if (selectedLevel === "level5") {
 
         <button
           className="subject-card"
-          onClick={() =>
-            setSelectedSubject("EVS")
-          }
+          onClick={() => setSelectedSubject("EVS")}
         >
           <span className="subject-icon">
             🌱
@@ -339,9 +337,7 @@ if (selectedLevel === "level5") {
             EVS
           </span>
         </button>
-
       </div>
-
     </div>
   );
 }
