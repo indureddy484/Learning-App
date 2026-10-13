@@ -1,0 +1,91 @@
+.version-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f7f5ff;
+  box-sizing: border-box;
+  padding: 40px 20px;
+}
+
+.version-title {
+  margin: 0 0 50px;
+  font-size: 42px;
+  font-weight: 700;
+  color: #5f3aa8;
+}
+
+.version-container {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  max-width: 900px;
+}
+
+.version-card {
+  width: 320px;
+  min-height: 230px;
+
+  border: none;
+  border-radius: 25px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.old-card {
+  background: #e8e8e8;
+  color: #555;
+}
+
+.new-card {
+  background: #e8ddff;
+  color: #5f3aa8;
+}
+
+.version-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.version-card:active {
+  transform: scale(0.97);
+}
+
+.version-label {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.version-description {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+@media (max-width: 700px) {
+  .version-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .version-card {
+    width: min(320px, 90vw);
+  }
+
+  .version-title {
+    font-size: 32px;
+    margin-bottom: 35px;
+  }
+}

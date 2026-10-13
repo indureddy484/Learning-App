@@ -1,0 +1,209 @@
+.quiz-container {
+  min-height: 100vh;
+  height: auto;
+  overflow-y: auto;
+  padding-bottom: 100px;
+  margin-top: 0px;
+  margin-bottom: 0px; /* ✅ gives scroll space at the bottom */
+}
+
+
+.top-bar {
+  font-size: 24px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  color: #1acc07;
+  padding-top: 20px; 
+  margin-bottom: 8px; /* ✅ Add some breathing room above */
+}
+
+
+.level-select {
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid #0077cc;
+  background-color: #f0f8ff;
+  color: #333;
+  font-weight: bold;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.level-select:focus {
+  outline: none;
+  border-color: #005fa3;
+}
+
+.target-number {
+  position: sticky;
+  top: 0;
+  background-color: #32a0ae; /* optional: match your game background */
+  padding: 10px 20px;
+  margin-top: 0px;
+  z-index: 100;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 2px solid #ccc;
+}
+
+
+.supply-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+
+
+
+.supply-grid {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 520px;
+  margin: 20px auto;
+  gap: 10px;
+  justify-content: center;
+}
+
+.supply-block {
+  width: 40px;
+  height: 40px;
+  background-color: #90ee90;
+  border: 2px solid #222;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.supply-block.picked {
+  background-color: #ffe27a;
+  transform: scale(1.1);
+}
+
+
+/* Optional: Add hover effect */
+.supply-block:hover {
+  transform: scale(1.1);
+}
+
+
+.quiz-content.side-by-side {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.question-blocks {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.block-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 20px;
+}
+
+.block-section h3 {
+  font-size: 20px;
+  color: #070707;
+  margin-bottom: 10px;
+}
+
+.card {
+  background-color: #eeeaea;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #444;
+  box-shadow: 0 0 10px #777272;
+}
+
+.grid-tens {
+  display: flex;
+  gap: 10px;
+}
+
+.grid-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ones-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-left: 20px;
+}
+
+.grid-block {
+  width: 20px;
+  height: 20px;
+  background-color: #90ee90;
+  border: 1px solid #333;
+  border-radius: 3px;
+}
+
+.ten-block {
+  background-color: #9b59b6;
+}
+
+/* Submit + feedback */
+.submit-section {
+  width: 100%;
+  margin-top: 30px;
+}
+
+.submit-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit-btn {
+  width: 200px;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2527a3;
+  color: white;
+  cursor: pointer;
+}
+
+.result-message {
+  font-size: 24px;
+  color: #14cc07;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.wrong-message {
+  font-size: 24px;
+  color: red;
+  text-align: center;
+  margin-top: 20px;
+}
+.bundle-box {
+  border: 2px dashed #800080;
+  border-radius: 10px;
+  padding: 6px;
+  margin-bottom: 8px;
+  background-color: #f9f0ff;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+}
+.block-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}

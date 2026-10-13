@@ -1,0 +1,46 @@
+.question-block {
+  margin-top: 30px;
+}
+
+.question {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.option-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background: #eee;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.option-btn.correct {
+  background-color: #4caf50;
+  color: white;
+}
+
+.option-btn.wrong {
+  background-color: #f44336;
+  color: white;
+}
+.feedback {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.completion-message {
+  margin-top: 30px;
+  font-size: 22px;
+  color: green;
+}

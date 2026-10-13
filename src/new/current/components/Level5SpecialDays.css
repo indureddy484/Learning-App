@@ -1,0 +1,396 @@
+.level5-quiz {
+  min-height: 100vh;
+  padding: 30px 20px 60px;
+  box-sizing: border-box;
+  text-align: center;
+  background:
+    radial-gradient(
+      circle at top left,
+      #fff0f7,
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      #eeeaff,
+      transparent 35%
+    ),
+    #f8f7ff;
+}
+
+/* BACK */
+
+.level5-back {
+  position: absolute;
+  left: 25px;
+  top: 25px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px;
+  background: #5b5980;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 5px 15px
+    rgba(108, 99, 255, 0.25);
+  transition: 0.2s;
+}
+
+.level5-back:hover {
+  transform: translateY(-2px);
+}
+
+/* HERO */
+
+.level5-hero {
+  width: min(850px, 94%);
+  margin: 25px auto 20px;
+  padding: 22px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  border-radius: 25px;
+  background:
+    linear-gradient(
+      135deg,
+      #6c63ff,
+      #9b5de5,
+      #f15bb5
+    );
+  color: white;
+  box-shadow: 0 12px 30px
+    rgba(108, 99, 255, 0.25);
+}
+
+.level5-hero h1 {
+  margin: 0;
+  font-size: 34px;
+}
+
+.level5-hero p {
+  margin: 6px 0 0;
+  font-size: 16px;
+  opacity: 0.95;
+}
+
+.level5-hero-icon {
+  font-size: 42px;
+}
+
+/* LANGUAGE */
+
+.level5-language {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 22px 0;
+}
+
+.level5-language button {
+  padding: 11px 28px;
+  border: 2px solid #6c63ff;
+  border-radius: 12px;
+  background: white;
+  color: #6c63ff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.level5-language button:hover {
+  transform: translateY(-2px);
+}
+
+.level5-language button.active {
+  background: #6c63ff;
+  color: white;
+}
+
+/* PROGRESS */
+
+.level5-progress {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  margin-bottom: 18px;
+  border-radius: 30px;
+  background: white;
+  color: #666;
+  box-shadow: 0 5px 18px
+    rgba(0, 0, 0, 0.07);
+}
+
+.level5-progress strong {
+  color: #6c63ff;
+  font-size: 18px;
+}
+
+/* QUESTION CARD */
+
+.level5-card {
+  width: min(760px, 95%);
+  margin: auto;
+  padding: 35px 35px 40px;
+  box-sizing: border-box;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 15px 40px
+    rgba(72, 61, 139, 0.12);
+  border: 1px solid rgba(108, 99, 255, 0.1);
+}
+
+.level5-card-top {
+  width: 65px;
+  height: 65px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f0edff;
+  font-size: 32px;
+}
+
+.level5-card h2 {
+  margin: 0 auto 30px;
+  max-width: 650px;
+  font-size: 25px;
+  line-height: 1.5;
+  color: #29264a;
+}
+
+/* OPTIONS */
+
+.level5-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.level5-option {
+  min-height: 65px;
+  padding: 15px 20px;
+  border: 2px solid #e5e2f5;
+  border-radius: 16px;
+  background: white;
+  color: #35324d;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.level5-option:hover {
+  border-color: #6c63ff;
+  background: #f7f5ff;
+  transform: translateY(-2px);
+  box-shadow: 0 7px 18px
+    rgba(108, 99, 255, 0.12);
+}
+
+.level5-option.correct {
+  border-color: #28a745;
+  background: #e5f8e9;
+  color: #18752d;
+}
+
+.level5-option.wrong {
+  border-color: #dc3545;
+  background: #ffe7ea;
+  color: #b42332;
+}
+
+.level5-option:disabled {
+  cursor: default;
+}
+
+/* PRINT BUTTON */
+
+.level5-print {
+  margin-top: 25px;
+  padding: 14px 27px;
+  border: none;
+  border-radius: 13px;
+  background: #29264a;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 7px 18px
+    rgba(41, 38, 74, 0.2);
+  transition: 0.2s;
+}
+
+.level5-print:hover {
+  transform: translateY(-2px);
+  background: #17152d;
+}
+
+/* POPUP */
+
+.level5-popup-overlay,
+.level5-print-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(24, 21, 45, 0.55);
+  backdrop-filter: blur(4px);
+}
+
+.level5-success-box,
+.level5-wrong-box {
+  width: min(370px, 90%);
+  padding: 40px 25px;
+  border-radius: 25px;
+  background: white;
+  text-align: center;
+  box-shadow: 0 20px 50px
+    rgba(0, 0, 0, 0.25);
+}
+
+.level5-success-box h2 {
+  color: #28a745;
+  margin: 12px 0 5px;
+}
+
+.level5-wrong-box h2 {
+  color: #dc3545;
+  margin: 12px 0 5px;
+}
+
+.level5-success-box p,
+.level5-wrong-box p {
+  margin: 5px 0;
+  color: #777;
+}
+
+.level5-popup-icon {
+  font-size: 55px;
+}
+
+/* PRINT POPUP */
+
+.level5-print-box {
+  position: relative;
+  width: min(430px, 90%);
+  padding: 35px 25px;
+  border-radius: 25px;
+  background: white;
+  text-align: center;
+  box-shadow: 0 20px 50px
+    rgba(0, 0, 0, 0.25);
+}
+
+.level5-print-close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  border: none;
+  background: transparent;
+  color: #555;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.level5-print-icon {
+  font-size: 48px;
+}
+
+.level5-print-box h2 {
+  margin: 10px 0;
+  color: #29264a;
+}
+
+.level5-print-box p {
+  color: #666;
+}
+
+.level5-print-box input {
+  width: 110px;
+  padding: 11px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.level5-print-info {
+  font-size: 13px;
+}
+
+.level5-print-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.level5-print-buttons button {
+  padding: 11px 24px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.level5-print-buttons button:first-child {
+  background: #e5e5e5;
+  color: #333;
+}
+
+.level5-print-buttons button:last-child {
+  background: #6c63ff;
+  color: white;
+}
+
+/* MOBILE */
+
+@media (max-width: 650px) {
+  .level5-quiz {
+    padding-top: 80px;
+  }
+
+  .level5-back {
+    left: 15px;
+    top: 15px;
+  }
+
+  .level5-hero {
+    gap: 12px;
+    padding: 18px 12px;
+  }
+
+  .level5-hero h1 {
+    font-size: 25px;
+  }
+
+  .level5-hero p {
+    font-size: 13px;
+  }
+
+  .level5-hero-icon {
+    font-size: 30px;
+  }
+
+  .level5-card {
+    padding: 25px 15px 30px;
+  }
+
+  .level5-card h2 {
+    font-size: 20px;
+  }
+
+  .level5-options {
+    grid-template-columns: 1fr;
+  }
+
+  .level5-option {
+    font-size: 16px;
+  }
+}

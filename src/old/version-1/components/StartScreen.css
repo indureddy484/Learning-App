@@ -1,0 +1,179 @@
+.start-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.name-btn {
+  font-size: 20px;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border: 2px solid #4a90e2;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+}
+
+.back-btn-topright {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 18px;
+  padding: 8px 12px;
+  border: none;
+  background: #eee;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.start-title {
+  font-size: 28px;
+  margin: 20px 0 10px;
+  font-weight: bold;
+}
+
+.start-subtitle {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+/* 🎯 Responsive Grid */
+.button-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  justify-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+/* 🌈 General Button Style */
+.start-btn {
+  width: 200px;
+  height: 180px;
+  border-radius: 30%;
+  border: none;
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  transition: transform 0.2s;
+}
+
+.start-btn:hover {
+  transform: scale(1.05);
+}
+.start-btn.game {
+  background: #4a90e2; /* blue */
+}
+/* 🧠 Specific Game Colors */
+.start-btn.story     { background: #9b59b6; }
+.start-btn.compare   { background: #27ae60; }
+.start-btn.ascending { background: #e91e63; }
+.start-btn.dayquiz   { background: #f39c12; }
+.start-btn.clockquiz { background: #00bcd4; }
+.start-btn.quiz      { background: #2ecc71; }
+.start-btn.blending  { background: #703598; }
+.start-btn.blend     { background: #683030; }
+.start-btn.blends     { background: #098684; }
+
+/* 📱 Mobile Adjustments */
+@media (max-width: 768px) {
+  .button-group {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .button-group {
+    grid-template-columns: 1fr;
+  }
+
+  .start-btn {
+    width: 100px;
+    height: 100px;
+    font-size: 14px;
+  }
+
+  .start-title {
+    font-size: 22px;
+  }
+
+  .start-subtitle {
+    font-size: 14px;
+  }
+
+  .name-btn {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+}
+/* 🎓 Subject Buttons */
+.start-btn.telugu {
+  background: #8e44ad;  /* purple */
+}
+
+.start-btn.english {
+  background: #2980b9;  /* blue */
+}
+
+.start-btn.maths {
+  background: #16a085;  /* teal */
+}
+
+.start-btn.uoi {
+  background: #d35400;  /* orange */
+}
+
+.start-btn.music {
+  background: #c0392b;  /* red */
+}
+.phonics-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+.storyquiz {
+  background-color: #c0392b;
+}
+.bundlegame {
+  background-color: #8e44ad;
+}
+.chessgame {
+  background-color: #2980b9;
+}
+.level2game {
+  background-color: #27ae60;
+}
+.uoi-system {
+  background-color: #d35400;
+}
+.uoi-system1 {
+  background-color: #572d84; /* orange */
+}
+.uoi-system2 {
+  background-color: #147c4b; /* light orange */
+}
+.start-btn1 {
+  background-color: #f39c12; /* yellow */
+}
+.start-btn2 {
+  background-color: #e67e22; /* orange */
+}
+.start-btn3 {
+  background-color: #e74c3c; /* red */
+}
+.numbersense {
+  background-color: #1f7e56;
+}
+.numbersquiz {
+  background-color: #2980b9;
+}

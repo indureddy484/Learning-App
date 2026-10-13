@@ -1,0 +1,35 @@
+
+.menu-btn {
+  padding: 10px 16px;
+  font-size: 18px;
+  background-color: white;
+  color: #007bff;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.back-btn {
+  padding: 10px 16px;
+  font-size: 18px;
+  background-color: white;
+  color: #007bff;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right, #0099ff, #00ccff);
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.navbar-spacer {
+  flex: 1;
+}

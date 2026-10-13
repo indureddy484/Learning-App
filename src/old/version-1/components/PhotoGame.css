@@ -1,0 +1,222 @@
+.photo-container {
+  padding: 20px;
+  text-align: center;
+  font-family: "Comic Sans MS", sans-serif;
+  min-height: 100vh;
+}
+
+/* 🎨 Animated Background */
+.animated-bg {
+  background: linear-gradient(135deg, #ffe4ec, #d0f0fd);
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ☁️ Floating elements */
+.animated-bg::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: -100px;
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: floatCloud 25s linear infinite;
+}
+
+.animated-bg::after {
+  content: "";
+  position: absolute;
+  bottom: 20%;
+  right: -100px;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  animation: floatCloud 35s linear infinite reverse;
+}
+
+@keyframes floatCloud {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(160vw); }
+}
+
+.photo-row {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+.target-row {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  min-height: 120px;
+}
+
+.photo-box {
+  padding: 10px;
+  background: #fff5f5;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.photo-box:hover {
+  transform: scale(1.05);
+}
+
+.photo-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.photo-img.small {
+  width: 120px;
+  height: 120px;
+}
+
+.check-btn,
+.reset-btn {
+  margin-top: 20px;
+  padding: 10px 25px;
+  font-size: 16px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reset-btn {
+  background-color: #f44336;
+}
+
+.drop-slot {
+  width: 120px;
+  height: 120px;
+  border: 4px dashed #7ec8e3;
+  background: #f0faff;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0, 150, 255, 0.15);
+  position: relative;
+  transition: background 0.3s;
+}
+
+.placeholder {
+  color: #888;
+  font-size: 34px;
+  font-weight: bold;
+}
+
+.level-select {
+  margin-top: 10px;
+  font-size: 16px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  margin-bottom: 15px;
+}
+
+/* 📱 Mobile Friendly */
+@media (max-width: 600px) {
+  .photo-img,
+  .photo-img.small,
+  .drop-slot {
+    width: 100px;
+    height: 100px;
+  }
+
+  .check-btn,
+  .reset-btn {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+/* ❌ Remove Button */
+.slot-with-remove {
+  position: relative;
+  display: inline-block;
+}
+
+.remove-btn {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* 🔴 Shake Animation for Incorrect Drop */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+.fail-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 12px;
+  animation: shake 0.4s ease;
+}
+.story-title {
+  animation: fadeIn 1s ease;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.photo-box.selected {
+  outline: 3ps solid #2196f3;
+  transform: scale(1.05);
+}
+.youtube-link {
+  display: inline-block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background-color: #ff0000;
+  color: white;
+  font-weight: bold;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
+.youtube-link:hover {
+  background-color: #cc0000;
+}

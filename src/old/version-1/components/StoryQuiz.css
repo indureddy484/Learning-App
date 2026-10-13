@@ -1,0 +1,110 @@
+/* Fullscreen quiz modal */
+.quiz-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: 100vh; /* changed from height to min-height */
+  background: linear-gradient(to bottom right, #f0f9ff, #cfe0f9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 80px 20px 40px;
+  z-index: 1000;
+  overflow-y: auto; /* make sure vertical scroll is enabled */
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Level title */
+.quiz-modal h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Level selector dropdown */
+.level-select {
+  font-size: 16px;
+  padding: 8px 16px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 2px solid #888;
+}
+
+/* Video styling */
+.quiz-video {
+  width: 90%;
+  max-width: 600px;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Question text */
+.quiz-modal h3 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* Option buttons */
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  width: 90%;
+  max-width: 400px;
+}
+
+.quiz-option {
+  font-size: 18px;
+  padding: 12px 20px;
+  border: 2px solid #888;
+  border-radius: 12px;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Correct and wrong feedback styles */
+.quiz-option.correct {
+  background-color: #c8f7c5;
+  border-color: #27ae60;
+  color: #145a32;
+}
+
+.quiz-option.wrong {
+  background-color: #f9c0c0;
+  border-color: #e74c3c;
+  color: #922b21;
+}
+
+.quiz-option:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Feedback message */
+.quiz-msg {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Back button */
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #eee;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+}

@@ -1,0 +1,50 @@
+.main-area {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Reverse column layout on mobile so supply goes to bottom */
+@media (max-width: 768px) {
+  .main-area {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .supply-vertical {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+
+  .supply-vertical img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .numbers-area {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .num-row,
+  .order-row,
+  .num-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+@media (max-width: 768px) {
+  .main-area {
+    flex-direction: column-reverse; /* <== This reverses the layout */
+    align-items: center;
+  }
+}

@@ -1,0 +1,16 @@
+.audio-detail-page {
+  padding: 50px;
+  text-align: center;
+  color: #3e2723;
+  
+}
+
+.audio-detail-page h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+audio {
+  width: 300px;
+  margin: 0 auto;
+}

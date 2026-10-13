@@ -1,0 +1,149 @@
+.result-container {
+  text-align: center;
+  padding: 40px 20px;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: linear-gradient(to right, #e0f7fa, #f0fff0);
+  min-height: 100vh;
+}
+
+/* Title */
+.result-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: green;
+  margin-bottom: 20px;
+}
+
+/* Score & Time */
+.score-box,
+.time-box {
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+/* Button row (Home + Retry) */
+.test-sym-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+
+/* Icon + Label buttons */
+.test-sym-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100px;
+  height: 100px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #e6f0ff;
+  border: 2px solid #007bff;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.test-sym-box:hover {
+  background-color: #d0e8ff;
+}
+
+.test-sym-box .icon {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.test-sym-box .label {
+  font-size: 14px;
+}
+
+
+/* Answers container */
+.answers-list {
+  margin-top: 20px;
+  text-align: left;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Each answer */
+.answer-block {
+  background-color: #fff;
+  border-left: 6px solid #ccc;
+  padding: 12px 18px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.answer-block.correct {
+  border-left-color: #28a745;
+  background-color: #eaffea;
+}
+
+.answer-block.wrong {
+  border-left-color: #dc3545;
+  background-color: #ffeaea;
+}
+
+/* Question text */
+.answer-question {
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+/* Answer info lines */
+.answer-left div {
+  margin: 4px 0;
+  font-size: 16px;
+}
+
+/* Retake button */
+.retake-btn {
+  margin-top: 30px;
+  padding: 12px 26px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.retake-btn:hover {
+  background-color: #0056b3;
+}
+
+.pagination-controls {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  font-size: 18px;
+}
+
+.pagination-controls button {
+  padding: 8px 14px;
+  border-radius: 10px;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.pagination-controls button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}

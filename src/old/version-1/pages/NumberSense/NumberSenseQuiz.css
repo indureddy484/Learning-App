@@ -1,0 +1,230 @@
+/* Container styling */
+.quiz-container {
+  text-align: center;
+  padding: 30px 20px;
+  background: linear-gradient(to right, #fffbd5, #c9f2ff);
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Title */
+.quiz-container h2 {
+  font-size: 28px;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+/* Question text and numbering */
+.quiz-container p {
+  font-size: 18px;
+  color: #444;
+  margin: 10px 0;
+}
+
+.quiz-container h3 {
+  font-size: 26px;
+  font-weight: bold;
+  color: #2b2b2b;
+  margin: 15px 0;
+}
+
+/* Option buttons */
+.options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.options button {
+  width: 160px;
+  padding: 14px 24px;
+  font-size: 20px;
+  font-weight: bold;
+  background: linear-gradient(to right, #43188d, #26357b);
+  border: 2px solid #0077cc;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+.options button:hover {
+  background: linear-gradient(to right, #74ebd5, #acb6e5);
+  transform: scale(1.05);
+  color: #000;
+}
+
+.options button.selected {
+  background: #00c37e;
+  color: white;
+  border-color: #007f5f;
+  transform: scale(1.08);
+}
+
+/* Default buttons (not submit/test) */
+.quiz-container button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 10px;
+}
+
+.quiz-container button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.quiz-container button:hover:enabled {
+  background-color: #005fa3;
+}
+
+/* Timer */
+.timer {
+  margin-top: 25px;
+  font-weight: bold;
+  font-size: 20px;
+  color: #333;
+}
+
+/* Print controls section */
+.print-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 25px;
+  background: #fff9d6;
+  padding: 14px 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.print-controls label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.print-controls input {
+  width: 60px;
+  padding: 6px 10px;
+  font-size: 16px;
+  border: 2px solid #4caf50;
+  border-radius: 6px;
+  outline: none;
+  text-align: center;
+}
+
+.print-controls button {
+  background-color: #4caf50;
+  color: white;
+  font-size: 15px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.print-controls button:hover {
+  background-color: #388e3c;
+}
+
+/* Submit Answer button */
+.submit-btn {
+  margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  background: #ffb347;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.submit-btn:hover:enabled {
+  background-color: #fb8c00;
+  transform: scale(1.05);
+}
+
+.submit-btn:disabled {
+  background: #ccc;
+  color: #777;
+  cursor: not-allowed;
+}
+
+/* Submit Test Button */
+.final-submit-btn {
+  margin-top: 12px;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.final-submit-btn:hover {
+  background: #218838;
+  transform: scale(1.05);
+}
+
+/* Stop button */
+.stop-btn {
+  margin-top: 10px;
+  padding:  24px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #e53935;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.stop-btn:hover {
+  background-color: #c62828;
+  transform: scale(1.05);
+}
+
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 2px solid #0077cc;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: #d3eafd;
+  color: #000;
+}

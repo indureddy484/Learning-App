@@ -1,0 +1,45 @@
+.story-wrapper {
+  padding: 20px;
+  font-family: "Comic Sans MS", cursive;
+  text-align: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fce4ec, #d0f0fd);
+}
+
+.story-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto 20px;
+}
+
+.story-header h2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.toggle-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.switch-btn {
+  padding: 8px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: #ffcc80;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.switch-btn:disabled {
+  background-color: #ffe0b2;
+  cursor: not-allowed;
+}
+
+.story-content {
+  max-width: 900px;
+  margin: auto;
+}
