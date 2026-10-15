@@ -8,17 +8,47 @@ const NOTE_IMAGES = {
   50: "/money-notes/50-rupee-note.png",
 };
 
-const DENOMINATIONS = [10, 20, 50];
+const COIN_IMAGES = {
+  1: "/money-coins/one-rupee-coin.png",
+  2: "/money-coins/two-rupee-coin.png",
+  5: "/money-coins/five-rupee-coin.png",
+};
 
-function createQuestions(denomination) {
-  return Array.from({ length: 9 }, (_, index) => {
-    const count = index + 2;
+const TOPIC_OPTIONS = [
+  { value: "note-10", label: "₹10 Note" },
+  { value: "note-20", label: "₹20 Note" },
+  { value: "note-50", label: "₹50 Note" },
+  { value: "notes-10-20", label: "₹10 + ₹20 Notes" },
+  { value: "notes-10-50", label: "₹10 + ₹50 Notes" },
+  { value: "notes-20-50", label: "₹20 + ₹50 Notes" },
+  { value: "notes-10-20-50", label: "₹10 + ₹20 + ₹50 Notes" },
+  { value: "coin-1", label: "₹1 Coins" },
+  { value: "coin-2", label: "₹2 Coins" },
+  { value: "coin-5", label: "₹5 Coins" },
+  { value: "coins-1-2", label: "₹1 + ₹2 Coins" },
+  { value: "coins-1-5", label: "₹1 + ₹5 Coins" },
+  { value: "coins-2-5", label: "₹2 + ₹5 Coins" },
+  { value: "coins-1-2-5", label: "₹1 + ₹2 + ₹5 Coins" },
+];
 
-    return {
-      count,
-      answer: count * denomination,
-    };
-  });
+function getTopic(topic) {
+  const isCoin = topic.startsWith("coin-") ||
+    topic.startsWith("coins-");
+  const isSingle = topic.startsWith("note-") ||
+    topic.startsWith("coin-");
+
+  const values = topic
+    .replace(/^(notes|coins|note|coin)-/, "")
+    .split("-")
+    .map(Number);
+
+  return {
+    values,
+    kind: isCoin ? "coin" : "note",
+    type: isSingle ? "single" : "combo",
+    label: values.map((v) => `₹${v}`).join(" + ") +
+      (isCoin ? " Coins" : " Notes"),
+  };
 }
 
 function shuffle(items) {
@@ -32,253 +62,211 @@ function shuffle(items) {
   return result;
 }
 
-function createOptions(answer, denomination) {
-  const choices = [];
+function makeQuestion(topic) {
+  const config = getTopic(topic);
+  let items;
 
-  for (let count = 2; count <= 10; count++) {
-    const amount = count * denomination;
+  if (config.type === "single") {
+    const count = Math.floor(Math.random() * 9) + 2;
 
-    if (amount !== answer) {
-      choices.push(amount);
-    }
+    items = Array.from({ length: count }, () => ({
+      value: config.values[0],
+      kind: config.kind,
+    }));
+  } else {
+    items = config.values.flatMap((value) => {
+      const count = Math.floor(Math.random() * 3) + 1;
+
+      return Array.from({ length: count }, () => ({
+        value,
+        kind: config.kind,
+      }));
+    });
   }
 
-  return shuffle([answer, ...shuffle(choices).slice(0, 3)]);
+  const answer = items.reduce((sum, item) => sum + item.value, 0);
+
+  return { items, answer };
 }
 
-// CREATE PRINTABLE QUESTIONS
-function createPrintQuestions(count, denomination) {
+function createQuestions(topic) {
+  return Array.from({ length: 9 }, () => makeQuestion(topic));
+}
+
+function createOptions(answer) {
+  const choices = new Set([answer]);
+  const step = answer > 100 ? 10 : answer > 30 ? 5 : 1;
+
+  while (choices.size < 4) {
+    const offset = (Math.floor(Math.random() * 8) + 1) * step;
+    const candidate = Math.max(
+      1,
+      answer + (Math.random() < 0.5 ? -offset : offset)
+    );
+
+    choices.add(candidate);
+  }
+
+  return shuffle([...choices]);
+}
+
+function imageFor(item) {
+  return item.kind === "coin"
+    ? COIN_IMAGES[item.value]
+    : NOTE_IMAGES[item.value];
+}
+
+function createPrintQuestions(count, topic) {
   return Array.from({ length: count }, (_, index) => {
-    const noteCount = Math.floor(Math.random() * 9) + 2;
-    const answer = noteCount * denomination;
+    const question = makeQuestion(topic);
 
     return {
       number: index + 1,
-      noteCount,
-      answer,
-      options: createOptions(answer, denomination),
+      ...question,
+      options: createOptions(question.answer),
     };
   });
 }
 
-// PRINT QUESTION PAPER
-function printQuestions(questions, denomination) {
-  const printWindow = window.open(
-    "",
-    "_blank",
-    "width=900,height=700"
-  );
+function printQuestions(questions, topic) {
+  const config = getTopic(topic);
+  const printWindow = window.open("", "_blank", "width=900,height=700");
 
   if (!printWindow) {
     alert("Please allow pop-ups to print the question paper.");
     return;
   }
 
-  const noteImage = new URL(
-    NOTE_IMAGES[denomination],
-    window.location.origin
-  ).href;
+  const questionsHTML = questions.map((question) => {
+    const itemsHTML = question.items.map((item) => `
+      <img
+        src="${new URL(imageFor(item), window.location.origin).href}"
+        alt="₹${item.value} ${item.kind}"
+      />
+    `).join("");
 
-  const questionsHTML = questions
-    .map(
-      (question) => `
-        <div class="question">
-          <div class="question-text">
-            ${question.number}. Find the total value of
-            ${question.noteCount} ₹${denomination} notes.
-          </div>
+    const optionsHTML = question.options.map((option, index) => `
+      <div class="option">
+        ${String.fromCharCode(65 + index)}) ₹${option}
+      </div>
+    `).join("");
 
-          <div class="notes">
-            ${Array.from(
-              { length: question.noteCount },
-              () => `
-                <img
-                  src="${noteImage}"
-                  alt="₹${denomination} note"
-                />
-              `
-            ).join("")}
-            <span class="equals">= ?</span>
-          </div>
-
-          <div class="options">
-            ${question.options
-              .map(
-                (option, index) => `
-                  <div class="option">
-                    ${String.fromCharCode(65 + index)}) ₹${option}
-                  </div>
-                `
-              )
-              .join("")}
-          </div>
+    return `
+      <div class="question">
+        <div class="question-text">
+          ${question.number}. Find the total value.
         </div>
-      `
-    )
-    .join("");
+        <div class="notes">
+          ${itemsHTML}<span class="equals">= ?</span>
+        </div>
+        <div class="options">${optionsHTML}</div>
+      </div>
+    `;
+  }).join("");
 
   printWindow.document.open();
-
   printWindow.document.write(`
     <!DOCTYPE html>
     <html>
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>Money Level 1 - Question Paper</title>
-
-      <style>
-        @page {
-          size: A4;
-          margin: 12mm;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-
-        body {
-          margin: 0;
-          font-family: Arial, Helvetica, sans-serif;
-          color: #111;
-          background: white;
-          font-size: 15px;
-        }
-
-        .header {
-          text-align: center;
-          border-bottom: 2px solid #222;
-          padding-bottom: 12px;
-          margin-bottom: 22px;
-        }
-
-        .header h1 {
-          margin: 0 0 8px;
-          font-size: 25px;
-        }
-
-        .header h2 {
-          margin: 0;
-          font-size: 19px;
-          font-weight: normal;
-        }
-
-        .student-info {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 25px;
-          margin-bottom: 24px;
-        }
-
-        .line {
-          min-height: 30px;
-          border-bottom: 1px solid #222;
-          padding-bottom: 6px;
-        }
-
-        .instructions {
-          font-weight: bold;
-          margin-bottom: 22px;
-        }
-
-        .question {
-          margin-bottom: 25px;
-          page-break-inside: avoid;
-          break-inside: avoid;
-        }
-
-        .question-text {
-          font-size: 16px;
-          font-weight: bold;
-          line-height: 1.5;
-          margin-bottom: 10px;
-        }
-
-        .notes {
-          display: flex;
-          align-items: center;
-          flex-wrap: wrap;
-          gap: 5px;
-          margin: 8px 0 12px 18px;
-        }
-
-        .notes img {
-          width: 65px;
-          height: 32px;
-          object-fit: contain;
-        }
-
-        .equals {
-          font-size: 19px;
-          font-weight: bold;
-          margin-left: 5px;
-        }
-
-        .options {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 8px 18px;
-          margin-left: 20px;
-        }
-
-        .option {
-          font-size: 15px;
-          line-height: 1.5;
-        }
-
-        .footer {
-          margin-top: 25px;
-          padding-top: 10px;
-          border-top: 1px solid #999;
-          text-align: center;
-          font-size: 11px;
-          color: #666;
-        }
-
-        img {
-          print-color-adjust: exact;
-          -webkit-print-color-adjust: exact;
-        }
-
-        @media print {
+      <head>
+        <meta charset="UTF-8" />
+        <title>Money Level 1 - Question Paper</title>
+        <style>
+          @page { size: A4; margin: 12mm; }
+          * { box-sizing: border-box; }
+          body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #111;
+            font-size: 15px;
+          }
+          .header {
+            text-align: center;
+            border-bottom: 2px solid #222;
+            padding-bottom: 12px;
+            margin-bottom: 22px;
+          }
+          .header h1 { margin: 0 0 8px; font-size: 25px; }
+          .header h2 { margin: 0; font-size: 19px; font-weight: normal; }
+          .student-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 24px;
+          }
+          .line {
+            min-height: 30px;
+            border-bottom: 1px solid #222;
+          }
+          .instructions { font-weight: bold; margin-bottom: 22px; }
           .question {
+            margin-bottom: 25px;
+            page-break-inside: avoid;
             break-inside: avoid;
           }
-        }
-      </style>
-    </head>
-
-    <body>
-      <div class="header">
-        <h1>Money Learning App</h1>
-        <h2>Level 1 - Addition of Indian Currency</h2>
-      </div>
-
-      <div class="student-info">
-        <div class="line">Name:</div>
-        <div class="line">Date:</div>
-      </div>
-
-      <div class="instructions">
-        Instructions: Choose the correct answer.
-        Note value: ₹${denomination}
-      </div>
-
-      ${questionsHTML}
-
-      <div class="footer">
-        Money Level 1 - Practice Question Paper
-      </div>
-    </body>
+          .question-text {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+          }
+          .notes {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin: 8px 0 12px 18px;
+          }
+          .notes img {
+            width: 55px;
+            height: 38px;
+            object-fit: contain;
+          }
+          .equals { font-size: 19px; font-weight: bold; }
+          .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 18px;
+            margin-left: 20px;
+          }
+          .option { line-height: 1.5; }
+          .footer {
+            margin-top: 25px;
+            padding-top: 10px;
+            border-top: 1px solid #999;
+            text-align: center;
+            font-size: 11px;
+            color: #666;
+          }
+          img {
+            print-color-adjust: exact;
+            -webkit-print-color-adjust: exact;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <h1>Money Learning App</h1>
+          <h2>Level 1 - Addition of Indian Currency</h2>
+        </div>
+        <div class="student-info">
+          <div class="line">Name:</div>
+          <div class="line">Date:</div>
+        </div>
+        <div class="instructions">
+          Instructions: Choose the correct answer.
+          Topic: ${config.label}
+        </div>
+        ${questionsHTML}
+        <div class="footer">Money Level 1 - Practice Question Paper</div>
+      </body>
     </html>
   `);
 
-  // Register load handling before closing the document.
-  printWindow.onload = async () => {
-    const images = Array.from(printWindow.document.images);
+  printWindow.document.close();
 
+  printWindow.onload = async () => {
     await Promise.all(
-      images.map((img) => {
+      Array.from(printWindow.document.images).map((img) => {
         if (img.complete) return Promise.resolve();
 
         return new Promise((resolve) => {
@@ -291,28 +279,16 @@ function printQuestions(questions, denomination) {
     printWindow.focus();
     printWindow.print();
   };
-
-  printWindow.document.close();
 }
 
 function MoneyLevel1({ onBack }) {
-  const [denomination, setDenomination] = useState(10);
+  const [topic, setTopic] = useState("note-10");
   const [questionIndex, setQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [feedback, setFeedback] = useState("");
   const [isCorrect, setIsCorrect] = useState(false);
   const [finished, setFinished] = useState(false);
-
-  const [questions, setQuestions] = useState(() =>
-    createQuestions(10)
-  );
-
-  const [optionsByQuestion, setOptionsByQuestion] = useState(() =>
-    createQuestions(10).map((question) =>
-      createOptions(question.answer, 10)
-    )
-  );
-
+  const [questions, setQuestions] = useState(() => createQuestions("note-10"));
   const [showPrintPopup, setShowPrintPopup] = useState(false);
   const [printCount, setPrintCount] = useState("10");
 
@@ -323,12 +299,14 @@ function MoneyLevel1({ onBack }) {
   const timers = useRef([]);
 
   useEffect(() => {
-    return () => {
-      timers.current.forEach((timer) => clearTimeout(timer));
-    };
+    return () => timers.current.forEach(clearTimeout);
   }, []);
 
   const question = questions[questionIndex];
+
+  const optionsByQuestion = questions.map((item) =>
+    createOptions(item.answer)
+  );
 
   const playAudio = (audioRef) => {
     if (!audioRef.current) return;
@@ -339,27 +317,15 @@ function MoneyLevel1({ onBack }) {
   };
 
   const schedule = (callback, delay) => {
-    const timer = setTimeout(callback, delay);
-    timers.current.push(timer);
+    timers.current.push(setTimeout(callback, delay));
   };
 
-  const changeDenomination = (value) => {
-    const newDenomination = Number(value);
-
-    timers.current.forEach((timer) => clearTimeout(timer));
+  const resetForTopic = (newTopic) => {
+    timers.current.forEach(clearTimeout);
     timers.current = [];
 
-    const newQuestions = createQuestions(newDenomination);
-
-    setDenomination(newDenomination);
-    setQuestions(newQuestions);
-
-    setOptionsByQuestion(
-      newQuestions.map((item) =>
-        createOptions(item.answer, newDenomination)
-      )
-    );
-
+    setTopic(newTopic);
+    setQuestions(createQuestions(newTopic));
     setQuestionIndex(0);
     setSelectedAnswer(null);
     setFeedback("");
@@ -379,27 +345,22 @@ function MoneyLevel1({ onBack }) {
   };
 
   const handleAnswer = (answer) => {
-    if (selectedAnswer !== null || finished) return;
+    if (selectedAnswer !== null || finished || !question) return;
 
     setSelectedAnswer(answer);
 
     if (answer === question.answer) {
       setIsCorrect(true);
       setFeedback("Very Good! 🎉");
-
       playAudio(successAudio);
 
       schedule(() => {
         playAudio(veryGoodAudio);
-
-        schedule(() => {
-          moveToNextQuestion();
-        }, 900);
+        schedule(moveToNextQuestion, 900);
       }, 700);
     } else {
       setIsCorrect(false);
       setFeedback("Try Again!");
-
       playAudio(failAudio);
 
       schedule(() => {
@@ -413,26 +374,7 @@ function MoneyLevel1({ onBack }) {
     }
   };
 
-  const restartGame = () => {
-    timers.current.forEach((timer) => clearTimeout(timer));
-    timers.current = [];
-
-    const newQuestions = createQuestions(denomination);
-
-    setQuestions(newQuestions);
-
-    setOptionsByQuestion(
-      newQuestions.map((item) =>
-        createOptions(item.answer, denomination)
-      )
-    );
-
-    setQuestionIndex(0);
-    setSelectedAnswer(null);
-    setFeedback("");
-    setIsCorrect(false);
-    setFinished(false);
-  };
+  const restartGame = () => resetForTopic(topic);
 
   const handlePrint = () => {
     const count = Number(printCount);
@@ -442,67 +384,34 @@ function MoneyLevel1({ onBack }) {
       return;
     }
 
-    const printableQuestions = createPrintQuestions(
-      count,
-      denomination
-    );
-
     setShowPrintPopup(false);
-    printQuestions(printableQuestions, denomination);
+    printQuestions(createPrintQuestions(count, topic), topic);
   };
 
   if (!question && !finished) return null;
 
   return (
     <div className="money-level-screen">
-      <audio
-        ref={successAudio}
-        src="/sounds/success-1-6297.mp3"
-        preload="auto"
-      />
+      <audio ref={successAudio} src="/sounds/success-1-6297.mp3" preload="auto" />
+      <audio ref={failAudio} src="/sounds/fail-2-2777575.mp3" preload="auto" />
+      <audio ref={veryGoodAudio} src="/sounds/very-good.mp3" preload="auto" />
+      <audio ref={tryAgainAudio} src="/sounds/try-again.mp3" preload="auto" />
 
-      <audio
-        ref={failAudio}
-        src="/sounds/fail-2-2777575.mp3"
-        preload="auto"
-      />
-
-      <audio
-        ref={veryGoodAudio}
-        src="/sounds/very-good.mp3"
-        preload="auto"
-      />
-
-      <audio
-        ref={tryAgainAudio}
-        src="/sounds/try-again.mp3"
-        preload="auto"
-      />
-
-      <button
-        className="money-back-button"
-        onClick={onBack}
-        type="button"
-      >
+      <button className="money-back-button" onClick={onBack} type="button">
         ← BACK
       </button>
 
       <div className="money-toolbar">
-        <label htmlFor="money-denomination">
-          Select Note:
-        </label>
-
+        <label htmlFor="money-denomination">Select Money:</label>
         <select
           id="money-denomination"
           className="money-denomination-select"
-          value={denomination}
-          onChange={(event) =>
-            changeDenomination(event.target.value)
-          }
+          value={topic}
+          onChange={(event) => resetForTopic(event.target.value)}
         >
-          {DENOMINATIONS.map((value) => (
-            <option key={value} value={value}>
-              ₹{value} note
+          {TOPIC_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
             </option>
           ))}
         </select>
@@ -512,45 +421,32 @@ function MoneyLevel1({ onBack }) {
         {finished ? (
           <div className="money-complete-card">
             <div className="money-complete-icon">🏆</div>
-
             <h2>Level Completed!</h2>
-
             <p>
-              Excellent work! You completed the ₹{denomination}
-              note addition game.
+              Excellent work! You completed the {getTopic(topic).label} addition game.
             </p>
-
-            <button
-              className="money-action-button"
-              onClick={restartGame}
-              type="button"
-            >
+            <button className="money-action-button" onClick={restartGame} type="button">
               Play Again
             </button>
           </div>
         ) : (
           <>
             <div className="money-addition">
-              {Array.from(
-                { length: question.count },
-                (_, index) => (
-                  <span
-                    className="money-note-item"
-                    key={index}
-                  >
-                    <img
-                      src={NOTE_IMAGES[denomination]}
-                      alt={`₹${denomination} note`}
-                      className="money-note-inline"
-                    />
-
-                    {index < question.count - 1 && (
-                      <span className="money-plus-sign">+</span>
-                    )}
-                  </span>
-                )
-              )}
-
+              {question.items.map((item, index) => (
+                <span
+                  className="money-note-item"
+                  key={`${index}-${item.value}-${item.kind}`}
+                >
+                  <img
+                    src={imageFor(item)}
+                    alt={`₹${item.value} ${item.kind}`}
+                    className="money-note-inline"
+                  />
+                  {index < question.items.length - 1 && (
+                    <span className="money-plus-sign">+</span>
+                  )}
+                </span>
+              ))}
               <span className="money-equals">= ______</span>
             </div>
 
@@ -559,10 +455,9 @@ function MoneyLevel1({ onBack }) {
                 let buttonClass = "money-option-button";
 
                 if (selectedAnswer === option) {
-                  buttonClass +=
-                    option === question.answer
-                      ? " money-correct"
-                      : " money-wrong";
+                  buttonClass += option === question.answer
+                    ? " money-correct"
+                    : " money-wrong";
                 }
 
                 return (
@@ -594,7 +489,6 @@ function MoneyLevel1({ onBack }) {
         )}
       </div>
 
-      {/* PRINT QUESTIONS BUTTON */}
       <button
         className="money-print-button"
         type="button"
@@ -603,7 +497,6 @@ function MoneyLevel1({ onBack }) {
         🖨️ PRINT QUESTIONS
       </button>
 
-      {/* PRINT QUESTIONS POPUP */}
       {showPrintPopup && (
         <div
           className="money-print-overlay"
@@ -629,9 +522,7 @@ function MoneyLevel1({ onBack }) {
             </button>
 
             <div className="money-print-icon">🖨️</div>
-
             <h2 id="money-print-title">Print Questions</h2>
-
             <p>How many questions do you want to print?</p>
 
             <input
@@ -645,19 +536,14 @@ function MoneyLevel1({ onBack }) {
             <p className="money-print-info">
               A4 format · Multiple choice · No answers
             </p>
-
             <p className="money-print-info">
-              Selected note: ₹{denomination}
+              Selected: {getTopic(topic).label}
             </p>
 
             <div className="money-print-buttons">
-              <button
-                type="button"
-                onClick={() => setShowPrintPopup(false)}
-              >
+              <button type="button" onClick={() => setShowPrintPopup(false)}>
                 CANCEL
               </button>
-
               <button type="button" onClick={handlePrint}>
                 PRINT
               </button>

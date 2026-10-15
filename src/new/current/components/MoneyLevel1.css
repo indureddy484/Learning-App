@@ -111,12 +111,12 @@
 
 .money-note-inline {
   display: block;
-  width: 300px;
-  max-width: 100%;
-  height: auto;
+  width: 180px;
+  height: 90px;
   object-fit: contain;
-  border-radius: 5px;
+  border-radius: 3px;
 }
+
 
 /* PLUS SIGN */
 

@@ -1,0 +1,426 @@
+
+.money-level3-screen {
+  width: 100%;
+  min-height: 100vh;
+  padding: 24px;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #f8fafc, #fffaf0);
+  font-family: Arial, sans-serif;
+}
+
+.money-level3-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 20px auto 25px;
+}
+
+.money-level3-toolbar label {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.money-level3-toolbar button,
+.money-level3-print-button,
+.money-level3-next,
+.money-print-actions button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #176db0;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.money-level3-toolbar .money-back-button {
+  margin-right: auto;
+  background: #ffffff;
+  color: #17324d;
+}
+
+.money-level3-toolbar select {
+  min-width: 210px;
+  padding: 12px 16px;
+  border: 2px solid #bfd0e8;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #39216f;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.money-level3-card {
+  width: min(100%, 950px);
+  min-height: 330px;
+  margin: 20px auto;
+  padding: 30px;
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 5px 22px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.money-level3-question-count {
+  margin-bottom: 20px;
+  color: #54708f;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Entire question stays in one flowing row */
+.money-level3-question {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 28px auto;
+  color: #172554;
+  font-size: clamp(22px, 2.8vw, 30px);
+  line-height: 1.5;
+  font-weight: 800;
+  text-align: center;
+}
+
+/* Small product image beside the question */
+.money-level3-inline-object {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+}
+
+/* Emoji product images */
+.money-level3-inline-emoji {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  font-size: 42px;
+  line-height: 1;
+}
+
+/* ₹10 note appears inside the question */
+.money-level3-inline-note {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 105px;
+  height: 58px;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+/* Four number-only options */
+.money-level3-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+  max-width: 600px;
+  margin: 30px auto;
+}
+
+.money-level3-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 86px;
+  padding: 15px;
+  border: 2px solid #b8cce8;
+  border-radius: 15px;
+  background: #f8fbff;
+  color: #39216f;
+  font-size: 30px;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.money-level3-option:hover:not(:disabled) {
+  border-color: #2563eb;
+  background: #eff6ff;
+  transform: translateY(-2px);
+}
+
+.money-level3-option:disabled {
+  cursor: default;
+}
+
+.money-level3-option.correct {
+  border-color: #16a34a;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.money-level3-option.incorrect {
+  border-color: #dc2626;
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* Feedback message */
+.money-level3-feedback {
+  margin: 20px 0;
+  font-size: 26px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.money-level3-feedback.correct-text {
+  color: #16a34a;
+}
+
+.money-level3-feedback.incorrect-text {
+  color: #dc2626;
+}
+
+/* Next question */
+.money-level3-next {
+  display: block;
+  margin: 24px auto 0;
+}
+
+.money-level3-toolbar button:hover,
+.money-level3-print-button:hover,
+.money-level3-next:hover,
+.money-print-actions button:hover {
+  background: #12548a;
+}
+
+.money-level3-toolbar .money-back-button:hover {
+  background: #edf4ff;
+}
+
+/* Print button */
+.money-level3-print-area {
+  display: flex;
+  justify-content: center;
+  margin: 25px auto;
+}
+
+.money-level3-print-button {
+  padding: 15px 24px;
+  font-size: 18px;
+}
+
+/* Print popup */
+.money-print-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.money-print-popup {
+  position: relative;
+  width: min(100%, 420px);
+  padding: 30px;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+}
+
+.money-print-popup h2 {
+  margin: 0 0 22px;
+  font-size: 26px;
+  text-align: center;
+}
+
+.money-print-popup label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.money-print-popup input {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid #94a3b8;
+  border-radius: 8px;
+  font-size: 18px;
+  box-sizing: border-box;
+}
+
+.money-print-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  color: #111827;
+  font-size: 32px;
+  cursor: pointer;
+}
+
+.money-print-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.money-print-actions .money-print-cancel {
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #111827;
+}
+
+.money-print-actions .money-print-cancel:hover {
+  background: #e2e8f0;
+}
+
+/* Keyboard focus */
+.money-level3-option:focus-visible,
+.money-level3-toolbar button:focus-visible,
+.money-level3-toolbar select:focus-visible,
+.money-level3-next:focus-visible,
+.money-level3-print-button:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .money-level3-screen {
+    padding: 12px;
+  }
+
+  .money-level3-toolbar {
+    flex-direction: column;
+  }
+
+  .money-level3-toolbar .money-back-button {
+    margin-right: 0;
+    align-self: flex-start;
+  }
+
+  .money-level3-card {
+    min-height: 300px;
+    padding: 20px 14px;
+  }
+
+  .money-level3-question {
+    gap: 6px;
+    margin: 22px auto;
+    font-size: 21px;
+  }
+
+  .money-level3-inline-object {
+    width: 45px;
+    height: 45px;
+  }
+
+  .money-level3-inline-emoji {
+    font-size: 34px;
+  }
+
+  .money-level3-inline-note {
+    width: 78px;
+    height: 44px;
+  }
+
+  .money-level3-options {
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .money-level3-option {
+    min-height: 70px;
+    padding: 12px;
+    font-size: 27px;
+  }
+
+  .money-level3-feedback {
+    font-size: 23px;
+  }
+
+  .money-level3-print-button {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .money-print-popup {
+    padding: 26px 20px;
+  }
+}
+
+@media (max-width: 360px) {
+  .money-level3-question {
+    font-size: 19px;
+    gap: 5px;
+  }
+
+  .money-level3-inline-object {
+    width: 38px;
+    height: 38px;
+  }
+
+  .money-level3-inline-note {
+    width: 68px;
+    height: 40px;
+  }
+
+  .money-level3-options {
+    gap: 8px;
+  }
+
+  .money-level3-option {
+    min-height: 62px;
+    font-size: 24px;
+  }
+}
+
+.money-level3-language-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.money-level3-language-selector button {
+  padding: 8px 14px;
+  border: 2px solid #2563eb;
+  border-radius: 10px;
+  background: white;
+  color: #1d4ed8;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.money-level3-language-selector button.active {
+  background: #2563eb;
+  color: white;
+}
+
+
+.money-level3-option.incorrect {
+  background-color: #f0b7b7 !important;
+  border: 2px solid #edadad !important;
+  color: #ffffff !important;
+  transition: none !important;
+}
+
+
+.money-level3-option.correct {
+  background: #97d1ac;
+  border-color: #799b84;
+  color: white;
+}
