@@ -150,14 +150,13 @@ function printQuestions(questions, topic) {
       return `
         <div class="question">
           <div class="question-text">
-            ${question.number}.
-            Rs. ${question.total} lo enni Rs. ${question.denomination}
+            <span>${question.number}. Rs. ${question.total} lo enni Rs. ${question.denomination} untayi?</span>
+
             <img
               class="question-money-image"
               src="${imageUrl}"
               alt="Rs. ${question.denomination} ${money.kind}"
             />
-            untayi?
           </div>
 
           <div class="options">
@@ -237,19 +236,26 @@ function printQuestions(questions, topic) {
 
           .question-text {
             display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 5px;
-            font-size: 15px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 18px;
+            line-height: 1.5;
             font-weight: bold;
             margin-bottom: 12px;
           }
 
+          /* Enlarged money image for printing */
           .question-money-image {
-            width: 48px;
-            height: 30px;
+            width: 180px;
+            height: 90px;
             object-fit: contain;
-            vertical-align: middle;
+            object-position: center;
+            display: block;
+            flex-shrink: 0;
+            margin: 8px 0;
+            print-color-adjust: exact;
+            -webkit-print-color-adjust: exact;
           }
 
           .options {
@@ -257,6 +263,7 @@ function printQuestions(questions, topic) {
             grid-template-columns: 1fr 1fr;
             gap: 8px 18px;
             margin-left: 20px;
+            font-size: 16px;
           }
 
           .option {
@@ -275,6 +282,13 @@ function printQuestions(questions, topic) {
           img {
             print-color-adjust: exact;
             -webkit-print-color-adjust: exact;
+          }
+
+          @media print {
+            .question-money-image {
+              width: 180px;
+              height: 90px;
+            }
           }
         </style>
       </head>
@@ -509,18 +523,19 @@ export default function MoneyLevel2({ onBack }) {
               Question {questionIndex + 1} of {questions.length}
             </div>
 
-<h2 className="money-question-heading">
-  <span>Rs. {question.total} lo enni Rs. {question.denomination}</span>
+            <h2 className="money-question-heading">
+              <span>
+                Rs. {question.total} lo enni Rs. {question.denomination}
+              </span>
 
-  <img
-    src={money.image}
-    alt={`Rs. ${question.denomination} ${money.kind}`}
-    className="money-question-note-image"
-  />
+              <img
+                src={money.image}
+                alt={`Rs. ${question.denomination} ${money.kind}`}
+                className="money-question-note-image"
+              />
 
-  <span>untayi?</span>
-</h2>
-
+              <span>untayi?</span>
+            </h2>
 
             <div className="money-options">
               {question.options.map((option) => {

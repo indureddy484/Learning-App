@@ -181,8 +181,7 @@ function MoneyLevel3({ onBack = () => {} }) {
   }
 
   function handleAnswer(option) {
-    // Once the child answers correctly, lock the options
-    // while the next question is loading.
+    // Lock the options after a correct answer.
     if (selectedAnswer === question.correctAnswer) return;
 
     clearTimers();
@@ -190,7 +189,9 @@ function MoneyLevel3({ onBack = () => {} }) {
     if (option === question.correctAnswer) {
       setSelectedAnswer(option);
       setFeedback(
-        language === "te" ? "Correct! Chaala baagundi!" : "Correct!"
+        language === "te"
+          ? "Correct! Chaala baagundi!"
+          : "Correct!"
       );
 
       playSound("success");
@@ -207,27 +208,27 @@ function MoneyLevel3({ onBack = () => {} }) {
         setSelectedAnswer(null);
         setFeedback("");
       }, 1600);
-    
-} else {
-  // Keep the selected wrong answer red for 3 seconds.
-  // Do not reveal the correct answer.
-  setSelectedAnswer(option);
-  setFeedback(
-    language === "te" ? "Malli try cheyyi!" : "Try again!"
-  );
+    } else {
+      // Keep a wrong answer red for 3 seconds.
+      // Do not reveal the correct answer.
+      setSelectedAnswer(option);
+      setFeedback(
+        language === "te"
+          ? "Malli try cheyyi!"
+          : "Try again!"
+      );
 
-  playSound("fail");
+      playSound("fail");
 
-  feedbackTimer.current = setTimeout(() => {
-    playSound("tryAgain");
-  }, 700);
+      feedbackTimer.current = setTimeout(() => {
+        playSound("tryAgain");
+      }, 700);
 
-  nextQuestionTimer.current = setTimeout(() => {
-    setSelectedAnswer(null);
-    setFeedback("");
-  }, 3000);
-}
-
+      nextQuestionTimer.current = setTimeout(() => {
+        setSelectedAnswer(null);
+        setFeedback("");
+      }, 3000);
+    }
   }
 
   function handlePrint() {
@@ -304,38 +305,138 @@ function MoneyLevel3({ onBack = () => {} }) {
         <head>
           <meta charset="UTF-8" />
           <title>Money Level 3 Questions</title>
+
           <style>
-            * { box-sizing: border-box; }
-            body { margin: 20px; color: #111827; font-family: Arial, sans-serif; }
-            h1 { text-align: center; }
-            .student-details { display: flex; justify-content: space-between; margin: 25px 0; }
-            .print-question { padding: 12px 0 25px; break-inside: avoid; }
-            .page-break { break-before: page; page-break-before: always; }
-            .print-question-line { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; font-size: 20px; font-weight: bold; text-align: center; }
-            .product-image { width: 55px; height: 55px; object-fit: contain; }
-            .product-emoji { font-size: 38px; }
-            .inline-note { width: 90px; height: 48px; object-fit: contain; }
-            .print-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 420px; margin: 20px auto; }
-            .print-option { padding: 12px; border: 2px solid #444; border-radius: 8px; font-size: 24px; font-weight: bold; text-align: center; }
-            @media print { body { margin: 10mm; } }
+            @page {
+              size: A4;
+              margin: 12mm;
+            }
+
+            * {
+              box-sizing: border-box;
+            }
+
+            body {
+              margin: 20px;
+              color: #111827;
+              font-family: Arial, sans-serif;
+            }
+
+            h1 {
+              text-align: center;
+            }
+
+            .student-details {
+              display: flex;
+              justify-content: space-between;
+              margin: 25px 0;
+            }
+
+            .print-question {
+              padding: 12px 0 25px;
+              break-inside: avoid;
+              page-break-inside: avoid;
+            }
+
+            .page-break {
+              break-before: page;
+              page-break-before: always;
+            }
+
+            .print-question-line {
+              display: flex;
+              flex-wrap: wrap;
+              align-items: center;
+              justify-content: center;
+              gap: 10px;
+              font-size: 20px;
+              font-weight: bold;
+              text-align: center;
+              line-height: 1.5;
+            }
+
+            .product-image {
+              width: 55px;
+              height: 55px;
+              object-fit: contain;
+              flex-shrink: 0;
+            }
+
+            .product-emoji {
+              font-size: 38px;
+            }
+
+            /* Enlarged currency note for printing */
+            .inline-note {
+              width: 180px;
+              height: 90px;
+              object-fit: contain;
+              object-position: center;
+              display: block;
+              flex-shrink: 0;
+              margin: 8px;
+              print-color-adjust: exact;
+              -webkit-print-color-adjust: exact;
+            }
+
+            .print-options {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 12px;
+              max-width: 420px;
+              margin: 20px auto;
+            }
+
+            .print-option {
+              padding: 12px;
+              border: 2px solid #444;
+              border-radius: 8px;
+              font-size: 24px;
+              font-weight: bold;
+              text-align: center;
+            }
+
+            img {
+              print-color-adjust: exact;
+              -webkit-print-color-adjust: exact;
+            }
+
+            @media print {
+              body {
+                margin: 10mm;
+              }
+
+              .inline-note {
+                width: 180px;
+                height: 90px;
+              }
+            }
           </style>
         </head>
+
         <body>
           <h1>Money Level 3</h1>
+
           <div class="student-details">
             <span>Name: ____________________</span>
             <span>Date: ____________________</span>
           </div>
+
           ${questionHtml}
+
           <script>
             window.onload = async function () {
-              await Promise.all(Array.from(document.images).map((img) => {
-                if (img.complete) return Promise.resolve();
-                return new Promise((resolve) => {
-                  img.onload = resolve;
-                  img.onerror = resolve;
-                });
-              }));
+              await Promise.all(
+                Array.from(document.images).map((img) => {
+                  if (img.complete) return Promise.resolve();
+
+                  return new Promise((resolve) => {
+                    img.onload = resolve;
+                    img.onerror = resolve;
+                  });
+                })
+              );
+
               window.focus();
               window.print();
             };
@@ -362,8 +463,6 @@ function MoneyLevel3({ onBack = () => {} }) {
         </button>
 
         <div className="money-level3-language-selector">
-          
-
           <button
             type="button"
             className={language === "en" ? "active" : ""}
@@ -393,9 +492,11 @@ function MoneyLevel3({ onBack = () => {} }) {
           <option value="10">
             {language === "te" ? "Rs. 10 Notes" : "Rs. 10 Notes"}
           </option>
+
           <option value="20">
             {language === "te" ? "Rs. 20 Notes" : "Rs. 20 Notes"}
           </option>
+
           <option value="both">
             Rs. 10 / Rs. 20 Notes
           </option>
@@ -439,7 +540,9 @@ function MoneyLevel3({ onBack = () => {} }) {
           />
 
           <span>
-            {language === "te" ? "notes ivvali?" : "notes are needed?"}
+            {language === "te"
+              ? "notes ivvali?"
+              : "notes are needed?"}
           </span>
         </div>
 
@@ -529,9 +632,7 @@ function MoneyLevel3({ onBack = () => {} }) {
               ×
             </button>
 
-            <h2 id="money-print-title">
-              {language === "te" ? "Print Questions" : "Print Questions"}
-            </h2>
+            <h2 id="money-print-title">Print Questions</h2>
 
             <label htmlFor="money-print-count">
               Number of questions (1–200)

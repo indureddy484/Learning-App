@@ -107,7 +107,7 @@
   gap: 22px;
 }
 
-/* NOTE IMAGES */
+/* NOTE IMAGES ON SCREEN */
 
 .money-note-inline {
   display: block;
@@ -116,7 +116,6 @@
   object-fit: contain;
   border-radius: 3px;
 }
-
 
 /* PLUS SIGN */
 
@@ -439,7 +438,9 @@
   background: #1d4ed8;
 }
 
-/* TABLET */
+/* ==============================
+   TABLET
+============================== */
 
 @media (max-width: 1100px) {
   .money-question-card {
@@ -467,7 +468,9 @@
   }
 }
 
-/* MOBILE */
+/* ==============================
+   MOBILE
+============================== */
 
 @media (max-width: 600px) {
   .money-level-screen {
@@ -571,7 +574,9 @@
   }
 }
 
-/* SMALL MOBILE */
+/* ==============================
+   SMALL MOBILE
+============================== */
 
 @media (max-width: 380px) {
   .money-note-inline {
