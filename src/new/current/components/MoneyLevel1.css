@@ -1,307 +1,687 @@
-/* =========================================
-   MONEY LEVEL 1 - QUIZ BUTTON
-========================================= */
 
-.money-test-button {
-  display: block;
-  margin: 18px auto;
-  padding: 14px 28px;
-  background: #087df1;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  font-size: 17px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-}
+/* =========================================================
+   MAIN MONEY LEVEL 1 SCREEN
+========================================================= */
 
-.money-test-button:hover {
-  background: #0564c5;
-  transform: translateY(-2px);
-}
-
-/* =========================================
-   QUIZ SCREEN
-========================================= */
-
-.money-test-screen {
+.money-level-screen {
   min-height: 100vh;
-  padding-bottom: 40px;
-  background: linear-gradient(120deg, #e1efff, #e9fff1);
-  color: #172033;
-  font-family: Arial, sans-serif;
+  padding: 22px;
   box-sizing: border-box;
-}
-
-.money-test-screen *,
-.money-test-screen *::before,
-.money-test-screen *::after {
-  box-sizing: border-box;
-}
-
-.money-test-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding: 16px 24px;
-  background: #0788f9;
-  color: #fff;
-  box-shadow: 0 3px 10px #00000012;
+  background: linear-gradient(120deg, #eef7ff 0%, #fffaf0 100%);
+  color: #252525;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.money-test-header strong {
-  font-size: 20px;
-}
+/* Back button */
 
-.money-test-header button {
-  padding: 10px 18px;
-  background: #fff;
-  color: #0875d1;
+.money-back-button {
+  position: absolute;
+  top: 22px;
+  left: 22px;
+  z-index: 10;
+  padding: 13px 23px;
   border: none;
-  border-radius: 7px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-/* =========================================
-   QUIZ SETUP
-========================================= */
-
-.money-test-setup {
-  width: min(650px, calc(100% - 32px));
-  margin: 55px auto;
-  padding: 32px;
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 5px 25px #00000012;
-  text-align: center;
-}
-
-.money-test-setup h1 {
-  margin: 0 0 25px;
-  font-size: 28px;
-}
-
-.money-test-setup p {
-  line-height: 1.6;
-}
-
-.money-test-setup label {
-  display: block;
-  margin: 25px 0 10px;
-  font-weight: 700;
-}
-
-.money-test-setup select {
-  min-width: 200px;
-  padding: 12px 16px;
-  border: 1px solid #b9c7d8;
-  border-radius: 8px;
-  background: #fff;
+  border-radius: 13px;
+  background: white;
+  color: #263b50;
   font-size: 17px;
-}
-
-.money-test-setup > button {
-  display: block;
-  margin: 15px auto;
-  padding: 12px 22px;
-  background: #fff;
-  color: #0875d1;
-  border: 1px solid #0875d1;
-  border-radius: 8px;
   font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  transition: 0.2s;
 }
 
-.money-test-setup .money-test-primary {
-  margin: 28px auto 18px;
-  padding: 15px 42px;
-  background: #1686f8;
-  color: #fff;
-  border: none;
-  border-radius: 11px;
-  font-size: 19px;
+.money-back-button:hover {
+  background: #edf5ff;
+  transform: translateY(-1px);
 }
 
-.money-test-setup .money-test-primary:hover {
-  background: #086bd0;
-}
+/* =========================================================
+   TOP TOOLBAR
+========================================================= */
 
-.money-test-error {
-  color: #b91c1c;
-  background: #fee2e2;
-  padding: 12px;
-  border-radius: 8px;
-}
-
-/* Hidden setup video: camera stream is displayed in quiz preview. */
-
-.money-test-hidden-video {
-  display: none;
-}
-
-/* =========================================
-   TIMER AND QUESTION STATUS
-========================================= */
-
-.money-test-title {
-  margin: 28px 12px;
-  text-align: center;
-  font-size: 29px;
-}
-
-.money-test-status {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 14px 32px;
-  width: fit-content;
-  max-width: calc(100% - 32px);
-  margin: 20px auto;
-  padding: 15px 24px;
-  background: #fff;
-  border: 1px solid #d9e5f1;
-  border-radius: 12px;
-  box-shadow: 0 3px 12px #00000008;
-  font-size: 17px;
-}
-
-.money-test-status strong {
-  color: #086bd0;
-  font-size: 20px;
-}
-
-/* =========================================
-   ONE QUESTION AT A TIME
-========================================= */
-
-.money-test-single-question {
-  width: min(850px, calc(100% - 32px));
-  min-height: 380px;
-  margin: 30px auto;
-  padding: 35px 28px;
-  background: #fff;
-  border: 1px solid #e0e8f1;
-  border-radius: 18px;
-  box-shadow: 0 5px 22px #0000000c;
-  text-align: center;
-}
-
-.money-test-single-question h2 {
-  margin: 0 0 35px;
-  color: #182b45;
-  font-size: 26px;
-}
-
-.money-test-items {
+.money-toolbar {
+  width: 100%;
+  margin: 70px auto 26px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   gap: 14px;
-  margin: 30px 0 38px;
 }
 
-.money-test-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 25px;
+.money-toolbar label {
+  color: #292929;
+  font-size: 23px;
   font-weight: 700;
 }
 
-.money-test-item img {
-  display: block;
-  width: 140px;
-  height: 80px;
-  object-fit: contain;
+.money-denomination-select {
+  width: 255px;
+  max-width: 100%;
+  min-height: 50px;
+  padding: 12px 16px;
+  border: 2px solid #bdd0e8;
+  border-radius: 12px;
+  background: white;
+  color: #39216f;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
 }
 
-.money-test-equals {
-  font-size: 32px;
-  font-weight: 800;
+.money-denomination-select:focus {
+  border-color: #1685f8;
+  box-shadow: 0 0 0 3px rgba(22, 133, 248, 0.12);
 }
 
-.money-test-options {
+/* =========================================================
+   MAIN QUESTION CARD
+========================================================= */
+
+.money-question-card {
+  width: 100%;
+  min-height: 465px;
+  padding: 70px 35px 55px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 45px;
+  border-radius: 24px;
+  background: white;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.07);
+}
+
+/* =========================================================
+   CURRENCY NOTES
+========================================================= */
+
+.money-addition {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 15px;
+  column-gap: 15px;
+  row-gap: 20px;
 }
 
-.money-test-option {
-  min-width: 125px;
-  padding: 17px 24px;
-  background: #fff;
-  color: #075eb5;
-  border: 2px solid #b9d5f3;
-  border-radius: 11px;
-  font-size: 23px;
-  font-weight: 700;
+.money-note-item {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* Bigger notes on the learning screen */
+
+.money-note-inline {
+  width: 300px !important;
+  height: 145px !important;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.money-plus-sign {
+  display: inline-block;
+  color: #183c65;
+  font-size: 31px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.money-equals {
+  display: inline-block;
+  margin-left: 5px;
+  color: #183c65;
+  font-size: 28px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   ANSWER OPTIONS - OVERLAP FIX
+========================================================= */
+
+.money-options {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.money-option-button {
+  flex: 0 1 154px;
+  min-width: 0;
+  max-width: 180px;
+  min-height: 87px;
+  padding: 18px 12px;
+  box-sizing: border-box;
+  border: 2px solid #bfd3eb;
+  border-radius: 15px;
+  background: #f8fbff;
+  color: #39216f;
+  font-size: 27px;
+  font-weight: 800;
+  text-align: center;
+  overflow-wrap: anywhere;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s,
-    transform 0.15s;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
 }
 
-.money-test-option:hover {
-  background: #e8f3ff;
-  border-color: #1686f8;
+.money-option-button:hover:not(:disabled) {
+  border-color: #1685f8;
+  background: #eaf4ff;
   transform: translateY(-2px);
 }
 
-.money-test-question-hint {
-  margin: 30px 0 0;
-  color: #64748b;
-  font-size: 14px;
+.money-option-button:disabled {
+  cursor: default;
+  opacity: 1;
 }
 
-/* =========================================
-   END TEST BUTTON
-========================================= */
+.money-option-button.money-correct {
+  border-color: #37a75b;
+  background: #dff7e5;
+  color: #176b30;
+}
 
-.money-test-end {
-  display: block;
-  margin: 22px auto;
-  padding: 14px 34px;
-  background: #ef4444;
-  color: #fff;
+.money-option-button.money-wrong {
+  border-color: #e04444;
+  background: #ffe1e1;
+  color: #a51d1d;
+}
+
+/* =========================================================
+   FEEDBACK
+========================================================= */
+
+.money-feedback {
+  margin-top: -20px;
+  font-size: 25px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.money-feedback-correct {
+  color: #249447;
+}
+
+.money-feedback-wrong {
+  color: #d93030;
+}
+
+/* =========================================================
+   COMPLETED GAME
+========================================================= */
+
+.money-complete-card {
+  width: 100%;
+  text-align: center;
+}
+
+.money-complete-icon {
+  margin-bottom: 12px;
+  font-size: 65px;
+}
+
+.money-complete-card h2 {
+  color: #286c42;
+  font-size: 32px;
+}
+
+.money-complete-card p {
+  font-size: 19px;
+  color: #555;
+}
+
+.money-action-button {
+  padding: 14px 30px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
+  background: #1685f8;
+  color: white;
   font-size: 18px;
   font-weight: 700;
   cursor: pointer;
 }
 
-.money-test-end:hover {
-  background: #c62828;
+/* =========================================================
+   PRINT AND TEST BUTTONS
+========================================================= */
+
+.money-print-button,
+.money-test-button {
+  display: block;
+  min-width: 270px;
+  margin: 15px auto 0;
+  padding: 16px 25px;
+  border: none;
+  border-radius: 13px;
+  color: white;
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.09);
+  transition: 0.2s;
 }
 
-/* =========================================
-   CAMERA PREVIEW - BOTTOM LEFT
-========================================= */
+.money-print-button {
+  background: #176da8;
+}
+
+.money-print-button:hover {
+  background: #105783;
+  transform: translateY(-1px);
+}
+
+.money-test-button {
+  background: #087ff0;
+}
+
+.money-test-button:hover {
+  background: #0067cc;
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   PRINT POPUP
+========================================================= */
+
+.money-print-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  background: rgba(10, 25, 45, 0.5);
+}
+
+.money-print-box {
+  position: relative;
+  width: min(450px, 100%);
+  padding: 35px 28px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.money-print-close {
+  position: absolute;
+  top: 9px;
+  right: 15px;
+  border: none;
+  background: transparent;
+  color: #444;
+  font-size: 32px;
+  cursor: pointer;
+}
+
+.money-print-icon {
+  font-size: 48px;
+}
+
+.money-print-box h2 {
+  color: #243b55;
+}
+
+.money-print-box p {
+  color: #555;
+  line-height: 1.5;
+}
+
+.money-print-box input {
+  width: 130px;
+  padding: 12px;
+  border: 2px solid #bdd0e8;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 22px;
+}
+
+.money-print-info {
+  font-size: 14px;
+}
+
+.money-print-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.money-print-buttons button {
+  padding: 12px 22px;
+  border: 1px solid #1685f8;
+  border-radius: 10px;
+  background: white;
+  color: #0878e8;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.money-print-buttons button:last-child {
+  background: #1685f8;
+  color: white;
+}
+
+/* =========================================================
+   MONEY LEVEL 1 TEST SCREEN
+========================================================= */
+
+.money-test-screen {
+  min-height: 100vh;
+  padding: 0 20px 40px;
+  box-sizing: border-box;
+  background: linear-gradient(120deg, #e0f0ff 0%, #e4fff2 100%);
+  color: #172b45;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.money-test-header {
+  min-height: 74px;
+  margin: 0 -20px;
+  padding: 12px 26px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  background: #0785f9;
+  color: white;
+}
+
+.money-test-header strong {
+  font-size: 22px;
+}
+
+.money-test-header button {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 9px;
+  background: white;
+  color: #0878e8;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* =========================================================
+   TEST SETUP
+========================================================= */
+
+.money-test-setup {
+  position: relative;
+  width: min(700px, calc(100% - 20px));
+  margin: 58px auto 40px;
+  padding: 38px 30px 42px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 12px 36px rgba(25, 75, 110, 0.1);
+  text-align: center;
+}
+
+.money-test-setup h1 {
+  margin: 0 0 28px;
+  color: #172b45;
+  font-size: 29px;
+}
+
+.money-test-setup p {
+  margin: 18px 0;
+  line-height: 1.6;
+}
+
+.money-test-setup label {
+  display: block;
+  margin: 24px 0 10px;
+  font-weight: 700;
+}
+
+.money-test-setup select {
+  display: block;
+  width: min(280px, 100%);
+  margin: 0 auto 22px;
+  padding: 14px;
+  border: 1px solid #c6d4e5;
+  border-radius: 9px;
+  background: white;
+  color: #172b45;
+  font-size: 17px;
+}
+
+.money-test-setup > button {
+  display: block;
+  width: min(280px, 100%);
+  margin: 15px auto 0;
+  padding: 14px 20px;
+  border: 1px solid #1685f8;
+  border-radius: 11px;
+  background: white;
+  color: #0878e8;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.money-test-setup > button.money-test-primary {
+  padding: 17px 22px;
+  background: #1685f8;
+  color: white;
+  font-size: 19px;
+}
+
+.money-test-setup > button:hover {
+  filter: brightness(0.97);
+}
+
+.money-test-error {
+  color: #c62828;
+  overflow-wrap: anywhere;
+}
+
+.money-test-hidden-video {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =========================================================
+   TEST QUESTION SCREEN
+========================================================= */
+
+.money-test-title {
+  margin: 28px 0 25px;
+  color: #172b45;
+  font-size: 29px;
+  text-align: center;
+}
+
+.money-test-status {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 28px;
+  padding: 16px 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  box-sizing: border-box;
+  border: 1px solid #d7e4f3;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(25, 75, 110, 0.06);
+}
+
+.money-test-status span {
+  white-space: nowrap;
+}
+
+.money-test-status strong {
+  color: #0878e8;
+  font-size: 18px;
+}
+
+.money-test-single-question {
+  width: min(100%, 1050px);
+  min-height: 390px;
+  margin: 0 auto;
+  padding: 32px 26px;
+  box-sizing: border-box;
+  border-radius: 18px;
+  background: white;
+  box-shadow: 0 8px 28px rgba(25, 75, 110, 0.08);
+  text-align: center;
+}
+
+/* Bigger notes in test */
+
+.money-test-single-question h2 {
+  margin: 0 0 32px;
+  color: #172b45;
+  font-size: 24px;
+}
+
+.money-test-items {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 22px auto 35px;
+}
+
+.money-test-item {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.money-test-item img {
+  display: block;
+  width: 230px;
+  height: 118px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.money-test-item > span {
+  color: #183c65;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.money-test-equals {
+  color: #183c65;
+  font-size: 30px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* Test answer options */
+
+.money-test-options {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+  padding: 0 12px;
+  box-sizing: border-box;
+  margin-top: 30px;
+}
+
+.money-test-option {
+  flex: 0 1 154px;
+  min-width: 0;
+  max-width: 180px;
+  min-height: 61px;
+  padding: 14px 12px;
+  box-sizing: border-box;
+  border: 2px solid #bdd4f2;
+  border-radius: 12px;
+  background: #f8fbff;
+  color: #0878e8;
+  font-size: 21px;
+  font-weight: 800;
+  text-align: center;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.money-test-option:hover {
+  border-color: #1685f8;
+  background: #eaf4ff;
+}
+
+.money-test-question-hint {
+  margin-top: 25px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.money-test-end {
+  display: block;
+  min-width: 160px;
+  margin: 28px auto;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 11px;
+  background: #f04444;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.money-test-end:hover {
+  background: #d92f2f;
+}
+
+/* =========================================================
+   CAMERA PREVIEW
+========================================================= */
 
 .money-test-camera {
   position: fixed;
-  z-index: 1000;
-  left: 16px;
-  bottom: 16px;
-  width: 220px;
-  padding: 8px;
+  bottom: 18px;
+  left: 18px;
+  z-index: 100;
+  width: 198px;
   overflow: hidden;
-  background: #111827;
-  color: #fff;
-  border: 1px solid #334155;
-  border-radius: 11px;
-  box-shadow: 0 5px 20px #00000035;
+  border: 2px solid #263348;
+  border-radius: 12px;
+  background: #101827;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.28);
 }
 
-.money-test-camera span {
+.money-test-camera > span {
   display: block;
-  margin: 2px 0 7px;
+  padding: 8px 10px;
+  color: white;
   font-size: 12px;
   font-weight: 700;
 }
@@ -309,128 +689,107 @@
 .money-test-camera video {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  background: #000;
-  border-radius: 7px;
+  height: 126px;
   object-fit: cover;
+  background: #111;
 }
 
-/* =========================================
-   ANALYSIS REPORT
-========================================= */
+/* =========================================================
+   TEST ANALYSIS REPORT
+========================================================= */
 
 .money-test-analysis {
-  width: min(1000px, calc(100% - 32px));
-  margin: 30px auto;
-  padding: 22px;
-  background: #fff;
-  border: 1px solid #e0e8f1;
+  width: min(880px, calc(100% - 20px));
+  margin: 26px auto 40px;
+  padding: 28px;
+  box-sizing: border-box;
   border-radius: 16px;
-  box-shadow: 0 5px 20px #0000000b;
+  background: white;
+  box-shadow: 0 8px 28px rgba(25, 75, 110, 0.09);
 }
 
 .money-test-analysis > h1 {
-  margin: 10px 0 25px;
+  margin: 0 0 24px;
+  color: #172b45;
+  font-size: 28px;
   text-align: center;
-  font-size: 30px;
 }
 
 .money-test-score {
-  margin: 20px 0 28px;
-  padding: 22px;
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
+  padding: 20px;
+  border: 1px solid #c6e0ff;
   border-radius: 12px;
+  background: #eff6ff;
   text-align: center;
 }
 
 .money-test-score h2 {
-  margin-top: 0;
-  color: #075eb5;
-  font-size: 28px;
+  margin: 0 0 18px;
+  color: #066bd0;
+  font-size: 25px;
 }
 
 .money-test-score p {
+  color: #263348;
+  font-size: 14px;
   line-height: 1.6;
 }
 
-/* Report question cards */
-
 .money-test-report-list {
-  display: flex;
-  flex-direction: column;
-  gap: 13px;
+  margin-top: 24px;
 }
 
 .money-report-question {
-  margin: 0;
-  padding: 17px 20px;
-  border: 1px solid #e2e8f0;
-  border-left: 5px solid;
+  margin: 14px 0;
+  padding: 18px 16px;
+  border: 1px solid #dce5ef;
+  border-left: 5px solid #f04444;
   border-radius: 10px;
+  background: #fff7f7;
+  overflow-wrap: anywhere;
 }
 
 .money-report-question.correct {
-  background: #f0fdf4;
-  border-left-color: #16a34a;
-}
-
-.money-report-question.incorrect {
-  background: #fff7f7;
-  border-left-color: #ef4444;
+  border-left-color: #29964b;
+  background: #f3fff6;
 }
 
 .money-report-question h3 {
   margin: 0 0 12px;
+  color: #b42318;
+  font-size: 17px;
   line-height: 1.6;
-  font-size: 18px;
-}
-
-.money-report-question p {
-  margin: 7px 0;
-  line-height: 1.5;
-  overflow-wrap: anywhere;
 }
 
 .money-report-question.correct h3 {
-  color: #166534;
+  color: #237a3b;
 }
 
-.money-report-question.incorrect h3 {
-  color: #991b1b;
+.money-report-question p {
+  margin: 8px 0;
+  color: #263348;
+  line-height: 1.5;
+  font-size: 14px;
 }
 
-/* =========================================
-   REPORT PAGINATION
-========================================= */
+/* Pagination */
 
 .money-test-pagination {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
   gap: 18px;
-  margin: 25px 0;
-}
-
-.money-test-pagination span {
-  font-weight: 700;
-  color: #334155;
+  margin: 22px auto;
 }
 
 .money-test-pagination button {
-  min-width: 90px;
   padding: 10px 16px;
-  background: #fff;
-  color: #0875d1;
-  border: 1px solid #0875d1;
-  border-radius: 7px;
+  border: 1px solid #b8d7ff;
+  border-radius: 8px;
+  background: white;
+  color: #0878e8;
   font-weight: 700;
   cursor: pointer;
-}
-
-.money-test-pagination button:hover:not(:disabled) {
-  background: #e8f3ff;
 }
 
 .money-test-pagination button:disabled {
@@ -438,31 +797,35 @@
   cursor: not-allowed;
 }
 
-/* =========================================
-   REPORT ACTIONS AND PLAYBACK
-========================================= */
+.money-test-pagination span {
+  color: #263348;
+  font-weight: 700;
+}
+
+/* Report actions */
 
 .money-test-report-actions {
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  margin: 25px 0;
+  margin: 25px auto;
 }
 
 .money-test-report-actions button {
-  padding: 12px 20px;
-  background: #087df1;
-  color: #fff;
+  padding: 12px 18px;
   border: none;
-  border-radius: 8px;
-  font-size: 15px;
+  border-radius: 9px;
+  background: #087ff0;
+  color: white;
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
 }
 
 .money-test-report-actions button:hover:not(:disabled) {
-  background: #0564c5;
+  background: #0067cc;
 }
 
 .money-test-report-actions button:disabled {
@@ -470,41 +833,154 @@
   cursor: not-allowed;
 }
 
-.money-test-playback {
-  display: block;
-  width: min(720px, 100%);
-  max-height: 460px;
-  margin: 24px auto;
-  background: #111;
-  border-radius: 10px;
-}
-
 .money-test-note {
-  text-align: center;
   color: #64748b;
+  text-align: center;
+  font-size: 14px;
   line-height: 1.6;
 }
 
-/* =========================================
-   RESPONSIVE LAYOUT
-========================================= */
+.money-test-playback {
+  display: block;
+  width: 100%;
+  max-height: 450px;
+  margin: 22px auto 0;
+  border-radius: 10px;
+  background: #111;
+}
 
-@media (max-width: 700px) {
+.money-test-playback[hidden] {
+  display: none;
+}
+
+/* =========================================================
+   TABLET RESPONSIVENESS
+========================================================= */
+
+@media (max-width: 1100px) {
+  .money-note-inline {
+    width: 175px;
+    height: 91px;
+  }
+
+  .money-addition {
+    column-gap: 12px;
+  }
+
+  .money-test-item img {
+    width: 190px;
+    height: 98px;
+  }
+
+  .money-test-single-question {
+    padding: 28px 20px;
+  }
+}
+
+/* =========================================================
+   PHONE RESPONSIVENESS
+========================================================= */
+
+@media (max-width: 650px) {
+  .money-level-screen {
+    padding: 14px;
+  }
+
+  .money-back-button {
+    top: 12px;
+    left: 12px;
+    padding: 10px 15px;
+    font-size: 15px;
+  }
+
+  .money-toolbar {
+    margin-top: 68px;
+    gap: 10px;
+  }
+
+  .money-toolbar label {
+    width: 100%;
+    font-size: 17px;
+    text-align: center;
+  }
+
+  .money-denomination-select {
+    width: min(100%, 320px);
+    font-size: 15px;
+  }
+
+  .money-question-card {
+    min-height: 0;
+    padding: 35px 14px;
+    gap: 30px;
+  }
+
+  .money-addition {
+    gap: 12px;
+  }
+
+  .money-note-item {
+    gap: 6px;
+  }
+
+  .money-note-inline {
+    width: 140px;
+    height: 72px;
+  }
+
+  .money-plus-sign,
+  .money-equals {
+    font-size: 23px;
+  }
+
+  .money-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 0 5px;
+  }
+
+  .money-option-button {
+    width: 100%;
+    max-width: none;
+    min-height: 62px;
+    padding: 12px 8px;
+    font-size: 21px;
+  }
+
+  .money-print-button,
+  .money-test-button {
+    width: min(100%, 320px);
+    min-width: 0;
+    font-size: 16px;
+  }
+
+  .money-test-screen {
+    padding: 0 10px 25px;
+  }
+
   .money-test-header {
-    padding: 13px;
+    margin: 0 -10px;
+    min-height: 62px;
+    padding: 10px 12px;
   }
 
   .money-test-header strong {
     font-size: 16px;
   }
 
+  .money-test-header button {
+    padding: 9px 12px;
+  }
+
   .money-test-setup {
-    margin: 25px auto;
-    padding: 23px 16px;
+    width: 100%;
+    margin-top: 28px;
+    padding: 28px 18px;
   }
 
   .money-test-setup h1 {
-    font-size: 23px;
+    font-size: 24px;
   }
 
   .money-test-title {
@@ -512,95 +988,117 @@
   }
 
   .money-test-status {
-    gap: 10px 18px;
-    padding: 12px;
+    width: 100%;
+    gap: 10px;
+    padding: 12px 8px;
+  }
+
+  .money-test-status span {
+    font-size: 12px;
+  }
+
+  .money-test-status strong {
     font-size: 14px;
   }
 
   .money-test-single-question {
-    min-height: 300px;
-    padding: 25px 12px;
+    min-height: 0;
+    padding: 24px 12px;
   }
 
   .money-test-single-question h2 {
-    font-size: 21px;
-    margin-bottom: 25px;
+    font-size: 20px;
   }
 
   .money-test-items {
-    gap: 8px;
-    margin: 24px 0 30px;
+    gap: 9px;
+    margin-bottom: 25px;
   }
 
   .money-test-item {
-    gap: 6px;
-    font-size: 19px;
+    gap: 5px;
   }
 
   .money-test-item img {
-    width: 85px;
-    height: 55px;
+    width: 140px;
+    height: 72px;
   }
 
+  .money-test-item > span,
   .money-test-equals {
-    font-size: 25px;
+    font-size: 22px;
   }
 
   .money-test-options {
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 0 5px;
   }
 
   .money-test-option {
-    min-width: 90px;
-    padding: 12px 15px;
-    font-size: 19px;
+    width: 100%;
+    max-width: none;
+    min-height: 52px;
+    padding: 12px 8px;
+    font-size: 18px;
   }
 
   .money-test-camera {
-    left: 8px;
-    bottom: 8px;
-    width: 145px;
+    bottom: 10px;
+    left: 10px;
+    width: 120px;
+  }
+
+  .money-test-camera > span {
+    padding: 6px;
+    font-size: 10px;
+  }
+
+  .money-test-camera video {
+    height: 78px;
   }
 
   .money-test-analysis {
-    width: calc(100% - 16px);
-    margin: 12px auto;
-    padding: 12px;
+    width: 100%;
+    padding: 17px 12px;
   }
 
   .money-test-analysis > h1 {
-    font-size: 23px;
+    font-size: 22px;
   }
 
   .money-test-score {
-    padding: 15px 10px;
+    padding: 15px 8px;
   }
 
-  .money-test-score h2 {
-    font-size: 24px;
+  .money-test-report-actions {
+    flex-direction: column;
   }
 
-  .money-report-question {
-    padding: 13px;
-  }
-
-  .money-report-question h3 {
-    font-size: 16px;
-  }
-
-  .money-test-pagination {
-    gap: 10px;
+  .money-test-report-actions button {
+    width: 100%;
   }
 }
 
-@media (max-width: 380px) {
-  .money-test-camera {
-    width: 115px;
+/* =========================================================
+   SHORT LAPTOP SCREENS
+========================================================= */
+
+@media (max-height: 650px) and (min-width: 651px) {
+  .money-question-card {
+    min-height: 340px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    gap: 28px;
   }
 
-  .money-test-option {
-    min-width: 75px;
-    padding: 10px;
-    font-size: 17px;
+  .money-note-inline {
+    width: 180px;
+    height: 93px;
+  }
+
+  .money-option-button {
+    min-height: 65px;
   }
 }

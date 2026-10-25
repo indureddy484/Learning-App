@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect, useCallback } from "react";
 import "./MoneyLevel1.css";
 
@@ -144,15 +143,44 @@ function createOptions(answer, maxAmount = 100, topic = "") {
   return shuffle([...choices]);
 }
 
-function createQuestions(topic, maxAmount = 100, count = 9) {
-  return Array.from({ length: count }, () => {
-    const question = makeQuestion(topic, maxAmount);
+// A question is identified by its money items, regardless of their order.
+function getQuestionKey(question) {
+  return question.items
+    .map((item) => `${item.kind}-${item.value}`)
+    .sort()
+    .join("|");
+}
 
-    return {
+// Try to find a question that has not appeared in this question set.
+function makeUniqueQuestion(topic, maxAmount, seenQuestions) {
+  for (let attempt = 0; attempt < 1000; attempt++) {
+    const question = makeQuestion(topic, maxAmount);
+    const key = getQuestionKey(question);
+
+    if (!seenQuestions.has(key)) {
+      seenQuestions.add(key);
+      return question;
+    }
+  }
+
+  return null;
+}
+
+function createQuestions(topic, maxAmount = 100, count = 9) {
+  const seenQuestions = new Set();
+  const questions = [];
+
+  for (let i = 0; i < count; i++) {
+    const question = makeUniqueQuestion(topic, maxAmount, seenQuestions);
+    if (!question) break; // Don't add duplicates if this topic has few combinations.
+
+    questions.push({
       ...question,
       options: createOptions(question.answer, maxAmount, topic),
-    };
-  });
+    });
+  }
+
+  return questions;
 }
 
 function imageFor(item) {
@@ -215,7 +243,7 @@ function printQuestions(questions, topic, maxAmount) {
           .student { display:flex; justify-content:space-between; margin:20px 0; }
           .question { padding:10px; margin-bottom:18px; border-bottom:1px dashed #aaa; break-inside:avoid; }
           .notes { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:15px 0; }
-          .notes img { width:125px; height:65px; object-fit:contain; }
+          .notes img { width:300px; height:145px; object-fit:contain; }
           .options { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
         </style>
       </head>
@@ -588,6 +616,8 @@ function MoneyLevel1Test({ topic, maxAmount, onBack }) {
   const finishRef = useRef(false);
   const finishingRef = useRef(false);
   const answersRef = useRef([]);
+  const seenTestQuestionsRef = useRef(new Set());
+  const lastQuestionKeyRef = useRef("");
   const currentQuestionRef = useRef(null);
   const questionNumberRef = useRef(1);
   const questionStartRef = useRef(0);
@@ -637,13 +667,34 @@ function MoneyLevel1Test({ topic, maxAmount, onBack }) {
   }, [recordingUrl]);
 
   const newQuestion = useCallback(() => {
-    const generated = makeQuestion(topic, maxAmount);
+    let generated = makeUniqueQuestion(
+      topic,
+      maxAmount,
+      seenTestQuestionsRef.current
+    );
+
+    // If all combinations have been used, begin a new cycle but keep the
+    // immediately previous question reserved so it cannot repeat straight away.
+    if (!generated) {
+      const previousKey = lastQuestionKeyRef.current;
+      seenTestQuestionsRef.current = new Set(previousKey ? [previousKey] : []);
+      generated = makeUniqueQuestion(
+        topic,
+        maxAmount,
+        seenTestQuestionsRef.current
+      );
+    }
+
+    // Defensive fallback for a topic with only one possible combination.
+    if (!generated) generated = makeQuestion(topic, maxAmount);
+
     const next = {
       ...generated,
       options: createOptions(generated.answer, maxAmount, topic),
     };
 
     currentQuestionRef.current = next;
+    lastQuestionKeyRef.current = getQuestionKey(next);
     setCurrentQuestion(next);
     questionNumberRef.current += 1;
     setQuestionNumber(questionNumberRef.current);
@@ -722,6 +773,8 @@ function MoneyLevel1Test({ topic, maxAmount, onBack }) {
     answersRef.current = [];
     chunksRef.current = [];
     questionNumberRef.current = 1;
+    seenTestQuestionsRef.current = new Set();
+    lastQuestionKeyRef.current = "";
 
     setAnswers([]);
     setPage(0);
@@ -732,12 +785,18 @@ function MoneyLevel1Test({ topic, maxAmount, onBack }) {
     setRecordingUrl("");
     blobRef.current = null;
 
-    const first = makeQuestion(topic, maxAmount);
+    const first = makeUniqueQuestion(
+      topic,
+      maxAmount,
+      seenTestQuestionsRef.current
+    );
+    const preparedQuestion = first || makeQuestion(topic, maxAmount);
     const prepared = {
-      ...first,
-      options: createOptions(first.answer, maxAmount, topic),
+      ...preparedQuestion,
+      options: createOptions(preparedQuestion.answer, maxAmount, topic),
     };
 
+    lastQuestionKeyRef.current = getQuestionKey(prepared);
     currentQuestionRef.current = prepared;
     setCurrentQuestion(prepared);
     setQuestionNumber(1);
