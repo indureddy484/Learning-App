@@ -254,8 +254,7 @@ function printQuestions(questions, topic, maxAmount) {
           <span>Name: __________________</span>
           <span>Date: __________</span>
         </div>
-        <p><strong>Topic:</strong> ${getTopic(topic).label}</p>
-        <p><strong>Amount limit:</strong> Less than ₹${maxAmount}</p>
+        
         <p>Choose the correct answer.</p>
         ${html}
       </body>
