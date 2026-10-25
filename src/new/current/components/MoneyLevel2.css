@@ -323,3 +323,84 @@
     padding: 24px 18px;
   }
 }
+
+/* =========================================
+   MONEY LEVEL 2 - LARGE NOTES + FULL PAGE
+========================================= */
+
+.money-level-screen {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Use the available page width */
+.money-level-screen .money-question-card {
+  width: 100%;
+  max-width: none;
+  min-height: 55vh;
+  margin: 0 auto 24px;
+  padding: 35px 25px;
+  box-sizing: border-box;
+}
+
+/* Make notes inside the question heading bigger */
+.money-level-screen .money-question-note-image {
+  width: 180px;
+  height: 90px;
+  max-width: 100%;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Make addition-game notes bigger, if present */
+.money-level-screen .money-addition .money-note-inline {
+  width: 180px;
+  min-width: 180px;
+  height: 90px;
+  min-height: 90px;
+  max-width: none;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Keep question content centered */
+.money-level-screen .money-question-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .money-level-screen .money-question-note-image,
+  .money-level-screen .money-addition .money-note-inline {
+    width: 150px;
+    min-width: 150px;
+    height: 75px;
+    min-height: 75px;
+  }
+}
+
+/* Phone */
+@media (max-width: 600px) {
+  .money-level-screen {
+    padding: 12px;
+  }
+
+  .money-level-screen .money-question-card {
+    min-height: auto;
+    padding: 24px 12px;
+  }
+
+  .money-level-screen .money-question-note-image,
+  .money-level-screen .money-addition .money-note-inline {
+    width: 140px;
+    min-width: 140px;
+    height: 70px;
+    min-height: 70px;
+  }
+}

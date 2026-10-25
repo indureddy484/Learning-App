@@ -424,3 +424,132 @@
   border-color: #799b84;
   color: white;
 }
+
+/* =========================================
+   MONEY LEVEL 3 - BIG NOTES AND FULL WIDTH
+========================================= */
+
+.money-level3-screen {
+  width: 100% !important;
+  min-height: 100vh !important;
+  padding: 20px !important;
+  box-sizing: border-box !important;
+}
+
+/* Make the question card use the full page width */
+.money-level3-screen .money-level3-card {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 60vh !important;
+  margin: 20px auto !important;
+  padding: 35px 25px !important;
+  box-sizing: border-box !important;
+}
+
+/* Enlarge the money note to match the printed worksheet */
+.money-level3-screen .money-level3-inline-note {
+  display: inline-block !important;
+  width: 180px !important;
+  min-width: 180px !important;
+  max-width: none !important;
+  height: 90px !important;
+  min-height: 90px !important;
+  object-fit: contain !important;
+  flex-shrink: 0 !important;
+}
+
+/* Give the question more room */
+.money-level3-screen .money-level3-question {
+  width: 100% !important;
+  max-width: none !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin: 30px auto !important;
+  line-height: 1.6 !important;
+}
+
+/* Larger product images */
+.money-level3-screen .money-level3-inline-object {
+  width: 65px !important;
+  height: 65px !important;
+}
+
+/* Keep answer options comfortably sized */
+.money-level3-screen .money-level3-options {
+  width: 100% !important;
+  max-width: 800px !important;
+  gap: 18px !important;
+  margin: 35px auto !important;
+}
+
+.money-level3-screen .money-level3-option {
+  min-height: 90px !important;
+  font-size: 32px !important;
+}
+
+/* =========================================
+   TABLETS
+========================================= */
+@media (max-width: 900px) {
+  .money-level3-screen .money-level3-card {
+    padding: 25px 15px !important;
+  }
+
+  .money-level3-screen .money-level3-inline-note {
+    width: 150px !important;
+    min-width: 150px !important;
+    height: 75px !important;
+    min-height: 75px !important;
+  }
+
+  .money-level3-screen .money-level3-question {
+    gap: 8px !important;
+    font-size: 24px !important;
+  }
+
+  .money-level3-screen .money-level3-option {
+    min-height: 75px !important;
+    font-size: 27px !important;
+  }
+}
+
+/* =========================================
+   PHONES
+========================================= */
+@media (max-width: 600px) {
+  .money-level3-screen {
+    padding: 10px !important;
+  }
+
+  .money-level3-screen .money-level3-card {
+    min-height: auto !important;
+    padding: 22px 10px !important;
+  }
+
+  .money-level3-screen .money-level3-inline-note {
+    width: 120px !important;
+    min-width: 120px !important;
+    height: 60px !important;
+    min-height: 60px !important;
+  }
+
+  .money-level3-screen .money-level3-question {
+    gap: 6px !important;
+    font-size: 20px !important;
+  }
+
+  .money-level3-screen .money-level3-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin: 25px auto !important;
+  }
+
+  .money-level3-screen .money-level3-option {
+    min-height: 65px !important;
+    padding: 10px !important;
+    font-size: 24px !important;
+  }
+}
