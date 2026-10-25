@@ -911,8 +911,7 @@ function MoneyLevel1Test({ topic, maxAmount, onBack }) {
             <option value={15}>15 minutes</option>
           </select>
 
-          <p>Questions continue until time runs out or you end the test.</p>
-
+         
           {cameraError && (
             <p className="money-test-error">{cameraError}</p>
           )}
