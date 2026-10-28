@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 import MatchingGame from "../components/MatchingGame";
@@ -17,6 +16,8 @@ import MoneyLevel1 from "../components/MoneyLevel1";
 import MoneyLevel2 from "../components/MoneyLevel2";
 import MoneyLevel3 from "../components/MoneyLevel3";
 
+import VisualLengthLevel1 from "../components/VisualLengthLevel1";
+
 import "./NewHome.css";
 
 function NewHome({ onBack }) {
@@ -29,15 +30,17 @@ function NewHome({ onBack }) {
   const [selectedMoneyGame, setSelectedMoneyGame] = useState(false);
   const [selectedMoneyLevel, setSelectedMoneyLevel] = useState(null);
 
+  // Measure navigation state
+  const [selectedMeasureGame, setSelectedMeasureGame] = useState(false);
+  const [selectedMeasureLevel, setSelectedMeasureLevel] = useState(null);
+
   /* =========================
      EVS - MATCHING GAME
   ========================= */
 
   if (selectedGame === "match") {
     return (
-      <MatchingGame
-        onBack={() => setSelectedGame(null)}
-      />
+      <MatchingGame onBack={() => setSelectedGame(null)} />
     );
   }
 
@@ -47,9 +50,7 @@ function NewHome({ onBack }) {
 
   if (selectedGame === "video") {
     return (
-      <VideoGame
-        onBack={() => setSelectedGame(null)}
-      />
+      <VideoGame onBack={() => setSelectedGame(null)} />
     );
   }
 
@@ -57,10 +58,7 @@ function NewHome({ onBack }) {
      MATHS - DAY QUIZ LEVEL SCREEN
   ========================= */
 
-  if (
-    selectedMathsGame === "levels" &&
-    selectedLevel === null
-  ) {
+  if (selectedMathsGame === "levels" && selectedLevel === null) {
     return (
       <LevelScreen
         onBack={() => {
@@ -167,10 +165,7 @@ function NewHome({ onBack }) {
      MONEY - LEVEL SELECTION
   ========================= */
 
-  if (
-    selectedMoneyGame &&
-    selectedMoneyLevel === null
-  ) {
+  if (selectedMoneyGame && selectedMoneyLevel === null) {
     return (
       <div className="new-page">
         <button
@@ -187,36 +182,27 @@ function NewHome({ onBack }) {
         <h1>Money</h1>
 
         <div className="game-tabs">
-          {/* MONEY LEVEL 1 */}
           <button
             className="game-card"
-            onClick={() => {
-              setSelectedMoneyLevel("level1");
-            }}
+            onClick={() => setSelectedMoneyLevel("level1")}
             type="button"
           >
             <div className="game-icon">💵</div>
             <span>Level 1</span>
           </button>
 
-          {/* MONEY LEVEL 2 */}
           <button
             className="game-card"
-            onClick={() => {
-              setSelectedMoneyLevel("level2");
-            }}
+            onClick={() => setSelectedMoneyLevel("level2")}
             type="button"
           >
             <div className="game-icon">💰</div>
             <span>Level 2</span>
           </button>
 
-          {/* MONEY LEVEL 3 */}
           <button
             className="game-card"
-            onClick={() => {
-              setSelectedMoneyLevel("level3");
-            }}
+            onClick={() => setSelectedMoneyLevel("level3")}
             type="button"
           >
             <div className="game-icon">🛍️</div>
@@ -231,15 +217,10 @@ function NewHome({ onBack }) {
      MONEY - LEVEL 1
   ========================= */
 
-  if (
-    selectedMoneyGame &&
-    selectedMoneyLevel === "level1"
-  ) {
+  if (selectedMoneyGame && selectedMoneyLevel === "level1") {
     return (
       <MoneyLevel1
-        onBack={() => {
-          setSelectedMoneyLevel(null);
-        }}
+        onBack={() => setSelectedMoneyLevel(null)}
       />
     );
   }
@@ -248,15 +229,10 @@ function NewHome({ onBack }) {
      MONEY - LEVEL 2
   ========================= */
 
-  if (
-    selectedMoneyGame &&
-    selectedMoneyLevel === "level2"
-  ) {
+  if (selectedMoneyGame && selectedMoneyLevel === "level2") {
     return (
       <MoneyLevel2
-        onBack={() => {
-          setSelectedMoneyLevel(null);
-        }}
+        onBack={() => setSelectedMoneyLevel(null)}
       />
     );
   }
@@ -265,15 +241,60 @@ function NewHome({ onBack }) {
      MONEY - LEVEL 3
   ========================= */
 
-  if (
-    selectedMoneyGame &&
-    selectedMoneyLevel === "level3"
-  ) {
+  if (selectedMoneyGame && selectedMoneyLevel === "level3") {
     return (
       <MoneyLevel3
-        onBack={() => {
-          setSelectedMoneyLevel(null);
-        }}
+        onBack={() => setSelectedMoneyLevel(null)}
+      />
+    );
+  }
+
+  /* =========================
+     MEASURE - LEVEL SELECTION
+  ========================= */
+
+  if (selectedMeasureGame && selectedMeasureLevel === null) {
+    return (
+      <div className="new-page">
+        <button
+          className="top-back-button"
+          onClick={() => {
+            setSelectedMeasureGame(false);
+            setSelectedMeasureLevel(null);
+          }}
+          type="button"
+        >
+          ← BACK
+        </button>
+
+        <h1>Measure</h1>
+
+        <div className="game-tabs">
+          <button
+            className="game-card"
+            onClick={() => setSelectedMeasureLevel("visualLength")}
+            type="button"
+          >
+            <div className="game-icon">📏</div>
+            <span>Level 1</span>
+            <span>Visual Length</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  /* =========================
+     MEASURE - VISUAL LENGTH
+  ========================= */
+
+  if (
+    selectedMeasureGame &&
+    selectedMeasureLevel === "visualLength"
+  ) {
+    return (
+      <VisualLengthLevel1
+        onBack={() => setSelectedMeasureLevel(null)}
       />
     );
   }
@@ -294,6 +315,8 @@ function NewHome({ onBack }) {
             setSelectedLevel(null);
             setSelectedMoneyGame(false);
             setSelectedMoneyLevel(null);
+            setSelectedMeasureGame(false);
+            setSelectedMeasureLevel(null);
           }}
           type="button"
         >
@@ -308,9 +331,7 @@ function NewHome({ onBack }) {
           <div className="game-tabs">
             <button
               className="game-card"
-              onClick={() => {
-                setSelectedGame("match");
-              }}
+              onClick={() => setSelectedGame("match")}
               type="button"
             >
               <div className="game-icon">🧩</div>
@@ -319,9 +340,7 @@ function NewHome({ onBack }) {
 
             <button
               className="game-card"
-              onClick={() => {
-                setSelectedGame("video");
-              }}
+              onClick={() => setSelectedGame("video")}
               type="button"
             >
               <div className="game-icon">🎬</div>
@@ -339,11 +358,13 @@ function NewHome({ onBack }) {
                 setSelectedLevel(null);
                 setSelectedMoneyGame(false);
                 setSelectedMoneyLevel(null);
+                setSelectedMeasureGame(false);
+                setSelectedMeasureLevel(null);
               }}
               type="button"
             >
               <div className="game-icon">📅</div>
-              <span>Day Quiz</span>
+              <span>Take Quiz</span>
             </button>
 
             <button
@@ -353,20 +374,36 @@ function NewHome({ onBack }) {
                 setSelectedMoneyLevel(null);
                 setSelectedMathsGame(null);
                 setSelectedLevel(null);
+                setSelectedMeasureGame(false);
+                setSelectedMeasureLevel(null);
               }}
               type="button"
             >
               <div className="game-icon">💰</div>
               <span>Money</span>
             </button>
+
+            <button
+              className="game-card"
+              onClick={() => {
+                setSelectedMeasureGame(true);
+                setSelectedMeasureLevel(null);
+                setSelectedMathsGame(null);
+                setSelectedLevel(null);
+                setSelectedMoneyGame(false);
+                setSelectedMoneyLevel(null);
+              }}
+              type="button"
+            >
+              <div className="game-icon">📏</div>
+              <span>Measure</span>
+            </button>
           </div>
         ) : (
           /* TELUGU / ENGLISH */
 
           <div className="coming-soon">
-            <p>
-              Games for {selectedSubject} will be added here.
-            </p>
+            <p>Games for {selectedSubject} will be added here.</p>
           </div>
         )}
       </div>
@@ -387,81 +424,51 @@ function NewHome({ onBack }) {
         ← BACK
       </button>
 
-      <h1 className="new-title">
-        Learning App
-      </h1>
+      <h1 className="new-title">Learning App</h1>
 
       <div className="subject-grid">
         {/* TELUGU */}
 
         <button
           className="subject-card"
-          onClick={() => {
-            setSelectedSubject("Telugu");
-          }}
+          onClick={() => setSelectedSubject("Telugu")}
           type="button"
         >
-          <span className="subject-icon">
-            తెలుగు
-          </span>
-
-          <span className="subject-name">
-            Telugu
-          </span>
+          <span className="subject-icon">తెలుగు</span>
+          <span className="subject-name">Telugu</span>
         </button>
 
         {/* ENGLISH */}
 
         <button
           className="subject-card"
-          onClick={() => {
-            setSelectedSubject("English");
-          }}
+          onClick={() => setSelectedSubject("English")}
           type="button"
         >
-          <span className="subject-icon">
-            A B C
-          </span>
-
-          <span className="subject-name">
-            English
-          </span>
+          <span className="subject-icon">A B C</span>
+          <span className="subject-name">English</span>
         </button>
 
         {/* MATHS */}
 
         <button
           className="subject-card"
-          onClick={() => {
-            setSelectedSubject("Maths");
-          }}
+          onClick={() => setSelectedSubject("Maths")}
           type="button"
         >
-          <span className="subject-icon">
-            123
-          </span>
-
-          <span className="subject-name">
-            Maths
-          </span>
+          <span className="subject-icon">123</span>
+          <span className="subject-name">Maths</span>
         </button>
 
         {/* EVS */}
 
         <button
           className="subject-card"
-          onClick={() => {
-            setSelectedSubject("EVS");
-          }}
+          onClick={() => setSelectedSubject("EVS")}
           type="button"
         >
-          <span className="subject-icon">
-            🌱
-          </span>
-
-          <span className="subject-name">
-            EVS
-          </span>
+          <span className="subject-icon">🌱</span>
+          <span className="subject-name">EVS</span>
         </button>
       </div>
     </div>
