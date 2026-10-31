@@ -1,0 +1,727 @@
+
+/* =====================================================
+   MAIN SCREEN
+===================================================== */
+
+.vl2-screen {
+  width: 100%;
+  min-height: 100vh;
+  padding: 28px;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #edf4ff, #f8fbff);
+  color: #25466f;
+  font-family: Arial, sans-serif;
+}
+
+.vl2-screen *,
+.vl-test-screen * {
+  box-sizing: border-box;
+}
+
+.vl-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 0 auto 22px;
+  max-width: 1500px;
+}
+
+.vl-header h1,
+.vl-test-header h1 {
+  margin: 4px 0;
+  font-size: 29px;
+  font-weight: 800;
+  color: #234b7c;
+}
+
+.vl-eyebrow {
+  margin: 0;
+  color: #3474c6;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.vl-subtitle {
+  margin: 5px 0 0;
+  color: #7388a4;
+  font-size: 15px;
+}
+
+.vl-back {
+  border: none;
+  background: #e3edff;
+  color: #285c9e;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.vl-back:hover {
+  background: #d3e3ff;
+}
+
+/* =====================================================
+   TOOLBAR
+===================================================== */
+
+.vl-toolbar {
+  max-width: 1500px;
+  margin: 0 auto 22px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #ffffff;
+  border: 1px solid #dbe7f8;
+  border-radius: 18px;
+  box-shadow: 0 5px 18px rgba(43, 82, 130, 0.06);
+}
+
+.vl-progress-label {
+  font-weight: 800;
+  white-space: nowrap;
+  color: #31577f;
+}
+
+.vl-progress {
+  flex: 1;
+  height: 12px;
+  overflow: hidden;
+  background: #e6effd;
+  border-radius: 20px;
+}
+
+.vl-progress span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #4388f5, #35b9e8);
+  border-radius: 20px;
+}
+
+.vl-primary,
+.vl-secondary,
+.vl-end-test {
+  border: none;
+  padding: 13px 19px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.vl-primary {
+  color: white;
+  background: linear-gradient(135deg, #347ce5, #2458bf);
+  box-shadow: 0 5px 12px rgba(43, 102, 204, 0.18);
+}
+
+.vl-secondary {
+  color: #285b9e;
+  background: #e7efff;
+}
+
+.vl-primary:hover,
+.vl-secondary:hover,
+.vl-end-test:hover {
+  transform: translateY(-2px);
+}
+
+/* =====================================================
+   LEARNING CARD
+===================================================== */
+
+.vl-learning-card {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 30px 34px;
+  background: #ffffff;
+  border: 1px solid #dce8f8;
+  border-radius: 26px;
+  box-shadow: 0 12px 35px rgba(43, 82, 130, 0.07);
+}
+
+.vl-card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.vl-pill {
+  padding: 11px 19px;
+  background: #e7f0ff;
+  color: #2e6ec1;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.vl-step {
+  color: #7890ad;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.vl-question-title {
+  margin: 27px auto 28px;
+  text-align: center;
+  color: #244c7b;
+  font-size: clamp(22px, 3vw, 32px);
+  line-height: 1.35;
+  font-weight: 800;
+}
+
+/* =====================================================
+   OBJECT + PAPERCLIP VISUAL
+===================================================== */
+
+.vl2-measure-visual {
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 25px 35px 20px;
+  background: #f7faff;
+  border: 2px dashed #c7dcfa;
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 9px;
+}
+
+.vl2-object-picture {
+  width: 100%;
+  height: clamp(100px, 14vw, 165px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vl2-object-picture svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/*
+  The object and paperclip row use the same width.
+  The SVG viewBoxes keep their left and right edges aligned.
+*/
+
+.vl2-paperclip-svg {
+  display: block;
+  width: 100%;
+  height: clamp(35px, 5vw, 55px);
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+.vl2-measure-caption {
+  margin-top: 8px;
+  text-align: center;
+  color: #6d829e;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* =====================================================
+   ANSWER OPTIONS
+===================================================== */
+
+.vl2-answer-heading {
+  text-align: center;
+  margin: 28px 0 18px;
+  color: #31577f;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.vl2-options {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.vl2-option {
+  min-height: 125px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 2px solid #d8e6fa;
+  border-radius: 19px;
+  background: #ffffff;
+  color: #244b79;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vl2-option:hover:not(:disabled) {
+  background: #f0f6ff;
+  border-color: #7ba9ed;
+  transform: translateY(-3px);
+}
+
+.vl2-option:disabled {
+  cursor: default;
+  opacity: 0.9;
+}
+
+.vl2-option.selected {
+  border-color: #4387e5;
+  background: #eaf3ff;
+}
+
+.vl2-option-letter {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #e8f0ff;
+  border-radius: 50%;
+  color: #3472c0;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.vl2-option strong {
+  font-size: 27px;
+  color: #244b79;
+}
+
+.vl2-option small {
+  color: #748aa5;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* =====================================================
+   FEEDBACK
+===================================================== */
+
+.vl-feedback {
+  max-width: 650px;
+  margin: 20px auto 0;
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.vl-feedback.correct {
+  background: #e1f8e9;
+  color: #16834a;
+}
+
+.vl-feedback.try-again {
+  background: #fff3dc;
+  color: #b66b12;
+}
+
+.vl-hint {
+  margin: 24px auto 0;
+  text-align: center;
+  color: #8397b0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* =====================================================
+   PRINT POPUP
+===================================================== */
+
+.vl-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(23, 43, 70, 0.55);
+}
+
+.vl-print-modal {
+  position: relative;
+  width: min(460px, 100%);
+  padding: 32px;
+  border-radius: 22px;
+  background: white;
+  text-align: center;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
+}
+
+.vl-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  border: none;
+  background: transparent;
+  color: #6b7e96;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.vl-print-icon {
+  font-size: 42px;
+}
+
+.vl-print-modal h2 {
+  color: #285583;
+}
+
+.vl-print-modal p {
+  color: #8293a8;
+  line-height: 1.5;
+}
+
+.vl-print-modal label {
+  display: block;
+  margin: 20px 0 8px;
+  color: #355b83;
+  font-weight: 800;
+}
+
+.vl-print-modal input {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #cbdcf3;
+  border-radius: 10px;
+  font-size: 17px;
+}
+
+.vl-modal-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* =====================================================
+   TEST SCREEN
+===================================================== */
+
+.vl-test-screen {
+  min-height: 100vh;
+  padding: 30px;
+  background: linear-gradient(135deg, #edf4ff, #f8fbff);
+  color: #25466f;
+  font-family: Arial, sans-serif;
+}
+
+.vl-test-header {
+  max-width: 1200px;
+  margin: 0 auto 25px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.vl-test-panel {
+  max-width: 1150px;
+  margin: 25px auto;
+  padding: 35px;
+  background: white;
+  border: 1px solid #dce8f8;
+  border-radius: 24px;
+  box-shadow: 0 10px 35px rgba(43, 82, 130, 0.07);
+}
+
+.vl-test-panel h2 {
+  color: #285583;
+  text-align: center;
+}
+
+.vl-test-setup {
+  max-width: 550px;
+  text-align: center;
+}
+
+.vl-setup-icon {
+  font-size: 55px;
+}
+
+.vl-test-setup p {
+  color: #8192a9;
+  line-height: 1.6;
+}
+
+.vl-test-setup label {
+  display: block;
+  margin: 24px 0 8px;
+  font-weight: 800;
+}
+
+.vl-test-setup select {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #cbdcf3;
+  border-radius: 10px;
+  background: white;
+  color: #31577f;
+  font-size: 16px;
+}
+
+.vl-start-test {
+  width: 100%;
+  margin-top: 22px;
+}
+
+.vl-test-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  color: #42658e;
+  font-weight: 800;
+}
+
+.vl-countdown {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #fff1df;
+  color: #b36a16;
+  font-size: 18px;
+}
+
+.vl-test-main .vl2-measure-visual {
+  margin-top: 20px;
+}
+
+.vl-end-test {
+  display: block;
+  margin: 25px auto 0;
+  padding: 13px 30px;
+  background: #ffe7e7;
+  color: #c04444;
+}
+
+/* =====================================================
+   ANALYSIS REPORT
+===================================================== */
+
+.vl-score-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+  margin: 30px 0;
+}
+
+.vl-score-grid > div {
+  padding: 25px 12px;
+  border: 1px solid #dce8f8;
+  border-radius: 16px;
+  background: #f7faff;
+  text-align: center;
+}
+
+.vl-score-grid strong {
+  display: block;
+  color: #2f6fc0;
+  font-size: 30px;
+}
+
+.vl-score-grid span {
+  display: block;
+  margin-top: 8px;
+  color: #7188a5;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+  .vl2-screen {
+    padding: 18px;
+  }
+
+  .vl-learning-card {
+    padding: 24px 20px;
+  }
+
+  .vl-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .vl-progress {
+    min-width: 150px;
+  }
+
+  .vl2-options {
+    gap: 10px;
+  }
+
+  .vl2-option {
+    min-height: 110px;
+  }
+
+  .vl2-measure-visual {
+    padding: 20px;
+  }
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+  .vl2-screen {
+    padding: 12px;
+  }
+
+  .vl-header {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .vl-header h1 {
+    font-size: 22px;
+  }
+
+  .vl-subtitle {
+    font-size: 13px;
+  }
+
+  .vl-toolbar {
+    padding: 12px;
+    gap: 9px;
+  }
+
+  .vl-progress-label {
+    font-size: 13px;
+  }
+
+  .vl-toolbar .vl-progress {
+    flex-basis: 100%;
+    order: 3;
+  }
+
+  .vl-toolbar button {
+    flex: 1;
+    padding: 11px 8px;
+    font-size: 12px;
+  }
+
+  .vl-learning-card {
+    padding: 18px 12px;
+    border-radius: 18px;
+  }
+
+  .vl-card-heading {
+    align-items: flex-start;
+  }
+
+  .vl-pill {
+    padding: 9px 12px;
+    font-size: 10px;
+  }
+
+  .vl-step {
+    font-size: 12px;
+  }
+
+  .vl-question-title {
+    margin: 22px auto;
+    font-size: 22px;
+  }
+
+  .vl2-measure-visual {
+    padding: 15px 10px;
+    border-radius: 15px;
+    gap: 6px;
+  }
+
+  .vl2-object-picture {
+    height: 95px;
+  }
+
+  .vl2-paperclip-svg {
+    height: 34px;
+  }
+
+  .vl2-measure-caption {
+    font-size: 12px;
+  }
+
+  .vl2-answer-heading {
+    font-size: 16px;
+    margin: 22px 0 14px;
+  }
+
+  .vl2-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .vl2-option {
+    min-height: 100px;
+    padding: 10px;
+  }
+
+  .vl2-option strong {
+    font-size: 23px;
+  }
+
+  .vl-test-screen {
+    padding: 15px;
+  }
+
+  .vl-test-header {
+    flex-wrap: wrap;
+  }
+
+  .vl-test-header h1 {
+    font-size: 22px;
+  }
+
+  .vl-test-panel {
+    padding: 20px 12px;
+  }
+
+  .vl-score-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 360px) {
+  .vl2-object-picture {
+    height: 75px;
+  }
+
+  .vl2-paperclip-svg {
+    height: 27px;
+  }
+
+  .vl2-measure-caption {
+    font-size: 11px;
+  }
+
+  .vl2-option {
+    min-height: 90px;
+  }
+
+  .vl2-option strong {
+    font-size: 20px;
+  }
+}

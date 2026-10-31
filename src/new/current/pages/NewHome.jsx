@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 
 import MatchingGame from "../components/MatchingGame";
@@ -17,6 +18,7 @@ import MoneyLevel2 from "../components/MoneyLevel2";
 import MoneyLevel3 from "../components/MoneyLevel3";
 
 import VisualLengthLevel1 from "../components/VisualLengthLevel1";
+import VisualLengthLevel2 from "../components/VisualLengthLevel2";
 
 import "./NewHome.css";
 
@@ -270,6 +272,9 @@ function NewHome({ onBack }) {
         <h1>Measure</h1>
 
         <div className="game-tabs">
+
+          {/* VISUAL LENGTH LEVEL 1 */}
+
           <button
             className="game-card"
             onClick={() => setSelectedMeasureLevel("visualLength")}
@@ -279,13 +284,26 @@ function NewHome({ onBack }) {
             <span>Level 1</span>
             <span>Visual Length</span>
           </button>
+
+          {/* VISUAL LENGTH LEVEL 2 */}
+
+          <button
+            className="game-card"
+            onClick={() => setSelectedMeasureLevel("visualLength2")}
+            type="button"
+          >
+            <div className="game-icon">📐</div>
+            <span>Level 2</span>
+            <span>Visual Length</span>
+          </button>
+
         </div>
       </div>
     );
   }
 
   /* =========================
-     MEASURE - VISUAL LENGTH
+     MEASURE - VISUAL LENGTH LEVEL 1
   ========================= */
 
   if (
@@ -294,6 +312,21 @@ function NewHome({ onBack }) {
   ) {
     return (
       <VisualLengthLevel1
+        onBack={() => setSelectedMeasureLevel(null)}
+      />
+    );
+  }
+
+  /* =========================
+     MEASURE - VISUAL LENGTH LEVEL 2
+  ========================= */
+
+  if (
+    selectedMeasureGame &&
+    selectedMeasureLevel === "visualLength2"
+  ) {
+    return (
+      <VisualLengthLevel2
         onBack={() => setSelectedMeasureLevel(null)}
       />
     );
@@ -348,6 +381,7 @@ function NewHome({ onBack }) {
             </button>
           </div>
         ) : selectedSubject === "Maths" ? (
+
           /* MATHS */
 
           <div className="game-tabs">
@@ -400,6 +434,7 @@ function NewHome({ onBack }) {
             </button>
           </div>
         ) : (
+
           /* TELUGU / ENGLISH */
 
           <div className="coming-soon">
@@ -427,6 +462,7 @@ function NewHome({ onBack }) {
       <h1 className="new-title">Learning App</h1>
 
       <div className="subject-grid">
+
         {/* TELUGU */}
 
         <button
@@ -470,6 +506,7 @@ function NewHome({ onBack }) {
           <span className="subject-icon">🌱</span>
           <span className="subject-name">EVS</span>
         </button>
+
       </div>
     </div>
   );

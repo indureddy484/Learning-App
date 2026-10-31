@@ -35,7 +35,6 @@ function shuffle(items) {
   return copy;
 }
 
-// FIX: Map the category names used by the UI to the correct arrays.
 function getQuestions(category) {
   if (category === "bigSmall") {
     return bigSmallQuestions || [];
@@ -63,6 +62,7 @@ export default function VisualLengthLevel1({ onBack }) {
   const [learnQuestions, setLearnQuestions] = useState(() =>
     shuffle(getQuestions("bigSmall"))
   );
+
   const [learnIndex, setLearnIndex] = useState(0);
 
   const [feedback, setFeedback] = useState("");
@@ -96,6 +96,7 @@ export default function VisualLengthLevel1({ onBack }) {
   const recorderRef = useRef(null);
   const chunksRef = useRef([]);
   const previewRef = useRef(null);
+
   const testActiveRef = useRef(false);
   const finishedRef = useRef(false);
 
@@ -201,6 +202,13 @@ export default function VisualLengthLevel1({ onBack }) {
     };
   }, [screen]);
 
+  // Attach the camera stream to the preview element.
+  useEffect(() => {
+    if (screen === "test" && cameraOn && previewRef.current) {
+      previewRef.current.srcObject = streamRef.current;
+    }
+  }, [screen, cameraOn]);
+
   // Release resources when the component is unmounted.
   useEffect(() => {
     return () => {
@@ -231,14 +239,14 @@ export default function VisualLengthLevel1({ onBack }) {
 
     if (!questions.length) {
       window.alert(
-        `No questions are available for ${CATEGORY_LABELS[nextCategory]}. Add questions to visualLengthQuestions.js first.`
+        `No questions are available for ${CATEGORY_LABELS[nextCategory]}.`
       );
-
       return;
     }
 
     if (pendingRef.current) {
       clearTimeout(pendingRef.current);
+      pendingRef.current = null;
     }
 
     setCategory(nextCategory);
@@ -248,15 +256,17 @@ export default function VisualLengthLevel1({ onBack }) {
     setLocked(false);
   }
 
-  function handleLearningAnswer(side) {
+  // Works with both old left/right answers and new A/B/C/D answers.
+  function handleLearningAnswer(selectedAnswer) {
     if (!currentLearnQuestion || locked) return;
 
-    const isCorrect = side === currentLearnQuestion.answer;
+    const isCorrect = selectedAnswer === currentLearnQuestion.answer;
 
     setLocked(true);
 
     if (pendingRef.current) {
       clearTimeout(pendingRef.current);
+      pendingRef.current = null;
     }
 
     if (isCorrect) {
@@ -296,12 +306,12 @@ export default function VisualLengthLevel1({ onBack }) {
         setFeedback("");
         setLocked(false);
 
-        // Keep the child on the same question after a wrong answer.
+        // Wrong answer: remain on the same question.
       }, 1000);
     }
   }
 
-  function handleTestAnswer(side) {
+  function handleTestAnswer(selectedAnswer) {
     if (
       !currentTestQuestion ||
       !testActiveRef.current ||
@@ -310,13 +320,13 @@ export default function VisualLengthLevel1({ onBack }) {
       return;
     }
 
-    const isCorrect = side === currentTestQuestion.answer;
+    const isCorrect = selectedAnswer === currentTestQuestion.answer;
 
     setTestAnswers((previous) => [
       ...previous,
       {
         question: currentTestQuestion,
-        selected: side,
+        selected: selectedAnswer,
         correct: isCorrect,
         answeredAt: Date.now(),
       },
@@ -383,10 +393,6 @@ export default function VisualLengthLevel1({ onBack }) {
         streamRef.current = stream;
         setCameraOn(true);
 
-        if (previewRef.current) {
-          previewRef.current.srcObject = stream;
-        }
-
         const recorder = new MediaRecorder(stream);
 
         recorderRef.current = recorder;
@@ -426,7 +432,7 @@ export default function VisualLengthLevel1({ onBack }) {
       }
     } catch (_) {
       setCameraError(
-        "Camera or microphone permission was not granted. You can still take the quiz."
+        "Camera or microphone permission was not granted. You can still take the test."
       );
     }
   }
@@ -447,8 +453,14 @@ export default function VisualLengthLevel1({ onBack }) {
     setScreen("learn");
   }
 
-  const correctCount = testAnswers.filter((item) => item.correct).length;
-  const incorrectCount = testAnswers.filter((item) => !item.correct).length;
+  const correctCount = testAnswers.filter(
+    (item) => item.correct
+  ).length;
+
+  const incorrectCount = testAnswers.filter(
+    (item) => !item.correct
+  ).length;
+
   const attemptedCount = testAnswers.length;
 
   const accuracy = attemptedCount
@@ -533,7 +545,9 @@ export default function VisualLengthLevel1({ onBack }) {
             </h2>
 
             <p className="vl-instruction">
-              Tap the picture that answers the question.
+              {currentLearnQuestion?.questionType === "four-picture"
+                ? "Look at all four pictures and choose the correct one."
+                : "Tap the picture that answers the question."}
             </p>
 
             {currentLearnQuestion ? (
@@ -544,7 +558,7 @@ export default function VisualLengthLevel1({ onBack }) {
               />
             ) : (
               <p className="vl-empty">
-                Add questions to `visualLengthQuestions.js` to begin.
+                Add questions to visualLengthQuestions.js to begin.
               </p>
             )}
 
@@ -586,7 +600,9 @@ export default function VisualLengthLevel1({ onBack }) {
           <select
             id="vl-timer"
             value={timerMinutes}
-            onChange={(event) => setTimerMinutes(Number(event.target.value))}
+            onChange={(event) =>
+              setTimerMinutes(Number(event.target.value))
+            }
           >
             {[1, 2, 5, 10, 15].map((minutes) => (
               <option key={minutes} value={minutes}>
@@ -790,7 +806,7 @@ export default function VisualLengthLevel1({ onBack }) {
 
             <p>
               Choose the number of questions to print from the current
-              category's question bank.
+              category's mixed question bank.
             </p>
 
             <label htmlFor="vl-print-count">Number of questions</label>
@@ -798,7 +814,9 @@ export default function VisualLengthLevel1({ onBack }) {
             <select
               id="vl-print-count"
               value={printCount}
-              onChange={(event) => setPrintCount(Number(event.target.value))}
+              onChange={(event) =>
+                setPrintCount(Number(event.target.value))
+              }
             >
               {[4, 8, 12, 16, 20, 30, 40, 50, 60, 100].map((count) => (
                 <option key={count} value={count}>
@@ -848,10 +866,40 @@ export default function VisualLengthLevel1({ onBack }) {
                 {index + 1}. {question.prompt}
               </p>
 
-              <div className="vl-print-pictures">
-                <img src={question.leftImage} alt="Left choice" />
-                <img src={question.rightImage} alt="Right choice" />
-              </div>
+              {question.questionType === "four-picture" ? (
+                <div className="vl-print-pictures vl-print-pictures-four">
+                  {question.options.map((option) => (
+                    <div
+                      className="vl-print-four-option"
+                      key={option.id}
+                    >
+                      <span>{option.id}</span>
+                      <img
+                        src={option.image}
+                        alt={`Option ${option.id}`}
+                        style={{
+                          transform:
+                            question.comparison === "length"
+                              ? `scaleX(${option.scale})`
+                              : `scale(${option.scale})`,
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="vl-print-pictures">
+                  <div className="vl-print-four-option">
+                    <span>A</span>
+                    <img src={question.leftImage} alt="Option A" />
+                  </div>
+
+                  <div className="vl-print-four-option">
+                    <span>B</span>
+                    <img src={question.rightImage} alt="Option B" />
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -860,7 +908,41 @@ export default function VisualLengthLevel1({ onBack }) {
   );
 }
 
+// Displays either the original two pictures or the new four pictures.
 function PictureChoices({ question, onChoose, disabled = false }) {
+  if (question.questionType === "four-picture") {
+    return (
+      <div className="vl-four-picture-choices">
+        {question.options.map((option) => (
+          <button
+            type="button"
+            key={option.id}
+            className="vl-four-picture-option"
+            onClick={() => onChoose(option.id)}
+            disabled={disabled}
+            aria-label={`Choose option ${option.id}`}
+          >
+            <div className="vl-four-picture-image">
+              <img
+                src={option.image}
+                alt={option.label}
+                style={{
+                  transform:
+                    question.comparison === "length"
+                      ? `scaleX(${option.scale})`
+                      : `scale(${option.scale})`,
+                }}
+              />
+            </div>
+
+            <span>{option.id}</span>
+          </button>
+        ))}
+      </div>
+    );
+  }
+
+  // Original two-picture display remains unchanged.
   return (
     <div className="vl-picture-choices">
       <button
