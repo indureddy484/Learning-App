@@ -1,0 +1,141 @@
+
+/* LOGIN PAGE */
+
+.login-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #141e30, #243b55);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* LOGIN BOX */
+
+.login-box {
+  width: 100%;
+  max-width: 380px;
+  padding: 40px 35px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* HEADING */
+
+.login-box h1 {
+  color: #243b55;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* SUBTITLE */
+
+.login-box p {
+  color: #777777;
+  font-size: 15px;
+  margin-bottom: 25px;
+}
+
+/* INPUT FIELDS */
+
+.login-box input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 18px;
+  border: 1px solid #cccccc;
+  border-radius: 10px;
+  outline: none;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+.login-box input:focus {
+  border-color: #243b55;
+  box-shadow: 0 0 5px rgba(36, 59, 85, 0.3);
+}
+
+/* LOGIN BUTTON */
+
+.login-box button {
+  width: 100%;
+  padding: 14px;
+  background: #243b55;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-box button:hover {
+  background: #365b80;
+  transform: translateY(-2px);
+}
+
+/* ERROR MESSAGE */
+
+.login-box .login-error {
+  color: #e53935;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+/* MOBILE RESPONSIVE */
+
+@media (max-width: 480px) {
+  .login-box {
+    padding: 30px 22px;
+  }
+
+  .login-box h1 {
+    font-size: 25px;
+  }
+}
+
+/* PASSWORD WRAPPER */
+
+.password-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+/* PASSWORD INPUT */
+
+.password-wrapper input {
+  width: 100%;
+  padding: 14px 45px 14px 14px;
+  margin-bottom: 0;
+}
+
+/* EYE BUTTON */
+
+.password-wrapper .toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto;
+  padding: 5px;
+  margin: 0;
+  background: transparent;
+  border: none;
+  color: #333;
+  font-size: 19px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.password-wrapper .toggle-password:hover {
+  background: transparent;
+  transform: translateY(-50%);
+}
