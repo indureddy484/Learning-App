@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import "./TenaliStory.css";
 
@@ -16,6 +17,17 @@ function TenaliStory({ onBack }) {
     "cheat",
   ];
 
+  // Available video files
+  const videoFiles = {
+    Story: "/videos/tenali/story.mp4",
+    decorate: "/videos/tenali/decorate.mp4",
+    greed: "/videos/tenali/greedy.mp4",
+    cheat: "/videos/tenali/cheat.mp4",
+    reward: "/videos/tenali/reward.mp4",
+    grains: "/videos/tenali/grains.mp4",
+    court: "/videos/tenali/court.mp4",
+  };
+
   const [selectedWord, setSelectedWord] = useState("Story");
 
   // Video loading states
@@ -23,20 +35,32 @@ function TenaliStory({ onBack }) {
   const [videoReady, setVideoReady] = useState(false);
   const [videoError, setVideoError] = useState(false);
 
+  const selectedVideo = videoFiles[selectedWord];
+
   // Reset video states whenever another word is selected
   useEffect(() => {
-    if (selectedWord === "Story") {
-      setIsVideoLoading(true);
-      setVideoReady(false);
-      setVideoError(false);
-    }
-  }, [selectedWord]);
+    setIsVideoLoading(Boolean(selectedVideo));
+    setVideoReady(false);
+    setVideoError(false);
+  }, [selectedWord, selectedVideo]);
+
+  // Video is ready
+  const handleVideoReady = () => {
+    setIsVideoLoading(false);
+    setVideoReady(true);
+  };
+
+  // Video loading error
+  const handleVideoError = () => {
+    setIsVideoLoading(false);
+    setVideoReady(false);
+    setVideoError(true);
+  };
 
   return (
     <div className="tenali-story-layout">
 
       {/* TOP HEADER */}
-
       <div className="tenali-story-header">
         <button
           className="tenali-story-back"
@@ -50,17 +74,13 @@ function TenaliStory({ onBack }) {
       </div>
 
       {/* MAIN CONTENT */}
-
       <div className="tenali-story-main">
 
         {/* LEFT NAVIGATION */}
-
         <div className="tenali-story-sidebar">
-
           <h2>Story Words</h2>
 
           <div className="tenali-word-list">
-
             {words.map((word, index) => (
               <button
                 key={word}
@@ -77,48 +97,39 @@ function TenaliStory({ onBack }) {
                 <span>{word}</span>
               </button>
             ))}
-
           </div>
         </div>
 
         {/* RIGHT VIDEO AREA */}
-
         <div className="tenali-story-video-area">
-
           <h2>{selectedWord}</h2>
 
           <div className="tenali-video-placeholder">
 
-            {/* STORY VIDEO */}
-
-            {selectedWord === "Story" ? (
+            {/* VIDEO AVAILABLE */}
+            {selectedVideo ? (
               <>
-
-                {isVideoLoading && (
-                  <p className="tenali-loading-text">
-                    Loading video... Please wait
-                  </p>
+                {/* LOADING SPINNER */}
+                {isVideoLoading && !videoError && (
+                  <div className="tenali-loading-overlay">
+                    <div className="tenali-loading-spinner"></div>
+                  </div>
                 )}
 
+                {/* VIDEO PLAYER */}
                 {!videoError && (
                   <video
                     className="tenali-video-player"
                     controls
                     preload="auto"
                     autoPlay={false}
-                    key={selectedWord}
-                    onCanPlay={() => {
-                      setIsVideoLoading(false);
-                      setVideoReady(true);
-                    }}
-                    onError={() => {
-                      setIsVideoLoading(false);
-                      setVideoReady(false);
-                      setVideoError(true);
-                    }}
+                    key={selectedVideo}
+                    onLoadedData={handleVideoReady}
+                    onCanPlay={handleVideoReady}
+                    onError={handleVideoError}
                   >
                     <source
-                      src="/videos/tenali/story.mp4"
+                      src={selectedVideo}
                       type="video/mp4"
                     />
 
@@ -126,17 +137,16 @@ function TenaliStory({ onBack }) {
                   </video>
                 )}
 
+                {/* ERROR MESSAGE */}
                 {videoError && (
                   <p className="tenali-error-text">
                     Unable to load video. Please check the video file.
                   </p>
                 )}
-
               </>
             ) : (
 
-              /* OTHER WORDS - VIDEO PLACEHOLDER */
-
+              /* VIDEO NOT AVAILABLE YET */
               <>
                 <div className="tenali-video-icon">▶</div>
 
@@ -145,7 +155,6 @@ function TenaliStory({ onBack }) {
             )}
 
           </div>
-
         </div>
 
       </div>
@@ -153,4 +162,4 @@ function TenaliStory({ onBack }) {
   );
 }
 
-export default TenaliStory;
+export default TenaliStory

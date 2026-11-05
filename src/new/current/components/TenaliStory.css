@@ -227,6 +227,59 @@
   }
 }
 
+/* Video player */
+.tenali-video-player {
+  width: 100%;
+  max-height: 500px;
+  border-radius: 12px;
+  background: #000;
+  object-fit: contain;
+}
+
+/* Loading overlay inside video area */
+.tenali-loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  border-radius: 12px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Rotating loading symbol */
+.tenali-loading-spinner {
+  width: 45px;
+  height: 45px;
+  border: 5px solid #777;
+  border-top: 5px solid #fff;
+  border-radius: 50%;
+  animation: tenali-spin 0.8s linear infinite;
+}
+
+@keyframes tenali-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Video error message */
+.tenali-error-text {
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Required for spinner positioning */
+.tenali-video-placeholder {
+  position: relative;
+}
+
+
 @media (max-width: 700px) {
   .tenali-story-header {
     flex-direction: column;

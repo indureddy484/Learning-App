@@ -17,7 +17,7 @@ function TenaliLessonMenu({ onStory, onQuiz, onBack }) {
           onClick={onStory}
         >
           <span className="tenali-option-icon">📖</span>
-          <span>STORY</span>
+          <span>Videos</span>
         </button>
 
         <button
