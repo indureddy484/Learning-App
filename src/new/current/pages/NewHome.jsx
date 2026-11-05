@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 import MatchingGame from "../components/MatchingGame";
@@ -20,6 +19,11 @@ import MoneyLevel3 from "../components/MoneyLevel3";
 import VisualLengthLevel1 from "../components/VisualLengthLevel1";
 import VisualLengthLevel2 from "../components/VisualLengthLevel2";
 
+// ENGLISH
+import TenaliRamaGreedyFarmer from "../components/TenaliRamaGreedyFarmer";
+import TenaliLessonMenu from "../components/TenaliLessonMenu";
+import TenaliStory from "../components/TenaliStory";
+
 import "./NewHome.css";
 
 function NewHome({ onBack }) {
@@ -27,6 +31,10 @@ function NewHome({ onBack }) {
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedMathsGame, setSelectedMathsGame] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(null);
+
+  // English navigation
+  const [selectedEnglishTopic, setSelectedEnglishTopic] = useState(null);
+  const [selectedTenaliOption, setSelectedTenaliOption] = useState(null);
 
   // Money navigation state
   const [selectedMoneyGame, setSelectedMoneyGame] = useState(false);
@@ -333,6 +341,54 @@ function NewHome({ onBack }) {
   }
 
   /* =========================
+     ENGLISH - TENALI RAMA STORY / QUIZ MENU
+  ========================= */
+
+  if (selectedEnglishTopic === "tenali") {
+
+    // STORY SCREEN
+    // STORY SCREEN
+    if (selectedTenaliOption === "story") {
+      return (
+        <TenaliStory
+          onBack={() => setSelectedTenaliOption(null)}
+        />
+      );
+    }
+
+    // QUIZ SCREEN
+    if (selectedTenaliOption === "quiz") {
+      return (
+        <div className="new-page">
+          <button
+            className="top-back-button"
+            onClick={() => setSelectedTenaliOption(null)}
+            type="button"
+          >
+            ← BACK
+          </button>
+
+          <h1>Tenali Rama - Quiz</h1>
+
+          <p>Quiz content will be added here.</p>
+        </div>
+      );
+    }
+
+    // STORY / QUIZ MENU
+    return (
+      <TenaliLessonMenu
+        onStory={() => setSelectedTenaliOption("story")}
+        onQuiz={() => setSelectedTenaliOption("quiz")}
+        onBack={() => {
+          setSelectedEnglishTopic(null);
+          setSelectedTenaliOption(null);
+        }}
+      />
+    );
+  }
+
+  /* =========================
      SUBJECT PAGE
   ========================= */
 
@@ -346,6 +402,8 @@ function NewHome({ onBack }) {
             setSelectedGame(null);
             setSelectedMathsGame(null);
             setSelectedLevel(null);
+            setSelectedEnglishTopic(null);
+            setSelectedTenaliOption(null);
             setSelectedMoneyGame(false);
             setSelectedMoneyLevel(null);
             setSelectedMeasureGame(false);
@@ -380,6 +438,7 @@ function NewHome({ onBack }) {
               <span>Video Game</span>
             </button>
           </div>
+
         ) : selectedSubject === "Maths" ? (
 
           /* MATHS */
@@ -433,9 +492,28 @@ function NewHome({ onBack }) {
               <span>Measure</span>
             </button>
           </div>
+
+        ) : selectedSubject === "English" ? (
+
+          /* ENGLISH */
+
+          <div className="game-tabs">
+            <button
+              className="english-lesson-card"
+              onClick={() => {
+                setSelectedEnglishTopic("tenali");
+                setSelectedTenaliOption(null);
+              }}
+              type="button"
+            >
+              <div className="english-lesson-icon">📖</div>
+              <span>Tenali Rama and the Greedy Farmer</span>
+            </button>
+          </div>
+
         ) : (
 
-          /* TELUGU / ENGLISH */
+          /* TELUGU */
 
           <div className="coming-soon">
             <p>Games for {selectedSubject} will be added here.</p>

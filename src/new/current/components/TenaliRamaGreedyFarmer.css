@@ -1,0 +1,75 @@
+
+.tenali-story-page {
+  min-height: 100vh;
+  padding: 25px;
+  background: #f5f8ff;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.tenali-back-button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 11px 22px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.tenali-back-button:hover {
+  background: #1d4ed8;
+}
+
+.tenali-story-header {
+  text-align: center;
+  margin: 35px auto;
+}
+
+.tenali-story-header h1 {
+  color: #1e3a8a;
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.tenali-story-header p {
+  color: #64748b;
+  font-size: 17px;
+}
+
+.tenali-story-content {
+  max-width: 850px;
+  min-height: 250px;
+  margin: 0 auto;
+  padding: 30px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.tenali-story-content h2 {
+  color: #2563eb;
+  text-align: center;
+}
+
+.tenali-story-content p {
+  color: #475569;
+  font-size: 17px;
+  text-align: center;
+  line-height: 1.7;
+}
+
+@media (max-width: 600px) {
+  .tenali-story-page {
+    padding: 15px;
+  }
+
+  .tenali-story-header h1 {
+    font-size: 23px;
+  }
+
+  .tenali-story-content {
+    padding: 20px;
+  }
+}

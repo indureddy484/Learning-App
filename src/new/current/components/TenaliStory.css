@@ -1,0 +1,262 @@
+.tenali-story-layout {
+  min-height: 100vh;
+  background: #f7f5ff;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* HEADER */
+
+.tenali-story-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 65px;
+  margin-bottom: 20px;
+}
+
+.tenali-story-header h1 {
+  color: #5936a8;
+  font-size: 30px;
+  text-align: center;
+}
+
+.tenali-story-back {
+  position: absolute;
+  left: 0;
+  padding: 12px 22px;
+  background: #7048c6;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* MAIN LAYOUT */
+
+.tenali-story-main {
+  display: flex;
+  gap: 25px;
+  align-items: stretch;
+  min-height: 75vh;
+}
+
+/* LEFT SIDEBAR */
+
+.tenali-story-sidebar {
+  width: 280px;
+  min-width: 280px;
+  background: white;
+  border: 2px solid #d9cafa;
+  border-radius: 18px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.tenali-story-sidebar h2 {
+  color: #5936a8;
+  text-align: center;
+  font-size: 24px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.tenali-word-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tenali-word-button {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 15px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: #f3efff;
+  color: #321078;
+  border: 2px solid transparent;
+  border-radius: 10px;
+
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.tenali-word-button:hover {
+  background: #e4d9ff;
+}
+
+.tenali-word-button.active {
+  background: #7048c6;
+  color: white;
+  border-color: #321078;
+}
+
+.tenali-word-number {
+  min-width: 25px;
+}
+
+/* RIGHT VIDEO AREA */
+
+.tenali-story-video-area {
+  flex: 1;
+  min-width: 0;
+  background: white;
+  border: 2px solid #d9cafa;
+  border-radius: 18px;
+  padding: 25px;
+  box-sizing: border-box;
+}
+
+.tenali-story-video-area h2 {
+  color: #5936a8;
+  text-align: center;
+  font-size: 28px;
+  margin-top: 5px;
+  margin-bottom: 25px;
+  text-transform: capitalize;
+}
+
+.tenali-video-placeholder {
+  width: 100%;
+  min-height: 400px;
+  background: #eeeaf8;
+  border: 2px dashed #a994d8;
+  border-radius: 15px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.tenali-video-icon {
+  width: 75px;
+  height: 75px;
+  background: #7048c6;
+  color: white;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 30px;
+  padding-left: 5px;
+  box-sizing: border-box;
+}
+
+.tenali-video-placeholder p {
+  font-size: 20px;
+  color: #5936a8;
+  font-weight: bold;
+}
+
+/* RESPONSIVE DESIGN */
+.tenali-video-player {
+  width: 100%;
+  max-height: 500px;
+  border-radius: 12px;
+  background: #000;
+  object-fit: contain;
+}
+/* VIDEO PLAYER */
+
+.tenali-video-player {
+  width: 100%;
+  max-height: 500px;
+  border-radius: 12px;
+  background: #000;
+  object-fit: contain;
+}
+
+/* LOADING MESSAGE */
+
+.tenali-loading-text {
+  color: #5936a8;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+}
+
+/* ERROR MESSAGE */
+
+.tenali-error-text {
+  color: #d32f2f;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+}
+
+.tenali-video-placeholder {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  background: #000;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tenali-loading-spinner {
+  width: 45px;
+  height: 45px;
+  border: 5px solid #777;
+  border-top: 5px solid #fff;
+  border-radius: 50%;
+  animation: tenali-spin 0.8s linear infinite;
+}
+
+@keyframes tenali-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 700px) {
+  .tenali-story-header {
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 55px;
+  }
+
+  .tenali-story-header h1 {
+    font-size: 23px;
+  }
+
+  .tenali-story-back {
+    top: 0;
+    left: 0;
+  }
+
+  .tenali-story-main {
+    flex-direction: column;
+  }
+
+  .tenali-story-sidebar {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .tenali-story-video-area {
+    width: 100%;
+  }
+
+  .tenali-video-placeholder {
+    min-height: 250px;
+  }
+}

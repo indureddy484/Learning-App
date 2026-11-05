@@ -1,0 +1,71 @@
+.tenali-menu-page {
+  min-height: 100vh;
+  padding: 30px;
+  box-sizing: border-box;
+  background: #f7f5ff;
+  text-align: center;
+}
+
+.tenali-menu-back {
+  position: absolute;
+  top: 30px;
+  left: 35px;
+  padding: 12px 25px;
+  background: #7048c6;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.tenali-menu-page h1 {
+  margin-top: 100px;
+  color: #5936a8;
+  font-size: 36px;
+}
+
+.tenali-menu-subtitle {
+  font-size: 21px;
+  color: #555;
+  margin-top: 15px;
+}
+
+.tenali-menu-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  flex-wrap: wrap;
+  margin-top: 65px;
+}
+
+.tenali-option-card {
+  width: 260px;
+  height: 240px;
+  background: white;
+  border: 3px solid #321078;
+  border-radius: 25px;
+  color: #321078;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.tenali-option-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 18px rgba(50, 16, 120, 0.15);
+}
+
+.tenali-option-icon {
+  font-size: 65px;
+}

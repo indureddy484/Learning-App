@@ -213,6 +213,7 @@
    MOBILE
 ========================= */
 
+
 @media (max-width: 650px) {
 
   .subject-grid {
@@ -228,4 +229,40 @@
     width: 230px;
     height: 170px;
   }
+}
+/* English lesson card only */
+.english-lesson-card {
+  width: 340px;
+  min-height: 270px;
+  padding: 35px 30px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+
+  background: #ffffff;
+  border: 3px solid #321078;
+  border-radius: 25px;
+
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.english-lesson-card:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 18px rgba(50, 16, 120, 0.15);
+}
+
+.english-lesson-icon {
+  font-size: 65px;
+}
+
+.english-lesson-card span {
+  font-size: 27px;
+  font-weight: bold;
+  line-height: 1.35;
+  text-align: center;
+  color: #321078;
 }
