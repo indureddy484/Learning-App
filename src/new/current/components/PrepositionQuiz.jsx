@@ -6,7 +6,7 @@ import "./PrepositionQuiz.css";
 const questions = [
   {
     id: 1,
-    image: "/images/telugu/preposition/table-apple.jpg",
+    image: "/images/telugu/preposition/table-apple.png",
     imageAlt: "Apple placed on top of a table",
     question: "Table ______ apple undhi.",
     options: [
