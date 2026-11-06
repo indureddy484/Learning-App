@@ -26,6 +26,10 @@ function TenaliStory({ onBack }) {
     reward: "/videos/tenali/reward.mp4",
     grains: "/videos/tenali/grains.mp4",
     court: "/videos/tenali/court.mp4",
+    roots: "/videos/tenali/roots.mp4",
+    Clever: "/videos/tenali/clever.mp4",
+    proud: "/videos/tenali/proud.mp4",
+    plain: "/videos/tenali/plain.mp4",
   };
 
   const [selectedWord, setSelectedWord] = useState("Story");

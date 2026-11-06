@@ -1,0 +1,375 @@
+
+.animals-layout {
+  min-height: 100vh;
+  padding: 20px;
+  background: #f5f7fc;
+  box-sizing: border-box;
+}
+
+/* HEADER */
+
+.animals-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.animals-header h1 {
+  margin: 0;
+  color: #30345b;
+  font-size: 30px;
+}
+
+.animals-back-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #5936a8;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* MAIN LAYOUT */
+
+.animals-main {
+  display: flex;
+  gap: 25px;
+  align-items: flex-start;
+}
+
+/* SIDEBAR */
+
+.animals-sidebar {
+  width: 250px;
+  min-width: 220px;
+  padding: 18px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.animals-sidebar h2 {
+  margin: 0 0 18px;
+  color: #30345b;
+}
+
+.animals-category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.animals-category-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 12px;
+  border: none;
+  border-radius: 9px;
+  background: #f2f3fa;
+  color: #30345b;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.animals-category-button:hover {
+  background: #e5e0f7;
+}
+
+.animals-category-button.active {
+  background: #5936a8;
+  color: white;
+}
+
+/* RIGHT CONTENT */
+
+.animals-content {
+  flex: 1;
+  min-width: 0;
+  padding: 20px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.animals-content h2 {
+  margin: 0 0 22px;
+  color: #30345b;
+}
+
+/* ANIMAL GRID */
+
+.animals-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.animal-card {
+  overflow: hidden;
+  padding: 12px;
+  background: #f8f8fc;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.animal-card:hover {
+  transform: translateY(-4px);
+}
+
+.animal-thumbnail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 145px;
+  background: #e9e5f7;
+  border-radius: 10px;
+}
+
+.animal-thumbnail span {
+  font-size: 75px;
+}
+
+.animal-card h3 {
+  margin: 12px 0 6px;
+  color: #30345b;
+}
+
+.animal-card p {
+  margin: 0 0 8px;
+  color: #777;
+  font-size: 13px;
+}
+
+
+/* Farm animal video cards */
+.animal-card-clickable {
+  cursor: pointer;
+}
+
+.animal-card-clickable:hover {
+  transform: translateY(-5px);
+}
+
+/* Selected animal video section */
+.animal-video-section {
+  margin-bottom: 25px;
+  padding: 15px;
+  background: #f8f8fc;
+  border-radius: 12px;
+}
+
+.animal-video-section h3 {
+  color: #30345b;
+  margin: 15px 0;
+}
+
+/* Video player */
+.animal-video-player {
+  display: block;
+  width: 100%;
+  max-width: 850px;
+  max-height: 480px;
+  margin: 0 auto;
+  background: #000;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+/* REAL ANIMAL PHOTOGRAPHS */
+
+.animal-card-image {
+  width: 100%;
+  height: 145px;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
+}
+
+/* Farm animal cards */
+.animal-card-clickable {
+  cursor: pointer;
+}
+
+.animal-card-clickable:hover {
+  transform: translateY(-5px);
+}
+
+/* Selected animal video */
+.animal-video-section {
+  margin-bottom: 25px;
+  padding: 15px;
+  background: #f8f8fc;
+  border-radius: 12px;
+}
+
+.animal-video-section h3 {
+  color: #30345b;
+  margin: 15px 0;
+}
+
+.animal-video-player {
+  display: block;
+  width: 100%;
+  max-width: 850px;
+  max-height: 480px;
+  margin: 0 auto;
+  background: #000;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 800px) {
+  .animals-main {
+    flex-direction: column;
+  }
+
+  .animals-sidebar {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .animals-category-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .animals-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .animals-content {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 450px) {
+  .animals-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .animals-category-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =================================
+   ANIMALS PAGE - IMPROVED DESIGN
+================================= */
+
+.animals-layout {
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Main content heading */
+.animals-content h2 {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 27px;
+  font-weight: 700;
+  color: #26345b;
+  margin-bottom: 24px;
+}
+
+/* Animal grid */
+.animals-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* Individual animal card */
+.animal-card {
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 14px;
+  overflow: hidden;
+  text-align: left;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.animal-card-clickable {
+  cursor: pointer;
+}
+
+.animal-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* Image container */
+.animal-thumbnail {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  min-height: 0;
+  background: #f1f3f5;
+  border-radius: 11px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Actual animal photograph */
+.animal-card-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 11px;
+}
+
+/* Animal name */
+.animal-card h3 {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  color: #26345b;
+  text-align: left;
+  margin: 13px 3px 5px;
+}
+
+/* Watch video label */
+.animal-card p {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6845b5;
+  text-align: left;
+  margin: 0 3px 5px;
+}
+
+/* Video player heading */
+.animal-video-section h3 {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* Responsive layout */
+@media (max-width: 1000px) {
+  .animals-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .animals-grid {
+    grid-template-columns: 1fr;
+  }
+}

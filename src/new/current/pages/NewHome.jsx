@@ -1,7 +1,9 @@
+
 import { useState } from "react";
 
 import MatchingGame from "../components/MatchingGame";
 import VideoGame from "../components/VideoGame";
+import Animals from "../components/Animals";
 
 import Level1Today from "../components/Level1Today";
 import Level2NinnaToday from "../components/Level2NinnaToday";
@@ -23,6 +25,10 @@ import VisualLengthLevel2 from "../components/VisualLengthLevel2";
 import TenaliRamaGreedyFarmer from "../components/TenaliRamaGreedyFarmer";
 import TenaliLessonMenu from "../components/TenaliLessonMenu";
 import TenaliStory from "../components/TenaliStory";
+import TenaliQuiz from "../components/TenaliQuiz";
+
+// TELUGU
+import PrepositionQuiz from "../components/PrepositionQuiz";
 
 import "./NewHome.css";
 
@@ -36,6 +42,10 @@ function NewHome({ onBack }) {
   const [selectedEnglishTopic, setSelectedEnglishTopic] = useState(null);
   const [selectedTenaliOption, setSelectedTenaliOption] = useState(null);
 
+  // Telugu navigation
+  const [selectedTeluguOption, setSelectedTeluguOption] = useState(null);
+  const [selectedTeluguQuizTopic, setSelectedTeluguQuizTopic] = useState(null);
+
   // Money navigation state
   const [selectedMoneyGame, setSelectedMoneyGame] = useState(false);
   const [selectedMoneyLevel, setSelectedMoneyLevel] = useState(null);
@@ -45,13 +55,19 @@ function NewHome({ onBack }) {
   const [selectedMeasureLevel, setSelectedMeasureLevel] = useState(null);
 
   /* =========================
+     EVS - ANIMALS
+  ========================= */
+
+  if (selectedGame === "animals") {
+    return <Animals onBack={() => setSelectedGame(null)} />;
+  }
+
+  /* =========================
      EVS - MATCHING GAME
   ========================= */
 
   if (selectedGame === "match") {
-    return (
-      <MatchingGame onBack={() => setSelectedGame(null)} />
-    );
+    return <MatchingGame onBack={() => setSelectedGame(null)} />;
   }
 
   /* =========================
@@ -59,9 +75,7 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (selectedGame === "video") {
-    return (
-      <VideoGame onBack={() => setSelectedGame(null)} />
-    );
+    return <VideoGame onBack={() => setSelectedGame(null)} />;
   }
 
   /* =========================
@@ -228,11 +242,7 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (selectedMoneyGame && selectedMoneyLevel === "level1") {
-    return (
-      <MoneyLevel1
-        onBack={() => setSelectedMoneyLevel(null)}
-      />
-    );
+    return <MoneyLevel1 onBack={() => setSelectedMoneyLevel(null)} />;
   }
 
   /* =========================
@@ -240,11 +250,7 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (selectedMoneyGame && selectedMoneyLevel === "level2") {
-    return (
-      <MoneyLevel2
-        onBack={() => setSelectedMoneyLevel(null)}
-      />
-    );
+    return <MoneyLevel2 onBack={() => setSelectedMoneyLevel(null)} />;
   }
 
   /* =========================
@@ -252,11 +258,7 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (selectedMoneyGame && selectedMoneyLevel === "level3") {
-    return (
-      <MoneyLevel3
-        onBack={() => setSelectedMoneyLevel(null)}
-      />
-    );
+    return <MoneyLevel3 onBack={() => setSelectedMoneyLevel(null)} />;
   }
 
   /* =========================
@@ -280,9 +282,6 @@ function NewHome({ onBack }) {
         <h1>Measure</h1>
 
         <div className="game-tabs">
-
-          {/* VISUAL LENGTH LEVEL 1 */}
-
           <button
             className="game-card"
             onClick={() => setSelectedMeasureLevel("visualLength")}
@@ -293,8 +292,6 @@ function NewHome({ onBack }) {
             <span>Visual Length</span>
           </button>
 
-          {/* VISUAL LENGTH LEVEL 2 */}
-
           <button
             className="game-card"
             onClick={() => setSelectedMeasureLevel("visualLength2")}
@@ -304,7 +301,6 @@ function NewHome({ onBack }) {
             <span>Level 2</span>
             <span>Visual Length</span>
           </button>
-
         </div>
       </div>
     );
@@ -314,10 +310,7 @@ function NewHome({ onBack }) {
      MEASURE - VISUAL LENGTH LEVEL 1
   ========================= */
 
-  if (
-    selectedMeasureGame &&
-    selectedMeasureLevel === "visualLength"
-  ) {
+  if (selectedMeasureGame && selectedMeasureLevel === "visualLength") {
     return (
       <VisualLengthLevel1
         onBack={() => setSelectedMeasureLevel(null)}
@@ -329,10 +322,7 @@ function NewHome({ onBack }) {
      MEASURE - VISUAL LENGTH LEVEL 2
   ========================= */
 
-  if (
-    selectedMeasureGame &&
-    selectedMeasureLevel === "visualLength2"
-  ) {
+  if (selectedMeasureGame && selectedMeasureLevel === "visualLength2") {
     return (
       <VisualLengthLevel2
         onBack={() => setSelectedMeasureLevel(null)}
@@ -345,9 +335,6 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (selectedEnglishTopic === "tenali") {
-
-    // STORY SCREEN
-    // STORY SCREEN
     if (selectedTenaliOption === "story") {
       return (
         <TenaliStory
@@ -356,26 +343,14 @@ function NewHome({ onBack }) {
       );
     }
 
-    // QUIZ SCREEN
     if (selectedTenaliOption === "quiz") {
       return (
-        <div className="new-page">
-          <button
-            className="top-back-button"
-            onClick={() => setSelectedTenaliOption(null)}
-            type="button"
-          >
-            ← BACK
-          </button>
-
-          <h1>Tenali Rama - Quiz</h1>
-
-          <p>Quiz content will be added here.</p>
-        </div>
+        <TenaliQuiz
+          onBack={() => setSelectedTenaliOption(null)}
+        />
       );
     }
 
-    // STORY / QUIZ MENU
     return (
       <TenaliLessonMenu
         onStory={() => setSelectedTenaliOption("story")}
@@ -385,6 +360,56 @@ function NewHome({ onBack }) {
           setSelectedTenaliOption(null);
         }}
       />
+    );
+  }
+
+  /* =========================
+     TELUGU - PREPOSITION QUIZ PAGE
+  ========================= */
+
+  if (
+    selectedSubject === "Telugu" &&
+    selectedTeluguOption === "quiz" &&
+    selectedTeluguQuizTopic === "preposition"
+  ) {
+    return (
+      <PrepositionQuiz
+        onBack={() => setSelectedTeluguQuizTopic(null)}
+      />
+    );
+  }
+
+  /* =========================
+     TELUGU - QUIZ TOPICS
+  ========================= */
+
+  if (
+    selectedSubject === "Telugu" &&
+    selectedTeluguOption === "quiz"
+  ) {
+    return (
+      <div className="new-page">
+        <button
+          className="top-back-button"
+          onClick={() => setSelectedTeluguOption(null)}
+          type="button"
+        >
+          ← BACK
+        </button>
+
+        <h1>తెలుగు - Quiz</h1>
+
+        <div className="game-tabs">
+          <button
+            className="game-card"
+            onClick={() => setSelectedTeluguQuizTopic("preposition")}
+            type="button"
+          >
+            <div className="game-icon">📝</div>
+            <span>Preposition</span>
+          </button>
+        </div>
+      </div>
     );
   }
 
@@ -404,6 +429,8 @@ function NewHome({ onBack }) {
             setSelectedLevel(null);
             setSelectedEnglishTopic(null);
             setSelectedTenaliOption(null);
+            setSelectedTeluguOption(null);
+            setSelectedTeluguQuizTopic(null);
             setSelectedMoneyGame(false);
             setSelectedMoneyLevel(null);
             setSelectedMeasureGame(false);
@@ -422,6 +449,15 @@ function NewHome({ onBack }) {
           <div className="game-tabs">
             <button
               className="game-card"
+              onClick={() => setSelectedGame("animals")}
+              type="button"
+            >
+              <div className="game-icon">🐘</div>
+              <span>Animals</span>
+            </button>
+
+            <button
+              className="game-card"
               onClick={() => setSelectedGame("match")}
               type="button"
             >
@@ -438,9 +474,7 @@ function NewHome({ onBack }) {
               <span>Video Game</span>
             </button>
           </div>
-
         ) : selectedSubject === "Maths" ? (
-
           /* MATHS */
 
           <div className="game-tabs">
@@ -492,9 +526,7 @@ function NewHome({ onBack }) {
               <span>Measure</span>
             </button>
           </div>
-
         ) : selectedSubject === "English" ? (
-
           /* ENGLISH */
 
           <div className="game-tabs">
@@ -510,11 +542,23 @@ function NewHome({ onBack }) {
               <span>Tenali Rama and the Greedy Farmer</span>
             </button>
           </div>
-
-        ) : (
-
+        ) : selectedSubject === "Telugu" ? (
           /* TELUGU */
 
+          <div className="game-tabs">
+            <button
+              className="game-card"
+              onClick={() => {
+                setSelectedTeluguOption("quiz");
+                setSelectedTeluguQuizTopic(null);
+              }}
+              type="button"
+            >
+              <div className="game-icon">📝</div>
+              <span>Quiz</span>
+            </button>
+          </div>
+        ) : (
           <div className="coming-soon">
             <p>Games for {selectedSubject} will be added here.</p>
           </div>
@@ -540,7 +584,6 @@ function NewHome({ onBack }) {
       <h1 className="new-title">Learning App</h1>
 
       <div className="subject-grid">
-
         {/* TELUGU */}
 
         <button
@@ -584,7 +627,6 @@ function NewHome({ onBack }) {
           <span className="subject-icon">🌱</span>
           <span className="subject-name">EVS</span>
         </button>
-
       </div>
     </div>
   );
