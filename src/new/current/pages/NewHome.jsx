@@ -21,6 +21,12 @@ import MoneyLevel3 from "../components/MoneyLevel3";
 import VisualLengthLevel1 from "../components/VisualLengthLevel1";
 import VisualLengthLevel2 from "../components/VisualLengthLevel2";
 
+// NUMBER SENSE
+import NumberSenseMenu from "../components/NumberSenseMenu";
+import AscendingOrder from "../components/AscendingOrder";
+import CompareNumbers from "../components/CompareNumbers";
+import NumberSense from "../components/NumberSense";
+
 // ENGLISH
 import TenaliRamaGreedyFarmer from "../components/TenaliRamaGreedyFarmer";
 import TenaliLessonMenu from "../components/TenaliLessonMenu";
@@ -53,6 +59,10 @@ function NewHome({ onBack }) {
   // Measure navigation state
   const [selectedMeasureGame, setSelectedMeasureGame] = useState(false);
   const [selectedMeasureLevel, setSelectedMeasureLevel] = useState(null);
+
+  // Number Sense navigation state
+  const [selectedNumberSenseMenu, setSelectedNumberSenseMenu] = useState(false);
+  const [selectedNumberSenseActivity, setSelectedNumberSenseActivity] = useState(null);
 
   /* =========================
      EVS - ANIMALS
@@ -331,6 +341,66 @@ function NewHome({ onBack }) {
   }
 
   /* =========================
+     NUMBER SENSE - MENU
+  ========================= */
+
+  if (selectedNumberSenseMenu && selectedNumberSenseActivity === null) {
+    return (
+      <NumberSenseMenu
+        onBack={() => setSelectedNumberSenseMenu(false)}
+        onSelectActivity={(activity) => {
+          setSelectedNumberSenseActivity(activity);
+        }}
+      />
+    );
+  }
+
+  /* =========================
+     NUMBER SENSE - COMPARE NUMBERS
+  ========================= */
+
+  if (
+    selectedNumberSenseMenu &&
+    selectedNumberSenseActivity === "compare"
+  ) {
+    return (
+      <CompareNumbers
+        onBack={() => setSelectedNumberSenseActivity(null)}
+      />
+    );
+  }
+
+  /* =========================
+     NUMBER SENSE - ASCENDING ORDER QUIZ
+  ========================= */
+
+  if (
+    selectedNumberSenseMenu &&
+    selectedNumberSenseActivity === "ascending"
+  ) {
+    return (
+      <AscendingOrder
+        onBack={() => setSelectedNumberSenseActivity(null)}
+      />
+    );
+  }
+
+  /* =========================
+     NUMBER SENSE - QUIZ
+  ========================= */
+
+  if (
+    selectedNumberSenseMenu &&
+    selectedNumberSenseActivity === "numberSense"
+  ) {
+    return (
+      <NumberSense
+        onBack={() => setSelectedNumberSenseActivity(null)}
+      />
+    );
+  }
+
+  /* =========================
      ENGLISH - TENALI RAMA STORY / QUIZ MENU
   ========================= */
 
@@ -435,6 +505,8 @@ function NewHome({ onBack }) {
             setSelectedMoneyLevel(null);
             setSelectedMeasureGame(false);
             setSelectedMeasureLevel(null);
+            setSelectedNumberSenseMenu(false);
+            setSelectedNumberSenseActivity(null);
           }}
           type="button"
         >
@@ -487,6 +559,8 @@ function NewHome({ onBack }) {
                 setSelectedMoneyLevel(null);
                 setSelectedMeasureGame(false);
                 setSelectedMeasureLevel(null);
+                setSelectedNumberSenseMenu(false);
+                setSelectedNumberSenseActivity(null);
               }}
               type="button"
             >
@@ -503,6 +577,8 @@ function NewHome({ onBack }) {
                 setSelectedLevel(null);
                 setSelectedMeasureGame(false);
                 setSelectedMeasureLevel(null);
+                setSelectedNumberSenseMenu(false);
+                setSelectedNumberSenseActivity(null);
               }}
               type="button"
             >
@@ -519,11 +595,33 @@ function NewHome({ onBack }) {
                 setSelectedLevel(null);
                 setSelectedMoneyGame(false);
                 setSelectedMoneyLevel(null);
+                setSelectedNumberSenseMenu(false);
+                setSelectedNumberSenseActivity(null);
               }}
               type="button"
             >
               <div className="game-icon">📏</div>
               <span>Measure</span>
+            </button>
+
+            {/* NUMBER SENSE */}
+
+            <button
+              className="game-card"
+              onClick={() => {
+                setSelectedNumberSenseMenu(true);
+                setSelectedNumberSenseActivity(null);
+                setSelectedMathsGame(null);
+                setSelectedLevel(null);
+                setSelectedMoneyGame(false);
+                setSelectedMoneyLevel(null);
+                setSelectedMeasureGame(false);
+                setSelectedMeasureLevel(null);
+              }}
+              type="button"
+            >
+              <div className="game-icon">🔢</div>
+              <span>Number Sense</span>
             </button>
           </div>
         ) : selectedSubject === "English" ? (

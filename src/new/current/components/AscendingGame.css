@@ -1,0 +1,476 @@
+
+/* =========================================
+   ASCENDING ORDER - NEW LEARNING APP DESIGN
+========================================= */
+
+.ascending-page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 24px clamp(14px, 3vw, 38px) 40px;
+  background: linear-gradient(120deg, #eef7ff 0%, #fffaf0 100%);
+  color: #243247;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.ascending-header {
+  width: min(1180px, 100%);
+  margin: 0 auto 22px;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.ascending-back-button {
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 18px;
+  background: #ffffff;
+  color: #0878e8;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(31, 78, 121, 0.12);
+}
+
+.ascending-back-button:hover {
+  background: #eaf4ff;
+}
+
+.ascending-heading {
+  flex: 1;
+  text-align: center;
+  padding-right: 90px;
+}
+
+.ascending-eyebrow {
+  color: #1685f8;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+}
+
+.ascending-heading h1 {
+  margin: 5px 0 8px;
+  color: #173b65;
+  font-size: clamp(25px, 3vw, 36px);
+}
+
+.ascending-heading p {
+  margin: 0;
+  color: #62748a;
+  font-size: 16px;
+}
+
+.ascending-card {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: clamp(16px, 2.5vw, 28px);
+  box-sizing: border-box;
+  border: 1px solid rgba(206, 224, 241, 0.8);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 12px 34px rgba(31, 78, 121, 0.10);
+}
+
+.ascending-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  align-items: start;
+  gap: 24px;
+}
+
+.ascending-number-area h2,
+.ascending-supply-heading h2 {
+  margin: 0;
+  color: #24496f;
+  font-size: 21px;
+}
+
+.ascending-instruction {
+  margin: 8px 0 18px;
+  color: #687b90;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* NUMBER CARDS */
+
+.ascending-number-row {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  min-height: 210px;
+}
+
+.ascending-number-card {
+  width: 160px;
+  min-height: 190px;
+  padding: 13px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  border: 2px solid #d9eaff;
+  border-radius: 18px;
+  background: #f7fbff;
+  cursor: grab;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+
+.ascending-number-card.is-dragging {
+  border-color: #1685f8;
+  box-shadow: 0 10px 24px rgba(22, 133, 248, 0.2);
+}
+
+.ascending-big-number {
+  color: #0878e8;
+  font-size: 35px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* BISCUIT BUCKETS */
+
+.ascending-bucket {
+  width: 100%;
+  min-height: 95px;
+  padding: 8px;
+  border: 2px dashed #b8d8f6;
+  border-radius: 13px;
+  background: #ffffff;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 3px;
+  cursor: pointer;
+}
+
+.ascending-bucket img {
+  width: 27px;
+  height: 27px;
+  object-fit: contain;
+}
+
+.ascending-bucket-placeholder {
+  color: #9aabba;
+  font-size: 12px;
+}
+
+.ascending-bucket-count {
+  color: #526b84;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* DIVIDER */
+
+.ascending-divider {
+  height: 1px;
+  margin: 24px 0;
+  background: #e4edf5;
+}
+
+/* ANSWER SLOTS */
+
+.ascending-answer-row,
+.ascending-number-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 13px;
+}
+
+.ascending-answer-row {
+  margin: 18px 0;
+}
+
+.ascending-answer-slot {
+  width: 76px;
+  height: 70px;
+  border: 2px dashed #9fc9ef;
+  border-radius: 15px;
+  background: #f6fbff;
+  color: #8aa0b5;
+  font-size: 30px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.ascending-answer-slot.is-filled {
+  border-style: solid;
+  border-color: #1685f8;
+  background: #eaf4ff;
+  color: #0878e8;
+}
+
+/* NUMBER SELECTION BUTTONS */
+
+.ascending-number-button {
+  width: 54px;
+  height: 54px;
+  border: 2px solid #cfe4f8;
+  border-radius: 14px;
+  background: #ffffff;
+  color: #24527d;
+  font-size: 23px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.ascending-number-button.is-selected {
+  border-color: #0878e8;
+  background: #1685f8;
+  color: #ffffff;
+  box-shadow: 0 5px 13px rgba(22, 133, 248, 0.22);
+}
+
+/* CHECK BUTTON */
+
+.ascending-check-button {
+  display: block;
+  min-width: 190px;
+  margin: 22px auto 0;
+  padding: 14px 22px;
+  border: 0;
+  border-radius: 13px;
+  background: #1685f8;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 5px 14px rgba(22, 133, 248, 0.2);
+}
+
+.ascending-check-button:hover {
+  background: #0878e8;
+}
+
+/* FEEDBACK MESSAGE */
+
+.ascending-message {
+  margin: 16px auto 0;
+  max-width: 560px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.ascending-message.error {
+  background: #fff0ef;
+  color: #b42318;
+}
+
+.ascending-message.info {
+  background: #eef7ff;
+  color: #24527d;
+}
+
+.ascending-message.success {
+  background: #eaf8ef;
+  color: #18713b;
+}
+
+/* BISCUIT SUPPLY PANEL */
+
+.ascending-supply-panel {
+  padding: 18px;
+  border: 1px solid #dceafa;
+  border-radius: 18px;
+  background: #f7fbff;
+}
+
+.ascending-supply-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ascending-supply-heading span {
+  padding: 5px 9px;
+  border-radius: 20px;
+  background: #e4f1ff;
+  color: #0878e8;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.ascending-supply-panel > p {
+  margin: 8px 0 14px;
+  color: #718398;
+  font-size: 13px;
+}
+
+.ascending-supply-grid {
+  max-height: 480px;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  padding: 3px;
+}
+
+.ascending-biscuit-button {
+  min-width: 0;
+  aspect-ratio: 1;
+  padding: 5px;
+  border: 2px solid transparent;
+  border-radius: 11px;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.ascending-biscuit-button img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ascending-biscuit-button.is-selected {
+  border-color: #1685f8;
+  background: #eaf4ff;
+  box-shadow: 0 0 0 2px rgba(22, 133, 248, 0.12);
+}
+
+.ascending-supply-empty {
+  grid-column: 1 / -1;
+  padding: 18px 4px;
+  color: #718398;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* TABLET */
+
+@media (max-width: 900px) {
+  .ascending-workspace {
+    grid-template-columns: minmax(0, 1fr) 210px;
+    gap: 16px;
+  }
+
+  .ascending-number-card {
+    width: 145px;
+  }
+
+  .ascending-supply-panel {
+    padding: 14px;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 680px) {
+  .ascending-page {
+    padding: 14px 10px 26px;
+  }
+
+  .ascending-header {
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  .ascending-back-button {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .ascending-heading {
+    padding: 12px 0 0;
+  }
+
+  .ascending-heading h1 {
+    font-size: 25px;
+  }
+
+  .ascending-heading p {
+    font-size: 14px;
+  }
+
+  .ascending-card {
+    padding: 14px 11px;
+    border-radius: 18px;
+  }
+
+  .ascending-workspace {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 18px;
+  }
+
+  .ascending-number-area,
+  .ascending-supply-panel {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .ascending-supply-grid {
+    max-height: 145px;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .ascending-number-row {
+    gap: 9px;
+  }
+
+  .ascending-number-card {
+    width: min(30%, 125px);
+    min-width: 92px;
+    min-height: 155px;
+    padding: 9px 6px;
+  }
+
+  .ascending-big-number {
+    font-size: 29px;
+  }
+
+  .ascending-bucket {
+    min-height: 78px;
+    padding: 5px;
+  }
+
+  .ascending-bucket img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .ascending-answer-slot {
+    width: 64px;
+    height: 62px;
+    font-size: 26px;
+  }
+
+  .ascending-number-button {
+    width: 48px;
+    height: 48px;
+    font-size: 21px;
+  }
+}
+
+@media (max-width: 380px) {
+  .ascending-supply-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .ascending-number-card {
+    min-width: 84px;
+  }
+
+  .ascending-instruction {
+    font-size: 13px;
+  }
+}

@@ -1,0 +1,44 @@
+
+.number-sense-page {
+  text-align: center;
+}
+
+.number-sense-subtitle {
+  font-size: 18px;
+  color: #64748b;
+  margin: -10px 0 25px;
+  font-weight: 500;
+}
+
+.number-sense-page .game-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 22px;
+}
+
+.number-sense-page .game-card {
+  min-width: 180px;
+  min-height: 155px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.number-sense-page .game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+}
+
+@media (max-width: 600px) {
+  .number-sense-page .game-tabs {
+    gap: 14px;
+  }
+
+  .number-sense-page .game-card {
+    min-width: 140px;
+    min-height: 135px;
+  }
+
+  .number-sense-subtitle {
+    font-size: 16px;
+  }
+}
