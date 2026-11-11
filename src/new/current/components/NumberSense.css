@@ -565,3 +565,203 @@
     font-size: 11px;
   }
 }
+
+
+/* NUMBER RANGE SELECTION */
+
+.number-sense-range-section {
+  width: 100%;
+  max-width: 340px;
+  margin: 20px auto 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.number-sense-range-label {
+  font-size: 17px;
+  font-weight: 700;
+  color: #263b5a;
+  text-align: center;
+}
+
+.number-sense-range-select {
+  width: 100%;
+  max-width: 250px;
+  min-height: 52px;
+  padding: 10px 16px;
+  border: 2px solid #b9d8f5;
+  border-radius: 12px;
+  background-color: #ffffff;
+  color: #24476b;
+  font-size: 19px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.number-sense-range-select:focus {
+  border-color: #3987d5;
+  box-shadow: 0 0 0 3px rgba(57, 135, 213, 0.15);
+}
+
+.number-sense-range-hint {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .number-sense-range-section {
+    max-width: 100%;
+    margin: 16px auto 22px;
+  }
+
+  .number-sense-range-select {
+    max-width: 220px;
+    font-size: 17px;
+  }
+
+  .number-sense-range-label {
+    font-size: 16px;
+  }
+}
+
+/* ========================================
+   NUMBER RANGE DROPDOWN
+======================================== */
+
+.number-sense-range-section {
+  width: 100%;
+  max-width: 340px;
+  margin: 20px auto 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.number-sense-range-label {
+  font-size: 17px;
+  font-weight: 700;
+  color: #263b5a;
+  text-align: center;
+}
+
+.number-sense-range-select {
+  width: 100%;
+  max-width: 250px;
+  min-height: 52px;
+  padding: 10px 16px;
+  border: 2px solid #b9d8f5;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #24476b;
+  font-size: 19px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.number-sense-range-select:focus {
+  border-color: #3987d5;
+  box-shadow: 0 0 0 3px rgba(57, 135, 213, 0.15);
+}
+
+.number-sense-range-hint {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ========================================
+   PRACTICE WORKSHEET DIVIDER
+======================================== */
+
+.number-sense-practice-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.number-sense-practice-divider::before,
+.number-sense-practice-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #dbe4ee;
+}
+
+/* ========================================
+   PRACTICE WORKSHEET BUTTON
+======================================== */
+
+.number-sense-practice-button {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  background: #e8f7f0;
+  color: #137d58;
+  border: 2px solid #7bc9a5;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.number-sense-practice-button:hover {
+  background: #d3f1e2;
+  border-color: #48ad80;
+  transform: translateY(-1px);
+}
+
+.number-sense-practice-button:active {
+  transform: scale(0.98);
+}
+
+.number-sense-practice-description {
+  margin: 10px 0 18px;
+  font-size: 13px;
+  color: #64748b;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ========================================
+   RESPONSIVE STYLING
+======================================== */
+
+@media (max-width: 600px) {
+  .number-sense-range-section {
+    max-width: 100%;
+    margin: 16px auto 22px;
+  }
+
+  .number-sense-range-select {
+    max-width: 220px;
+    font-size: 17px;
+  }
+
+  .number-sense-range-label {
+    font-size: 16px;
+  }
+
+  .number-sense-practice-button {
+    font-size: 15px;
+    padding: 13px 12px;
+  }
+}

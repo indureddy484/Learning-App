@@ -19,6 +19,7 @@ function NumberSenseMenu({ onBack, onSelectActivity }) {
       </p>
 
       <div className="game-tabs">
+        {/* COMPARE NUMBERS */}
         <button
           className="game-card"
           onClick={() => onSelectActivity("compare")}
@@ -28,6 +29,7 @@ function NumberSenseMenu({ onBack, onSelectActivity }) {
           <span>Compare Numbers</span>
         </button>
 
+        {/* ASCENDING ORDER */}
         <button
           className="game-card"
           onClick={() => onSelectActivity("ascending")}
@@ -37,13 +39,14 @@ function NumberSenseMenu({ onBack, onSelectActivity }) {
           <span>Ascending Order</span>
         </button>
 
+        {/* WORD PROBLEMS */}
         <button
           className="game-card"
           onClick={() => onSelectActivity("numberSense")}
           type="button"
         >
           <div className="game-icon">🧩</div>
-          <span>Number Sense</span>
+          <span>Word Problems</span>
         </button>
       </div>
     </div>

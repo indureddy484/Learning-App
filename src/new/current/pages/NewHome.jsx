@@ -56,7 +56,7 @@ function NewHome({ onBack }) {
   const [selectedMoneyGame, setSelectedMoneyGame] = useState(false);
   const [selectedMoneyLevel, setSelectedMoneyLevel] = useState(null);
 
-  // Measure navigation state
+  // Length navigation state
   const [selectedMeasureGame, setSelectedMeasureGame] = useState(false);
   const [selectedMeasureLevel, setSelectedMeasureLevel] = useState(null);
 
@@ -272,7 +272,7 @@ function NewHome({ onBack }) {
   }
 
   /* =========================
-     MEASURE - LEVEL SELECTION
+     LENGTH - LEVEL SELECTION
   ========================= */
 
   if (selectedMeasureGame && selectedMeasureLevel === null) {
@@ -289,7 +289,7 @@ function NewHome({ onBack }) {
           ← BACK
         </button>
 
-        <h1>Measure</h1>
+        <h1>Length</h1>
 
         <div className="game-tabs">
           <button
@@ -317,7 +317,7 @@ function NewHome({ onBack }) {
   }
 
   /* =========================
-     MEASURE - VISUAL LENGTH LEVEL 1
+     LENGTH - VISUAL LENGTH LEVEL 1
   ========================= */
 
   if (selectedMeasureGame && selectedMeasureLevel === "visualLength") {
@@ -329,7 +329,7 @@ function NewHome({ onBack }) {
   }
 
   /* =========================
-     MEASURE - VISUAL LENGTH LEVEL 2
+     LENGTH - VISUAL LENGTH LEVEL 2
   ========================= */
 
   if (selectedMeasureGame && selectedMeasureLevel === "visualLength2") {
@@ -601,7 +601,7 @@ function NewHome({ onBack }) {
               type="button"
             >
               <div className="game-icon">📏</div>
-              <span>Measure</span>
+              <span>Length</span>
             </button>
 
             {/* NUMBER SENSE */}

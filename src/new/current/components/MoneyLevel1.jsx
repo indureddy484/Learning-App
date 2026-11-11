@@ -28,6 +28,9 @@ const TOPIC_OPTIONS = [
   { value: "coins-1-5", label: "₹1 + ₹5 Coins" },
   { value: "coins-2-5", label: "₹2 + ₹5 Coins" },
   { value: "coins-1-2-5", label: "₹1 + ₹2 + ₹5 Coins" },
+  { value: "note-10-coins", label: "₹10 Note + Coins" },
+  { value: "note-20-coins", label: "₹20 Note + Coins" },
+  { value: "note-50-coins", label: "₹50 Note + Coins" },
   {
     value: "mixed-notes-coins",
     label: "₹10 + ₹20 + ₹50 Notes & ₹1 + ₹2 + ₹5 Coins",
@@ -35,6 +38,18 @@ const TOPIC_OPTIONS = [
 ];
 
 function getTopic(topic) {
+  const noteAndCoinsMatch = topic.match(/^note-(10|20|50)-coins$/);
+
+  if (noteAndCoinsMatch) {
+    const noteValue = Number(noteAndCoinsMatch[1]);
+    return {
+      values: [noteValue, 1, 2, 5],
+      kind: "mixed",
+      type: "combo",
+      label: `₹${noteValue} Note + Coins`,
+    };
+  }
+
   if (topic === "mixed-notes-coins") {
     return {
       values: [10, 20, 50, 1, 2, 5],
@@ -76,42 +91,77 @@ function shuffle(items) {
   return result;
 }
 
+// Generate mixed note-and-coin questions. At least one selected note and
+// one selected coin are included. Use no more than 5 notes and 6 coins,
+// and keep the total strictly below maxAmount.
+function pickRandomSubset(values) {
+  const shuffled = shuffle(values);
+  const count = Math.floor(Math.random() * values.length) + 1;
+  return shuffled.slice(0, count);
+}
+
+function makeNotesAndCoinsQuestion(noteValues, coinValues, maxAmount = 100) {
+  const selectedNotes = pickRandomSubset(noteValues);
+  const selectedCoins = pickRandomSubset(coinValues);
+  const items = [];
+  let answer = 0;
+
+  // Add at least one of every selected note denomination.
+  selectedNotes.forEach((value) => {
+    items.push({ value, kind: "note" });
+    answer += value;
+  });
+
+  // Add at least one of every selected coin denomination.
+  selectedCoins.forEach((value) => {
+    items.push({ value, kind: "coin" });
+    answer += value;
+  });
+
+  // Choose a random target within the quantity limits: 5 notes + 6 coins.
+  const maximumItemCount = 11;
+  const targetCount =
+    items.length +
+    Math.floor(Math.random() * (maximumItemCount - items.length + 1));
+
+  const availableDenominations = [
+    ...selectedNotes.map((value) => ({ value, kind: "note" })),
+    ...selectedCoins.map((value) => ({ value, kind: "coin" })),
+  ];
+
+  while (items.length < targetCount) {
+    const noteCount = items.filter((item) => item.kind === "note").length;
+    const coinCount = items.filter((item) => item.kind === "coin").length;
+
+    const affordable = shuffle(availableDenominations).filter((item) => {
+      const withinQuantityLimit =
+        item.kind === "note" ? noteCount < 5 : coinCount < 6;
+      return withinQuantityLimit && answer + item.value < maxAmount;
+    });
+
+    if (affordable.length === 0) break;
+
+    const nextItem = affordable[0];
+    items.push(nextItem);
+    answer += nextItem.value;
+  }
+
+  return { items: shuffle(items), answer };
+}
+
 function makeQuestion(topic, maxAmount = 100) {
   const config = getTopic(topic);
 
-  // Mixed-money questions always contain at least one note and one coin.
-  // Any of the six denominations may repeat or be omitted, and the total
-  // must remain strictly below the selected maximum amount (₹100 for this topic).
+  // ₹10 / ₹20 / ₹50 note + coins activities.
+  const noteAndCoinsMatch = topic.match(/^note-(10|20|50)-coins$/);
+  if (noteAndCoinsMatch) {
+    const noteValue = Number(noteAndCoinsMatch[1]);
+    return makeNotesAndCoinsQuestion([noteValue], [1, 2, 5], 100);
+  }
+
+  // Final overall combination: all note and coin denominations are eligible.
   if (topic === "mixed-notes-coins") {
-    const noteValues = [10, 20, 50];
-    const coinValues = [1, 2, 5];
-    const items = [];
-    let answer = 0;
-
-    const firstNote = noteValues[Math.floor(Math.random() * noteValues.length)];
-    const firstCoin = coinValues[Math.floor(Math.random() * coinValues.length)];
-
-    items.push({ value: firstNote, kind: "note" });
-    items.push({ value: firstCoin, kind: "coin" });
-    answer = firstNote + firstCoin;
-
-    // Vary the number of items so questions can contain two or more notes/coins.
-    const desiredCount = Math.floor(Math.random() * 7) + 2;
-
-    while (items.length < desiredCount) {
-      const candidates = shuffle([
-        ...noteValues.map((value) => ({ value, kind: "note" })),
-        ...coinValues.map((value) => ({ value, kind: "coin" })),
-      ]).filter((item) => answer + item.value < maxAmount);
-
-      if (candidates.length === 0) break;
-
-      const nextItem = candidates[0];
-      items.push(nextItem);
-      answer += nextItem.value;
-    }
-
-    return { items: shuffle(items), answer };
+    return makeNotesAndCoinsQuestion([10, 20, 50], [1, 2, 5], 100);
   }
 
   if (topic === "note-50") {
@@ -346,9 +396,15 @@ function MoneyLevel1({ onBack }) {
 
   const isFiftyNoteOnly = topic === "note-50";
   const isMixedMoney = topic === "mixed-notes-coins";
+  const isNoteAndCoins = [
+    "note-10-coins",
+    "note-20-coins",
+    "note-50-coins",
+  ].includes(topic);
+  const hasFixedMixedLimit = isMixedMoney || isNoteAndCoins;
   const currentLimit = isFiftyNoteOnly
     ? fiftyNoteLimit
-    : isMixedMoney
+    : hasFixedMixedLimit
       ? 100
       : maxAmount;
   const question = questions[questionIndex];
@@ -475,12 +531,14 @@ function MoneyLevel1({ onBack }) {
           value={topic}
           onChange={(event) => {
             const nextTopic = event.target.value;
-            const limit =
-              nextTopic === "note-50"
-                ? fiftyNoteLimit
-                : nextTopic === "mixed-notes-coins"
-                  ? 100
-                  : maxAmount;
+            const nextIsMixed =
+              nextTopic === "mixed-notes-coins" ||
+              ["note-10-coins", "note-20-coins", "note-50-coins"].includes(nextTopic);
+            const limit = nextTopic === "note-50"
+              ? fiftyNoteLimit
+              : nextIsMixed
+                ? 100
+                : maxAmount;
             resetForTopic(nextTopic, limit);
           }}
         >
@@ -496,7 +554,7 @@ function MoneyLevel1({ onBack }) {
           id="money-max-amount"
           className="money-denomination-select"
           value={currentLimit}
-          disabled={isMixedMoney}
+          disabled={hasFixedMixedLimit}
           onChange={(event) => {
             const limit = Number(event.target.value);
             if (isFiftyNoteOnly) setFiftyNoteLimit(limit);
@@ -504,7 +562,7 @@ function MoneyLevel1({ onBack }) {
             resetForTopic(topic, limit);
           }}
         >
-          {isMixedMoney ? (
+          {hasFixedMixedLimit ? (
             <option value={100}>Less than ₹100</option>
           ) : isFiftyNoteOnly ? (
             <>

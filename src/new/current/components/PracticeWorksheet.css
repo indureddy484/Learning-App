@@ -1,0 +1,284 @@
+
+.practice-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(15, 35, 65, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.practice-modal {
+  width: 100%;
+  max-width: 430px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 30px 25px;
+  box-shadow: 0 18px 45px rgba(15, 35, 65, 0.2);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.practice-modal-icon {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.practice-modal h2 {
+  font-size: 24px;
+  color: #24476b;
+  margin: 0 0 10px;
+}
+
+.practice-modal-description {
+  font-size: 15px;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0 0 18px;
+}
+
+.practice-modal-range {
+  display: inline-block;
+  background: #e8f3ff;
+  color: #2879c8;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 9px 18px;
+  border-radius: 25px;
+  margin: 0 0 22px;
+}
+
+.practice-modal-label {
+  display: block;
+  font-size: 17px;
+  font-weight: 700;
+  color: #263b5a;
+  margin-bottom: 12px;
+}
+
+.practice-modal-input {
+  display: block;
+  width: 100%;
+  max-width: 220px;
+  height: 55px;
+  margin: 0 auto;
+  padding: 8px 15px;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  color: #24476b;
+  border: 2px solid #b9d8f5;
+  border-radius: 12px;
+  background: white;
+  box-sizing: border-box;
+}
+
+.practice-modal-input:focus {
+  outline: none;
+  border-color: #3987d5;
+  box-shadow: 0 0 0 3px rgba(57, 135, 213, 0.15);
+}
+
+.practice-modal-hint {
+  font-size: 13px;
+  color: #64748b;
+  margin: 10px 0 20px;
+}
+
+.practice-modal-error {
+  color: #c62828;
+  font-size: 13px;
+  margin: 10px 0;
+}
+
+.practice-generate-button,
+.practice-cancel-button {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.practice-generate-button {
+  background: #2879c8;
+  color: white;
+  border: none;
+  margin-bottom: 12px;
+}
+
+.practice-generate-button:hover {
+  background: #1b65ad;
+}
+
+.practice-cancel-button {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #dbe4ee;
+}
+
+.practice-cancel-button:hover {
+  background: #e2e8f0;
+}
+
+@media (max-width: 600px) {
+  .practice-modal {
+    padding: 25px 18px;
+  }
+
+  .practice-modal h2 {
+    font-size: 21px;
+  }
+}
+
+/* ========================================
+   PRACTICE WORKSHEET POPUP
+======================================== */
+
+.practice-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(15, 35, 65, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.practice-modal {
+  width: 100%;
+  max-width: 430px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 30px 25px;
+  box-shadow: 0 18px 45px rgba(15, 35, 65, 0.2);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.practice-modal-icon {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.practice-modal h2 {
+  font-size: 24px;
+  color: #24476b;
+  margin: 0 0 10px;
+}
+
+.practice-modal-description {
+  font-size: 15px;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0 0 18px;
+}
+
+.practice-modal-range {
+  display: inline-block;
+  background: #e8f3ff;
+  color: #2879c8;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 9px 18px;
+  border-radius: 25px;
+  margin: 0 0 22px;
+}
+
+.practice-modal-label {
+  display: block;
+  font-size: 17px;
+  font-weight: 700;
+  color: #263b5a;
+  margin-bottom: 12px;
+}
+
+.practice-modal-input {
+  display: block;
+  width: 100%;
+  max-width: 220px;
+  height: 55px;
+  margin: 0 auto;
+  padding: 8px 15px;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  color: #24476b;
+  border: 2px solid #b9d8f5;
+  border-radius: 12px;
+  background: white;
+  box-sizing: border-box;
+}
+
+.practice-modal-input:focus {
+  outline: none;
+  border-color: #3987d5;
+  box-shadow: 0 0 0 3px rgba(57, 135, 213, 0.15);
+}
+
+.practice-modal-hint {
+  font-size: 13px;
+  color: #64748b;
+  margin: 10px 0 20px;
+}
+
+.practice-modal-error {
+  color: #c62828;
+  font-size: 13px;
+  margin: 10px 0;
+}
+
+.practice-generate-button,
+.practice-cancel-button {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.practice-generate-button {
+  background: #2879c8;
+  color: white;
+  border: none;
+  margin-bottom: 12px;
+}
+
+.practice-generate-button:hover {
+  background: #1b65ad;
+}
+
+.practice-cancel-button {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #dbe4ee;
+}
+
+.practice-cancel-button:hover {
+  background: #e2e8f0;
+}
+
+@media (max-width: 600px) {
+  .practice-modal {
+    padding: 25px 18px;
+  }
+
+  .practice-modal h2 {
+    font-size: 21px;
+  }
+}

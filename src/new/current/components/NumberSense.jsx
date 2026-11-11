@@ -1,8 +1,10 @@
 
 import { useEffect, useState } from "react";
 import "./NumberSense.css";
+import PracticeWorksheet from "./PracticeWorksheet";
 
 const TIMER_OPTIONS = [2, 5, 10, 15, 20];
+const NUMBER_RANGE_OPTIONS = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
 const randomInt = (min, max) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
@@ -18,14 +20,17 @@ const shuffle = (items) => {
   return result;
 };
 
-const makeNumberOptions = (correct, candidates) => {
+// Generates four unique answer choices within the selected range.
+const makeNumberOptions = (correct, candidates, maxNumber) => {
   const unique = [...new Set([correct, ...candidates])].filter(
     (number) =>
-      Number.isInteger(number) && number >= 1 && number <= 100
+      Number.isInteger(number) &&
+      number >= 1 &&
+      number <= maxNumber
   );
 
   while (unique.length < 4) {
-    const candidate = randomInt(1, 100);
+    const candidate = randomInt(1, maxNumber);
     if (!unique.includes(candidate)) unique.push(candidate);
   }
 
@@ -65,7 +70,9 @@ const TEXT = {
     languageDescription: "Select the language for your quiz.",
 
     setupTitle: "Number Sense Quiz",
-    setupDescription: "Choose your quiz time.",
+    setupDescription: "Choose your number range and quiz time.",
+    selectRange: "Select Number Range",
+    rangeHint: "All quiz numbers will stay within this range.",
     selectTime: "Select Time",
     minutes: "min",
     setupHint: "Answer as many questions as you can before time runs out!",
@@ -120,7 +127,9 @@ const TEXT = {
     languageDescription: "Mee quiz language select cheyyandi.",
 
     setupTitle: "Number Sense Quiz",
-    setupDescription: "Quiz time select cheyyandi.",
+    setupDescription: "Number range mariyu quiz time select cheyyandi.",
+    selectRange: "Number Range Select Cheyyandi",
+    rangeHint: "Ee range lopala numbers matrame vastayi.",
     selectTime: "Time Select Cheyyandi",
     minutes: "min",
     setupHint:
@@ -160,24 +169,24 @@ const TEXT = {
       descending: "Descending Order",
     },
 
+    // Updated child-friendly Tenglish question wording
     prompts: {
       before: (number) =>
-        `${number} mundu ye number vastundi?`,
+        `${number} mundu yemi number vastundi?`,
       after: (number) =>
-        `${number} tarvatha ye number vastundi?`,
+        `${number} taruvata yemi number vastundi?`,
       between: (first, second) =>
-        `${first} ki ${second} ki madhyalo ye number vastundi?`,
-      smallest: "Veetilo chinna number edi?",
-      biggest: "Veetilo pedda number edi?",
-      ascending:
-        "Chinna number nundi pedda number varaku arrange cheyyandi.",
-      descending:
-        "Pedda number nundi chinna number varaku arrange cheyyandi.",
+        `${first} and ${second} ki madhyalo yemi number vastundi?`,
+      smallest: "Veetilo chinna number yedi?",
+      biggest: "Veetilo pedda number yedi?",
+      ascending: "Ascending order lo arrange cheyyandi.",
+      descending: "Descending order lo arrange cheyyandi.",
     },
   },
 };
 
-const generateQuestion = (language = "english") => {
+// GENERATE QUESTIONS WITHIN THE SELECTED NUMBER RANGE
+const generateQuestion = (language = "english", maxNumber = 10) => {
   const text = TEXT[language] || TEXT.english;
 
   const types = [
@@ -194,45 +203,43 @@ const generateQuestion = (language = "english") => {
 
   // BEFORE NUMBER
   if (type === "before") {
-    const number = randomInt(2, 100);
+    const number = randomInt(2, maxNumber);
     const correct = number - 1;
 
     return {
       type,
       title: text.titles.before,
       prompt: text.prompts.before(number),
-      options: makeNumberOptions(correct, [
-        number - 2,
-        number + 1,
-        number + 2,
-      ]),
+      options: makeNumberOptions(
+        correct,
+        [number - 2, number + 1, number + 2],
+        maxNumber
+      ),
       correct,
     };
   }
 
   // AFTER NUMBER
   if (type === "after") {
-    const number = randomInt(1, 99);
+    const number = randomInt(1, maxNumber - 1);
     const correct = number + 1;
 
     return {
       type,
       title: text.titles.after,
       prompt: text.prompts.after(number),
-      options: makeNumberOptions(correct, [
-        number - 1,
-        number + 2,
-        number + 3,
-      ]),
+      options: makeNumberOptions(
+        correct,
+        [number - 1, number + 2, number + 3],
+        maxNumber
+      ),
       correct,
     };
   }
 
   // BETWEEN NUMBERS
-  // Exactly one number comes between the given numbers.
-  // Example: 7 and 9 -> 8
   if (type === "between") {
-    const first = randomInt(1, 98);
+    const first = randomInt(1, maxNumber - 2);
     const second = first + 2;
     const correct = first + 1;
 
@@ -241,11 +248,11 @@ const generateQuestion = (language = "english") => {
       title: text.titles.between,
       prompt: text.prompts.between(first, second),
       numbers: [first, second],
-      options: makeNumberOptions(correct, [
-        first - 1,
-        first + 3,
-        second + 1,
-      ]),
+      options: makeNumberOptions(
+        correct,
+        [first - 1, first + 3, second + 1],
+        maxNumber
+      ),
       correct,
     };
   }
@@ -255,7 +262,7 @@ const generateQuestion = (language = "english") => {
     const numbers = [];
 
     while (numbers.length < 3) {
-      const number = randomInt(1, 100);
+      const number = randomInt(1, maxNumber);
       if (!numbers.includes(number)) numbers.push(number);
     }
 
@@ -280,10 +287,14 @@ const generateQuestion = (language = "english") => {
           ? text.prompts.smallest
           : text.prompts.biggest,
       numbers,
-      options: makeNumberOptions(correct, [
-        ...numbers.filter((number) => number !== correct),
-        distractor,
-      ]),
+      options: makeNumberOptions(
+        correct,
+        [
+          ...numbers.filter((number) => number !== correct),
+          distractor,
+        ],
+        maxNumber
+      ),
       correct,
     };
   }
@@ -292,7 +303,7 @@ const generateQuestion = (language = "english") => {
   const numbers = [];
 
   while (numbers.length < 3) {
-    const number = randomInt(1, 100);
+    const number = randomInt(1, maxNumber);
     if (!numbers.includes(number)) numbers.push(number);
   }
 
@@ -339,13 +350,20 @@ const isCorrectAnswer = (selected, correct) => {
 
 function NumberSense({ onBack }) {
   const [selectedLanguage, setSelectedLanguage] = useState(null);
+  const [selectedMaxNumber, setSelectedMaxNumber] = useState(10);
   const [selectedDuration, setSelectedDuration] = useState(5);
+
+  // Controls the Practice Worksheet popup independently of the quiz.
+  const [showPracticeWorksheet, setShowPracticeWorksheet] =
+    useState(false);
 
   const [quizStarted, setQuizStarted] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState(5 * 60);
-  const [question, setQuestion] = useState(generateQuestion);
+  const [question, setQuestion] = useState(() =>
+    generateQuestion("english", 10)
+  );
   const [selectedAnswer, setSelectedAnswer] = useState(null);
 
   const [questionNumber, setQuestionNumber] = useState(1);
@@ -375,12 +393,12 @@ function NumberSense({ onBack }) {
   // LANGUAGE SELECTION
   const chooseLanguage = (language) => {
     setSelectedLanguage(language);
-    setQuestion(generateQuestion(language));
+    setQuestion(generateQuestion(language, selectedMaxNumber));
   };
 
   // START QUIZ
   const startQuiz = () => {
-    setQuestion(generateQuestion(selectedLanguage));
+    setQuestion(generateQuestion(selectedLanguage, selectedMaxNumber));
     setSelectedAnswer(null);
     setQuestionNumber(1);
     setCorrectCount(0);
@@ -406,7 +424,9 @@ function NumberSense({ onBack }) {
       setIncorrectCount((previous) => previous + 1);
     }
 
-    setQuestion(generateQuestion(selectedLanguage));
+    setQuestion(
+      generateQuestion(selectedLanguage, selectedMaxNumber)
+    );
     setSelectedAnswer(null);
     setQuestionNumber((previous) => previous + 1);
   };
@@ -422,7 +442,9 @@ function NumberSense({ onBack }) {
     setQuizCompleted(false);
     setSelectedDuration(5);
     setTimeLeft(5 * 60);
-    setQuestion(generateQuestion(selectedLanguage));
+    setQuestion(
+      generateQuestion(selectedLanguage, selectedMaxNumber)
+    );
     setSelectedAnswer(null);
     setQuestionNumber(1);
     setCorrectCount(0);
@@ -491,7 +513,7 @@ function NumberSense({ onBack }) {
     );
   }
 
-  // STEP 2: TIMER SELECTION
+  // STEP 2: NUMBER RANGE AND TIMER SELECTION
   if (!quizStarted) {
     return (
       <main className="number-sense-quiz-page">
@@ -516,6 +538,36 @@ function NumberSense({ onBack }) {
             {text.setupDescription}
           </p>
 
+          {/* NUMBER RANGE SELECTION */}
+          <div className="number-sense-range-section">
+            <label
+              htmlFor="number-sense-range"
+              className="number-sense-range-label"
+            >
+              {text.selectRange}
+            </label>
+
+            <select
+              id="number-sense-range"
+              className="number-sense-range-select"
+              value={selectedMaxNumber}
+              onChange={(event) =>
+                setSelectedMaxNumber(Number(event.target.value))
+              }
+            >
+              {NUMBER_RANGE_OPTIONS.map((maxNumber) => (
+                <option key={maxNumber} value={maxNumber}>
+                  ≤ {maxNumber}
+                </option>
+              ))}
+            </select>
+
+            <p className="number-sense-range-hint">
+              {text.rangeHint}
+            </p>
+          </div>
+
+          {/* TIMER SELECTION */}
           <h3>{text.selectTime}</h3>
 
           <div className="number-sense-timer-options">
@@ -539,6 +591,7 @@ function NumberSense({ onBack }) {
             {text.setupHint}
           </p>
 
+          {/* EXISTING TIMED QUIZ BUTTON */}
           <button
             className="number-sense-primary-button"
             onClick={startQuiz}
@@ -546,6 +599,37 @@ function NumberSense({ onBack }) {
           >
             {text.startQuiz}
           </button>
+
+          {/* SEPARATE PRACTICE WORKSHEET FEATURE */}
+          <div className="number-sense-practice-divider">
+            <span>OR</span>
+          </div>
+
+          <button
+            className="number-sense-practice-button"
+            type="button"
+            onClick={() => setShowPracticeWorksheet(true)}
+          >
+            🖨️{" "}
+            {selectedLanguage === "tenglish"
+              ? "Practice Worksheet Print Cheyyandi"
+              : "Print Practice Worksheet"}
+          </button>
+
+          <p className="number-sense-practice-description">
+            {selectedLanguage === "tenglish"
+              ? "Timer lekunda practice cheyyadaniki worksheet."
+              : "Generate a worksheet for practice without a timer."}
+          </p>
+
+          {/* PRACTICE WORKSHEET POPUP */}
+          {showPracticeWorksheet && (
+            <PracticeWorksheet
+              language={selectedLanguage}
+              maxNumber={selectedMaxNumber}
+              onClose={() => setShowPracticeWorksheet(false)}
+            />
+          )}
 
           <button
             className="number-sense-secondary-button"
