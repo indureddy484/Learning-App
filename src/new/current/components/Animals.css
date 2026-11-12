@@ -1,9 +1,12 @@
 
+/* MAIN PAGE */
+
 .animals-layout {
   min-height: 100vh;
   padding: 20px;
   background: #f5f7fc;
   box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
 }
 
 /* HEADER */
@@ -31,6 +34,10 @@
   cursor: pointer;
 }
 
+.animals-back-button:hover {
+  background: #48258f;
+}
+
 /* MAIN LAYOUT */
 
 .animals-main {
@@ -39,7 +46,7 @@
   align-items: flex-start;
 }
 
-/* SIDEBAR */
+/* LEFT SIDEBAR */
 
 .animals-sidebar {
   width: 250px;
@@ -48,12 +55,17 @@
   background: white;
   border-radius: 14px;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
 }
 
 .animals-sidebar h2 {
   margin: 0 0 18px;
   color: #30345b;
+  font-size: 24px;
+  font-weight: 700;
 }
+
+/* CATEGORY LIST */
 
 .animals-category-list {
   display: flex;
@@ -87,20 +99,40 @@
   color: white;
 }
 
+/* EATING HABITS SECTION */
+
+.animals-eating-habits {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 2px solid #e9e5f7;
+}
+
+.animals-eating-habits h2 {
+  margin: 0 0 18px;
+  color: #30345b;
+  font-size: 24px;
+  font-weight: 700;
+}
+
 /* RIGHT CONTENT */
 
 .animals-content {
   flex: 1;
   min-width: 0;
+  min-height: 500px;
   padding: 20px;
   background: white;
   border-radius: 14px;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
 }
 
 .animals-content h2 {
-  margin: 0 0 22px;
-  color: #30345b;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 27px;
+  font-weight: 700;
+  color: #26345b;
+  margin: 0 0 24px;
 }
 
 /* ANIMAL GRID */
@@ -108,188 +140,11 @@
 .animals-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
-}
-
-.animal-card {
-  overflow: hidden;
-  padding: 12px;
-  background: #f8f8fc;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-  text-align: center;
-  transition: transform 0.2s;
-}
-
-.animal-card:hover {
-  transform: translateY(-4px);
-}
-
-.animal-thumbnail {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 145px;
-  background: #e9e5f7;
-  border-radius: 10px;
-}
-
-.animal-thumbnail span {
-  font-size: 75px;
-}
-
-.animal-card h3 {
-  margin: 12px 0 6px;
-  color: #30345b;
-}
-
-.animal-card p {
-  margin: 0 0 8px;
-  color: #777;
-  font-size: 13px;
-}
-
-
-/* Farm animal video cards */
-.animal-card-clickable {
-  cursor: pointer;
-}
-
-.animal-card-clickable:hover {
-  transform: translateY(-5px);
-}
-
-/* Selected animal video section */
-.animal-video-section {
-  margin-bottom: 25px;
-  padding: 15px;
-  background: #f8f8fc;
-  border-radius: 12px;
-}
-
-.animal-video-section h3 {
-  color: #30345b;
-  margin: 15px 0;
-}
-
-/* Video player */
-.animal-video-player {
-  display: block;
-  width: 100%;
-  max-width: 850px;
-  max-height: 480px;
-  margin: 0 auto;
-  background: #000;
-  border-radius: 12px;
-  object-fit: contain;
-}
-
-/* REAL ANIMAL PHOTOGRAPHS */
-
-.animal-card-image {
-  width: 100%;
-  height: 145px;
-  object-fit: cover;
-  display: block;
-  border-radius: 10px;
-}
-
-/* Farm animal cards */
-.animal-card-clickable {
-  cursor: pointer;
-}
-
-.animal-card-clickable:hover {
-  transform: translateY(-5px);
-}
-
-/* Selected animal video */
-.animal-video-section {
-  margin-bottom: 25px;
-  padding: 15px;
-  background: #f8f8fc;
-  border-radius: 12px;
-}
-
-.animal-video-section h3 {
-  color: #30345b;
-  margin: 15px 0;
-}
-
-.animal-video-player {
-  display: block;
-  width: 100%;
-  max-width: 850px;
-  max-height: 480px;
-  margin: 0 auto;
-  background: #000;
-  border-radius: 12px;
-  object-fit: contain;
-}
-
-/* RESPONSIVE */
-
-@media (max-width: 800px) {
-  .animals-main {
-    flex-direction: column;
-  }
-
-  .animals-sidebar {
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .animals-category-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .animals-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .animals-content {
-    width: 100%;
-    box-sizing: border-box;
-  }
-}
-
-@media (max-width: 450px) {
-  .animals-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .animals-category-list {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-/* =================================
-   ANIMALS PAGE - IMPROVED DESIGN
-================================= */
-
-.animals-layout {
-  font-family: "Segoe UI", Arial, sans-serif;
-}
-
-/* Main content heading */
-.animals-content h2 {
-  font-family: "Segoe UI", Arial, sans-serif;
-  font-size: 27px;
-  font-weight: 700;
-  color: #26345b;
-  margin-bottom: 24px;
-}
-
-/* Animal grid */
-.animals-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
 }
 
-/* Individual animal card */
+/* ANIMAL CARD */
+
 .animal-card {
   background: #ffffff;
   border-radius: 15px;
@@ -310,7 +165,8 @@
   box-shadow: 0 7px 18px rgba(0, 0, 0, 0.12);
 }
 
-/* Image container */
+/* IMAGE CONTAINER */
+
 .animal-thumbnail {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -324,7 +180,8 @@
   align-items: center;
 }
 
-/* Actual animal photograph */
+/* ANIMAL IMAGE */
+
 .animal-card-image {
   display: block;
   width: 100%;
@@ -334,7 +191,8 @@
   border-radius: 11px;
 }
 
-/* Animal name */
+/* ANIMAL NAME */
+
 .animal-card h3 {
   font-family: "Segoe UI", Arial, sans-serif;
   font-size: 19px;
@@ -344,7 +202,8 @@
   margin: 13px 3px 5px;
 }
 
-/* Watch video label */
+/* WATCH VIDEO LABEL */
+
 .animal-card p {
   font-family: "Segoe UI", Arial, sans-serif;
   font-size: 13px;
@@ -354,22 +213,319 @@
   margin: 0 3px 5px;
 }
 
-/* Video player heading */
+/* SELECTED ANIMAL VIDEO SECTION */
+
+.animal-video-section {
+  width: 100%;
+  margin-bottom: 25px;
+  padding: 15px;
+  background: #f8f8fc;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
 .animal-video-section h3 {
+  color: #30345b;
+  margin: 15px 0;
   font-family: "Segoe UI", Arial, sans-serif;
   font-size: 22px;
   font-weight: 700;
 }
 
-/* Responsive layout */
+/* VIDEO PLAYER */
+
+.animal-video-player {
+  display: block;
+  width: 100%;
+  max-width: 1000px;
+  max-height: 550px;
+  margin: 0 auto;
+  background: #000;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+/* RESPONSIVE */
+
 @media (max-width: 1000px) {
   .animals-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
+@media (max-width: 800px) {
+  .animals-main {
+    flex-direction: column;
+  }
+
+  .animals-sidebar {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .animals-category-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .animals-content {
+    width: 100%;
+    min-height: 400px;
+  }
+}
+
 @media (max-width: 600px) {
   .animals-grid {
     grid-template-columns: 1fr;
+  }
+
+  .animals-category-list {
+    grid-template-columns: 1fr;
+  }
+
+  .animals-header h1 {
+    font-size: 25px;
+  }
+}
+
+
+/* =====================================
+   COLLAPSIBLE SIDEBAR HEADINGS
+===================================== */
+
+.animals-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 4px;
+  margin: 0;
+  border: none;
+  background: transparent;
+  color: #30345b;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.animals-section-heading:hover {
+  color: #5936a8;
+}
+
+/* Dropdown arrow */
+
+.animals-dropdown-arrow {
+  font-size: 13px;
+  color: #5936a8;
+  transition: transform 0.3s ease;
+}
+
+.animals-dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+/* =====================================
+   SMOOTH DROPDOWN ANIMATION
+===================================== */
+
+.animals-dropdown {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.4s ease,
+    opacity 0.3s ease;
+}
+
+.animals-dropdown.expanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.animals-dropdown-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Space between heading and options */
+
+.animals-dropdown.expanded .animals-dropdown-inner {
+  padding-top: 12px;
+}
+
+/* Eating Habits section */
+
+.animals-eating-habits {
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 2px solid #e9e5f7;
+}
+
+/* Dropdown button spacing */
+
+.animals-dropdown .animals-category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+/* =========================================
+   IMPROVED ANIMALS SIDEBAR
+========================================= */
+
+.animals-sidebar {
+  width: 280px;
+  min-width: 250px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 5px 18px rgba(35, 43, 80, 0.08);
+  box-sizing: border-box;
+}
+
+/* Section headings */
+
+.animals-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 62px;
+  padding: 14px 16px;
+  margin: 0;
+  border: 1px solid #e9e3f8;
+  border-radius: 12px;
+  background: #f7f5fc;
+  color: #30345b;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.25s ease,
+              border-color 0.25s ease,
+              box-shadow 0.25s ease;
+}
+
+.animals-section-heading:hover {
+  background: #eee9fa;
+  border-color: #cfc1ed;
+}
+
+/* Active / expanded heading */
+
+.animals-section-heading[aria-expanded="true"] {
+  background: #5936a8;
+  color: #ffffff;
+  border-color: #5936a8;
+  box-shadow: 0 4px 10px rgba(89, 54, 168, 0.18);
+}
+
+/* Arrow indicator */
+
+.animals-dropdown-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: #e9e2f8;
+  color: #5936a8;
+  font-size: 11px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease,
+              background 0.3s ease,
+              color 0.3s ease;
+}
+
+.animals-section-heading[aria-expanded="true"] .animals-dropdown-arrow {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.animals-dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+/* Dropdown animation */
+
+.animals-dropdown {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.4s ease,
+              opacity 0.3s ease;
+}
+
+.animals-dropdown.expanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.animals-dropdown-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.animals-dropdown.expanded .animals-dropdown-inner {
+  padding-top: 12px;
+}
+
+/* Category buttons */
+
+.animals-category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.animals-category-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 13px 12px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: #f2f3fa;
+  color: #30345b;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease,
+              color 0.2s ease,
+              transform 0.2s ease;
+}
+
+.animals-category-button:hover {
+  background: #e9e2f8;
+  transform: translateX(3px);
+}
+
+.animals-category-button.active {
+  background: #5936a8;
+  color: #ffffff;
+}
+
+/* Eating Habits section */
+
+.animals-eating-habits {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e9e3f8;
+}
+
+/* Responsive sidebar */
+
+@media (max-width: 800px) {
+  .animals-sidebar {
+    width: 100%;
+    min-width: 0;
   }
 }

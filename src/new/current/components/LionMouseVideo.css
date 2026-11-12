@@ -1,0 +1,241 @@
+
+.lion-mouse-story-layout {
+  min-height: 100vh;
+  background: #f7f4ff;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* HEADER */
+
+.lion-mouse-story-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 65px;
+  margin-bottom: 20px;
+}
+
+.lion-mouse-story-header h1 {
+  color: #603bb5;
+  font-size: 30px;
+  text-align: center;
+}
+
+.lion-mouse-story-back {
+  position: absolute;
+  left: 0;
+  padding: 12px 22px;
+  background: #7048c6;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* MAIN LAYOUT */
+
+.lion-mouse-story-main {
+  display: flex;
+  gap: 25px;
+  align-items: stretch;
+  min-height: 75vh;
+}
+
+/* LEFT SIDEBAR */
+
+.lion-mouse-story-sidebar {
+  width: 280px;
+  min-width: 280px;
+  background: white;
+  border: 2px solid #d9cafa;
+  border-radius: 18px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.lion-mouse-story-sidebar h2 {
+  color: #603bb5;
+  text-align: center;
+  font-size: 24px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.lion-mouse-word-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lion-mouse-word-button {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f3efff;
+  color: #321078;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.lion-mouse-word-button:hover {
+  background: #e4d9ff;
+}
+
+.lion-mouse-word-button.active {
+  background: #7048c6;
+  color: white;
+  border-color: #321078;
+}
+
+.lion-mouse-word-number {
+  min-width: 25px;
+}
+
+/* RIGHT VIDEO AREA */
+
+.lion-mouse-video-area {
+  flex: 1;
+  min-width: 0;
+  background: white;
+  border: 2px solid #d9cafa;
+  border-radius: 18px;
+  padding: 25px;
+  box-sizing: border-box;
+}
+
+.lion-mouse-video-area h2 {
+  color: #603bb5;
+  text-align: center;
+  font-size: 28px;
+  margin-top: 5px;
+  margin-bottom: 25px;
+  text-transform: capitalize;
+}
+
+.lion-mouse-video-placeholder {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  background: #000;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.lion-mouse-video-player {
+  display: block;
+  width: 100%;
+  max-height: 500px;
+  border-radius: 12px;
+  background: #000;
+  object-fit: contain;
+}
+
+.lion-mouse-video-icon {
+  width: 75px;
+  height: 75px;
+  background: #7048c6;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  padding-left: 5px;
+  box-sizing: border-box;
+}
+
+.lion-mouse-video-placeholder p {
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+}
+
+/* LOADING OVERLAY */
+
+.lion-mouse-loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  border-radius: 12px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.lion-mouse-loading-spinner {
+  width: 45px;
+  height: 45px;
+  border: 5px solid #777;
+  border-top: 5px solid #fff;
+  border-radius: 50%;
+  animation: lion-mouse-spin 0.8s linear infinite;
+}
+
+@keyframes lion-mouse-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ERROR MESSAGE */
+
+.lion-mouse-error-text {
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 700px) {
+  .lion-mouse-story-header {
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 55px;
+  }
+
+  .lion-mouse-story-header h1 {
+    font-size: 23px;
+  }
+
+  .lion-mouse-story-back {
+    top: 0;
+    left: 0;
+  }
+
+  .lion-mouse-story-main {
+    flex-direction: column;
+  }
+
+  .lion-mouse-story-sidebar {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .lion-mouse-video-area {
+    width: 100%;
+  }
+
+  .lion-mouse-video-placeholder {
+    min-height: 250px;
+  }
+}

@@ -11,10 +11,35 @@ function Animals({ onBack }) {
     "Birds",
   ];
 
+  const eatingHabits = [
+    "Herbivores",
+    "Carnivores",
+    "Omnivores",
+  ];
+
   const [selectedCategory, setSelectedCategory] =
     useState("Pet Animals");
 
   const [selectedAnimal, setSelectedAnimal] = useState(null);
+
+  const [selectedEatingHabit, setSelectedEatingHabit] =
+    useState(null);
+
+  // Sidebar dropdown state
+  // Initially both sections are collapsed
+  const [expandedSection, setExpandedSection] = useState(null);
+
+  // Eating habits video paths
+  const eatingHabitVideos = {
+    Herbivores:
+      "/videos/animals/eating-habits/herbivores.mp4",
+
+    Carnivores:
+      "/videos/animals/eating-habits/carnivores.mp4",
+
+    Omnivores:
+      "/videos/animals/eating-habits/omnivores.mp4",
+  };
 
   // All animal data, image paths and video paths
   const animalData = {
@@ -213,9 +238,23 @@ function Animals({ onBack }) {
     ],
   };
 
-  // Change category
+  // Toggle sidebar dropdown
+  const toggleSection = (section) => {
+    setExpandedSection((previous) =>
+      previous === section ? null : section
+    );
+  };
+
+  // Change animal category
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
+    setSelectedAnimal(null);
+    setSelectedEatingHabit(null);
+  };
+
+  // Change eating habit
+  const handleEatingHabitChange = (habit) => {
+    setSelectedEatingHabit(habit);
     setSelectedAnimal(null);
   };
 
@@ -258,113 +297,221 @@ function Animals({ onBack }) {
 
         {/* LEFT SIDEBAR */}
         <div className="animals-sidebar">
-          <h2>Categories</h2>
 
-          <div className="animals-category-list">
-            {categories.map((category, index) => (
-              <button
-                key={category}
-                className={`animals-category-button ${
-                  selectedCategory === category ? "active" : ""
+          {/* CATEGORIES DROPDOWN */}
+          <button
+            className="animals-section-heading"
+            onClick={() => toggleSection("categories")}
+            type="button"
+            aria-expanded={expandedSection === "categories"}
+          >
+            <span>Categories</span>
+
+            <span
+              className={`animals-dropdown-arrow ${
+                expandedSection === "categories" ? "open" : ""
+              }`}
+            >
+              ▼
+            </span>
+          </button>
+
+          <div
+            className={`animals-dropdown ${
+              expandedSection === "categories" ? "expanded" : ""
+            }`}
+          >
+            <div className="animals-dropdown-inner">
+
+              <div className="animals-category-list">
+                {categories.map((category, index) => (
+                  <button
+                    key={category}
+                    className={`animals-category-button ${
+                      selectedEatingHabit === null &&
+                      selectedCategory === category
+                        ? "active"
+                        : ""
+                    }`}
+                    onClick={() => handleCategoryChange(category)}
+                    type="button"
+                  >
+                    <span>{index + 1}.</span>
+                    <span>{category}</span>
+                  </button>
+                ))}
+              </div>
+
+            </div>
+          </div>
+
+          {/* EATING HABITS DROPDOWN */}
+          <div className="animals-eating-habits">
+
+            <button
+              className="animals-section-heading"
+              onClick={() => toggleSection("eatingHabits")}
+              type="button"
+              aria-expanded={expandedSection === "eatingHabits"}
+            >
+              <span>Eating Habits</span>
+
+              <span
+                className={`animals-dropdown-arrow ${
+                  expandedSection === "eatingHabits" ? "open" : ""
                 }`}
-                onClick={() => handleCategoryChange(category)}
-                type="button"
               >
-                <span>{index + 1}.</span>
-                <span>{category}</span>
-              </button>
-            ))}
+                ▼
+              </span>
+            </button>
+
+            <div
+              className={`animals-dropdown ${
+                expandedSection === "eatingHabits" ? "expanded" : ""
+              }`}
+            >
+              <div className="animals-dropdown-inner">
+
+                <div className="animals-category-list">
+                  {eatingHabits.map((habit, index) => (
+                    <button
+                      key={habit}
+                      className={`animals-category-button ${
+                        selectedEatingHabit === habit ? "active" : ""
+                      }`}
+                      onClick={() => handleEatingHabitChange(habit)}
+                      type="button"
+                    >
+                      <span>{index + 1}.</span>
+                      <span>{habit}</span>
+                    </button>
+                  ))}
+                </div>
+
+              </div>
+            </div>
+
           </div>
         </div>
 
         {/* RIGHT CONTENT AREA */}
         <div className="animals-content">
 
-          <h2>{selectedCategory}</h2>
+          {/* EATING HABITS VIDEO */}
+          {selectedEatingHabit ? (
+            <>
+              <h2>{selectedEatingHabit}</h2>
 
-          {/* SELECTED ANIMAL VIDEO */}
-          {selectedAnimal && (
-            <div className="animal-video-section">
+              <div className="animal-video-section">
 
-              <button
-                className="animals-back-button"
-                onClick={() => setSelectedAnimal(null)}
-                type="button"
-              >
-                ← Back to {selectedCategory}
-              </button>
-
-              <h3>{selectedAnimal.name}</h3>
-
-              <video
-                key={selectedAnimal.video}
-                className="animal-video-player"
-                controls
-                autoPlay
-                playsInline
-              >
-                <source
-                  src={selectedAnimal.video}
-                  type="video/mp4"
-                />
-
-                Your browser does not support video playback.
-              </video>
-
-            </div>
-          )}
-
-          {/* ANIMAL GRID */}
-          {!selectedAnimal && (
-            <div className="animals-grid">
-
-              {animalData[selectedCategory].map((animal, index) => (
-                <div
-                  className="animal-card animal-card-clickable"
-                  key={`${animal.name}-${index}`}
-                  onClick={() => handleAnimalClick(animal)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(event) => {
-                    if (
-                      event.key === "Enter" ||
-                      event.key === " "
-                    ) {
-                      event.preventDefault();
-                      handleAnimalClick(animal);
-                    }
-                  }}
+                <video
+                  key={eatingHabitVideos[selectedEatingHabit]}
+                  className="animal-video-player"
+                  controls
+                  playsInline
+                  preload="metadata"
                 >
+                  <source
+                    src={eatingHabitVideos[selectedEatingHabit]}
+                    type="video/mp4"
+                  />
 
-                  <div className="animal-thumbnail">
+                  Your browser does not support video playback.
+                </video>
 
-                    <img
-                      src={animal.image}
-                      alt={animal.name}
-                      className="animal-card-image"
-                      loading="lazy"
-                      onError={handleImageError}
+              </div>
+            </>
+          ) : (
+            <>
+              <h2>{selectedCategory}</h2>
+
+              {/* SELECTED ANIMAL VIDEO */}
+              {selectedAnimal && (
+                <div className="animal-video-section">
+
+                  <button
+                    className="animals-back-button"
+                    onClick={() => setSelectedAnimal(null)}
+                    type="button"
+                  >
+                    ← Back to {selectedCategory}
+                  </button>
+
+                  <h3>{selectedAnimal.name}</h3>
+
+                  <video
+                    key={selectedAnimal.video}
+                    className="animal-video-player"
+                    controls
+                    autoPlay
+                    playsInline
+                  >
+                    <source
+                      src={selectedAnimal.video}
+                      type="video/mp4"
                     />
 
-                    <span
-                      style={{
-                        display: "none",
-                        fontSize: "55px",
-                      }}
-                    >
-                      {animal.emoji}
-                    </span>
-
-                  </div>
-
-                  <h3>{animal.name}</h3>
-
-                  <p>▶ Watch Video</p>
+                    Your browser does not support video playback.
+                  </video>
 
                 </div>
-              ))}
+              )}
 
-            </div>
+              {/* ANIMAL GRID */}
+              {!selectedAnimal && (
+                <div className="animals-grid">
+
+                  {animalData[selectedCategory].map(
+                    (animal, index) => (
+                      <div
+                        className="animal-card animal-card-clickable"
+                        key={`${animal.name}-${index}`}
+                        onClick={() => handleAnimalClick(animal)}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(event) => {
+                          if (
+                            event.key === "Enter" ||
+                            event.key === " "
+                          ) {
+                            event.preventDefault();
+                            handleAnimalClick(animal);
+                          }
+                        }}
+                      >
+
+                        <div className="animal-thumbnail">
+
+                          <img
+                            src={animal.image}
+                            alt={animal.name}
+                            className="animal-card-image"
+                            loading="lazy"
+                            onError={handleImageError}
+                          />
+
+                          <span
+                            style={{
+                              display: "none",
+                              fontSize: "55px",
+                            }}
+                          >
+                            {animal.emoji}
+                          </span>
+
+                        </div>
+
+                        <h3>{animal.name}</h3>
+
+                        <p>▶ Watch Video</p>
+
+                      </div>
+                    )
+                  )}
+
+                </div>
+              )}
+            </>
           )}
 
         </div>

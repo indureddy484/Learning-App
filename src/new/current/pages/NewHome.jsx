@@ -4,6 +4,7 @@ import { useState } from "react";
 import MatchingGame from "../components/MatchingGame";
 import VideoGame from "../components/VideoGame";
 import Animals from "../components/Animals";
+import Plants from "../components/Plants";
 
 import Level1Today from "../components/Level1Today";
 import Level2NinnaToday from "../components/Level2NinnaToday";
@@ -27,11 +28,15 @@ import AscendingOrder from "../components/AscendingOrder";
 import CompareNumbers from "../components/CompareNumbers";
 import NumberSense from "../components/NumberSense";
 
-// ENGLISH
+// ENGLISH - TENALI RAMA
 import TenaliRamaGreedyFarmer from "../components/TenaliRamaGreedyFarmer";
 import TenaliLessonMenu from "../components/TenaliLessonMenu";
 import TenaliStory from "../components/TenaliStory";
 import TenaliQuiz from "../components/TenaliQuiz";
+
+// ENGLISH - LION AND THE MOUSE
+import LionMouseLessonMenu from "../components/LionMouseLessonMenu";
+import LionMouseVideo from "../components/LionMouseVideo";
 
 // TELUGU
 import PrepositionQuiz from "../components/PrepositionQuiz";
@@ -47,6 +52,9 @@ function NewHome({ onBack }) {
   // English navigation
   const [selectedEnglishTopic, setSelectedEnglishTopic] = useState(null);
   const [selectedTenaliOption, setSelectedTenaliOption] = useState(null);
+
+  // Lion and the Mouse navigation
+  const [selectedLionMouseOption, setSelectedLionMouseOption] = useState(null);
 
   // Telugu navigation
   const [selectedTeluguOption, setSelectedTeluguOption] = useState(null);
@@ -69,7 +77,63 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (selectedGame === "animals") {
-    return <Animals onBack={() => setSelectedGame(null)} />;
+    return (
+      <Animals
+        onBack={() => setSelectedGame(null)}
+      />
+    );
+  }
+
+  /* =========================
+     EVS - PLANTS
+  ========================= */
+
+  if (selectedGame === "plants") {
+    return (
+      <Plants
+        onBack={() => setSelectedGame(null)}
+      />
+    );
+  }
+
+  /* =========================
+     EVS - MISCELLANEOUS MENU
+  ========================= */
+
+  if (selectedGame === "miscellaneous") {
+    return (
+      <div className="new-page">
+        <button
+          className="top-back-button"
+          onClick={() => setSelectedGame(null)}
+          type="button"
+        >
+          ← BACK
+        </button>
+
+        <h1>Miscellaneous</h1>
+
+        <div className="game-tabs">
+          <button
+            className="game-card"
+            onClick={() => setSelectedGame("match")}
+            type="button"
+          >
+            <div className="game-icon">🧩</div>
+            <span>Match Game</span>
+          </button>
+
+          <button
+            className="game-card"
+            onClick={() => setSelectedGame("video")}
+            type="button"
+          >
+            <div className="game-icon">🎬</div>
+            <span>Video Game</span>
+          </button>
+        </div>
+      </div>
+    );
   }
 
   /* =========================
@@ -77,7 +141,11 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (selectedGame === "match") {
-    return <MatchingGame onBack={() => setSelectedGame(null)} />;
+    return (
+      <MatchingGame
+        onBack={() => setSelectedGame("miscellaneous")}
+      />
+    );
   }
 
   /* =========================
@@ -85,7 +153,11 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (selectedGame === "video") {
-    return <VideoGame onBack={() => setSelectedGame(null)} />;
+    return (
+      <VideoGame
+        onBack={() => setSelectedGame("miscellaneous")}
+      />
+    );
   }
 
   /* =========================
@@ -386,7 +458,7 @@ function NewHome({ onBack }) {
   }
 
   /* =========================
-     NUMBER SENSE - QUIZ
+     NUMBER SENSE - WORD PROBLEMS
   ========================= */
 
   if (
@@ -428,6 +500,55 @@ function NewHome({ onBack }) {
         onBack={() => {
           setSelectedEnglishTopic(null);
           setSelectedTenaliOption(null);
+        }}
+      />
+    );
+  }
+
+  /* =========================
+     ENGLISH - LION AND THE MOUSE
+  ========================= */
+
+  if (selectedEnglishTopic === "lionMouse") {
+    // LION AND THE MOUSE - VIDEOS
+    if (selectedLionMouseOption === "video") {
+      return (
+        <LionMouseVideo
+          onBack={() => setSelectedLionMouseOption(null)}
+        />
+      );
+    }
+
+    // LION AND THE MOUSE - QUIZ (COMING SOON)
+    if (selectedLionMouseOption === "quiz") {
+      return (
+        <div className="new-page">
+          <button
+            className="top-back-button"
+            type="button"
+            onClick={() => setSelectedLionMouseOption(null)}
+          >
+            ← BACK
+          </button>
+
+          <h1>Lion and the Mouse</h1>
+
+          <div className="coming-soon">
+            <h2>Quiz</h2>
+            <p>Coming Soon!</p>
+          </div>
+        </div>
+      );
+    }
+
+    // LION AND THE MOUSE - MENU
+    return (
+      <LionMouseLessonMenu
+        onVideo={() => setSelectedLionMouseOption("video")}
+        onQuiz={() => setSelectedLionMouseOption("quiz")}
+        onBack={() => {
+          setSelectedEnglishTopic(null);
+          setSelectedLionMouseOption(null);
         }}
       />
     );
@@ -499,6 +620,7 @@ function NewHome({ onBack }) {
             setSelectedLevel(null);
             setSelectedEnglishTopic(null);
             setSelectedTenaliOption(null);
+            setSelectedLionMouseOption(null);
             setSelectedTeluguOption(null);
             setSelectedTeluguQuizTopic(null);
             setSelectedMoneyGame(false);
@@ -530,20 +652,20 @@ function NewHome({ onBack }) {
 
             <button
               className="game-card"
-              onClick={() => setSelectedGame("match")}
+              onClick={() => setSelectedGame("plants")}
               type="button"
             >
-              <div className="game-icon">🧩</div>
-              <span>Match Game</span>
+              <div className="game-icon">🌳</div>
+              <span>Plants</span>
             </button>
 
             <button
               className="game-card"
-              onClick={() => setSelectedGame("video")}
+              onClick={() => setSelectedGame("miscellaneous")}
               type="button"
             >
-              <div className="game-icon">🎬</div>
-              <span>Video Game</span>
+              <div className="game-icon">📚</div>
+              <span>Miscellaneous</span>
             </button>
           </div>
         ) : selectedSubject === "Maths" ? (
@@ -565,7 +687,7 @@ function NewHome({ onBack }) {
               type="button"
             >
               <div className="game-icon">📅</div>
-              <span>Take Quiz</span>
+              <span>Calendar</span>
             </button>
 
             <button
@@ -628,16 +750,34 @@ function NewHome({ onBack }) {
           /* ENGLISH */
 
           <div className="game-tabs">
+            {/* TENALI RAMA */}
+
             <button
               className="english-lesson-card"
               onClick={() => {
                 setSelectedEnglishTopic("tenali");
                 setSelectedTenaliOption(null);
+                setSelectedLionMouseOption(null);
               }}
               type="button"
             >
               <div className="english-lesson-icon">📖</div>
               <span>Tenali Rama and the Greedy Farmer</span>
+            </button>
+
+            {/* LION AND THE MOUSE */}
+
+            <button
+              className="english-lesson-card"
+              onClick={() => {
+                setSelectedEnglishTopic("lionMouse");
+                setSelectedLionMouseOption(null);
+                setSelectedTenaliOption(null);
+              }}
+              type="button"
+            >
+              <div className="english-lesson-icon">🦁</div>
+              <span>The Lion and the Little Mouse</span>
             </button>
           </div>
         ) : selectedSubject === "Telugu" ? (

@@ -1,0 +1,90 @@
+
+.lion-mouse-menu-page {
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 35px 30px;
+  background: #f7f4ff;
+  text-align: center;
+  position: relative;
+}
+
+.lion-mouse-menu-back {
+  position: absolute;
+  top: 25px;
+  left: 30px;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 10px;
+  background: #35177e;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.lion-mouse-menu-page h1 {
+  margin: 10px 0 15px;
+  color: #603bb5;
+  font-size: 36px;
+  font-family: Georgia, serif;
+}
+
+.lion-mouse-menu-subtitle {
+  margin: 20px 0 35px;
+  color: #444;
+  font-size: 20px;
+}
+
+.lion-mouse-menu-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.lion-mouse-option-card {
+  width: 300px;
+  min-height: 220px;
+  padding: 30px 20px;
+  background: white;
+  border: 3px solid #35177e;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  color: #35177e;
+  font-size: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lion-mouse-option-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(53, 23, 126, 0.15);
+}
+
+.lion-mouse-option-icon {
+  font-size: 55px;
+}
+
+@media (max-width: 650px) {
+  .lion-mouse-menu-page {
+    padding: 85px 15px 30px;
+  }
+
+  .lion-mouse-menu-page h1 {
+    font-size: 28px;
+  }
+
+  .lion-mouse-option-card {
+    width: 100%;
+    max-width: 320px;
+    min-height: 180px;
+  }
+}
