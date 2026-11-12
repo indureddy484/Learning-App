@@ -409,6 +409,7 @@ function Animals({ onBack }) {
                   key={eatingHabitVideos[selectedEatingHabit]}
                   className="animal-video-player"
                   controls
+                  muted
                   playsInline
                   preload="metadata"
                 >
@@ -444,6 +445,7 @@ function Animals({ onBack }) {
                     key={selectedAnimal.video}
                     className="animal-video-player"
                     controls
+                    muted
                     autoPlay
                     playsInline
                   >

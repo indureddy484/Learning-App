@@ -125,6 +125,7 @@ function TenaliStory({ onBack }) {
                   <video
                     className="tenali-video-player"
                     controls
+                    muted
                     preload="auto"
                     autoPlay={false}
                     key={selectedVideo}

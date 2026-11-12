@@ -105,6 +105,7 @@ function Plants({ onBack }) {
               key={categoryVideos[selectedCategory]}
               className="plant-video-player"
               controls
+              muted
               playsInline
               preload="metadata"
             >

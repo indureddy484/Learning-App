@@ -25,7 +25,11 @@ function NumberSenseMenu({ onBack, onSelectActivity }) {
           onClick={() => onSelectActivity("compare")}
           type="button"
         >
-          <div className="game-icon">⚖️</div>
+          <div className="game-icon compare-symbols">
+            <span>&lt;</span>
+            <span>=</span>
+            <span>&gt;</span>
+          </div>
           <span>Compare Numbers</span>
         </button>
 

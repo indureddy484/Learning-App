@@ -3,12 +3,15 @@ import { useEffect, useState } from "react";
 import "./AscendingOrder.css";
 
 const TIMER_OPTIONS = [2, 5, 10, 15, 20];
+const RANGE_OPTIONS = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+const DEFAULT_RANGE = 10;
 
-const randomNumbers = () => {
+// Generate 3 unique random numbers from 0 to selected range.
+const randomNumbers = (maxRange = DEFAULT_RANGE) => {
   const numbers = [];
 
   while (numbers.length < 3) {
-    const number = Math.floor(Math.random() * 20) + 1;
+    const number = Math.floor(Math.random() * (maxRange + 1));
 
     if (!numbers.includes(number)) {
       numbers.push(number);
@@ -29,38 +32,46 @@ const formatTime = (seconds) => {
 
 function AscendingOrder({ onBack }) {
   const [selectedDuration, setSelectedDuration] = useState(5);
+  const [selectedRange, setSelectedRange] = useState(DEFAULT_RANGE);
+
   const [quizStarted, setQuizStarted] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState(5 * 60);
-  const [numbers, setNumbers] = useState(() => randomNumbers());
+
+  const [numbers, setNumbers] = useState(() =>
+    randomNumbers(DEFAULT_RANGE)
+  );
+
   const [answer, setAnswer] = useState([]);
   const [questionNumber, setQuestionNumber] = useState(1);
 
   const [correctCount, setCorrectCount] = useState(0);
   const [incorrectCount, setIncorrectCount] = useState(0);
 
-  // Start the countdown only after the quiz begins.
+  // Countdown timer
   useEffect(() => {
     if (!quizStarted || quizCompleted) return;
 
     const timer = setInterval(() => {
-      setTimeLeft((previousTime) => {
-        if (previousTime <= 1) {
-          clearInterval(timer);
-          setQuizCompleted(true);
-          return 0;
-        }
-
-        return previousTime - 1;
-      });
+      setTimeLeft((previousTime) =>
+        Math.max(previousTime - 1, 0)
+      );
     }, 1000);
 
     return () => clearInterval(timer);
   }, [quizStarted, quizCompleted]);
 
+  // Automatically finish when time reaches zero
+  useEffect(() => {
+    if (quizStarted && timeLeft === 0) {
+      setQuizCompleted(true);
+    }
+  }, [quizStarted, timeLeft]);
+
+  // Start quiz
   const startQuiz = () => {
-    setNumbers(randomNumbers());
+    setNumbers(randomNumbers(selectedRange));
     setAnswer([]);
     setQuestionNumber(1);
     setCorrectCount(0);
@@ -70,26 +81,54 @@ function AscendingOrder({ onBack }) {
     setQuizStarted(true);
   };
 
+  // End test manually
+  const endTest = () => {
+    if (!quizStarted || quizCompleted) return;
+
+    setQuizCompleted(true);
+  };
+
+  // Select a number
   const selectNumber = (number) => {
-    if (quizCompleted || answer.includes(number)) return;
+    if (
+      quizCompleted ||
+      timeLeft === 0 ||
+      answer.includes(number)
+    ) {
+      return;
+    }
 
     setAnswer((previous) => [...previous, number]);
   };
 
+  // Remove a selected number
   const removeNumber = (number) => {
-    if (quizCompleted) return;
+    if (quizCompleted || timeLeft === 0) return;
 
     setAnswer((previous) =>
       previous.filter((item) => item !== number)
     );
   };
 
+  // Play feedback sound
+  const playSound = (file) => {
+    const audio = new Audio(file);
+    audio.play().catch(() => {});
+  };
+
+  // Next question
   const nextQuestion = () => {
-    if (answer.length !== 3 || quizCompleted || timeLeft === 0) {
+    if (
+      answer.length !== 3 ||
+      quizCompleted ||
+      timeLeft === 0
+    ) {
       return;
     }
 
-    const correctAnswer = [...numbers].sort((a, b) => a - b);
+    const correctAnswer = [...numbers].sort(
+      (a, b) => a - b
+    );
 
     const isCorrect = answer.every(
       (number, index) => number === correctAnswer[index]
@@ -103,40 +142,45 @@ function AscendingOrder({ onBack }) {
       playSound("/sounds/fail-2-277575.mp3");
     }
 
-    setNumbers(randomNumbers());
+    setNumbers(randomNumbers(selectedRange));
     setAnswer([]);
     setQuestionNumber((previous) => previous + 1);
   };
 
-  const playSound = (file) => {
-    const audio = new Audio(file);
-    audio.play().catch(() => {});
-  };
-
+  // Restart quiz
   const restartQuiz = () => {
     setQuizStarted(false);
     setQuizCompleted(false);
     setSelectedDuration(5);
+    setSelectedRange(DEFAULT_RANGE);
     setTimeLeft(5 * 60);
-    setNumbers(randomNumbers());
+    setNumbers(randomNumbers(DEFAULT_RANGE));
     setAnswer([]);
     setQuestionNumber(1);
     setCorrectCount(0);
     setIncorrectCount(0);
   };
 
-  // The currently displayed question is unanswered if the timer expires
-  // before the child submits it using the Next button.
+  // Test analysis
+  // The current question is unanswered when the test ends.
   const unansweredCount = quizCompleted ? 1 : 0;
+
+  const attemptedQuestions = correctCount + incorrectCount;
+
   const totalQuestions =
-    correctCount + incorrectCount + unansweredCount;
+    attemptedQuestions + unansweredCount;
 
   const accuracy =
+    attemptedQuestions > 0
+      ? Math.round((correctCount / attemptedQuestions) * 100)
+      : 0;
+
+  const scorePercentage =
     totalQuestions > 0
       ? Math.round((correctCount / totalQuestions) * 100)
       : 0;
 
-  // Timer selection screen
+  // Timer and range selection screen
   if (!quizStarted) {
     return (
       <main className="ascending-quiz-page">
@@ -158,7 +202,7 @@ function AscendingOrder({ onBack }) {
           <h1>Ascending Order</h1>
 
           <p className="ascending-setup-description">
-            Choose your quiz time.
+            Choose your quiz time and number range.
           </p>
 
           <h3>Select Time</h3>
@@ -180,8 +224,28 @@ function AscendingOrder({ onBack }) {
             ))}
           </div>
 
+          <h3>Select Number Range</h3>
+
+          <select
+            className="ascending-range-dropdown"
+            value={selectedRange}
+            onChange={(event) =>
+              setSelectedRange(Number(event.target.value))
+            }
+          >
+            {RANGE_OPTIONS.map((range) => (
+              <option key={range} value={range}>
+                ≤ {range}
+              </option>
+            ))}
+          </select>
+
+          <p className="ascending-selected-range">
+            Numbers from 0 to {selectedRange}
+          </p>
+
           <p className="ascending-setup-hint">
-            Answer as many questions as you can before time runs out!
+            Arrange the numbers from smallest to biggest!
           </p>
 
           <button
@@ -196,7 +260,7 @@ function AscendingOrder({ onBack }) {
     );
   }
 
-  // Quiz result screen
+  // Quiz result and analysis screen
   if (quizCompleted) {
     return (
       <main className="ascending-quiz-page">
@@ -211,18 +275,20 @@ function AscendingOrder({ onBack }) {
         <section className="ascending-result-card">
           <div className="ascending-result-icon">🏆</div>
 
-          <h1>Quiz Completed!</h1>
+          <h1>Test Analysis</h1>
 
           <p className="ascending-result-message">
-            Great effort! Your time is up.
+            Great effort! Your test has ended.
           </p>
 
           <div className="ascending-final-score">
             <span>Your Score</span>
+
             <strong>
               {correctCount} / {totalQuestions}
             </strong>
-            <span>{accuracy}% Accuracy</span>
+
+            <span>{scorePercentage}% Score</span>
           </div>
 
           <div className="ascending-result-stats">
@@ -242,9 +308,27 @@ function AscendingOrder({ onBack }) {
             </div>
           </div>
 
-          <p className="ascending-total-questions">
-            Total Questions: {totalQuestions}
-          </p>
+          <div className="ascending-analysis-details">
+            <div>
+              <span>Total Questions</span>
+              <strong>{totalQuestions}</strong>
+            </div>
+
+            <div>
+              <span>Attempted Questions</span>
+              <strong>{attemptedQuestions}</strong>
+            </div>
+
+            <div>
+              <span>Accuracy</span>
+              <strong>{accuracy}%</strong>
+            </div>
+
+            <div>
+              <span>Time Remaining</span>
+              <strong>{formatTime(timeLeft)}</strong>
+            </div>
+          </div>
 
           <button
             className="ascending-primary-button"
@@ -266,6 +350,7 @@ function AscendingOrder({ onBack }) {
     );
   }
 
+  // Active quiz screen
   return (
     <main className="ascending-quiz-page">
       <header className="ascending-quiz-header">
@@ -343,10 +428,12 @@ function AscendingOrder({ onBack }) {
                   removeNumber(answer[index]);
                 }
               }}
-              disabled={quizCompleted}
+              disabled={quizCompleted || timeLeft === 0}
               aria-label={`Answer position ${index + 1}`}
             >
-              {answer[index] !== undefined ? answer[index] : "?"}
+              {answer[index] !== undefined
+                ? answer[index]
+                : "?"}
             </button>
           ))}
         </div>
@@ -366,7 +453,11 @@ function AscendingOrder({ onBack }) {
                 answer.includes(number) ? "selected" : ""
               }`}
               onClick={() => selectNumber(number)}
-              disabled={answer.includes(number)}
+              disabled={
+                answer.includes(number) ||
+                quizCompleted ||
+                timeLeft === 0
+              }
             >
               {number}
             </button>
@@ -380,6 +471,14 @@ function AscendingOrder({ onBack }) {
           disabled={answer.length !== 3 || timeLeft === 0}
         >
           ➡ Next
+        </button>
+
+        <button
+          className="ascending-secondary-button ascending-end-button"
+          onClick={endTest}
+          type="button"
+        >
+          End Test
         </button>
       </section>
     </main>

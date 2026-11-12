@@ -26,11 +26,12 @@ const shuffle = (items) => {
   return result;
 };
 
+// Generate unique numbers from 0 to maxNumber.
 const getUniqueNumbers = (count, maxNumber) => {
   const numbers = [];
 
   while (numbers.length < count) {
-    const number = randomInt(1, maxNumber);
+    const number = randomInt(0, maxNumber);
 
     if (!numbers.includes(number)) {
       numbers.push(number);
@@ -55,6 +56,7 @@ const LABELS = {
     range: "Number Range",
     questions: "Questions",
     print: "Print / Save as PDF",
+
     before: (n) => `What number comes before ${n}?`,
     after: (n) => `What number comes after ${n}?`,
     between: (a, b) =>
@@ -81,7 +83,6 @@ const LABELS = {
     questions: "Questions",
     print: "Print / PDF Save Cheyyandi",
 
-    // Updated question wording to match NumberSense.jsx
     before: (n) => `${n} mundu yemi number vastundi?`,
     after: (n) => `${n} taruvata yemi number vastundi?`,
     between: (a, b) =>
@@ -94,8 +95,9 @@ const LABELS = {
 };
 
 const makeQuestion = (type, maxNumber, labels) => {
+  // BEFORE NUMBER
   if (type === "before") {
-    const number = randomInt(2, maxNumber);
+    const number = randomInt(1, maxNumber);
 
     return {
       type,
@@ -106,8 +108,9 @@ const makeQuestion = (type, maxNumber, labels) => {
     };
   }
 
+  // AFTER NUMBER
   if (type === "after") {
-    const number = randomInt(1, maxNumber - 1);
+    const number = randomInt(0, maxNumber - 1);
 
     return {
       type,
@@ -118,8 +121,9 @@ const makeQuestion = (type, maxNumber, labels) => {
     };
   }
 
+  // BETWEEN NUMBERS
   if (type === "between") {
-    const first = randomInt(1, maxNumber - 2);
+    const first = randomInt(0, maxNumber - 2);
     const second = first + 2;
 
     return {
@@ -131,6 +135,7 @@ const makeQuestion = (type, maxNumber, labels) => {
     };
   }
 
+  // SMALLEST AND BIGGEST
   const numbers = getUniqueNumbers(3, maxNumber);
 
   if (type === "smallest" || type === "biggest") {
@@ -147,10 +152,13 @@ const makeQuestion = (type, maxNumber, labels) => {
           : labels.biggest,
       numbers,
       answer: String(answer),
-      signature: `${type}-${[...numbers].sort((a, b) => a - b).join("-")}`,
+      signature: `${type}-${[...numbers]
+        .sort((a, b) => a - b)
+        .join("-")}`,
     };
   }
 
+  // ASCENDING AND DESCENDING
   const sorted = [...numbers].sort((a, b) =>
     type === "ascending" ? a - b : b - a
   );
@@ -163,7 +171,9 @@ const makeQuestion = (type, maxNumber, labels) => {
         : labels.descending,
     numbers,
     answer: sorted.join(", "),
-    signature: `${type}-${numbers.join("-")}`,
+    signature: `${type}-${[...numbers]
+      .sort((a, b) => a - b)
+      .join("-")}`,
   };
 };
 
@@ -172,7 +182,7 @@ const generateWorksheet = (count, maxNumber, labels) => {
   const used = new Set();
 
   // Shuffle topic order in each group of seven.
-  // Every complete group contains all seven types.
+  // Every complete group contains all seven question types.
   while (questions.length < count) {
     const types = shuffle(QUESTION_TYPES);
 
@@ -204,7 +214,7 @@ const generateWorksheet = (count, maxNumber, labels) => {
   return questions;
 };
 
-// Escape text before inserting it into the printable HTML.
+// Escape text before inserting it into printable HTML.
 const escapeHtml = (value) =>
   String(value)
     .replace(/&/g, "&amp;")
@@ -455,7 +465,7 @@ const buildWorksheetHtml = (questions, maxNumber, labels) => {
     </div>
 
     <div class="details">
-      <span>${escapeHtml(labels.range)}: 1–${maxNumber}</span>
+      <span>${escapeHtml(labels.range)}: 0–${maxNumber}</span>
       <span>${escapeHtml(labels.questions)}: ${questions.length}</span>
     </div>
 
@@ -547,7 +557,7 @@ function PracticeWorksheet({
         </p>
 
         <p className="practice-modal-range">
-          {labels.range}: 1–{maxNumber}
+          {labels.range}: 0–{maxNumber}
         </p>
 
         <label

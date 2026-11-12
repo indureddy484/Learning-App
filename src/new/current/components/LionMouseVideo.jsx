@@ -124,6 +124,7 @@ function LionMouseVideo({ onBack }) {
                   <video
                     className="lion-mouse-video-player"
                     controls
+                    muted
                     preload="auto"
                     autoPlay={false}
                     key={selectedVideo}

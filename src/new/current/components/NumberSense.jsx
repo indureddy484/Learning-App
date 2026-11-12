@@ -20,17 +20,18 @@ const shuffle = (items) => {
   return result;
 };
 
-// Generates four unique answer choices within the selected range.
+// Generates four unique answer choices from 0 to maxNumber.
 const makeNumberOptions = (correct, candidates, maxNumber) => {
   const unique = [...new Set([correct, ...candidates])].filter(
     (number) =>
       Number.isInteger(number) &&
-      number >= 1 &&
+      number >= 0 &&
       number <= maxNumber
   );
 
   while (unique.length < 4) {
-    const candidate = randomInt(1, maxNumber);
+    const candidate = randomInt(0, maxNumber);
+
     if (!unique.includes(candidate)) unique.push(candidate);
   }
 
@@ -72,7 +73,7 @@ const TEXT = {
     setupTitle: "Number Sense Quiz",
     setupDescription: "Choose your number range and quiz time.",
     selectRange: "Select Number Range",
-    rangeHint: "All quiz numbers will stay within this range.",
+    rangeHint: "Numbers from 0 to the selected maximum will be used.",
     selectTime: "Select Time",
     minutes: "min",
     setupHint: "Answer as many questions as you can before time runs out!",
@@ -129,7 +130,7 @@ const TEXT = {
     setupTitle: "Number Sense Quiz",
     setupDescription: "Number range mariyu quiz time select cheyyandi.",
     selectRange: "Number Range Select Cheyyandi",
-    rangeHint: "Ee range lopala numbers matrame vastayi.",
+    rangeHint: "0 nundi select chesina maximum number varaku questions vastayi.",
     selectTime: "Time Select Cheyyandi",
     minutes: "min",
     setupHint:
@@ -169,7 +170,6 @@ const TEXT = {
       descending: "Descending Order",
     },
 
-    // Updated child-friendly Tenglish question wording
     prompts: {
       before: (number) =>
         `${number} mundu yemi number vastundi?`,
@@ -203,7 +203,7 @@ const generateQuestion = (language = "english", maxNumber = 10) => {
 
   // BEFORE NUMBER
   if (type === "before") {
-    const number = randomInt(2, maxNumber);
+    const number = randomInt(1, maxNumber);
     const correct = number - 1;
 
     return {
@@ -221,7 +221,7 @@ const generateQuestion = (language = "english", maxNumber = 10) => {
 
   // AFTER NUMBER
   if (type === "after") {
-    const number = randomInt(1, maxNumber - 1);
+    const number = randomInt(0, maxNumber - 1);
     const correct = number + 1;
 
     return {
@@ -239,7 +239,7 @@ const generateQuestion = (language = "english", maxNumber = 10) => {
 
   // BETWEEN NUMBERS
   if (type === "between") {
-    const first = randomInt(1, maxNumber - 2);
+    const first = randomInt(0, maxNumber - 2);
     const second = first + 2;
     const correct = first + 1;
 
@@ -262,7 +262,7 @@ const generateQuestion = (language = "english", maxNumber = 10) => {
     const numbers = [];
 
     while (numbers.length < 3) {
-      const number = randomInt(1, maxNumber);
+      const number = randomInt(0, maxNumber);
       if (!numbers.includes(number)) numbers.push(number);
     }
 
@@ -303,7 +303,7 @@ const generateQuestion = (language = "english", maxNumber = 10) => {
   const numbers = [];
 
   while (numbers.length < 3) {
-    const number = randomInt(1, maxNumber);
+    const number = randomInt(0, maxNumber);
     if (!numbers.includes(number)) numbers.push(number);
   }
 
@@ -591,7 +591,6 @@ function NumberSense({ onBack }) {
             {text.setupHint}
           </p>
 
-          {/* EXISTING TIMED QUIZ BUTTON */}
           <button
             className="number-sense-primary-button"
             onClick={startQuiz}

@@ -3,10 +3,13 @@ import { useEffect, useState } from "react";
 import "./CompareNumbers.css";
 
 const TIMER_OPTIONS = [2, 5, 10, 15, 20];
+const RANGE_OPTIONS = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+const DEFAULT_RANGE = 10;
 
-const generateQuestion = () => ({
-  left: Math.floor(Math.random() * 20) + 1,
-  right: Math.floor(Math.random() * 20) + 1,
+// Generate two random numbers from 0 to the selected maximum.
+const generateQuestion = (maxRange = DEFAULT_RANGE) => ({
+  left: Math.floor(Math.random() * (maxRange + 1)),
+  right: Math.floor(Math.random() * (maxRange + 1)),
 });
 
 const formatTime = (seconds) => {
@@ -20,11 +23,16 @@ const formatTime = (seconds) => {
 
 function CompareNumbers({ onBack }) {
   const [selectedDuration, setSelectedDuration] = useState(5);
+  const [selectedRange, setSelectedRange] = useState(DEFAULT_RANGE);
+
   const [quizStarted, setQuizStarted] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState(5 * 60);
-  const [question, setQuestion] = useState(generateQuestion);
+  const [question, setQuestion] = useState(() =>
+    generateQuestion(DEFAULT_RANGE)
+  );
+
   const [selectedSymbol, setSelectedSymbol] = useState("");
 
   const [questionNumber, setQuestionNumber] = useState(1);
@@ -36,7 +44,9 @@ function CompareNumbers({ onBack }) {
     if (!quizStarted || quizCompleted) return;
 
     const timer = setInterval(() => {
-      setTimeLeft((previousTime) => Math.max(previousTime - 1, 0));
+      setTimeLeft((previousTime) =>
+        Math.max(previousTime - 1, 0)
+      );
     }, 1000);
 
     return () => clearInterval(timer);
@@ -49,8 +59,9 @@ function CompareNumbers({ onBack }) {
     }
   }, [quizStarted, timeLeft]);
 
+  // Start quiz
   const startQuiz = () => {
-    setQuestion(generateQuestion());
+    setQuestion(generateQuestion(selectedRange));
     setSelectedSymbol("");
     setQuestionNumber(1);
     setCorrectCount(0);
@@ -60,13 +71,18 @@ function CompareNumbers({ onBack }) {
     setQuizStarted(true);
   };
 
+  // Choose comparison symbol
   const chooseSymbol = (symbol) => {
-    if (quizCompleted) return;
+    if (quizCompleted || timeLeft === 0) return;
+
     setSelectedSymbol(symbol);
   };
 
+  // Next question
   const nextQuestion = () => {
-    if (!selectedSymbol || quizCompleted || timeLeft === 0) return;
+    if (!selectedSymbol || quizCompleted || timeLeft === 0) {
+      return;
+    }
 
     let correctSymbol;
 
@@ -84,28 +100,30 @@ function CompareNumbers({ onBack }) {
       setIncorrectCount((previous) => previous + 1);
     }
 
-    setQuestion(generateQuestion());
+    setQuestion(generateQuestion(selectedRange));
     setSelectedSymbol("");
     setQuestionNumber((previous) => previous + 1);
   };
 
+  // End test
   const endTest = () => {
     setQuizCompleted(true);
   };
 
+  // Restart quiz
   const restartQuiz = () => {
     setQuizStarted(false);
     setQuizCompleted(false);
     setSelectedDuration(5);
+    setSelectedRange(DEFAULT_RANGE);
     setTimeLeft(5 * 60);
-    setQuestion(generateQuestion());
+    setQuestion(generateQuestion(DEFAULT_RANGE));
     setSelectedSymbol("");
     setQuestionNumber(1);
     setCorrectCount(0);
     setIncorrectCount(0);
   };
 
-  // The currently displayed question is unanswered when the quiz ends.
   const unansweredCount = quizCompleted ? 1 : 0;
 
   const totalQuestions =
@@ -116,7 +134,7 @@ function CompareNumbers({ onBack }) {
       ? Math.round((correctCount / totalQuestions) * 100)
       : 0;
 
-  // Timer selection screen
+  // Timer and range selection screen
   if (!quizStarted) {
     return (
       <main className="compare-quiz-page">
@@ -131,12 +149,14 @@ function CompareNumbers({ onBack }) {
         <section className="compare-setup-card">
           <div className="compare-setup-icon">⚖️</div>
 
-          <span className="compare-eyebrow">NUMBER SENSE</span>
+          <span className="compare-eyebrow">
+            NUMBER SENSE
+          </span>
 
           <h1>Compare Numbers</h1>
 
           <p className="compare-setup-description">
-            Choose your quiz time.
+            Choose your quiz time and number range.
           </p>
 
           <h3>Select Time</h3>
@@ -157,6 +177,26 @@ function CompareNumbers({ onBack }) {
               </button>
             ))}
           </div>
+
+          <h3>Select Number Range</h3>
+
+          <select
+            className="compare-range-dropdown"
+            value={selectedRange}
+            onChange={(event) =>
+              setSelectedRange(Number(event.target.value))
+            }
+          >
+            {RANGE_OPTIONS.map((range) => (
+              <option key={range} value={range}>
+                ≤ {range}
+              </option>
+            ))}
+          </select>
+
+          <p className="compare-selected-range">
+            Numbers from 0 to {selectedRange}
+          </p>
 
           <p className="compare-setup-hint">
             Compare the numbers and answer as many questions as you can!
@@ -197,9 +237,11 @@ function CompareNumbers({ onBack }) {
 
           <div className="compare-final-score">
             <span>Your Score</span>
+
             <strong>
               {correctCount} / {totalQuestions}
             </strong>
+
             <span>{accuracy}% Accuracy</span>
           </div>
 
@@ -257,8 +299,12 @@ function CompareNumbers({ onBack }) {
         </button>
 
         <div>
-          <span className="compare-eyebrow">NUMBER SENSE</span>
+          <span className="compare-eyebrow">
+            NUMBER SENSE
+          </span>
+
           <h1>Compare the Numbers</h1>
+
           <p>Choose the correct comparison symbol.</p>
         </div>
       </header>
