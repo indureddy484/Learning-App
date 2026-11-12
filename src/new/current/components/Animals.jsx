@@ -69,6 +69,12 @@ function Animals({ onBack }) {
         image: "/images/animals/pet/parrot.jpg",
         video: "/videos/animals/pet/parrot.mp4",
       },
+      {
+        name: "Dog",
+        emoji: "🐕",
+        image: "/images/animals/farm/dog.jpg",
+        video: "/videos/animals/farm/dog.mp4",
+      },
     ],
 
     // FARM ANIMALS
@@ -115,12 +121,7 @@ function Animals({ onBack }) {
         image: "/images/animals/farm/cow.png",
         video: "/videos/animals/farm/cow.mp4",
       },
-      {
-        name: "Dog",
-        emoji: "🐕",
-        image: "/images/animals/farm/dog.jpg",
-        video: "/videos/animals/farm/dog.mp4",
-      },
+      
     ],
 
     // WILD ANIMALS
