@@ -30,6 +30,12 @@ const formatTime = (seconds) => {
   ).padStart(2, "0")}`;
 };
 
+const getCorrectOrder = (numbers) =>
+  [...numbers].sort((a, b) => a - b);
+
+const formatOrder = (numbers) =>
+  numbers.length ? numbers.join(" → ") : "Not Answered";
+
 function AscendingOrder({ onBack }) {
   const [selectedDuration, setSelectedDuration] = useState(5);
   const [selectedRange, setSelectedRange] = useState(DEFAULT_RANGE);
@@ -48,6 +54,8 @@ function AscendingOrder({ onBack }) {
 
   const [correctCount, setCorrectCount] = useState(0);
   const [incorrectCount, setIncorrectCount] = useState(0);
+
+  const [questionHistory, setQuestionHistory] = useState([]);
 
   // Countdown timer
   useEffect(() => {
@@ -76,6 +84,7 @@ function AscendingOrder({ onBack }) {
     setQuestionNumber(1);
     setCorrectCount(0);
     setIncorrectCount(0);
+    setQuestionHistory([]);
     setTimeLeft(selectedDuration * 60);
     setQuizCompleted(false);
     setQuizStarted(true);
@@ -84,7 +93,6 @@ function AscendingOrder({ onBack }) {
   // End test manually
   const endTest = () => {
     if (!quizStarted || quizCompleted) return;
-
     setQuizCompleted(true);
   };
 
@@ -110,13 +118,7 @@ function AscendingOrder({ onBack }) {
     );
   };
 
-  // Play feedback sound
-  const playSound = (file) => {
-    const audio = new Audio(file);
-    audio.play().catch(() => {});
-  };
-
-  // Next question
+  // Submit current question and move to next
   const nextQuestion = () => {
     if (
       answer.length !== 3 ||
@@ -126,20 +128,31 @@ function AscendingOrder({ onBack }) {
       return;
     }
 
-    const correctAnswer = [...numbers].sort(
-      (a, b) => a - b
-    );
+    const correctAnswer = getCorrectOrder(numbers);
 
     const isCorrect = answer.every(
       (number, index) => number === correctAnswer[index]
     );
 
+    const historyItem = {
+      questionNumber,
+      questionNumbers: [...numbers],
+      selectedAnswer: [...answer],
+      correctAnswer,
+      status: isCorrect ? "Correct" : "Wrong",
+      isCorrect,
+    };
+
+    setQuestionHistory((previous) => [
+      ...previous,
+      historyItem,
+    ]);
+
+    // Update score silently: no sound feedback.
     if (isCorrect) {
       setCorrectCount((previous) => previous + 1);
-      playSound("/sounds/success-1-6297.mp3");
     } else {
       setIncorrectCount((previous) => previous + 1);
-      playSound("/sounds/fail-2-277575.mp3");
     }
 
     setNumbers(randomNumbers(selectedRange));
@@ -159,28 +172,35 @@ function AscendingOrder({ onBack }) {
     setQuestionNumber(1);
     setCorrectCount(0);
     setIncorrectCount(0);
+    setQuestionHistory([]);
   };
 
-  // Test analysis
-  // The current question is unanswered when the test ends.
+  // Include the current unsubmitted question in the report.
+  const currentQuestionHistory = quizCompleted
+    ? [
+        ...questionHistory,
+        {
+          questionNumber,
+          questionNumbers: [...numbers],
+          selectedAnswer: [...answer],
+          correctAnswer: getCorrectOrder(numbers),
+          status: answer.length > 0 ? "Not Submitted" : "Unanswered",
+          isCorrect: false,
+        },
+      ]
+    : questionHistory;
+
   const unansweredCount = quizCompleted ? 1 : 0;
 
-  const attemptedQuestions = correctCount + incorrectCount;
-
   const totalQuestions =
-    attemptedQuestions + unansweredCount;
-
-  const accuracy =
-    attemptedQuestions > 0
-      ? Math.round((correctCount / attemptedQuestions) * 100)
-      : 0;
+    correctCount + incorrectCount + unansweredCount;
 
   const scorePercentage =
     totalQuestions > 0
       ? Math.round((correctCount / totalQuestions) * 100)
       : 0;
 
-  // Timer and range selection screen
+  // Setup screen
   if (!quizStarted) {
     return (
       <main className="ascending-quiz-page">
@@ -260,10 +280,10 @@ function AscendingOrder({ onBack }) {
     );
   }
 
-  // Quiz result and analysis screen
+  // Result and question-wise analysis screen
   if (quizCompleted) {
     return (
-      <main className="ascending-quiz-page">
+      <main className="ascending-quiz-page ascending-results-page">
         <button
           className="ascending-quiz-back"
           onClick={onBack}
@@ -275,14 +295,14 @@ function AscendingOrder({ onBack }) {
         <section className="ascending-result-card">
           <div className="ascending-result-icon">🏆</div>
 
-          <h1>Test Analysis</h1>
+          <h1>Test Completed!</h1>
 
           <p className="ascending-result-message">
             Great effort! Your test has ended.
           </p>
 
           <div className="ascending-final-score">
-            <span>Your Score</span>
+            <span>Marks</span>
 
             <strong>
               {correctCount} / {totalQuestions}
@@ -299,7 +319,7 @@ function AscendingOrder({ onBack }) {
 
             <div className="ascending-stat incorrect-stat">
               <strong>{incorrectCount}</strong>
-              <span>Incorrect</span>
+              <span>Wrong</span>
             </div>
 
             <div className="ascending-stat unanswered-stat">
@@ -308,27 +328,82 @@ function AscendingOrder({ onBack }) {
             </div>
           </div>
 
-          <div className="ascending-analysis-details">
-            <div>
-              <span>Total Questions</span>
-              <strong>{totalQuestions}</strong>
+          {/* Question-wise analysis */}
+          <div className="ascending-review-section">
+            <div className="ascending-review-title">
+              <h2>Question-wise Analysis</h2>
+              <p>
+                Review your answers and learn from each question.
+              </p>
             </div>
 
-            <div>
-              <span>Attempted Questions</span>
-              <strong>{attemptedQuestions}</strong>
-            </div>
+            {currentQuestionHistory.map((item) => (
+              <article
+                className={`ascending-review-item ${
+                  item.status === "Correct"
+                    ? "review-correct"
+                    : item.status === "Wrong"
+                    ? "review-wrong"
+                    : "review-unanswered"
+                }`}
+                key={item.questionNumber}
+              >
+                <div className="ascending-review-heading">
+                  <strong>
+                    Question {item.questionNumber}
+                  </strong>
 
-            <div>
-              <span>Accuracy</span>
-              <strong>{accuracy}%</strong>
-            </div>
+                  <span className="ascending-review-status">
+                    {item.status}
+                  </span>
+                </div>
 
-            <div>
-              <span>Time Remaining</span>
-              <strong>{formatTime(timeLeft)}</strong>
-            </div>
+                <div className="ascending-review-question">
+                  <span className="ascending-review-label">
+                    Given Numbers
+                  </span>
+
+                  <strong>
+                    {formatOrder(item.questionNumbers)}
+                  </strong>
+                </div>
+
+                <div className="ascending-answer-details">
+                  <div className="ascending-answer-row">
+                    <span>Your Answer</span>
+
+                    <strong
+                      className={
+                        item.isCorrect
+                          ? "answer-correct"
+                          : item.selectedAnswer.length === 0
+                          ? "answer-missing"
+                          : "answer-wrong"
+                      }
+                    >
+                      {formatOrder(item.selectedAnswer)}
+                    </strong>
+                  </div>
+
+                  <div className="ascending-answer-row">
+                    <span>Correct Answer</span>
+
+                    <strong className="answer-correct">
+                      {formatOrder(item.correctAnswer)}
+                    </strong>
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
+
+          <button
+            className="ascending-print-button"
+            onClick={() => window.print()}
+            type="button"
+          >
+            🖨 Print Analysis
+          </button>
 
           <button
             className="ascending-primary-button"

@@ -765,3 +765,278 @@
     padding: 13px 12px;
   }
 }
+
+/* ========================================
+   QUESTION-WISE ANALYSIS
+======================================== */
+
+.number-sense-review-section {
+  width: 100%;
+  margin: 35px auto 25px;
+  text-align: left;
+}
+
+.number-sense-review-heading {
+  color: #234d75;
+  font-size: 24px;
+  text-align: center;
+  margin: 0 0 10px;
+}
+
+.number-sense-review-description {
+  color: #64748b;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.number-sense-review-item {
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 20px;
+  border: 1px solid #dbe5ef;
+  border-left: 5px solid #94a3b8;
+  border-radius: 14px;
+  background: #ffffff;
+  text-align: left;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.number-sense-review-item.review-correct {
+  border-left-color: #269653;
+  background: #f7fff9;
+}
+
+.number-sense-review-item.review-wrong {
+  border-left-color: #e05252;
+  background: #fffafa;
+}
+
+.number-sense-review-item.review-unanswered {
+  border-left-color: #d99a24;
+  background: #fffdf7;
+}
+
+.number-sense-review-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.number-sense-review-number {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.number-sense-review-top h3 {
+  color: #234d75;
+  font-size: 18px;
+  margin: 5px 0 0;
+}
+
+.number-sense-review-status {
+  display: inline-block;
+  padding: 7px 13px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.number-sense-review-status.status-correct {
+  color: #18763b;
+  background: #dff5e5;
+}
+
+.number-sense-review-status.status-wrong {
+  color: #b52e2e;
+  background: #ffe3e0;
+}
+
+.number-sense-review-status.status-unanswered {
+  color: #956317;
+  background: #fff0c9;
+}
+
+.number-sense-review-prompt {
+  margin: 18px 0;
+  color: #334e68;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.number-sense-review-numbers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+  color: #52677d;
+  font-size: 14px;
+}
+
+.number-sense-review-answer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 13px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.number-sense-answer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.number-sense-answer-row strong {
+  color: #52677d;
+  flex-shrink: 0;
+}
+
+.number-sense-answer-row span {
+  font-weight: 800;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.answer-correct {
+  color: #218344;
+}
+
+.answer-wrong {
+  color: #d13e36;
+}
+
+.answer-not-submitted {
+  color: #a16b16;
+}
+
+/* PRINT ANALYSIS BUTTON */
+
+.number-sense-print-button {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 20px auto;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 14px;
+  background: #21875b;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.number-sense-print-button:hover {
+  background: #176c47;
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   RESPONSIVE ANALYSIS
+======================================== */
+
+@media (max-width: 600px) {
+  .number-sense-review-heading {
+    font-size: 21px;
+  }
+
+  .number-sense-review-item {
+    padding: 15px 12px;
+  }
+
+  .number-sense-review-top h3 {
+    font-size: 16px;
+  }
+
+  .number-sense-review-prompt {
+    font-size: 15px;
+  }
+
+  .number-sense-answer-row {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .number-sense-answer-row span {
+    text-align: left;
+  }
+
+  .number-sense-print-button {
+    font-size: 15px;
+  }
+}
+
+/* ========================================
+   PRINT SETTINGS
+======================================== */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  body {
+    background: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .number-sense-result-card,
+  .number-sense-result-card * {
+    visibility: visible;
+  }
+
+  .number-sense-result-card {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 10px;
+    border-radius: 0;
+    box-shadow: none;
+    background: #ffffff;
+  }
+
+  .number-sense-result-card h1 {
+    font-size: 24px;
+  }
+
+  .number-sense-final-score {
+    margin: 15px auto;
+  }
+
+  .number-sense-review-section {
+    margin-top: 20px;
+  }
+
+  .number-sense-review-item {
+    box-shadow: none;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 12px;
+  }
+
+  .no-print {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}

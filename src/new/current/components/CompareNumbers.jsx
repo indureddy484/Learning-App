@@ -6,11 +6,16 @@ const TIMER_OPTIONS = [2, 5, 10, 15, 20];
 const RANGE_OPTIONS = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 const DEFAULT_RANGE = 10;
 
-// Generate two random numbers from 0 to the selected maximum.
 const generateQuestion = (maxRange = DEFAULT_RANGE) => ({
   left: Math.floor(Math.random() * (maxRange + 1)),
   right: Math.floor(Math.random() * (maxRange + 1)),
 });
+
+const getCorrectSymbol = (question) => {
+  if (question.left < question.right) return "<";
+  if (question.left > question.right) return ">";
+  return "=";
+};
 
 const formatTime = (seconds) => {
   const minutes = Math.floor(seconds / 60);
@@ -29,15 +34,18 @@ function CompareNumbers({ onBack }) {
   const [quizCompleted, setQuizCompleted] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState(5 * 60);
+
   const [question, setQuestion] = useState(() =>
     generateQuestion(DEFAULT_RANGE)
   );
 
   const [selectedSymbol, setSelectedSymbol] = useState("");
-
   const [questionNumber, setQuestionNumber] = useState(1);
+
   const [correctCount, setCorrectCount] = useState(0);
-  const [incorrectCount, setIncorrectCount] = useState(0);
+  const [wrongCount, setWrongCount] = useState(0);
+
+  const [questionHistory, setQuestionHistory] = useState([]);
 
   // Countdown timer
   useEffect(() => {
@@ -65,39 +73,48 @@ function CompareNumbers({ onBack }) {
     setSelectedSymbol("");
     setQuestionNumber(1);
     setCorrectCount(0);
-    setIncorrectCount(0);
+    setWrongCount(0);
+    setQuestionHistory([]);
     setTimeLeft(selectedDuration * 60);
     setQuizCompleted(false);
     setQuizStarted(true);
   };
 
-  // Choose comparison symbol
+  // Select comparison symbol
+  // No sound or correctness feedback is played during the quiz.
   const chooseSymbol = (symbol) => {
     if (quizCompleted || timeLeft === 0) return;
-
     setSelectedSymbol(symbol);
   };
 
-  // Next question
+  // Submit current question
   const nextQuestion = () => {
     if (!selectedSymbol || quizCompleted || timeLeft === 0) {
       return;
     }
 
-    let correctSymbol;
+    const correctSymbol = getCorrectSymbol(question);
+    const isCorrect = selectedSymbol === correctSymbol;
 
-    if (question.left < question.right) {
-      correctSymbol = "<";
-    } else if (question.left > question.right) {
-      correctSymbol = ">";
-    } else {
-      correctSymbol = "=";
-    }
+    const historyItem = {
+      questionNumber,
+      left: question.left,
+      right: question.right,
+      selectedAnswer: selectedSymbol,
+      correctAnswer: correctSymbol,
+      status: isCorrect ? "Correct" : "Wrong",
+      isCorrect,
+    };
 
-    if (selectedSymbol === correctSymbol) {
+    setQuestionHistory((previous) => [
+      ...previous,
+      historyItem,
+    ]);
+
+    if (isCorrect) {
       setCorrectCount((previous) => previous + 1);
     } else {
-      setIncorrectCount((previous) => previous + 1);
+      setWrongCount((previous) => previous + 1);
     }
 
     setQuestion(generateQuestion(selectedRange));
@@ -107,6 +124,7 @@ function CompareNumbers({ onBack }) {
 
   // End test
   const endTest = () => {
+    if (!quizStarted || quizCompleted) return;
     setQuizCompleted(true);
   };
 
@@ -121,20 +139,37 @@ function CompareNumbers({ onBack }) {
     setSelectedSymbol("");
     setQuestionNumber(1);
     setCorrectCount(0);
-    setIncorrectCount(0);
+    setWrongCount(0);
+    setQuestionHistory([]);
   };
+
+  // Include the current unsubmitted question in the report
+  const currentQuestionHistory = quizCompleted
+    ? [
+        ...questionHistory,
+        {
+          questionNumber,
+          left: question.left,
+          right: question.right,
+          selectedAnswer: selectedSymbol || "Not Answered",
+          correctAnswer: getCorrectSymbol(question),
+          status: selectedSymbol ? "Not Submitted" : "Unanswered",
+          isCorrect: false,
+        },
+      ]
+    : questionHistory;
 
   const unansweredCount = quizCompleted ? 1 : 0;
 
   const totalQuestions =
-    correctCount + incorrectCount + unansweredCount;
+    correctCount + wrongCount + unansweredCount;
 
   const accuracy =
     totalQuestions > 0
       ? Math.round((correctCount / totalQuestions) * 100)
       : 0;
 
-  // Timer and range selection screen
+  // Setup screen
   if (!quizStarted) {
     return (
       <main className="compare-quiz-page">
@@ -214,10 +249,10 @@ function CompareNumbers({ onBack }) {
     );
   }
 
-  // Quiz result screen
+  // Result screen
   if (quizCompleted) {
     return (
-      <main className="compare-quiz-page">
+      <main className="compare-quiz-page compare-results-page">
         <button
           className="compare-back-button"
           onClick={onBack}
@@ -236,7 +271,7 @@ function CompareNumbers({ onBack }) {
           </p>
 
           <div className="compare-final-score">
-            <span>Your Score</span>
+            <span>Marks</span>
 
             <strong>
               {correctCount} / {totalQuestions}
@@ -245,15 +280,16 @@ function CompareNumbers({ onBack }) {
             <span>{accuracy}% Accuracy</span>
           </div>
 
+          {/* Result statistics */}
           <div className="compare-result-stats">
             <div className="compare-stat correct-stat">
               <strong>{correctCount}</strong>
               <span>Correct</span>
             </div>
 
-            <div className="compare-stat incorrect-stat">
-              <strong>{incorrectCount}</strong>
-              <span>Incorrect</span>
+            <div className="compare-stat wrong-stat">
+              <strong>{wrongCount}</strong>
+              <span>Wrong</span>
             </div>
 
             <div className="compare-stat unanswered-stat">
@@ -262,9 +298,76 @@ function CompareNumbers({ onBack }) {
             </div>
           </div>
 
-          <p className="compare-total-questions">
-            Total Questions: {totalQuestions}
-          </p>
+          {/* Question-wise analysis */}
+          <div className="compare-review-section">
+            <div className="compare-review-title">
+              <h2>Question-wise Analysis</h2>
+              <p>Review your answers and learn from each question.</p>
+            </div>
+
+            {currentQuestionHistory.map((item) => (
+              <article
+                className={`compare-review-item ${
+                  item.status === "Correct"
+                    ? "review-correct"
+                    : item.status === "Wrong"
+                    ? "review-wrong"
+                    : "review-unanswered"
+                }`}
+                key={item.questionNumber}
+              >
+                <div className="compare-review-heading">
+                  <strong>
+                    Question {item.questionNumber}
+                  </strong>
+
+                  <span className="compare-review-status">
+                    {item.status}
+                  </span>
+                </div>
+
+                <div className="compare-review-question">
+                  <span>{item.left}</span>
+                  <span>{item.correctAnswer}</span>
+                  <span>{item.right}</span>
+                </div>
+
+                <div className="compare-answer-details">
+                  <div className="compare-answer-row">
+                    <span>Your Answer:</span>
+
+                    <strong
+                      className={
+                        item.isCorrect
+                          ? "answer-correct"
+                          : item.selectedAnswer === "Not Answered"
+                          ? "answer-missing"
+                          : "answer-wrong"
+                      }
+                    >
+                      {item.selectedAnswer}
+                    </strong>
+                  </div>
+
+                  <div className="compare-answer-row">
+                    <span>Correct Answer:</span>
+
+                    <strong className="answer-correct">
+                      {item.correctAnswer}
+                    </strong>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <button
+            className="compare-print-button"
+            onClick={() => window.print()}
+            type="button"
+          >
+            🖨 Print Analysis
+          </button>
 
           <button
             className="compare-primary-button"
@@ -312,7 +415,7 @@ function CompareNumbers({ onBack }) {
       <section className="compare-quiz-card">
         <div className="compare-quiz-progress">
           <span>Question {questionNumber}</span>
-          <span>Score: {correctCount}</span>
+          <span>Marks: {correctCount}</span>
         </div>
 
         <div className="compare-timer-display">

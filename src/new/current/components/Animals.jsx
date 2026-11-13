@@ -25,8 +25,10 @@ function Animals({ onBack }) {
   const [selectedEatingHabit, setSelectedEatingHabit] =
     useState(null);
 
+  // Global mute setting for ALL animal videos
+  const [isMuted, setIsMuted] = useState(false);
+
   // Sidebar dropdown state
-  // Initially both sections are collapsed
   const [expandedSection, setExpandedSection] = useState(null);
 
   // Eating habits video paths
@@ -43,7 +45,6 @@ function Animals({ onBack }) {
 
   // All animal data, image paths and video paths
   const animalData = {
-    // PET ANIMALS
     "Pet Animals": [
       {
         name: "Fish",
@@ -77,7 +78,6 @@ function Animals({ onBack }) {
       },
     ],
 
-    // FARM ANIMALS
     "Farm Animals": [
       {
         name: "Buffalo",
@@ -121,10 +121,8 @@ function Animals({ onBack }) {
         image: "/images/animals/farm/cow.png",
         video: "/videos/animals/farm/cow.mp4",
       },
-      
     ],
 
-    // WILD ANIMALS
     "Wild Animals": [
       {
         name: "Bear",
@@ -158,7 +156,6 @@ function Animals({ onBack }) {
       },
     ],
 
-    // WATER ANIMALS
     "Water Animals": [
       {
         name: "Octopus",
@@ -204,7 +201,6 @@ function Animals({ onBack }) {
       },
     ],
 
-    // BIRDS
     Birds: [
       {
         name: "Toucans",
@@ -291,6 +287,17 @@ function Animals({ onBack }) {
         </button>
 
         <h1>Animals</h1>
+
+        {/* GLOBAL MUTE / UNMUTE BUTTON */}
+        <button
+          className="animals-global-mute-button"
+          onClick={() => setIsMuted((previous) => !previous)}
+          type="button"
+          aria-label={isMuted ? "Unmute all animal videos" : "Mute all animal videos"}
+          aria-pressed={isMuted}
+        >
+          {isMuted ? "Unmute 🔊" : "Mute 🔇"}
+        </button>
       </div>
 
       {/* MAIN CONTENT */}
@@ -323,7 +330,6 @@ function Animals({ onBack }) {
             }`}
           >
             <div className="animals-dropdown-inner">
-
               <div className="animals-category-list">
                 {categories.map((category, index) => (
                   <button
@@ -342,13 +348,11 @@ function Animals({ onBack }) {
                   </button>
                 ))}
               </div>
-
             </div>
           </div>
 
           {/* EATING HABITS DROPDOWN */}
           <div className="animals-eating-habits">
-
             <button
               className="animals-section-heading"
               onClick={() => toggleSection("eatingHabits")}
@@ -372,7 +376,6 @@ function Animals({ onBack }) {
               }`}
             >
               <div className="animals-dropdown-inner">
-
                 <div className="animals-category-list">
                   {eatingHabits.map((habit, index) => (
                     <button
@@ -388,11 +391,10 @@ function Animals({ onBack }) {
                     </button>
                   ))}
                 </div>
-
               </div>
             </div>
-
           </div>
+
         </div>
 
         {/* RIGHT CONTENT AREA */}
@@ -404,12 +406,11 @@ function Animals({ onBack }) {
               <h2>{selectedEatingHabit}</h2>
 
               <div className="animal-video-section">
-
                 <video
                   key={eatingHabitVideos[selectedEatingHabit]}
                   className="animal-video-player"
                   controls
-                  muted
+                  muted={isMuted}
                   playsInline
                   preload="metadata"
                 >
@@ -420,7 +421,6 @@ function Animals({ onBack }) {
 
                   Your browser does not support video playback.
                 </video>
-
               </div>
             </>
           ) : (
@@ -430,7 +430,6 @@ function Animals({ onBack }) {
               {/* SELECTED ANIMAL VIDEO */}
               {selectedAnimal && (
                 <div className="animal-video-section">
-
                   <button
                     className="animals-back-button"
                     onClick={() => setSelectedAnimal(null)}
@@ -445,7 +444,7 @@ function Animals({ onBack }) {
                     key={selectedAnimal.video}
                     className="animal-video-player"
                     controls
-                    muted
+                    muted={isMuted}
                     autoPlay
                     playsInline
                   >
@@ -456,14 +455,12 @@ function Animals({ onBack }) {
 
                     Your browser does not support video playback.
                   </video>
-
                 </div>
               )}
 
               {/* ANIMAL GRID */}
               {!selectedAnimal && (
                 <div className="animals-grid">
-
                   {animalData[selectedCategory].map(
                     (animal, index) => (
                       <div
@@ -482,9 +479,7 @@ function Animals({ onBack }) {
                           }
                         }}
                       >
-
                         <div className="animal-thumbnail">
-
                           <img
                             src={animal.image}
                             alt={animal.name}
@@ -501,17 +496,14 @@ function Animals({ onBack }) {
                           >
                             {animal.emoji}
                           </span>
-
                         </div>
 
                         <h3>{animal.name}</h3>
 
                         <p>▶ Watch Video</p>
-
                       </div>
                     )
                   )}
-
                 </div>
               )}
             </>

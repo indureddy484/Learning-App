@@ -27,6 +27,7 @@ import NumberSenseMenu from "../components/NumberSenseMenu";
 import AscendingOrder from "../components/AscendingOrder";
 import CompareNumbers from "../components/CompareNumbers";
 import NumberSense from "../components/NumberSense";
+import PictureAscendingOrder from "../components/PictureAscendingOrder";
 
 // ENGLISH - TENALI RAMA
 import TenaliRamaGreedyFarmer from "../components/TenaliRamaGreedyFarmer";
@@ -78,9 +79,7 @@ function NewHome({ onBack }) {
 
   if (selectedGame === "animals") {
     return (
-      <Animals
-        onBack={() => setSelectedGame(null)}
-      />
+      <Animals onBack={() => setSelectedGame(null)} />
     );
   }
 
@@ -90,9 +89,7 @@ function NewHome({ onBack }) {
 
   if (selectedGame === "plants") {
     return (
-      <Plants
-        onBack={() => setSelectedGame(null)}
-      />
+      <Plants onBack={() => setSelectedGame(null)} />
     );
   }
 
@@ -167,12 +164,8 @@ function NewHome({ onBack }) {
   if (selectedMathsGame === "levels" && selectedLevel === null) {
     return (
       <LevelScreen
-        onBack={() => {
-          setSelectedMathsGame(null);
-        }}
-        onSelectLevel={(level) => {
-          setSelectedLevel(level);
-        }}
+        onBack={() => setSelectedMathsGame(null)}
+        onSelectLevel={(level) => setSelectedLevel(level)}
       />
     );
   }
@@ -473,6 +466,21 @@ function NewHome({ onBack }) {
   }
 
   /* =========================
+     NUMBER SENSE - PICTURE-BASED ASCENDING ORDER
+  ========================= */
+
+  if (
+    selectedNumberSenseMenu &&
+    selectedNumberSenseActivity === "pictureAscending"
+  ) {
+    return (
+      <PictureAscendingOrder
+        onBack={() => setSelectedNumberSenseActivity(null)}
+      />
+    );
+  }
+
+  /* =========================
      ENGLISH - TENALI RAMA STORY / QUIZ MENU
   ========================= */
 
@@ -510,7 +518,6 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (selectedEnglishTopic === "lionMouse") {
-    // LION AND THE MOUSE - VIDEOS
     if (selectedLionMouseOption === "video") {
       return (
         <LionMouseVideo
@@ -519,7 +526,6 @@ function NewHome({ onBack }) {
       );
     }
 
-    // LION AND THE MOUSE - QUIZ (COMING SOON)
     if (selectedLionMouseOption === "quiz") {
       return (
         <div className="new-page">
@@ -541,7 +547,6 @@ function NewHome({ onBack }) {
       );
     }
 
-    // LION AND THE MOUSE - MENU
     return (
       <LionMouseLessonMenu
         onVideo={() => setSelectedLionMouseOption("video")}
@@ -750,8 +755,6 @@ function NewHome({ onBack }) {
           /* ENGLISH */
 
           <div className="game-tabs">
-            {/* TENALI RAMA */}
-
             <button
               className="english-lesson-card"
               onClick={() => {
@@ -764,8 +767,6 @@ function NewHome({ onBack }) {
               <div className="english-lesson-icon">📖</div>
               <span>Tenali Rama and the Greedy Farmer</span>
             </button>
-
-            {/* LION AND THE MOUSE */}
 
             <button
               className="english-lesson-card"

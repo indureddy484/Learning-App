@@ -1,4 +1,3 @@
-
 import "./NumberSenseMenu.css";
 
 function NumberSenseMenu({ onBack, onSelectActivity }) {
@@ -51,6 +50,20 @@ function NumberSenseMenu({ onBack, onSelectActivity }) {
         >
           <div className="game-icon">🧩</div>
           <span>Word Problems</span>
+        </button>
+
+        {/* PICTURE-BASED ASCENDING ORDER */}
+        <button
+          className="game-card picture-ascending-card"
+          onClick={() =>
+            onSelectActivity("pictureAscending")
+          }
+          type="button"
+        >
+          <div className="game-icon picture-ascending-icon">
+            🍎
+          </div>
+          <span>Picture-Based Ascending Order</span>
         </button>
       </div>
     </div>

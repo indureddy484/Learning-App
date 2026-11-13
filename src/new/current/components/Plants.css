@@ -56,16 +56,77 @@
   box-sizing: border-box;
 }
 
-.plants-sidebar h2 {
-  margin: 0 0 18px;
+/* SIDEBAR HEADINGS */
+
+.plants-sidebar-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 12px 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 9px;
+  background: #eee9fa;
   color: #30345b;
+  font-size: 17px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease;
 }
+
+.plants-sidebar-heading:hover {
+  background: #e5ddf7;
+}
+
+.parts-heading {
+  margin-top: 20px;
+}
+
+.plants-expand-icon {
+  font-size: 22px;
+  font-weight: 700;
+  color: #5936a8;
+}
+
+/* SMOOTH ACCORDION */
+
+.plants-expandable-list {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    grid-template-rows 0.4s ease-in-out,
+    opacity 0.3s ease-in-out,
+    visibility 0s linear 0.4s;
+}
+
+.plants-expandable-list.expanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    grid-template-rows 0.4s ease-in-out,
+    opacity 0.3s ease-in-out,
+    visibility 0s;
+}
+
+.plants-expandable-list > .plants-category-list {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* CATEGORY LIST */
 
 .plants-category-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
+
+/* CATEGORY BUTTONS */
 
 .plants-category-button {
   display: flex;
@@ -81,7 +142,7 @@
   font-weight: 600;
   text-align: left;
   cursor: pointer;
-  transition: 0.2s;
+  transition: background 0.2s ease;
 }
 
 .plants-category-button:hover {
@@ -105,10 +166,99 @@
 }
 
 .plants-content h2 {
-  margin: 0 0 24px;
+  margin: 0;
   color: #26345b;
   font-size: 27px;
   font-weight: 700;
+}
+
+/* VIDEO SECTION */
+
+.plant-video-section {
+  width: 100%;
+  margin-bottom: 25px;
+  padding: 15px;
+  background: #f8f8fc;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+/* VIDEO CONTAINER */
+
+.plant-video-container {
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+/* VIDEO HEADER: TITLE LEFT, BUTTON RIGHT */
+
+.plant-video-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* EMPTY TITLE SPACE FOR PARTS OF PLANTS */
+
+.plant-video-title-placeholder {
+  flex: 1;
+  min-width: 0;
+}
+
+/* MUTE / UNMUTE BUTTON */
+
+.plant-mute-button {
+  position: static !important;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  margin: 0;
+  border: none;
+  border-radius: 8px;
+  background: #5936a8;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.plant-mute-button:hover {
+  background: #45268e;
+  transform: scale(1.04);
+}
+
+.plant-mute-button:focus-visible {
+  outline: 3px solid #b9a3f0;
+  outline-offset: 3px;
+}
+
+/* VIDEO PLAYER */
+
+.plant-video-container .plant-video-player {
+  display: block;
+  width: 100%;
+  max-width: 850px;
+  max-height: 480px;
+  margin: 0 auto;
+  background: #000;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+/* PARTS OF PLANTS CONTENT */
+
+.plant-part-content {
+  width: 100%;
 }
 
 /* PLANT GRID */
@@ -122,13 +272,15 @@
 /* PLANT CARD */
 
 .plant-card {
-  background: #ffffff;
-  border-radius: 15px;
   padding: 14px;
   overflow: hidden;
+  border-radius: 15px;
+  background: #fff;
   text-align: left;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .plant-card-clickable {
@@ -143,14 +295,14 @@
 /* IMAGE CONTAINER */
 
 .plant-thumbnail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   aspect-ratio: 16 / 9;
-  background: #f1f3f5;
-  border-radius: 11px;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border-radius: 11px;
+  background: #f1f3f5;
 }
 
 /* PLANT IMAGE */
@@ -159,91 +311,30 @@
   display: block;
   width: 100%;
   height: 100%;
+  border-radius: 11px;
   object-fit: contain;
   object-position: center;
-  border-radius: 11px;
 }
 
 /* FALLBACK EMOJI */
 
 .plant-image-fallback {
   display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
   font-size: 65px;
 }
 
 /* PLANT NAME */
 
 .plant-card h3 {
+  margin: 13px 3px 5px;
+  color: #26345b;
   font-size: 19px;
   font-weight: 700;
-  color: #26345b;
   text-align: left;
-  margin: 13px 3px 5px;
-}
-
-/* VIDEO LABEL */
-
-.plant-card p {
-  font-size: 13px;
-  font-weight: 500;
-  color: #6845b5;
-  text-align: left;
-  margin: 0 3px 5px;
-}
-
-/* EMPTY CATEGORY MESSAGE */
-
-.plants-empty-state {
-  min-height: 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 20px;
-  color: #30345b;
-}
-
-.plants-empty-icon {
-  font-size: 65px;
-  margin-bottom: 12px;
-}
-
-.plants-empty-state h3 {
-  font-size: 21px;
-  margin: 5px 0;
-}
-
-.plants-empty-state p {
-  font-size: 15px;
-  color: #777;
-  max-width: 400px;
-}
-
-/* VIDEO SECTION */
-
-.plant-video-section {
-  margin-bottom: 25px;
-  padding: 15px;
-  background: #f8f8fc;
-  border-radius: 12px;
-}
-
-.plant-video-section h3 {
-  color: #30345b;
-  margin: 15px 0;
-  font-size: 22px;
-}
-
-.plant-video-player {
-  display: block;
-  width: 100%;
-  max-width: 850px;
-  max-height: 480px;
-  margin: 0 auto;
-  background: #000;
-  border-radius: 12px;
-  object-fit: contain;
 }
 
 /* RESPONSIVE */
@@ -263,11 +354,6 @@
     width: 100%;
   }
 
-  .plants-category-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .plants-content {
     width: 100%;
     box-sizing: border-box;
@@ -278,88 +364,211 @@
   .plants-grid {
     grid-template-columns: 1fr;
   }
-}
 
-@media (max-width: 450px) {
-  .plants-category-list {
-    grid-template-columns: 1fr;
+  .plants-content h2 {
+    font-size: 23px;
+  }
+
+  .plant-video-header h2 {
+    font-size: 22px;
+  }
+
+  .plant-mute-button {
+    padding: 9px 13px;
+    font-size: 13px;
   }
 }
 
 
+/* =================================
+   ATTRACTIVE PLANTS SIDEBAR
+================================= */
 
-/* CATEGORY VIDEO BUTTON */
-
-.plants-video-button-container {
-  margin-bottom: 22px;
+.plants-sidebar {
+  width: 270px;
+  min-width: 240px;
+  padding: 20px 16px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8f5ff 100%);
+  border: 1px solid #eee8fa;
+  border-radius: 20px;
+  box-shadow: 0 6px 22px rgba(75, 48, 130, 0.10);
+  box-sizing: border-box;
 }
 
-.plants-watch-video-button {
-  padding: 12px 22px;
+/* SECTION HEADINGS */
+
+.plants-sidebar-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 54px;
+  padding: 13px 15px;
+  margin-bottom: 13px;
+  border: 1px solid #e7def8;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f1eaff, #e9e1fb);
+  color: #39266f;
+  font-size: 17px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.plants-sidebar-heading:hover {
+  background: #e4d8fa;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(89, 54, 168, 0.10);
+}
+
+.plants-expand-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #5936a8;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.parts-heading {
+  margin-top: 20px;
+}
+
+/* CATEGORY LIST */
+
+.plants-category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 2px 0;
+}
+
+/* CATEGORY BUTTONS */
+
+.plants-category-button {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  min-height: 48px;
+  padding: 11px 13px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  background: #f2f3fa;
+  color: #30345b;
+  font-size: 15px;
+  font-weight: 650;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.plants-category-button:hover {
+  background: #e9e1fa;
+  border-color: #d9cafa;
+  transform: translateX(4px);
+}
+
+/* ACTIVE CATEGORY */
+
+.plants-category-button.active {
+  background: linear-gradient(110deg, #5936a8, #7651c3);
+  color: #ffffff;
+  border-color: #5936a8;
+  box-shadow: 0 4px 12px rgba(89, 54, 168, 0.22);
+  transform: translateX(3px);
+}
+
+/* NUMBER STYLE */
+
+.plants-category-button span:first-child {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 23px;
+  height: 23px;
+  border-radius: 7px;
+  background: rgba(89, 54, 168, 0.09);
+  color: #5936a8;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.plants-category-button.active span:first-child {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+/* ACCESSIBILITY */
+
+.plants-category-button:focus-visible,
+.plants-sidebar-heading:focus-visible {
+  outline: 3px solid #b9a3f0;
+  outline-offset: 3px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 800px) {
+  .plants-sidebar {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+
+/* =================================
+   GLOBAL MUTE BUTTON
+================================= */
+
+.plants-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.plants-header h1 {
+  margin: 0;
+}
+
+.plants-global-mute-button {
+  margin-left: auto;
+  padding: 12px 24px;
   border: none;
   border-radius: 9px;
   background: #5936a8;
   color: white;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.plants-watch-video-button:hover {
+.plants-global-mute-button:hover {
   background: #45268e;
   transform: translateY(-2px);
 }
 
-/* PLANT IMAGE FALLBACK */
-
-.plant-image-fallback {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  font-size: 65px;
+.plants-global-mute-button:focus-visible {
+  outline: 3px solid #b9a3f0;
+  outline-offset: 3px;
 }
 
-/* PLANT VIDEO */
+@media (max-width: 500px) {
+  .plants-header {
+    gap: 10px;
+  }
 
-.plant-video-section {
-  margin-bottom: 25px;
-  padding: 15px;
-  background: #f8f8fc;
-  border-radius: 12px;
-}
-
-.plant-video-section h3 {
-  color: #30345b;
-  margin: 15px 0;
-  font-size: 22px;
-}
-
-.plant-video-player {
-  display: block;
-  width: 100%;
-  max-width: 850px;
-  max-height: 480px;
-  margin: 0 auto;
-  background: #000;
-  border-radius: 12px;
-  object-fit: contain;
-}
-
-
-.plant-video-section {
-  width: 100%;
-  margin-bottom: 25px;
-}
-
-.plant-video-player {
-  display: block;
-  width: 100%;
-  max-width: 850px;
-  max-height: 480px;
-  background: #000;
-  border-radius: 12px;
-  object-fit: contain;
+  .plants-global-mute-button {
+    padding: 9px 12px;
+    font-size: 13px;
+  }
 }

@@ -31,6 +31,8 @@ const TOPIC_OPTIONS = [
   { value: "note-10-coins", label: "₹10 Note + Coins" },
   { value: "note-20-coins", label: "₹20 Note + Coins" },
   { value: "note-50-coins", label: "₹50 Note + Coins" },
+  { value: "notes-10-20-coins", label: "₹10 + ₹20 Notes + Coins" },
+  { value: "notes-20-50-coins", label: "₹20 + ₹50 Notes + Coins" },
   {
     value: "mixed-notes-coins",
     label: "₹10 + ₹20 + ₹50 Notes & ₹1 + ₹2 + ₹5 Coins",
@@ -38,6 +40,18 @@ const TOPIC_OPTIONS = [
 ];
 
 function getTopic(topic) {
+  const multiNoteAndCoinsMatch = topic.match(/^notes-(10-20|20-50)-coins$/);
+
+  if (multiNoteAndCoinsMatch) {
+    const noteValues = multiNoteAndCoinsMatch[1].split("-").map(Number);
+    return {
+      values: [...noteValues, 1, 2, 5],
+      kind: "mixed",
+      type: "combo",
+      label: `₹${noteValues.join(" + ₹")} Notes + Coins`,
+    };
+  }
+
   const noteAndCoinsMatch = topic.match(/^note-(10|20|50)-coins$/);
 
   if (noteAndCoinsMatch) {
@@ -152,16 +166,23 @@ function makeNotesAndCoinsQuestion(noteValues, coinValues, maxAmount = 100) {
 function makeQuestion(topic, maxAmount = 100) {
   const config = getTopic(topic);
 
-  // ₹10 / ₹20 / ₹50 note + coins activities.
+  // Individual note + coin activities.
   const noteAndCoinsMatch = topic.match(/^note-(10|20|50)-coins$/);
   if (noteAndCoinsMatch) {
     const noteValue = Number(noteAndCoinsMatch[1]);
-    return makeNotesAndCoinsQuestion([noteValue], [1, 2, 5], 100);
+    return makeNotesAndCoinsQuestion([noteValue], [1, 2, 5], maxAmount);
+  }
+
+  // ₹10 + ₹20 notes with coins, or ₹20 + ₹50 notes with coins.
+  const multiNoteAndCoinsMatch = topic.match(/^notes-(10-20|20-50)-coins$/);
+  if (multiNoteAndCoinsMatch) {
+    const noteValues = multiNoteAndCoinsMatch[1].split("-").map(Number);
+    return makeNotesAndCoinsQuestion(noteValues, [1, 2, 5], maxAmount);
   }
 
   // Final overall combination: all note and coin denominations are eligible.
   if (topic === "mixed-notes-coins") {
-    return makeNotesAndCoinsQuestion([10, 20, 50], [1, 2, 5], 100);
+    return makeNotesAndCoinsQuestion([10, 20, 50], [1, 2, 5], maxAmount);
   }
 
   if (topic === "note-50") {
@@ -395,18 +416,7 @@ function MoneyLevel1({ onBack }) {
   const tryAgainAudio = useRef(null);
 
   const isFiftyNoteOnly = topic === "note-50";
-  const isMixedMoney = topic === "mixed-notes-coins";
-  const isNoteAndCoins = [
-    "note-10-coins",
-    "note-20-coins",
-    "note-50-coins",
-  ].includes(topic);
-  const hasFixedMixedLimit = isMixedMoney || isNoteAndCoins;
-  const currentLimit = isFiftyNoteOnly
-    ? fiftyNoteLimit
-    : hasFixedMixedLimit
-      ? 100
-      : maxAmount;
+  const currentLimit = isFiftyNoteOnly ? fiftyNoteLimit : maxAmount;
   const question = questions[questionIndex];
 
   useEffect(() => {
@@ -531,14 +541,9 @@ function MoneyLevel1({ onBack }) {
           value={topic}
           onChange={(event) => {
             const nextTopic = event.target.value;
-            const nextIsMixed =
-              nextTopic === "mixed-notes-coins" ||
-              ["note-10-coins", "note-20-coins", "note-50-coins"].includes(nextTopic);
             const limit = nextTopic === "note-50"
               ? fiftyNoteLimit
-              : nextIsMixed
-                ? 100
-                : maxAmount;
+              : maxAmount;
             resetForTopic(nextTopic, limit);
           }}
         >
@@ -554,7 +559,6 @@ function MoneyLevel1({ onBack }) {
           id="money-max-amount"
           className="money-denomination-select"
           value={currentLimit}
-          disabled={hasFixedMixedLimit}
           onChange={(event) => {
             const limit = Number(event.target.value);
             if (isFiftyNoteOnly) setFiftyNoteLimit(limit);
@@ -562,9 +566,7 @@ function MoneyLevel1({ onBack }) {
             resetForTopic(topic, limit);
           }}
         >
-          {hasFixedMixedLimit ? (
-            <option value={100}>Less than ₹100</option>
-          ) : isFiftyNoteOnly ? (
+          {isFiftyNoteOnly ? (
             <>
               <option value={300}>Less than ₹300</option>
               <option value={500}>Less than ₹500</option>

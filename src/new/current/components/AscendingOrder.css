@@ -675,3 +675,213 @@
 .ascending-end-button {
   margin-top: 12px;
 }
+
+/* Hide the old violet analysis summary */
+.ascending-analysis-details {
+  display: none !important;
+}
+
+/* Question-wise analysis */
+.ascending-review-section {
+  width: 100%;
+  margin: 30px auto 20px;
+  text-align: left;
+}
+
+.ascending-review-title {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.ascending-review-title h2 {
+  color: #234d75;
+  font-size: 25px;
+  margin-bottom: 8px;
+}
+
+.ascending-review-title p {
+  color: #718398;
+  font-size: 14px;
+}
+
+.ascending-review-item {
+  width: 100%;
+  margin: 0 auto 16px;
+  padding: 18px 20px;
+  border: 1px solid #dce6ee;
+  border-left: 6px solid #cbd5df;
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+.ascending-review-item.review-correct {
+  border-left-color: #239b59;
+  background: #f2fcf5;
+}
+
+.ascending-review-item.review-wrong {
+  border-left-color: #ef4444;
+  background: #fff6f5;
+}
+
+.ascending-review-item.review-unanswered {
+  border-left-color: #e5a52d;
+  background: #fffbf0;
+}
+
+.ascending-review-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 13px;
+  color: #234d75;
+  font-size: 16px;
+}
+
+.ascending-review-status {
+  padding: 6px 13px;
+  border-radius: 20px;
+  background: #edf1f5;
+  color: #526579;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.review-correct .ascending-review-status {
+  background: #dcf6e5;
+  color: #168044;
+}
+
+.review-wrong .ascending-review-status {
+  background: #ffe6e3;
+  color: #cf3932;
+}
+
+.review-unanswered .ascending-review-status {
+  background: #fff0cc;
+  color: #98630d;
+}
+
+.ascending-review-question {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 13px 15px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.ascending-review-label {
+  color: #718398;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ascending-review-question strong {
+  color: #234d75;
+  font-size: 20px;
+}
+
+.ascending-answer-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.ascending-answer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #e4ebf1;
+  border-radius: 10px;
+  background: #ffffff;
+  font-size: 13px;
+}
+
+.ascending-answer-row span {
+  color: #526579;
+}
+
+.ascending-answer-row strong {
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.answer-correct {
+  color: #168044;
+}
+
+.answer-wrong {
+  color: #d43d35;
+}
+
+.answer-missing {
+  color: #98630d;
+}
+
+/* Print button */
+.ascending-print-button {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  margin: 18px auto;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 12px;
+  background: #e9f3fc;
+  color: #286b9f;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ascending-print-button:hover {
+  background: #d8eafa;
+}
+
+/* Print only the analysis report */
+@media print {
+  .ascending-quiz-page {
+    padding: 0;
+    background: #ffffff;
+  }
+
+  .ascending-quiz-back,
+  .ascending-result-icon,
+  .ascending-print-button,
+  .ascending-result-card > .ascending-primary-button,
+  .ascending-result-card > .ascending-secondary-button {
+    display: none !important;
+  }
+
+  .ascending-result-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 10px;
+    box-shadow: none;
+  }
+
+  .ascending-review-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
+@media (max-width: 600px) {
+  .ascending-review-item {
+    padding: 14px 12px;
+  }
+
+  .ascending-answer-details {
+    grid-template-columns: 1fr;
+  }
+
+  .ascending-review-question strong {
+    font-size: 18px;
+  }
+}

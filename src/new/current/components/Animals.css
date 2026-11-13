@@ -529,3 +529,39 @@
     min-width: 0;
   }
 }
+
+/* GLOBAL MUTE / UNMUTE BUTTON */
+
+.animals-global-mute-button {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 11px 20px;
+  border: none;
+  border-radius: 9px;
+  background: #5936a8;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.animals-global-mute-button:hover {
+  background: #45268e;
+  transform: translateY(-2px);
+}
+
+.animals-global-mute-button:focus-visible {
+  outline: 3px solid #b9a3f0;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .animals-header {
+    flex-wrap: wrap;
+  }
+
+  .animals-global-mute-button {
+    margin-left: auto;
+  }
+}

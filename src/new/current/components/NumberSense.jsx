@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import "./NumberSense.css";
 import PracticeWorksheet from "./PracticeWorksheet";
@@ -20,7 +19,6 @@ const shuffle = (items) => {
   return result;
 };
 
-// Generates four unique answer choices from 0 to maxNumber.
 const makeNumberOptions = (correct, candidates, maxNumber) => {
   const unique = [...new Set([correct, ...candidates])].filter(
     (number) =>
@@ -31,14 +29,12 @@ const makeNumberOptions = (correct, candidates, maxNumber) => {
 
   while (unique.length < 4) {
     const candidate = randomInt(0, maxNumber);
-
     if (!unique.includes(candidate)) unique.push(candidate);
   }
 
   return shuffle(unique.slice(0, 4));
 };
 
-// Generates four unique arrangements from all six possible permutations.
 const makeOrderOptions = (numbers, correctOrder) => {
   const [a, b, c] = numbers;
 
@@ -64,12 +60,10 @@ const makeOrderOptions = (numbers, correctOrder) => {
   ]);
 };
 
-// LANGUAGE TEXT
 const TEXT = {
   english: {
     languageTitle: "Choose Your Language",
     languageDescription: "Select the language for your quiz.",
-
     setupTitle: "Number Sense Quiz",
     setupDescription: "Choose your number range and quiz time.",
     selectRange: "Select Number Range",
@@ -79,7 +73,6 @@ const TEXT = {
     setupHint: "Answer as many questions as you can before time runs out!",
     startQuiz: "▶ Start Quiz",
     changeLanguage: "Change Language",
-
     instruction: "Read the question and choose the correct answer.",
     chooseAnswer: "Choose one correct answer.",
     question: "Question",
@@ -88,7 +81,6 @@ const TEXT = {
     next: "➡ Next",
     endTest: "⛔ End Test",
     back: "← BACK",
-
     completed: "Quiz Completed!",
     resultMessage: "Great effort! Your quiz has ended.",
     yourScore: "Your Score",
@@ -99,7 +91,6 @@ const TEXT = {
     totalQuestions: "Total Questions",
     playAgain: "Play Again",
     backToMenu: "Back to Number Sense Menu",
-
     titles: {
       before: "Before Number",
       after: "After Number",
@@ -109,7 +100,6 @@ const TEXT = {
       ascending: "Ascending Order",
       descending: "Descending Order",
     },
-
     prompts: {
       before: (number) => `What number comes before ${number}?`,
       after: (number) => `What number comes after ${number}?`,
@@ -122,11 +112,9 @@ const TEXT = {
     },
   },
 
-  // TELUGU OPTION - ALL QUIZ CONTENT IN TENGLISH
   tenglish: {
     languageTitle: "Choose Your Language",
     languageDescription: "Mee quiz language select cheyyandi.",
-
     setupTitle: "Number Sense Quiz",
     setupDescription: "Number range mariyu quiz time select cheyyandi.",
     selectRange: "Number Range Select Cheyyandi",
@@ -137,9 +125,7 @@ const TEXT = {
       "Time aipoye lopu enni questions answer cheyyagaligite anni cheyyandi!",
     startQuiz: "▶ Quiz Start Cheyyandi",
     changeLanguage: "Language Marchandi",
-
-    instruction:
-      "Question chadivi correct answer select cheyyandi.",
+    instruction: "Question chadivi correct answer select cheyyandi.",
     chooseAnswer: "Oka correct answer select cheyyandi.",
     question: "Question",
     score: "Score",
@@ -147,10 +133,8 @@ const TEXT = {
     next: "➡ Next",
     endTest: "⛔ Test End Cheyyandi",
     back: "← BACK",
-
     completed: "Quiz Complete Ayyindi!",
-    resultMessage:
-      "Chala baaga try chesaru! Mee quiz complete ayyindi.",
+    resultMessage: "Chala baaga try chesaru! Mee quiz complete ayyindi.",
     yourScore: "Mee Score",
     accuracy: "Accuracy",
     correct: "Correct",
@@ -159,7 +143,6 @@ const TEXT = {
     totalQuestions: "Total Questions",
     playAgain: "Malli Aadandi",
     backToMenu: "Number Sense Menu Ki Vellandi",
-
     titles: {
       before: "Before Number",
       after: "After Number",
@@ -169,12 +152,9 @@ const TEXT = {
       ascending: "Ascending Order",
       descending: "Descending Order",
     },
-
     prompts: {
-      before: (number) =>
-        `${number} mundu yemi number vastundi?`,
-      after: (number) =>
-        `${number} taruvata yemi number vastundi?`,
+      before: (number) => `${number} mundu yemi number vastundi?`,
+      after: (number) => `${number} taruvata yemi number vastundi?`,
       between: (first, second) =>
         `${first} and ${second} ki madhyalo yemi number vastundi?`,
       smallest: "Veetilo chinna number yedi?",
@@ -185,7 +165,6 @@ const TEXT = {
   },
 };
 
-// GENERATE QUESTIONS WITHIN THE SELECTED NUMBER RANGE
 const generateQuestion = (language = "english", maxNumber = 10) => {
   const text = TEXT[language] || TEXT.english;
 
@@ -201,7 +180,6 @@ const generateQuestion = (language = "english", maxNumber = 10) => {
 
   const type = types[randomInt(0, types.length - 1)];
 
-  // BEFORE NUMBER
   if (type === "before") {
     const number = randomInt(1, maxNumber);
     const correct = number - 1;
@@ -219,7 +197,6 @@ const generateQuestion = (language = "english", maxNumber = 10) => {
     };
   }
 
-  // AFTER NUMBER
   if (type === "after") {
     const number = randomInt(0, maxNumber - 1);
     const correct = number + 1;
@@ -237,7 +214,6 @@ const generateQuestion = (language = "english", maxNumber = 10) => {
     };
   }
 
-  // BETWEEN NUMBERS
   if (type === "between") {
     const first = randomInt(0, maxNumber - 2);
     const second = first + 2;
@@ -257,7 +233,6 @@ const generateQuestion = (language = "english", maxNumber = 10) => {
     };
   }
 
-  // SMALLEST AND BIGGEST NUMBER
   if (type === "smallest" || type === "biggest") {
     const numbers = [];
 
@@ -299,7 +274,6 @@ const generateQuestion = (language = "english", maxNumber = 10) => {
     };
   }
 
-  // ASCENDING AND DESCENDING ORDER
   const numbers = [];
 
   while (numbers.length < 3) {
@@ -348,12 +322,20 @@ const isCorrectAnswer = (selected, correct) => {
   return selected === correct;
 };
 
+// Displays a normal answer or an ordered sequence.
+const displayAnswer = (answer) => {
+  if (answer === null || answer === undefined) return "Not answered";
+
+  return Array.isArray(answer)
+    ? answer.join(" → ")
+    : String(answer);
+};
+
 function NumberSense({ onBack }) {
   const [selectedLanguage, setSelectedLanguage] = useState(null);
   const [selectedMaxNumber, setSelectedMaxNumber] = useState(10);
   const [selectedDuration, setSelectedDuration] = useState(5);
 
-  // Controls the Practice Worksheet popup independently of the quiz.
   const [showPracticeWorksheet, setShowPracticeWorksheet] =
     useState(false);
 
@@ -370,9 +352,11 @@ function NumberSense({ onBack }) {
   const [correctCount, setCorrectCount] = useState(0);
   const [incorrectCount, setIncorrectCount] = useState(0);
 
+  // Stores the result of every submitted question.
+  const [questionHistory, setQuestionHistory] = useState([]);
+
   const text = TEXT[selectedLanguage || "english"];
 
-  // TIMER
   useEffect(() => {
     if (!quizStarted || quizCompleted) return;
 
@@ -383,32 +367,30 @@ function NumberSense({ onBack }) {
     return () => clearInterval(timer);
   }, [quizStarted, quizCompleted]);
 
-  // AUTO END WHEN TIMER REACHES ZERO
   useEffect(() => {
     if (quizStarted && timeLeft === 0) {
       setQuizCompleted(true);
     }
   }, [quizStarted, timeLeft]);
 
-  // LANGUAGE SELECTION
   const chooseLanguage = (language) => {
     setSelectedLanguage(language);
     setQuestion(generateQuestion(language, selectedMaxNumber));
   };
 
-  // START QUIZ
   const startQuiz = () => {
     setQuestion(generateQuestion(selectedLanguage, selectedMaxNumber));
     setSelectedAnswer(null);
     setQuestionNumber(1);
     setCorrectCount(0);
     setIncorrectCount(0);
+    setQuestionHistory([]);
     setTimeLeft(selectedDuration * 60);
     setQuizCompleted(false);
     setQuizStarted(true);
   };
 
-  // SUBMIT ANSWER
+  // SUBMIT ANSWER AND SAVE QUESTION-WISE ANALYSIS
   const submitAnswer = () => {
     if (
       selectedAnswer === null ||
@@ -418,7 +400,29 @@ function NumberSense({ onBack }) {
       return;
     }
 
-    if (isCorrectAnswer(selectedAnswer, question.correct)) {
+    const correct = isCorrectAnswer(
+      selectedAnswer,
+      question.correct
+    );
+
+    const historyItem = {
+      questionNumber,
+      title: question.title,
+      prompt: question.prompt,
+      numbers: question.numbers || [],
+      selectedAnswer: Array.isArray(selectedAnswer)
+        ? [...selectedAnswer]
+        : selectedAnswer,
+      correctAnswer: Array.isArray(question.correct)
+        ? [...question.correct]
+        : question.correct,
+      isCorrect: correct,
+      status: correct ? "Correct" : "Wrong",
+    };
+
+    setQuestionHistory((previous) => [...previous, historyItem]);
+
+    if (correct) {
       setCorrectCount((previous) => previous + 1);
     } else {
       setIncorrectCount((previous) => previous + 1);
@@ -431,12 +435,10 @@ function NumberSense({ onBack }) {
     setQuestionNumber((previous) => previous + 1);
   };
 
-  // END TEST
   const endTest = () => {
     setQuizCompleted(true);
   };
 
-  // RESTART QUIZ
   const restartQuiz = () => {
     setQuizStarted(false);
     setQuizCompleted(false);
@@ -449,9 +451,40 @@ function NumberSense({ onBack }) {
     setQuestionNumber(1);
     setCorrectCount(0);
     setIncorrectCount(0);
+    setQuestionHistory([]);
   };
 
-  // CURRENT QUESTION COUNTS AS UNANSWERED WHEN QUIZ ENDS
+  // The current question is also included in the final analysis.
+  // If it has no selected answer, its status is Unanswered.
+  // If an answer was selected but Next was not pressed, it is Not Submitted.
+  const currentQuestionHistory = quizCompleted
+    ? [
+        ...questionHistory,
+        {
+          questionNumber,
+          title: question.title,
+          prompt: question.prompt,
+          numbers: question.numbers || [],
+          selectedAnswer:
+            selectedAnswer === null
+              ? null
+              : Array.isArray(selectedAnswer)
+              ? [...selectedAnswer]
+              : selectedAnswer,
+          correctAnswer: Array.isArray(question.correct)
+            ? [...question.correct]
+            : question.correct,
+          isCorrect: false,
+          status:
+            selectedAnswer === null
+              ? "Unanswered"
+              : "Not Submitted",
+        },
+      ]
+    : questionHistory;
+
+  // The current question counts as unanswered in the summary
+  // when the quiz ends, including a selected but unsubmitted answer.
   const unansweredCount = quizCompleted ? 1 : 0;
 
   const totalQuestions =
@@ -502,9 +535,7 @@ function NumberSense({ onBack }) {
               className="number-sense-timer-option"
               onClick={() => chooseLanguage("tenglish")}
             >
-              <strong className="telugu-language-icon">
-                అఆఇ
-              </strong>
+              <strong className="telugu-language-icon">అఆఇ</strong>
               <span>తెలుగు</span>
             </button>
           </div>
@@ -538,7 +569,6 @@ function NumberSense({ onBack }) {
             {text.setupDescription}
           </p>
 
-          {/* NUMBER RANGE SELECTION */}
           <div className="number-sense-range-section">
             <label
               htmlFor="number-sense-range"
@@ -567,7 +597,6 @@ function NumberSense({ onBack }) {
             </p>
           </div>
 
-          {/* TIMER SELECTION */}
           <h3>{text.selectTime}</h3>
 
           <div className="number-sense-timer-options">
@@ -599,7 +628,6 @@ function NumberSense({ onBack }) {
             {text.startQuiz}
           </button>
 
-          {/* SEPARATE PRACTICE WORKSHEET FEATURE */}
           <div className="number-sense-practice-divider">
             <span>OR</span>
           </div>
@@ -621,7 +649,6 @@ function NumberSense({ onBack }) {
               : "Generate a worksheet for practice without a timer."}
           </p>
 
-          {/* PRACTICE WORKSHEET POPUP */}
           {showPracticeWorksheet && (
             <PracticeWorksheet
               language={selectedLanguage}
@@ -647,7 +674,7 @@ function NumberSense({ onBack }) {
     return (
       <main className="number-sense-quiz-page">
         <button
-          className="number-sense-back"
+          className="number-sense-back no-print"
           onClick={onBack}
           type="button"
         >
@@ -655,7 +682,9 @@ function NumberSense({ onBack }) {
         </button>
 
         <section className="number-sense-result-card">
-          <div className="number-sense-result-icon">🏆</div>
+          <div className="number-sense-result-icon no-print">
+            🏆
+          </div>
 
           <h1>{text.completed}</h1>
 
@@ -696,21 +725,112 @@ function NumberSense({ onBack }) {
             {text.totalQuestions}: {totalQuestions}
           </p>
 
-          <button
-            className="number-sense-primary-button"
-            onClick={restartQuiz}
-            type="button"
-          >
-            {text.playAgain}
-          </button>
+          {/* QUESTION-WISE ANALYSIS */}
+          <div className="number-sense-review-section">
+            <h2 className="number-sense-review-heading">
+              Question-wise Analysis
+            </h2>
+
+            <p className="number-sense-review-description">
+              Review each question, your answer, and the correct answer.
+            </p>
+
+            {currentQuestionHistory.map((item) => (
+              <article
+                className={`number-sense-review-item ${
+                  item.status === "Correct"
+                    ? "review-correct"
+                    : item.status === "Wrong"
+                    ? "review-wrong"
+                    : "review-unanswered"
+                }`}
+                key={item.questionNumber}
+              >
+                <div className="number-sense-review-top">
+                  <div>
+                    <span className="number-sense-review-number">
+                      Question {item.questionNumber}
+                    </span>
+
+                    <h3>{item.title}</h3>
+                  </div>
+
+                  <span
+                    className={`number-sense-review-status ${
+                      item.status === "Correct"
+                        ? "status-correct"
+                        : item.status === "Wrong"
+                        ? "status-wrong"
+                        : "status-unanswered"
+                    }`}
+                  >
+                    {item.status}
+                  </span>
+                </div>
+
+                <p className="number-sense-review-prompt">
+                  {item.prompt}
+                </p>
+
+                {item.numbers && item.numbers.length > 0 && (
+                  <div className="number-sense-review-numbers">
+                    <strong>Given numbers:</strong>
+                    <span>{item.numbers.join(", ")}</span>
+                  </div>
+                )}
+
+                <div className="number-sense-review-answer">
+                  <div className="number-sense-answer-row">
+                    <strong>Your Answer:</strong>
+                    <span
+                      className={
+                        item.status === "Correct"
+                          ? "answer-correct"
+                          : item.status === "Wrong"
+                          ? "answer-wrong"
+                          : "answer-not-submitted"
+                      }
+                    >
+                      {displayAnswer(item.selectedAnswer)}
+                    </span>
+                  </div>
+
+                  <div className="number-sense-answer-row">
+                    <strong>Correct Answer:</strong>
+                    <span className="answer-correct">
+                      {displayAnswer(item.correctAnswer)}
+                    </span>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
 
           <button
-            className="number-sense-secondary-button"
-            onClick={onBack}
+            className="number-sense-print-button no-print"
             type="button"
+            onClick={() => window.print()}
           >
-            {text.backToMenu}
+            🖨️ Print Analysis
           </button>
+
+          <div className="no-print">
+            <button
+              className="number-sense-primary-button"
+              onClick={restartQuiz}
+              type="button"
+            >
+              {text.playAgain}
+            </button>
+
+            <button
+              className="number-sense-secondary-button"
+              onClick={onBack}
+              type="button"
+            >
+              {text.backToMenu}
+            </button>
+          </div>
         </section>
       </main>
     );
@@ -762,8 +882,8 @@ function NumberSense({ onBack }) {
 
           {question.numbers && (
             <div className="number-sense-given-numbers">
-              {question.numbers.map((number) => (
-                <span key={number}>{number}</span>
+              {question.numbers.map((number, index) => (
+                <span key={`${number}-${index}`}>{number}</span>
               ))}
             </div>
           )}

@@ -1,4 +1,3 @@
-
 .number-sense-page {
   text-align: center;
 }
@@ -28,20 +27,7 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
 }
 
-@media (max-width: 600px) {
-  .number-sense-page .game-tabs {
-    gap: 14px;
-  }
-
-  .number-sense-page .game-card {
-    min-width: 140px;
-    min-height: 135px;
-  }
-
-  .number-sense-subtitle {
-    font-size: 16px;
-  }
-}
+/* Compare Numbers symbols */
 
 .compare-symbols {
   display: flex;
@@ -62,4 +48,45 @@
   font-size: 42px !important;
   font-weight: 800;
   line-height: 1;
+}
+
+/* Picture-Based Ascending Order */
+
+.number-sense-page .picture-ascending-card > span {
+  max-width: 220px;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.picture-ascending-icon {
+  font-size: 55px !important;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+  .number-sense-page .game-tabs {
+    gap: 14px;
+  }
+
+  .number-sense-page .game-card {
+    min-width: 140px;
+    min-height: 135px;
+  }
+
+  .number-sense-subtitle {
+    font-size: 16px;
+  }
+
+  .number-sense-page .picture-ascending-card > span {
+    font-size: 15px;
+  }
+
+  .picture-ascending-icon {
+    font-size: 45px !important;
+  }
 }
