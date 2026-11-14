@@ -1,0 +1,393 @@
+/* LEVEL 2 SETUP */
+.level2-setup-label {
+  width: fit-content;
+  margin: 18px auto;
+  padding: 10px 22px;
+  border-radius: 12px;
+  background: #eee8ff;
+  color: #5835a5;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.level2-setup-description {
+  max-width: 560px;
+  margin: 0 auto 24px;
+  text-align: center;
+  line-height: 1.7;
+  color: #5b6475;
+}
+
+/* LEVEL 2 QUIZ LAYOUT */
+.level2-quiz-card {
+  width: min(1200px, 96%);
+  max-width: 1200px;
+}
+
+.level2-arrangement-area,
+.level2-picture-area {
+  margin-top: 28px;
+}
+
+.level2-arrangement-area h3,
+.level2-picture-area h3 {
+  text-align: center;
+  color: #49318b;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.level2-answer-slots,
+.level2-picture-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+/* ARRANGEMENT SLOTS */
+.level2-answer-slot {
+  min-width: 0;
+  min-height: 190px;
+  padding: 12px;
+  border: 2px dashed #cfc3ef;
+  border-radius: 16px;
+  background: #faf8ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.level2-answer-slot.filled {
+  border-style: solid;
+  border-color: #8e72d1;
+  background: #f4efff;
+}
+
+.level2-position {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #e9e1fa;
+  color: #5835a5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  flex: 0 0 auto;
+}
+
+.level2-answer-slot > .level2-position {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  z-index: 2;
+}
+
+.level2-slot-placeholder {
+  color: #9a91ad;
+  font-size: 14px;
+  margin-top: 25px;
+}
+
+/* IMAGE STAGE */
+.level2-photo-stage {
+  width: 100%;
+  min-width: 0;
+  height: 155px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex: 1;
+}
+
+.level2-photo {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+
+.level2-photo-fallback {
+  font-size: 50px;
+}
+
+/* PICTURE OPTIONS */
+.level2-picture-card {
+  min-width: 0;
+  min-height: 220px;
+  position: relative;
+  padding: 14px;
+  border: 2px solid #ded5f5;
+  border-radius: 18px;
+  background: #faf8ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.level2-picture-card:not(:disabled):hover {
+  border-color: #8b68d0;
+  background: #f3edff;
+  transform: translateY(-3px);
+}
+
+.level2-picture-card:focus-visible {
+  outline: 3px solid #9575cd;
+  outline-offset: 3px;
+}
+
+.level2-picture-card:disabled {
+  cursor: default;
+}
+
+.level2-picture-card.level2-picture-used {
+  opacity: 0.5;
+  border-color: #a7a0b4;
+  background: #efedf3;
+}
+
+.level2-picture-check {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 5px 8px;
+  border-radius: 20px;
+  background: #eee8ff;
+  color: #5835a5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.level2-picture-used .level2-picture-check {
+  background: #d9f5e5;
+  color: #16834b;
+}
+
+.level2-picture-area .level2-photo-stage {
+  height: 165px;
+}
+
+.level2-picture-area .level2-photo {
+  max-height: 100%;
+}
+
+/* PROGRESS */
+.level2-progress-text {
+  text-align: center;
+  margin: 20px 0 8px;
+  color: #6545a3;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* QUESTION-WISE ANALYSIS */
+.level2-analysis-label {
+  color: #49318b;
+  font-weight: 800;
+  margin: 18px 0 10px;
+}
+
+.level2-analysis-order {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #faf8ff;
+}
+
+.level2-analysis-item {
+  min-width: 0;
+  min-height: 115px;
+  border: 1px solid #e1d9f2;
+  border-radius: 10px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.level2-analysis-item .level2-photo-stage {
+  width: 100%;
+  height: 75px;
+  min-height: 75px;
+  flex: 0 0 75px;
+}
+
+.level2-analysis-item .level2-photo {
+  width: auto;
+  max-width: 100%;
+  max-height: 70px;
+  object-fit: contain;
+}
+
+.level2-analysis-item .level2-position {
+  width: 25px;
+  height: 25px;
+  font-size: 13px;
+}
+
+.level2-analysis-order > p {
+  grid-column: 1 / -1;
+  color: #777;
+  text-align: center;
+}
+
+/* TABLET AND MOBILE */
+@media (max-width: 760px) {
+  .level2-answer-slots,
+  .level2-picture-grid,
+  .level2-analysis-order {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .level2-answer-slot {
+    min-height: 155px;
+  }
+
+  .level2-picture-card {
+    min-height: 185px;
+  }
+
+  .level2-picture-area .level2-photo-stage {
+    height: 135px;
+  }
+}
+
+@media (max-width: 420px) {
+  .level2-quiz-card {
+    padding: 16px;
+  }
+
+  .level2-picture-grid {
+    gap: 9px;
+  }
+
+  .level2-picture-card {
+    min-height: 155px;
+    padding: 8px;
+  }
+
+  .level2-picture-area .level2-photo-stage {
+    height: 115px;
+  }
+
+  .level2-answer-slot {
+    min-height: 135px;
+    padding: 8px;
+  }
+}
+
+/* PRINT */
+@media print {
+  .level2-analysis-order {
+    break-inside: avoid;
+  }
+}
+
+/* =========================================
+   LEVEL 2 COMPACT SETUP SCREEN
+========================================= */
+
+.level2-setup-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.level2-setup-page .picture-setup-card {
+  width: 100%;
+  max-width: 900px;
+  min-height: auto;
+  margin: 15px auto 30px;
+  padding: 30px 35px;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+/* Main heading */
+.level2-setup-page .setup-heading {
+  font-size: 32px;
+  margin: 0;
+}
+
+/* Available photographs */
+.level2-setup-page .image-loading-message {
+  margin: 0;
+  font-size: 15px;
+}
+
+/* Level 2 label */
+.level2-setup-page .level2-setup-label {
+  margin: 5px 0;
+  padding: 9px 22px;
+  font-size: 20px;
+}
+
+/* Instructions */
+.level2-setup-page .level2-setup-description {
+  max-width: 650px;
+  margin: 0 auto;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* Timer section */
+.level2-setup-page .setup-section {
+  margin-top: 8px;
+  gap: 14px;
+}
+
+.level2-setup-page .picture-time-heading {
+  font-size: 22px;
+}
+
+.level2-setup-page .picture-time-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* Start button */
+.level2-setup-page .setup-start-button {
+  min-width: 220px;
+  margin-top: 5px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .level2-setup-page .picture-setup-card {
+    padding: 24px 16px;
+    gap: 16px;
+  }
+
+  .level2-setup-page .setup-heading {
+    font-size: 25px;
+  }
+
+  .level2-setup-page .level2-setup-description {
+    font-size: 15px;
+  }
+
+  .level2-setup-page .picture-time-options {
+    gap: 8px;
+  }
+}

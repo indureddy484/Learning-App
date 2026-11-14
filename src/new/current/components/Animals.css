@@ -565,3 +565,20 @@
     margin-left: auto;
   }
 }
+
+.animals-quiz-open-button {
+  border: none;
+  border-radius: 9px;
+  padding: 11px 17px;
+  background: #536fc2;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.animals-quiz-open-button:hover {
+  background: #3f58a5;
+  transform: translateY(-2px);
+}

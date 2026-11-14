@@ -1,3 +1,4 @@
+
 import "./NumberSenseMenu.css";
 
 function NumberSenseMenu({ onBack, onSelectActivity }) {
@@ -18,6 +19,7 @@ function NumberSenseMenu({ onBack, onSelectActivity }) {
       </p>
 
       <div className="game-tabs">
+
         {/* COMPARE NUMBERS */}
         <button
           className="game-card"
@@ -55,9 +57,7 @@ function NumberSenseMenu({ onBack, onSelectActivity }) {
         {/* PICTURE-BASED ASCENDING ORDER */}
         <button
           className="game-card picture-ascending-card"
-          onClick={() =>
-            onSelectActivity("pictureAscending")
-          }
+          onClick={() => onSelectActivity("pictureAscending")}
           type="button"
         >
           <div className="game-icon picture-ascending-icon">
@@ -65,6 +65,31 @@ function NumberSenseMenu({ onBack, onSelectActivity }) {
           </div>
           <span>Picture-Based Ascending Order</span>
         </button>
+
+        {/* ADDITION */}
+        <button
+          className="game-card addition-menu-card"
+          onClick={() => onSelectActivity("addition")}
+          type="button"
+        >
+          <div className="game-icon addition-menu-icon">
+            ➕
+          </div>
+          <span>Addition</span>
+        </button>
+
+        {/* SUBTRACTION */}
+        <button
+          className="game-card subtraction-menu-card"
+          onClick={() => onSelectActivity("subtraction")}
+          type="button"
+        >
+          <div className="game-icon subtraction-menu-icon">
+            ➖
+          </div>
+          <span>Subtraction</span>
+        </button>
+
       </div>
     </div>
   );

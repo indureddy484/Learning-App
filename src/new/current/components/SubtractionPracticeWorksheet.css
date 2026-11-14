@@ -1,0 +1,124 @@
+
+.subtraction-worksheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(35, 25, 55, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.subtraction-worksheet-modal {
+  width: 100%;
+  max-width: 480px;
+  padding: 30px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 12px 40px rgba(40, 20, 70, 0.2);
+  text-align: center;
+  font-family: Georgia, serif;
+}
+
+.subtraction-worksheet-icon {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.subtraction-worksheet-modal h2 {
+  color: #7046bd;
+  font-size: 23px;
+  margin: 0 0 12px;
+}
+
+.subtraction-worksheet-description {
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.subtraction-worksheet-range {
+  display: inline-block;
+  padding: 10px 18px;
+  margin-bottom: 22px;
+  border-radius: 9px;
+  background: #f2ecfc;
+  color: #7046bd;
+  font-weight: bold;
+}
+
+.subtraction-worksheet-modal label {
+  display: block;
+  color: #44345e;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.subtraction-worksheet-modal input {
+  width: 100%;
+  max-width: 180px;
+  padding: 12px;
+  border: 2px solid #d8c8f3;
+  border-radius: 9px;
+  outline: none;
+  text-align: center;
+  font-size: 18px;
+}
+
+.subtraction-worksheet-modal input:focus {
+  border-color: #7046bd;
+}
+
+.subtraction-worksheet-hint {
+  color: #888;
+  font-size: 12px;
+  margin: 9px 0 15px;
+}
+
+.subtraction-worksheet-error {
+  color: #d33;
+  font-size: 13px;
+  margin: 10px 0;
+}
+
+.subtraction-worksheet-generate,
+.subtraction-worksheet-cancel {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 9px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.subtraction-worksheet-generate {
+  background: #7046bd;
+  color: white;
+}
+
+.subtraction-worksheet-generate:hover {
+  background: #5d36a5;
+}
+
+.subtraction-worksheet-cancel {
+  background: #f0edf5;
+  color: #55476c;
+}
+
+.subtraction-worksheet-cancel:hover {
+  background: #e5dff0;
+}
+
+@media (max-width: 500px) {
+  .subtraction-worksheet-modal {
+    padding: 22px 18px;
+  }
+
+  .subtraction-worksheet-modal h2 {
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,78 @@
+
+/* SUBTRACTION QUIZ */
+
+.subtraction-page {
+  background: linear-gradient(135deg, #f4f0fc, #fbf5f2);
+}
+
+.subtraction-minus {
+  color: #7046bd;
+  font-weight: 900;
+}
+
+.subtraction-page .addition-setup-card {
+  max-width: 760px;
+  padding: 30px 42px;
+}
+
+.subtraction-page .addition-setup-icon {
+  font-size: 43px;
+  margin-bottom: 5px;
+}
+
+.subtraction-page .addition-setup-card h1 {
+  font-size: 32px;
+  margin: 8px 0;
+}
+
+.subtraction-page .addition-description {
+  font-size: 15px;
+  margin: 8px 0 25px;
+}
+
+.subtraction-page .addition-setting {
+  margin: 22px 0;
+}
+
+.subtraction-page .addition-setting select {
+  padding: 12px 16px;
+  font-size: 16px;
+}
+
+.subtraction-page .addition-timer-options {
+  max-width: 500px;
+  gap: 12px;
+}
+
+.subtraction-page .addition-timer-options button {
+  width: 100px;
+  min-height: 88px;
+  font-size: 26px;
+  border-radius: 16px;
+}
+
+.subtraction-page .addition-primary-button,
+.subtraction-page .addition-worksheet-button {
+  padding: 14px;
+  font-size: 17px;
+}
+
+@media (max-width: 600px) {
+  .subtraction-page .addition-setup-card {
+    max-width: 100%;
+    padding: 24px 17px;
+  }
+
+  .subtraction-page .addition-setup-card h1 {
+    font-size: 27px;
+  }
+
+  .subtraction-page .addition-timer-options {
+    gap: 9px;
+  }
+
+  .subtraction-page .addition-timer-options button {
+    width: 85px;
+    min-height: 80px;
+  }
+}

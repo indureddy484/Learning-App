@@ -90,3 +90,74 @@
     font-size: 45px !important;
   }
 }
+
+/* Addition card */
+
+.number-sense-page .addition-menu-card > span {
+  text-align: center;
+}
+
+.addition-menu-icon {
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 55px !important;
+  color: #16865c;
+}
+
+.number-sense-page .addition-menu-card:hover {
+  border-color: #65c99c;
+}
+/* NUMBER SENSE - RESPONSIVE CARD GRID */
+
+.number-sense-page .game-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 25px;
+  width: 100%;
+  max-width: 1250px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+/* Tablet */
+@media (max-width: 1000px) {
+  .number-sense-page .game-tabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Small tablet */
+@media (max-width: 700px) {
+  .number-sense-page .game-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 450px) {
+  .number-sense-page .game-tabs {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* SUBTRACTION CARD */
+
+.number-sense-page .subtraction-menu-card > span {
+  text-align: center;
+}
+
+.subtraction-menu-icon {
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 55px !important;
+  color: #7046bd;
+}
+
+.number-sense-page .subtraction-menu-card:hover {
+  border-color: #a98be0;
+}

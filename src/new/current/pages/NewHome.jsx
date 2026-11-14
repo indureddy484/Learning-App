@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 import MatchingGame from "../components/MatchingGame";
@@ -28,6 +27,8 @@ import AscendingOrder from "../components/AscendingOrder";
 import CompareNumbers from "../components/CompareNumbers";
 import NumberSense from "../components/NumberSense";
 import PictureAscendingOrder from "../components/PictureAscendingOrder";
+import AdditionQuiz from "../components/AdditionQuiz";
+import SubtractionQuiz from "../components/SubtractionQuiz";
 
 // ENGLISH - TENALI RAMA
 import TenaliRamaGreedyFarmer from "../components/TenaliRamaGreedyFarmer";
@@ -41,6 +42,9 @@ import LionMouseVideo from "../components/LionMouseVideo";
 
 // TELUGU
 import PrepositionQuiz from "../components/PrepositionQuiz";
+
+// EVS - ANIMALS QUIZ
+import AnimalsQuiz from "../components/AnimalsQuiz";
 
 import "./NewHome.css";
 
@@ -61,6 +65,9 @@ function NewHome({ onBack }) {
   const [selectedTeluguOption, setSelectedTeluguOption] = useState(null);
   const [selectedTeluguQuizTopic, setSelectedTeluguQuizTopic] = useState(null);
 
+  // EVS - Quiz navigation
+  const [selectedEvsQuizTopic, setSelectedEvsQuizTopic] = useState(null);
+
   // Money navigation state
   const [selectedMoneyGame, setSelectedMoneyGame] = useState(false);
   const [selectedMoneyLevel, setSelectedMoneyLevel] = useState(null);
@@ -71,16 +78,15 @@ function NewHome({ onBack }) {
 
   // Number Sense navigation state
   const [selectedNumberSenseMenu, setSelectedNumberSenseMenu] = useState(false);
-  const [selectedNumberSenseActivity, setSelectedNumberSenseActivity] = useState(null);
+  const [selectedNumberSenseActivity, setSelectedNumberSenseActivity] =
+    useState(null);
 
   /* =========================
      EVS - ANIMALS
   ========================= */
 
   if (selectedGame === "animals") {
-    return (
-      <Animals onBack={() => setSelectedGame(null)} />
-    );
+    return <Animals onBack={() => setSelectedGame(null)} />;
   }
 
   /* =========================
@@ -88,9 +94,7 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (selectedGame === "plants") {
-    return (
-      <Plants onBack={() => setSelectedGame(null)} />
-    );
+    return <Plants onBack={() => setSelectedGame(null)} />;
   }
 
   /* =========================
@@ -128,6 +132,95 @@ function NewHome({ onBack }) {
             <div className="game-icon">🎬</div>
             <span>Video Game</span>
           </button>
+        </div>
+      </div>
+    );
+  }
+
+  /* =========================
+     EVS - QUIZ TOPICS
+  ========================= */
+
+  if (
+    selectedSubject === "EVS" &&
+    selectedGame === "quiz" &&
+    selectedEvsQuizTopic === null
+  ) {
+    return (
+      <div className="new-page">
+        <button
+          className="top-back-button"
+          onClick={() => setSelectedGame(null)}
+          type="button"
+        >
+          ← BACK
+        </button>
+
+        <h1>EVS Quiz</h1>
+
+        <div className="game-tabs">
+          <button
+            className="game-card"
+            onClick={() => setSelectedEvsQuizTopic("animals")}
+            type="button"
+          >
+            <div className="game-icon">🐘</div>
+            <span>Animals Quiz</span>
+          </button>
+
+          <button
+            className="game-card"
+            onClick={() => setSelectedEvsQuizTopic("plants")}
+            type="button"
+          >
+            <div className="game-icon">🌿</div>
+            <span>Plants Quiz</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  /* =========================
+     EVS - ANIMALS QUIZ
+  ========================= */
+
+  if (
+    selectedSubject === "EVS" &&
+    selectedGame === "quiz" &&
+    selectedEvsQuizTopic === "animals"
+  ) {
+    return (
+      <AnimalsQuiz
+        onBack={() => setSelectedEvsQuizTopic(null)}
+      />
+    );
+  }
+
+  /* =========================
+     EVS - PLANTS QUIZ
+  ========================= */
+
+  if (
+    selectedSubject === "EVS" &&
+    selectedGame === "quiz" &&
+    selectedEvsQuizTopic === "plants"
+  ) {
+    return (
+      <div className="new-page">
+        <button
+          className="top-back-button"
+          onClick={() => setSelectedEvsQuizTopic(null)}
+          type="button"
+        >
+          ← BACK
+        </button>
+
+        <h1>Plants Quiz</h1>
+
+        <div className="coming-soon">
+          <h2>Quiz</h2>
+          <p>Coming Soon!</p>
         </div>
       </div>
     );
@@ -481,6 +574,35 @@ function NewHome({ onBack }) {
   }
 
   /* =========================
+     NUMBER SENSE - ADDITION QUIZ
+  ========================= */
+
+  if (
+    selectedNumberSenseMenu &&
+    selectedNumberSenseActivity === "addition"
+  ) {
+    return (
+      <AdditionQuiz
+        onBack={() => setSelectedNumberSenseActivity(null)}
+      />
+    );
+  }
+  /* =========================
+   NUMBER SENSE - SUBTRACTION QUIZ
+========================= */
+
+if (
+  selectedNumberSenseMenu &&
+  selectedNumberSenseActivity === "subtraction"
+) {
+  return (
+    <SubtractionQuiz
+      onBack={() => setSelectedNumberSenseActivity(null)}
+    />
+  );
+}
+
+  /* =========================
      ENGLISH - TENALI RAMA STORY / QUIZ MENU
   ========================= */
 
@@ -621,6 +743,7 @@ function NewHome({ onBack }) {
           onClick={() => {
             setSelectedSubject(null);
             setSelectedGame(null);
+            setSelectedEvsQuizTopic(null);
             setSelectedMathsGame(null);
             setSelectedLevel(null);
             setSelectedEnglishTopic(null);
@@ -671,6 +794,20 @@ function NewHome({ onBack }) {
             >
               <div className="game-icon">📚</div>
               <span>Miscellaneous</span>
+            </button>
+
+            {/* EVS QUIZ OPTION */}
+
+            <button
+              className="game-card"
+              onClick={() => {
+                setSelectedGame("quiz");
+                setSelectedEvsQuizTopic(null);
+              }}
+              type="button"
+            >
+              <div className="game-icon">📝</div>
+              <span>Quiz</span>
             </button>
           </div>
         ) : selectedSubject === "Maths" ? (

@@ -1,0 +1,112 @@
+.addition-worksheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(25, 40, 65, 0.48);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+
+.addition-worksheet-modal {
+  width: 100%;
+  max-width: 440px;
+  padding: 30px;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 15px 45px rgba(20, 40, 80, 0.2);
+  text-align: center;
+}
+
+.addition-worksheet-icon {
+  font-size: 43px;
+  margin-bottom: 10px;
+}
+
+.addition-worksheet-modal h2 {
+  color: #294a7c;
+  margin: 0 0 10px;
+  font-size: 23px;
+}
+
+.addition-worksheet-description {
+  color: #71809a;
+  line-height: 1.5;
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+.addition-worksheet-range {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 9px;
+  background: #eff7ff;
+  color: #287cb9;
+  font-weight: 800;
+}
+
+.addition-worksheet-modal label {
+  display: block;
+  text-align: left;
+  color: #405273;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 9px;
+}
+
+.addition-worksheet-modal input {
+  width: 100%;
+  padding: 13px;
+  border: 2px solid #dce5f3;
+  border-radius: 10px;
+  font-size: 17px;
+  outline: none;
+}
+
+.addition-worksheet-modal input:focus {
+  border-color: #3989cc;
+}
+
+.addition-worksheet-hint {
+  text-align: left;
+  color: #8792a6;
+  font-size: 12px;
+  margin: 8px 0 18px;
+}
+
+.addition-worksheet-error {
+  color: #c43d3d;
+  font-size: 13px;
+  margin: 0 0 14px;
+}
+
+.addition-worksheet-generate,
+.addition-worksheet-cancel {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.addition-worksheet-generate {
+  background: #3288ca;
+  color: white;
+}
+
+.addition-worksheet-generate:hover {
+  background: #2475b5;
+}
+
+.addition-worksheet-cancel {
+  margin-top: 10px;
+  background: #edf2fa;
+  color: #40577e;
+}
+
+.addition-worksheet-cancel:hover {
+  background: #e1e9f6;
+}

@@ -1,0 +1,919 @@
+
+/* =========================================
+   ADDITION QUIZ - PURPLE THEME
+========================================= */
+
+.addition-page {
+  min-height: 100vh;
+  padding: 30px 20px 60px;
+  background: linear-gradient(135deg, #f4f0fc, #fbf5f2);
+  color: #45278d;
+  font-family: inherit;
+}
+
+/* BACK BUTTON */
+
+.addition-back-button {
+  border: none;
+  background: #7046bd;
+  color: white;
+  padding: 13px 23px;
+  border-radius: 13px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: 0.25s ease;
+}
+
+.addition-back-button:hover {
+  background: #59349f;
+  transform: translateY(-2px);
+}
+
+/* MAIN CARDS */
+
+.addition-setup-card,
+.addition-result-card,
+.addition-quiz-card {
+  width: 100%;
+  max-width: 1060px;
+  margin: 15px auto;
+  padding: 50px 65px;
+  border-radius: 28px;
+  background: #ffffff;
+  box-shadow: 0 12px 40px rgba(76, 48, 130, 0.09);
+  text-align: center;
+}
+
+/* HEADER ICON */
+
+.addition-setup-icon,
+.addition-result-icon {
+  font-size: 65px;
+  margin-bottom: 12px;
+}
+
+/* EYEBROW */
+
+.addition-eyebrow {
+  color: #7950c7;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+}
+
+/* MAIN HEADINGS */
+
+.addition-setup-card h1,
+.addition-result-card h1,
+.addition-quiz-header h1 {
+  color: #45278d;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 42px;
+  font-weight: 900;
+  margin: 15px 0;
+}
+
+.addition-description {
+  color: #756b8c;
+  font-family: Georgia, serif;
+  font-size: 17px;
+  line-height: 1.7;
+  margin: 12px 0 35px;
+}
+
+/* =========================================
+   SETTINGS
+========================================= */
+
+.addition-setting {
+  text-align: left;
+  margin: 32px 0;
+}
+
+.addition-setting label {
+  display: block;
+  color: #45278d;
+  font-family: Georgia, serif;
+  font-size: 19px;
+  font-weight: 800;
+  margin-bottom: 13px;
+}
+
+/* RANGE DROPDOWN */
+
+.addition-setting select {
+  width: 100%;
+  padding: 17px 20px;
+  border: 2px solid #cbb8f3;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #45278d;
+  font-size: 19px;
+  font-weight: 800;
+  outline: none;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.addition-setting select:focus {
+  border-color: #7046bd;
+  box-shadow: 0 0 0 4px rgba(112, 70, 189, 0.10);
+}
+
+.addition-hint {
+  margin: 10px 0 0;
+  color: #897ca5;
+  font-family: Georgia, serif;
+  font-size: 14px;
+}
+
+/* =========================================
+   TIMER OPTIONS
+========================================= */
+
+.addition-timer-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.addition-timer-options button {
+  width: 132px;
+  min-height: 120px;
+  padding: 15px 8px;
+  border: 2px solid #cbb8f3;
+  border-radius: 21px;
+  background: #f7f3ff;
+  color: #57349f;
+  font-size: 34px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.addition-timer-options button:hover {
+  background: #eee5ff;
+  border-color: #7046bd;
+  transform: translateY(-4px);
+}
+
+.addition-timer-options button small {
+  display: block;
+  margin-top: 5px;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.addition-timer-options button.active {
+  background: #7046bd;
+  border-color: #7046bd;
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(112, 70, 189, 0.22);
+  transform: translateY(-3px);
+}
+
+/* =========================================
+   ACTION BUTTONS
+========================================= */
+
+.addition-primary-button,
+.addition-worksheet-button,
+.addition-secondary-button,
+.addition-end-button {
+  width: 100%;
+  border: none;
+  border-radius: 15px;
+  padding: 19px 22px;
+  margin-top: 18px;
+  font-size: 20px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.addition-primary-button {
+  background: #7046bd;
+  color: white;
+  margin-top: 30px;
+}
+
+.addition-primary-button:hover {
+  background: #59349f;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(112, 70, 189, 0.2);
+}
+
+.addition-primary-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.addition-worksheet-button {
+  background: #f0eafd;
+  color: #57349f;
+}
+
+.addition-worksheet-button:hover {
+  background: #e5d9fc;
+  transform: translateY(-2px);
+}
+
+.addition-secondary-button {
+  background: #eee7fa;
+  color: #57349f;
+}
+
+.addition-secondary-button:hover {
+  background: #e0d4f5;
+}
+
+.addition-end-button {
+  background: #fff0f0;
+  color: #bd4545;
+}
+
+.addition-end-button:hover {
+  background: #ffe1e1;
+}
+
+/* =========================================
+   QUIZ HEADER
+========================================= */
+
+.addition-quiz-header {
+  max-width: 850px;
+  margin: 0 auto 25px;
+}
+
+.addition-quiz-header h1 {
+  margin-bottom: 8px;
+}
+
+.addition-quiz-header p {
+  color: #756b8c;
+  font-family: Georgia, serif;
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+.addition-quiz-info {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: #57349f;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+/* TIMER DISPLAY */
+
+.addition-timer-display {
+  display: inline-block;
+  margin: 25px 0;
+  padding: 14px 28px;
+  border-radius: 30px;
+  background: #f3eaff;
+  color: #7046bd;
+  font-weight: 900;
+  font-size: 19px;
+}
+
+/* =========================================
+   QUESTION DISPLAY
+========================================= */
+
+.addition-question {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 45px 15px;
+  border-radius: 23px;
+  background: #f7f3ff;
+  border: 2px solid #e5dafa;
+  color: #45278d;
+  font-size: clamp(40px, 7vw, 65px);
+  font-weight: 900;
+}
+
+.addition-plus {
+  color: #7046bd;
+}
+
+.addition-equals {
+  color: #9478c9;
+}
+
+.addition-question-mark {
+  color: #e5a33a;
+}
+
+.addition-instruction {
+  color: #756b8c;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-weight: 800;
+  margin: 30px 0 18px;
+}
+
+/* ANSWER OPTIONS */
+
+.addition-answer-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 17px;
+}
+
+.addition-answer-options button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  min-height: 80px;
+  border: 2px solid #cbb8f3;
+  border-radius: 17px;
+  background: #ffffff;
+  color: #57349f;
+  font-size: 27px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.addition-answer-options button:hover {
+  background: #f4efff;
+  border-color: #7046bd;
+  transform: translateY(-3px);
+}
+
+.addition-answer-options button > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  background: #eee7fa;
+  font-size: 15px;
+}
+
+.addition-answer-options button.selected {
+  border-color: #7046bd;
+  background: #eee7fa;
+  color: #57349f;
+}
+
+/* =========================================
+   RESULTS
+========================================= */
+
+.addition-score {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px;
+  margin: 25px 0;
+  border-radius: 20px;
+  background: #f3edff;
+  color: #756b8c;
+  font-size: 17px;
+}
+
+.addition-score strong {
+  color: #7046bd;
+  font-size: 45px;
+}
+
+.addition-result-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 25px 0;
+}
+
+.addition-stat {
+  padding: 22px 10px;
+  border-radius: 17px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.addition-stat strong {
+  font-size: 30px;
+}
+
+.addition-stat span {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.addition-stat.correct {
+  background: #e8f7ee;
+  color: #238052;
+}
+
+.addition-stat.incorrect {
+  background: #fff0f0;
+  color: #c44b43;
+}
+
+.addition-stat.unanswered {
+  background: #fff5df;
+  color: #a47419;
+}
+
+/* =========================================
+   QUESTION-WISE ANALYSIS
+========================================= */
+
+.addition-analysis-title {
+  text-align: left;
+  color: #45278d;
+  font-family: Georgia, serif;
+  font-size: 25px;
+  margin: 35px 0 18px;
+}
+
+.addition-analysis-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+}
+
+.addition-analysis-item {
+  position: relative;
+  padding: 20px;
+  border: 1px solid #e5dafa;
+  border-left: 6px solid #a99bc2;
+  border-radius: 15px;
+  background: #fcfaff;
+}
+
+.addition-analysis-item.answer-correct {
+  border-left-color: #36a66e;
+}
+
+.addition-analysis-item.answer-incorrect {
+  border-left-color: #dc625b;
+}
+
+.addition-analysis-item.not-answered {
+  border-left-color: #e0a52e;
+}
+
+.addition-analysis-question {
+  display: flex;
+  gap: 12px;
+  color: #45278d;
+  font-size: 19px;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.addition-analysis-answer {
+  color: #756b8c;
+  font-size: 15px;
+  margin-top: 7px;
+}
+
+.addition-analysis-status {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 900;
+  color: #57349f;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 800px) {
+  .addition-setup-card,
+  .addition-result-card,
+  .addition-quiz-card {
+    padding: 35px 25px;
+  }
+
+  .addition-setup-card h1,
+  .addition-result-card h1,
+  .addition-quiz-header h1 {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 600px) {
+  .addition-page {
+    padding: 15px 12px 35px;
+  }
+
+  .addition-setup-card,
+  .addition-result-card,
+  .addition-quiz-card {
+    padding: 27px 17px;
+    border-radius: 20px;
+  }
+
+  .addition-setup-card h1,
+  .addition-result-card h1,
+  .addition-quiz-header h1 {
+    font-size: 28px;
+  }
+
+  .addition-description {
+    font-size: 15px;
+  }
+
+  .addition-setting label {
+    font-size: 17px;
+  }
+
+  .addition-setting select {
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  .addition-timer-options {
+    gap: 10px;
+  }
+
+  .addition-timer-options button {
+    width: 105px;
+    min-height: 100px;
+    font-size: 28px;
+  }
+
+  .addition-question {
+    gap: 12px;
+    padding: 30px 10px;
+  }
+
+  .addition-answer-options {
+    gap: 10px;
+  }
+
+  .addition-answer-options button {
+    min-height: 65px;
+    font-size: 22px;
+  }
+
+  .addition-result-stats {
+    gap: 8px;
+  }
+
+  .addition-stat {
+    padding: 15px 5px;
+  }
+
+  .addition-stat strong {
+    font-size: 24px;
+  }
+
+  .addition-stat span {
+    font-size: 11px;
+  }
+
+  .addition-primary-button,
+  .addition-worksheet-button,
+  .addition-secondary-button,
+  .addition-end-button {
+    font-size: 17px;
+    padding: 16px;
+  }
+}
+
+
+/* =========================================
+   ADDITION QUIZ - COMPACT SIZE ADJUSTMENTS
+========================================= */
+
+.addition-page {
+  padding: 20px 18px 40px;
+}
+
+/* Main white card */
+.addition-setup-card,
+.addition-result-card,
+.addition-quiz-card {
+  max-width: 900px;
+  padding: 32px 48px;
+  margin: 12px auto;
+  border-radius: 24px;
+}
+
+/* Header icon */
+.addition-setup-icon,
+.addition-result-icon {
+  font-size: 48px;
+  margin-bottom: 7px;
+}
+
+/* Heading */
+.addition-setup-card h1,
+.addition-result-card h1,
+.addition-quiz-header h1 {
+  font-size: 34px;
+  margin: 10px 0;
+}
+
+.addition-eyebrow {
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.addition-description {
+  font-size: 15px;
+  margin: 8px 0 25px;
+}
+
+/* Settings */
+.addition-setting {
+  margin: 23px 0;
+}
+
+.addition-setting label {
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+.addition-setting select {
+  padding: 13px 16px;
+  font-size: 17px;
+  border-radius: 13px;
+}
+
+.addition-hint {
+  font-size: 13px;
+}
+
+/* Timer section */
+.addition-timer-options {
+  gap: 12px;
+  max-width: 560px;
+}
+
+.addition-timer-options button {
+  width: 112px;
+  min-height: 96px;
+  padding: 12px 6px;
+  border-radius: 16px;
+  font-size: 28px;
+}
+
+.addition-timer-options button small {
+  font-size: 13px;
+  margin-top: 3px;
+}
+
+/* Action buttons */
+.addition-primary-button,
+.addition-worksheet-button,
+.addition-secondary-button,
+.addition-end-button {
+  padding: 15px 18px;
+  margin-top: 14px;
+  font-size: 17px;
+  border-radius: 12px;
+}
+
+.addition-primary-button {
+  margin-top: 24px;
+}
+
+/* Quiz question */
+.addition-question {
+  padding: 30px 12px;
+  font-size: clamp(32px, 5vw, 48px);
+  gap: 15px;
+}
+
+.addition-instruction {
+  font-size: 16px;
+  margin: 22px 0 14px;
+}
+
+/* Answer options */
+.addition-answer-options {
+  gap: 12px;
+}
+
+.addition-answer-options button {
+  min-height: 65px;
+  font-size: 23px;
+  border-radius: 13px;
+}
+
+/* Result statistics */
+.addition-score {
+  padding: 20px;
+  margin: 18px 0;
+}
+
+.addition-score strong {
+  font-size: 36px;
+}
+
+.addition-result-stats {
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.addition-stat {
+  padding: 16px 8px;
+}
+
+.addition-stat strong {
+  font-size: 25px;
+}
+
+/* Analysis */
+.addition-analysis-title {
+  font-size: 21px;
+  margin: 25px 0 14px;
+}
+
+.addition-analysis-item {
+  padding: 15px;
+}
+
+/* Back button */
+.addition-back-button {
+  padding: 10px 18px;
+  font-size: 14px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .addition-setup-card,
+  .addition-result-card,
+  .addition-quiz-card {
+    padding: 24px 16px;
+  }
+
+  .addition-setup-card h1,
+  .addition-result-card h1,
+  .addition-quiz-header h1 {
+    font-size: 27px;
+  }
+
+  .addition-timer-options button {
+    width: 95px;
+    min-height: 85px;
+    font-size: 24px;
+  }
+
+  .addition-question {
+    padding: 24px 8px;
+  }
+}
+
+
+/* ACTIVE QUIZ NAVIGATION */
+
+.addition-quiz-header {
+  max-width: 900px;
+  margin: 0 auto 20px;
+}
+
+.addition-quiz-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.addition-active-back-button,
+.addition-active-end-button {
+  border: none;
+  padding: 11px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.addition-active-back-button {
+  background: #eee7fa;
+  color: #57349f;
+}
+
+.addition-active-back-button:hover {
+  background: #e0d4f5;
+  transform: translateY(-2px);
+}
+
+.addition-active-end-button {
+  background: #7046bd;
+  color: white;
+}
+
+.addition-active-end-button:hover {
+  background: #59349f;
+  transform: translateY(-2px);
+}
+
+.addition-quiz-heading {
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .addition-quiz-navigation {
+    margin-bottom: 18px;
+  }
+
+  .addition-active-back-button,
+  .addition-active-end-button {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+}
+
+/* =========================================
+   ADDITION SETUP - NARROWER LAYOUT
+========================================= */
+
+/* Reduce main white card width */
+.addition-setup-card {
+  max-width: 760px;
+  padding: 30px 42px;
+  margin: 15px auto;
+}
+
+/* Compact heading */
+.addition-setup-icon {
+  font-size: 43px;
+  margin-bottom: 5px;
+}
+
+.addition-setup-card h1 {
+  font-size: 32px;
+  margin: 8px 0;
+}
+
+.addition-description {
+  font-size: 15px;
+  margin-bottom: 25px;
+}
+
+/* Keep settings aligned */
+.addition-setup-card .addition-setting {
+  max-width: 100%;
+  margin: 22px 0;
+}
+
+/* Smaller dropdown */
+.addition-setting select {
+  padding: 12px 16px;
+  font-size: 16px;
+}
+
+/* Compact timer cards */
+.addition-timer-options {
+  max-width: 500px;
+  gap: 12px;
+}
+
+.addition-timer-options button {
+  width: 100px;
+  min-height: 88px;
+  font-size: 26px;
+  border-radius: 16px;
+}
+
+/* Smaller action buttons */
+.addition-setup-card .addition-primary-button,
+.addition-setup-card .addition-worksheet-button {
+  max-width: 100%;
+  padding: 14px;
+  font-size: 17px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .addition-setup-card {
+    max-width: 100%;
+    padding: 24px 17px;
+  }
+
+  .addition-timer-options {
+    gap: 9px;
+  }
+
+  .addition-timer-options button {
+    width: 85px;
+    min-height: 80px;
+  }
+}
