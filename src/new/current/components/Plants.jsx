@@ -9,8 +9,6 @@ import "./Plants.css";
 function PlantVideoPlayer({ src, isMuted }) {
   return (
     <div className="plant-video-container">
-
-      {/* VIDEO */}
       <video
         className="plant-video-player"
         controls
@@ -21,18 +19,15 @@ function PlantVideoPlayer({ src, isMuted }) {
         <source src={src} type="video/mp4" />
         Your browser does not support video playback.
       </video>
-
     </div>
   );
 }
-
 
 // =================================
 // PLANTS COMPONENT
 // =================================
 
-function Plants({ onBack }) {
-
+function Plants({ onBack, onQuiz }) {
   const categories = [
     "Trees",
     "Shrubs",
@@ -56,20 +51,19 @@ function Plants({ onBack }) {
   const [selectedPart, setSelectedPart] = useState(null);
 
   // GLOBAL MUTE STATE FOR ALL VIDEOS
-  // Videos start unmuted
   const [isMuted, setIsMuted] = useState(false);
 
-  // Only one sidebar section can be open at a time
+  // SIDEBAR STATE
   const [expandedSection, setExpandedSection] = useState("categories");
 
-  // Accordion toggle
+  // ACCORDION TOGGLE
   const toggleSection = (section) => {
     setExpandedSection((current) =>
       current === section ? null : section
     );
   };
 
-  // Category videos
+  // CATEGORY VIDEOS
   const categoryVideos = {
     Trees: "/videos/plants/trees.mp4",
     Shrubs: "/videos/plants/shrubs.mp4",
@@ -80,7 +74,7 @@ function Plants({ onBack }) {
     "Desert Plants": "/videos/plants/desert.mp4",
   };
 
-  // Parts of Plants videos
+  // PARTS OF PLANTS VIDEOS
   const plantPartVideos = {
     Root: "/videos/plants/parts_of_plants/roots.mp4",
     Stem: "/videos/plants/parts_of_plants/stem.mp4",
@@ -90,7 +84,7 @@ function Plants({ onBack }) {
     Seed: "/videos/plants/parts_of_plants/seed.mp4",
   };
 
-  // Plant images for each category
+  // PLANT IMAGES
   const plantData = {
     Trees: [],
     Shrubs: [],
@@ -101,20 +95,20 @@ function Plants({ onBack }) {
     "Desert Plants": [],
   };
 
-  // Handle category selection
+  // CATEGORY SELECTION
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setSelectedPart(null);
     setExpandedSection("categories");
   };
 
-  // Handle plant part selection
+  // PLANT PART SELECTION
   const handlePartChange = (part) => {
     setSelectedPart(part);
     setExpandedSection("parts");
   };
 
-  // Show fallback emoji if image fails to load
+  // IMAGE FALLBACK
   const handleImageError = (event) => {
     event.currentTarget.style.display = "none";
 
@@ -141,18 +135,33 @@ function Plants({ onBack }) {
 
         <h1>Plants</h1>
 
-        {/* ONE GLOBAL MUTE / UNMUTE BUTTON */}
-        <button
-          className="plants-global-mute-button"
-          onClick={() => setIsMuted((prev) => !prev)}
-          type="button"
-          aria-label={isMuted ? "Unmute all videos" : "Mute all videos"}
-        >
-          {isMuted ? "Unmute 🔊" : "Mute 🔇"}
-        </button>
+        {/* HEADER ACTIONS */}
+        <div className="plants-header-actions">
 
+          {/* GLOBAL MUTE / UNMUTE */}
+          <button
+            className="plants-global-mute-button"
+            onClick={() => setIsMuted((prev) => !prev)}
+            type="button"
+            aria-label={
+              isMuted ? "Unmute all videos" : "Mute all videos"
+            }
+            aria-pressed={isMuted}
+          >
+            {isMuted ? "Unmute 🔊" : "Mute 🔇"}
+          </button>
+
+          {/* PLANTS QUIZ */}
+          <button
+            className="plants-quiz-button"
+            onClick={onQuiz}
+            type="button"
+          >
+            📝 Plants Quiz
+          </button>
+
+        </div>
       </div>
-
 
       {/* MAIN CONTENT */}
       <div className="plants-main">
@@ -173,7 +182,6 @@ function Plants({ onBack }) {
               {expandedSection === "categories" ? "−" : "+"}
             </span>
           </button>
-
 
           {/* CATEGORY LIST */}
           <div
@@ -202,7 +210,6 @@ function Plants({ onBack }) {
             </div>
           </div>
 
-
           {/* PARTS OF PLANTS HEADING */}
           <button
             className="plants-sidebar-heading parts-heading"
@@ -216,7 +223,6 @@ function Plants({ onBack }) {
               {expandedSection === "parts" ? "−" : "+"}
             </span>
           </button>
-
 
           {/* PLANT PARTS LIST */}
           <div
@@ -245,13 +251,12 @@ function Plants({ onBack }) {
 
         </div>
 
-
         {/* RIGHT CONTENT AREA */}
         <div className="plants-content">
 
           {selectedPart ? (
 
-            /* PARTS OF PLANTS - VIDEO ONLY */
+            /* PARTS OF PLANTS VIDEO */
             <div className="plant-part-content">
 
               <div className="plant-video-section">
@@ -280,7 +285,6 @@ function Plants({ onBack }) {
                 />
 
               </div>
-
 
               {/* PLANT GRID */}
               {plantData[selectedCategory].length > 0 && (
@@ -317,6 +321,7 @@ function Plants({ onBack }) {
               )}
 
             </>
+
           )}
 
         </div>

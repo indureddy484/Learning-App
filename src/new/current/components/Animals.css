@@ -582,3 +582,47 @@
   background: #3f58a5;
   transform: translateY(-2px);
 }
+
+/* HEADER ACTION BUTTONS */
+.animals-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ANIMALS QUIZ BUTTON */
+.animals-quiz-button {
+  padding: 11px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #278b57;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.animals-quiz-button:hover {
+  background: #176c40;
+  transform: translateY(-2px);
+}
+
+.animals-quiz-button:focus-visible {
+  outline: 3px solid #a5d6b8;
+  outline-offset: 3px;
+}
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 600px) {
+  .animals-header-actions {
+    gap: 7px;
+  }
+
+  .animals-quiz-button {
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+}

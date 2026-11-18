@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import "./Animals.css";
 
-function Animals({ onBack }) {
+function Animals({ onBack, onQuiz }) {
   const categories = [
     "Pet Animals",
     "Farm Animals",
@@ -288,16 +288,34 @@ function Animals({ onBack }) {
 
         <h1>Animals</h1>
 
-        {/* GLOBAL MUTE / UNMUTE BUTTON */}
-        <button
-          className="animals-global-mute-button"
-          onClick={() => setIsMuted((previous) => !previous)}
-          type="button"
-          aria-label={isMuted ? "Unmute all animal videos" : "Mute all animal videos"}
-          aria-pressed={isMuted}
-        >
-          {isMuted ? "Unmute 🔊" : "Mute 🔇"}
-        </button>
+        {/* HEADER ACTION BUTTONS */}
+        <div className="animals-header-actions">
+
+          {/* GLOBAL MUTE / UNMUTE BUTTON */}
+          <button
+            className="animals-global-mute-button"
+            onClick={() => setIsMuted((previous) => !previous)}
+            type="button"
+            aria-label={
+              isMuted
+                ? "Unmute all animal videos"
+                : "Mute all animal videos"
+            }
+            aria-pressed={isMuted}
+          >
+            {isMuted ? "Unmute 🔊" : "Mute 🔇"}
+          </button>
+
+          {/* ANIMALS QUIZ BUTTON */}
+          <button
+            className="animals-quiz-button"
+            onClick={onQuiz}
+            type="button"
+          >
+            📝 Animals Quiz
+          </button>
+
+        </div>
       </div>
 
       {/* MAIN CONTENT */}

@@ -1,10 +1,13 @@
-
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./CompareNumbers.css";
 
 const TIMER_OPTIONS = [2, 5, 10, 15, 20];
 const RANGE_OPTIONS = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 const DEFAULT_RANGE = 10;
+
+// Change these two paths if your sound files have different names.
+const VERY_GOOD_SOUND = "/sounds/very-good.mp3";
+const TRY_AGAIN_SOUND = "/sounds/try-again.mp3";
 
 const generateQuestion = (maxRange = DEFAULT_RANGE) => ({
   left: Math.floor(Math.random() * (maxRange + 1)),
@@ -27,47 +30,114 @@ const formatTime = (seconds) => {
 };
 
 function CompareNumbers({ onBack }) {
+  // Practice is shown first. The Quiz button opens the existing timed quiz.
+  const [mode, setMode] = useState("practice");
   const [selectedDuration, setSelectedDuration] = useState(5);
   const [selectedRange, setSelectedRange] = useState(DEFAULT_RANGE);
 
   const [quizStarted, setQuizStarted] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
-
   const [timeLeft, setTimeLeft] = useState(5 * 60);
 
   const [question, setQuestion] = useState(() =>
     generateQuestion(DEFAULT_RANGE)
   );
-
   const [selectedSymbol, setSelectedSymbol] = useState("");
   const [questionNumber, setQuestionNumber] = useState(1);
-
   const [correctCount, setCorrectCount] = useState(0);
   const [wrongCount, setWrongCount] = useState(0);
-
   const [questionHistory, setQuestionHistory] = useState([]);
 
-  // Countdown timer
+  const [practiceFeedback, setPracticeFeedback] = useState("");
+  const [practiceLocked, setPracticeLocked] = useState(false);
+  const practiceAdvanceRef = useRef(null);
+
+  // Clear any pending practice transition when leaving practice.
   useEffect(() => {
-    if (!quizStarted || quizCompleted) return;
+    return () => {
+      if (practiceAdvanceRef.current) {
+        clearTimeout(practiceAdvanceRef.current);
+      }
+    };
+  }, []);
+
+  const playFeedbackSound = (soundPath) => {
+    const audio = new Audio(soundPath);
+    audio.play().catch((error) => {
+      // Browsers may block playback until audio is allowed by the user.
+      console.warn("Could not play feedback sound:", error);
+    });
+  };
+
+  const startPractice = () => {
+    if (practiceAdvanceRef.current) {
+      clearTimeout(practiceAdvanceRef.current);
+    }
+    setQuestion(generateQuestion(selectedRange));
+    setPracticeFeedback("");
+    setPracticeLocked(false);
+    setSelectedSymbol("");
+  };
+
+  const choosePracticeSymbol = (symbol) => {
+    if (practiceLocked) return;
+
+    const isCorrect = symbol === getCorrectSymbol(question);
+
+    if (isCorrect) {
+      setSelectedSymbol(symbol);
+      setPracticeFeedback("very-good");
+      setPracticeLocked(true);
+      playFeedbackSound(VERY_GOOD_SOUND);
+
+      practiceAdvanceRef.current = setTimeout(() => {
+        setQuestion(generateQuestion(selectedRange));
+        setSelectedSymbol("");
+        setPracticeFeedback("");
+        setPracticeLocked(false);
+      }, 1100);
+    } else {
+      setPracticeFeedback("try-again");
+      playFeedbackSound(TRY_AGAIN_SOUND);
+    }
+  };
+
+  // Countdown timer for the existing quiz.
+  useEffect(() => {
+    if (mode !== "quiz" || !quizStarted || quizCompleted) return;
 
     const timer = setInterval(() => {
-      setTimeLeft((previousTime) =>
-        Math.max(previousTime - 1, 0)
-      );
+      setTimeLeft((previousTime) => Math.max(previousTime - 1, 0));
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [quizStarted, quizCompleted]);
+  }, [mode, quizStarted, quizCompleted]);
 
-  // Automatically finish when time reaches zero
   useEffect(() => {
-    if (quizStarted && timeLeft === 0) {
+    if (mode === "quiz" && quizStarted && timeLeft === 0) {
       setQuizCompleted(true);
     }
-  }, [quizStarted, timeLeft]);
+  }, [mode, quizStarted, timeLeft]);
 
-  // Start quiz
+  const openQuiz = () => {
+    if (practiceAdvanceRef.current) {
+      clearTimeout(practiceAdvanceRef.current);
+      practiceAdvanceRef.current = null;
+    }
+    setPracticeFeedback("");
+    setPracticeLocked(false);
+    setMode("quiz");
+    setQuizStarted(false);
+    setQuizCompleted(false);
+  };
+
+  const openPractice = () => {
+    setMode("practice");
+    setQuizStarted(false);
+    setQuizCompleted(false);
+    startPractice();
+  };
+
   const startQuiz = () => {
     setQuestion(generateQuestion(selectedRange));
     setSelectedSymbol("");
@@ -80,18 +150,13 @@ function CompareNumbers({ onBack }) {
     setQuizStarted(true);
   };
 
-  // Select comparison symbol
-  // No sound or correctness feedback is played during the quiz.
   const chooseSymbol = (symbol) => {
     if (quizCompleted || timeLeft === 0) return;
     setSelectedSymbol(symbol);
   };
 
-  // Submit current question
   const nextQuestion = () => {
-    if (!selectedSymbol || quizCompleted || timeLeft === 0) {
-      return;
-    }
+    if (!selectedSymbol || quizCompleted || timeLeft === 0) return;
 
     const correctSymbol = getCorrectSymbol(question);
     const isCorrect = selectedSymbol === correctSymbol;
@@ -106,10 +171,7 @@ function CompareNumbers({ onBack }) {
       isCorrect,
     };
 
-    setQuestionHistory((previous) => [
-      ...previous,
-      historyItem,
-    ]);
+    setQuestionHistory((previous) => [...previous, historyItem]);
 
     if (isCorrect) {
       setCorrectCount((previous) => previous + 1);
@@ -122,13 +184,11 @@ function CompareNumbers({ onBack }) {
     setQuestionNumber((previous) => previous + 1);
   };
 
-  // End test
   const endTest = () => {
     if (!quizStarted || quizCompleted) return;
     setQuizCompleted(true);
   };
 
-  // Restart quiz
   const restartQuiz = () => {
     setQuizStarted(false);
     setQuizCompleted(false);
@@ -141,9 +201,9 @@ function CompareNumbers({ onBack }) {
     setCorrectCount(0);
     setWrongCount(0);
     setQuestionHistory([]);
+    setMode("quiz");
   };
 
-  // Include the current unsubmitted question in the report
   const currentQuestionHistory = quizCompleted
     ? [
         ...questionHistory,
@@ -160,42 +220,144 @@ function CompareNumbers({ onBack }) {
     : questionHistory;
 
   const unansweredCount = quizCompleted ? 1 : 0;
-
-  const totalQuestions =
-    correctCount + wrongCount + unansweredCount;
-
+  const totalQuestions = correctCount + wrongCount + unansweredCount;
   const accuracy =
     totalQuestions > 0
       ? Math.round((correctCount / totalQuestions) * 100)
       : 0;
 
-  // Setup screen
+  // PRACTICE SCREEN - shown first when Compare Numbers opens.
+  if (mode === "practice") {
+    return (
+      <main className="compare-quiz-page compare-practice-page">
+        <div className="compare-practice-topbar">
+          <button
+            className="compare-back-button"
+            onClick={onBack}
+            type="button"
+          >
+            ← BACK
+          </button>
+
+          <div className="compare-practice-range-top">
+            <label htmlFor="compare-practice-range">Number range</label>
+            <select
+              id="compare-practice-range"
+              className="compare-range-dropdown"
+              value={selectedRange}
+              onChange={(event) => {
+                setSelectedRange(Number(event.target.value));
+                setQuestion(generateQuestion(Number(event.target.value)));
+                setSelectedSymbol("");
+                setPracticeFeedback("");
+                setPracticeLocked(false);
+                if (practiceAdvanceRef.current) {
+                  clearTimeout(practiceAdvanceRef.current);
+                  practiceAdvanceRef.current = null;
+                }
+              }}
+            >
+              {RANGE_OPTIONS.map((range) => (
+                <option key={range} value={range}>
+                  0 to {range}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <button
+            className="compare-mode-button"
+            onClick={openQuiz}
+            type="button"
+          >
+            📝 Quiz
+          </button>
+        </div>
+
+        <section className="compare-quiz-card compare-practice-card">
+          <span className="compare-eyebrow">NUMBER SENSE · PRACTICE</span>
+          <h1 className="compare-practice-title">Compare the Numbers</h1>
+          <p className="compare-instruction">
+            Choose the correct symbol.
+          </p>
+
+          <div className="compare-question">
+            <span className="compare-number">{question.left}</span>
+            <div className="compare-symbol-display">
+              {selectedSymbol || "___"}
+            </div>
+            <span className="compare-number">{question.right}</span>
+          </div>
+
+          <div className="compare-symbol-options">
+            {["<", "=", ">"].map((symbol) => (
+              <button
+                key={symbol}
+                type="button"
+                className={`compare-symbol-button ${
+                  selectedSymbol === symbol ? "selected" : ""
+                }`}
+                onClick={() => choosePracticeSymbol(symbol)}
+                disabled={practiceLocked}
+                aria-label={
+                  symbol === "<"
+                    ? "Less than"
+                    : symbol === ">"
+                    ? "Greater than"
+                    : "Equal to"
+                }
+              >
+                {symbol}
+              </button>
+            ))}
+          </div>
+
+          <div
+            className={`compare-practice-feedback ${
+              practiceFeedback === "very-good"
+                ? "feedback-correct"
+                : practiceFeedback === "try-again"
+                ? "feedback-incorrect"
+                : ""
+            }`}
+            aria-live="polite"
+          >
+            {practiceFeedback === "very-good"
+              ? "🌟 Very Good!"
+              : practiceFeedback === "try-again"
+              ? "💛 Try Again!"
+              : " "}
+          </div>
+
+        </section>
+      </main>
+    );
+  }
+
+  // Existing quiz setup screen.
   if (!quizStarted) {
     return (
       <main className="compare-quiz-page">
-        <button
-          className="compare-back-button"
-          onClick={onBack}
-          type="button"
-        >
-          ← BACK
-        </button>
+        <div className="compare-practice-topbar">
+          <button
+            className="compare-back-button"
+            onClick={openPractice}
+            type="button"
+          >
+            ← PRACTICE
+          </button>
+          <span className="compare-mode-label">TIMED QUIZ</span>
+        </div>
 
         <section className="compare-setup-card">
           <div className="compare-setup-icon">⚖️</div>
-
-          <span className="compare-eyebrow">
-            NUMBER SENSE
-          </span>
-
+          <span className="compare-eyebrow">NUMBER SENSE</span>
           <h1>Compare Numbers</h1>
-
           <p className="compare-setup-description">
             Choose your quiz time and number range.
           </p>
 
           <h3>Select Time</h3>
-
           <div className="compare-timer-options">
             {TIMER_OPTIONS.map((duration) => (
               <button
@@ -214,7 +376,6 @@ function CompareNumbers({ onBack }) {
           </div>
 
           <h3>Select Number Range</h3>
-
           <select
             className="compare-range-dropdown"
             value={selectedRange}
@@ -232,7 +393,6 @@ function CompareNumbers({ onBack }) {
           <p className="compare-selected-range">
             Numbers from 0 to {selectedRange}
           </p>
-
           <p className="compare-setup-hint">
             Compare the numbers and answer as many questions as you can!
           </p>
@@ -249,56 +409,48 @@ function CompareNumbers({ onBack }) {
     );
   }
 
-  // Result screen
+  // Existing quiz result screen.
   if (quizCompleted) {
     return (
       <main className="compare-quiz-page compare-results-page">
-        <button
-          className="compare-back-button"
-          onClick={onBack}
-          type="button"
-        >
-          ← BACK
-        </button>
+        <div className="compare-practice-topbar">
+          <button
+            className="compare-back-button"
+            onClick={openPractice}
+            type="button"
+          >
+            ← PRACTICE
+          </button>
+        </div>
 
         <section className="compare-result-card">
           <div className="compare-result-icon">🏆</div>
-
           <h1>Test Completed!</h1>
-
           <p className="compare-result-message">
             Great effort! Your quiz has ended.
           </p>
 
           <div className="compare-final-score">
             <span>Marks</span>
-
-            <strong>
-              {correctCount} / {totalQuestions}
-            </strong>
-
+            <strong>{correctCount} / {totalQuestions}</strong>
             <span>{accuracy}% Accuracy</span>
           </div>
 
-          {/* Result statistics */}
           <div className="compare-result-stats">
             <div className="compare-stat correct-stat">
               <strong>{correctCount}</strong>
               <span>Correct</span>
             </div>
-
             <div className="compare-stat wrong-stat">
               <strong>{wrongCount}</strong>
               <span>Wrong</span>
             </div>
-
             <div className="compare-stat unanswered-stat">
               <strong>{unansweredCount}</strong>
               <span>Unanswered</span>
             </div>
           </div>
 
-          {/* Question-wise analysis */}
           <div className="compare-review-section">
             <div className="compare-review-title">
               <h2>Question-wise Analysis</h2>
@@ -317,10 +469,7 @@ function CompareNumbers({ onBack }) {
                 key={item.questionNumber}
               >
                 <div className="compare-review-heading">
-                  <strong>
-                    Question {item.questionNumber}
-                  </strong>
-
+                  <strong>Question {item.questionNumber}</strong>
                   <span className="compare-review-status">
                     {item.status}
                   </span>
@@ -335,7 +484,6 @@ function CompareNumbers({ onBack }) {
                 <div className="compare-answer-details">
                   <div className="compare-answer-row">
                     <span>Your Answer:</span>
-
                     <strong
                       className={
                         item.isCorrect
@@ -348,10 +496,8 @@ function CompareNumbers({ onBack }) {
                       {item.selectedAnswer}
                     </strong>
                   </div>
-
                   <div className="compare-answer-row">
                     <span>Correct Answer:</span>
-
                     <strong className="answer-correct">
                       {item.correctAnswer}
                     </strong>
@@ -368,7 +514,6 @@ function CompareNumbers({ onBack }) {
           >
             🖨 Print Analysis
           </button>
-
           <button
             className="compare-primary-button"
             onClick={restartQuiz}
@@ -376,38 +521,33 @@ function CompareNumbers({ onBack }) {
           >
             Play Again
           </button>
-
           <button
             className="compare-secondary-button"
-            onClick={onBack}
+            onClick={openPractice}
             type="button"
           >
-            Back to Number Sense
+            Back to Practice
           </button>
         </section>
       </main>
     );
   }
 
-  // Active quiz screen
+  // Existing active timed quiz screen.
   return (
     <main className="compare-quiz-page">
       <header className="compare-quiz-header">
         <button
           className="compare-back-button"
-          onClick={onBack}
+          onClick={openPractice}
           type="button"
         >
-          ← BACK
+          ← PRACTICE
         </button>
 
         <div>
-          <span className="compare-eyebrow">
-            NUMBER SENSE
-          </span>
-
+          <span className="compare-eyebrow">NUMBER SENSE · QUIZ</span>
           <h1>Compare the Numbers</h1>
-
           <p>Choose the correct comparison symbol.</p>
         </div>
       </header>
@@ -424,10 +564,7 @@ function CompareNumbers({ onBack }) {
         </div>
 
         <div className="compare-question">
-          <span className="compare-number">
-            {question.left}
-          </span>
-
+          <span className="compare-number">{question.left}</span>
           <div
             className={`compare-symbol-display ${
               selectedSymbol ? "has-selection" : ""
@@ -435,10 +572,7 @@ function CompareNumbers({ onBack }) {
           >
             {selectedSymbol || "___"}
           </div>
-
-          <span className="compare-number">
-            {question.right}
-          </span>
+          <span className="compare-number">{question.right}</span>
         </div>
 
         <p className="compare-instruction">

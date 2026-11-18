@@ -2322,3 +2322,383 @@
     print-color-adjust: exact;
   }
 }
+
+
+/* =====================================================
+   COMPARE NUMBERS - PRACTICE SCREEN
+   One consolidated set of rules; no duplicate overrides
+===================================================== */
+
+.compare-practice-page {
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 24px clamp(14px, 3vw, 36px) 40px;
+  background: linear-gradient(135deg, #eef7ff 0%, #f8fbff 55%, #fffaf1 100%);
+}
+
+.compare-practice-page *,
+.compare-practice-page *::before,
+.compare-practice-page *::after {
+  box-sizing: border-box;
+}
+
+/* Top row: Back | Number range | Quiz */
+
+.compare-practice-topbar {
+  width: min(100%, 1220px);
+  margin: 0 auto 22px;
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) minmax(250px, 335px) minmax(120px, 1fr);
+  align-items: center;
+  gap: 18px;
+}
+
+.compare-practice-topbar > .compare-back-button {
+  justify-self: start;
+}
+
+.compare-practice-topbar > .compare-mode-button {
+  justify-self: end;
+}
+
+.compare-mode-button {
+  min-height: 52px;
+  padding: 12px 25px;
+  border: 0;
+  border-radius: 14px;
+  background: #3287cb;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.compare-mode-button:hover {
+  background: #236da9;
+  transform: translateY(-2px);
+}
+
+.compare-practice-range-top {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+  text-align: left;
+}
+
+.compare-practice-range-top label {
+  color: #355b7b;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.compare-practice-range-top .compare-range-dropdown {
+  display: block;
+  width: 100%;
+  max-width: none;
+  min-height: 52px;
+  margin: 0;
+  padding: 11px 38px 11px 16px;
+  border: 1.5px solid #c9d8ee;
+  border-radius: 13px;
+  background: #ffffff;
+  color: #234d75;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(48, 92, 130, 0.05);
+}
+
+.compare-practice-range-top .compare-range-dropdown:focus {
+  border-color: #438dcc;
+  box-shadow: 0 0 0 3px rgba(67, 141, 204, 0.14);
+}
+
+/* Main practice card */
+
+.compare-practice-card {
+  width: 100%;
+  max-width: 1260px;
+  min-height: 0;
+  margin: 0 auto;
+  padding: clamp(34px, 4vw, 54px);
+  border: 1px solid #dce8f3;
+  border-radius: 28px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(48, 92, 130, 0.08);
+  text-align: center;
+}
+
+.compare-practice-card .compare-eyebrow,
+.compare-practice-card .compare-mode-label {
+  color: #3287cb;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.compare-practice-title {
+  margin: 14px 0 8px;
+  color: #234d75;
+  font-size: clamp(30px, 3vw, 42px);
+  line-height: 1.2;
+}
+
+.compare-practice-card .compare-instruction {
+  margin: 14px 0 26px;
+  color: #64748b;
+  font-size: 18px;
+}
+
+/* Numbers and empty answer box */
+
+.compare-practice-card .compare-question {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 4vw, 42px);
+  margin: 32px auto 40px;
+}
+
+.compare-practice-card .compare-number {
+  min-width: 90px;
+  color: #234d75;
+  font-size: clamp(58px, 6vw, 82px);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.compare-practice-card .compare-symbol-display {
+  width: 178px;
+  height: 155px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #c8d9e8;
+  border-radius: 21px;
+  background: #ffffff;
+  color: #3287cb;
+  font-size: 54px;
+  font-weight: 800;
+  box-shadow: 0 3px 12px rgba(48, 92, 130, 0.06);
+}
+
+.compare-practice-card .compare-symbol-display.has-selection {
+  border-color: #5a9ed4;
+  background: #eaf5ff;
+}
+
+/* Answer buttons */
+
+.compare-practice-card .compare-symbol-options {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin: 24px auto 12px;
+}
+
+.compare-practice-card .compare-symbol-button {
+  width: 172px;
+  height: 148px;
+  border: 2px solid #c8d9e8;
+  border-radius: 20px;
+  background: #ffffff;
+  color: #234d75;
+  font-size: 58px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.compare-practice-card .compare-symbol-button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  border-color: #3287cb;
+  background: #f1f8ff;
+}
+
+.compare-practice-card .compare-symbol-button.selected {
+  border: 3px solid #3287cb;
+  background: #e4f3ff;
+  color: #2365a0;
+}
+
+.compare-practice-card .compare-symbol-button:disabled {
+  cursor: default;
+  opacity: 0.8;
+}
+
+/* Feedback keeps its space so the card does not jump */
+
+.compare-practice-feedback {
+  min-height: 42px;
+  margin: 14px 0 0;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.compare-practice-feedback.feedback-correct {
+  color: #168451;
+}
+
+.compare-practice-feedback.feedback-incorrect {
+  color: #d18a16;
+}
+
+/* Optional practice controls */
+
+.compare-practice-controls {
+  width: 100%;
+  max-width: 350px;
+  margin: 25px auto 0;
+}
+
+.compare-practice-controls label {
+  display: block;
+  margin-bottom: 8px;
+  color: #355b7b;
+  font-weight: 700;
+}
+
+/* Tablet */
+
+@media (max-width: 900px) {
+  .compare-practice-card {
+    padding: 36px 24px;
+  }
+
+  .compare-practice-card .compare-symbol-display {
+    width: 145px;
+    height: 125px;
+  }
+
+  .compare-practice-card .compare-symbol-button {
+    width: 140px;
+    height: 120px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 650px) {
+  .compare-practice-page {
+    padding: 16px 12px 28px;
+  }
+
+  .compare-practice-topbar {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 9px;
+    margin-bottom: 16px;
+  }
+
+  .compare-practice-topbar .compare-back-button {
+    padding: 9px 11px;
+    font-size: 12px;
+  }
+
+  .compare-mode-button,
+  .compare-practice-topbar .compare-mode-button {
+    min-height: 40px;
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+
+  .compare-practice-range-top {
+    gap: 5px;
+  }
+
+  .compare-practice-range-top label {
+    font-size: 11px;
+  }
+
+  .compare-practice-range-top .compare-range-dropdown {
+    min-height: 40px;
+    padding: 7px 24px 7px 9px;
+    font-size: 12px;
+  }
+
+  .compare-practice-card {
+    min-height: 0;
+    padding: 30px 16px 34px;
+    border-radius: 20px;
+  }
+
+  .compare-practice-title {
+    font-size: clamp(25px, 6vw, 32px);
+  }
+
+  .compare-practice-card .compare-instruction {
+    margin: 12px 0 20px;
+    font-size: 15px;
+  }
+
+  .compare-practice-card .compare-question {
+    gap: 10px;
+    margin: 24px auto 28px;
+  }
+
+  .compare-practice-card .compare-number {
+    min-width: 48px;
+    font-size: clamp(42px, 10vw, 58px);
+  }
+
+  .compare-practice-card .compare-symbol-display {
+    width: 94px;
+    height: 88px;
+    border-radius: 15px;
+    font-size: 38px;
+  }
+
+  .compare-practice-card .compare-symbol-options {
+    gap: 10px;
+    margin: 20px auto 10px;
+  }
+
+  .compare-practice-card .compare-symbol-button {
+    width: min(27vw, 100px);
+    height: 86px;
+    border-radius: 14px;
+    font-size: 40px;
+  }
+
+  .compare-practice-feedback {
+    min-height: 36px;
+    font-size: 20px;
+  }
+}
+
+/* Very small phones */
+
+@media (max-width: 380px) {
+  .compare-practice-topbar {
+    gap: 6px;
+  }
+
+  .compare-practice-topbar .compare-back-button,
+  .compare-practice-topbar .compare-mode-button {
+    padding: 8px;
+    font-size: 11px;
+  }
+
+  .compare-practice-range-top .compare-range-dropdown {
+    padding-left: 7px;
+    font-size: 11px;
+  }
+
+  .compare-practice-card {
+    padding: 25px 10px 28px;
+  }
+
+  .compare-practice-card .compare-number {
+    min-width: 40px;
+  }
+
+  .compare-practice-card .compare-symbol-display {
+    width: 82px;
+    height: 78px;
+  }
+}

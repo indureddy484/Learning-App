@@ -86,7 +86,15 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (selectedGame === "animals") {
-    return <Animals onBack={() => setSelectedGame(null)} />;
+    return (
+      <Animals
+        onBack={() => setSelectedGame(null)}
+        onQuiz={() => {
+          setSelectedGame("quiz");
+          setSelectedEvsQuizTopic("animals");
+        }}
+      />
+    );
   }
 
   /* =========================
@@ -94,7 +102,15 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (selectedGame === "plants") {
-    return <Plants onBack={() => setSelectedGame(null)} />;
+    return (
+      <Plants
+        onBack={() => setSelectedGame(null)}
+        onQuiz={() => {
+          setSelectedGame("quiz");
+          setSelectedEvsQuizTopic("plants");
+        }}
+      />
+    );
   }
 
   /* =========================
@@ -192,7 +208,10 @@ function NewHome({ onBack }) {
   ) {
     return (
       <AnimalsQuiz
-        onBack={() => setSelectedEvsQuizTopic(null)}
+        onBack={() => {
+          setSelectedEvsQuizTopic(null);
+          setSelectedGame("animals");
+        }}
       />
     );
   }
@@ -210,7 +229,10 @@ function NewHome({ onBack }) {
       <div className="new-page">
         <button
           className="top-back-button"
-          onClick={() => setSelectedEvsQuizTopic(null)}
+          onClick={() => {
+            setSelectedEvsQuizTopic(null);
+            setSelectedGame("plants");
+          }}
           type="button"
         >
           ← BACK
@@ -796,19 +818,6 @@ if (
               <span>Miscellaneous</span>
             </button>
 
-            {/* EVS QUIZ OPTION */}
-
-            <button
-              className="game-card"
-              onClick={() => {
-                setSelectedGame("quiz");
-                setSelectedEvsQuizTopic(null);
-              }}
-              type="button"
-            >
-              <div className="game-icon">📝</div>
-              <span>Quiz</span>
-            </button>
           </div>
         ) : selectedSubject === "Maths" ? (
           /* MATHS */

@@ -572,3 +572,49 @@
     font-size: 13px;
   }
 }
+
+
+/* =================================
+   HEADER ACTION BUTTONS
+================================= */
+
+.plants-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.plants-quiz-button {
+  padding: 11px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #278b57;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.plants-quiz-button:hover {
+  background: #176c40;
+  transform: translateY(-2px);
+}
+
+.plants-quiz-button:focus-visible {
+  outline: 3px solid #a5d6b8;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .plants-header-actions {
+    gap: 7px;
+  }
+
+  .plants-quiz-button {
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+}
