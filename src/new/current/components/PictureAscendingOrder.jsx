@@ -1,41 +1,28 @@
-
-
 import { useEffect, useRef, useState } from "react";
-
-
 
 import "./PictureAscendingOrder.css";
 
 import "./PictureAscendingOrderLevel2.css";
 
-
-
 const TIMER_OPTIONS = [1, 2, 5, 10, 20];
-
-
 
 // LEVEL 1: Four different picture sizes.
 
 const SIZE_VALUES = [60, 105, 155, 205];
-
-
 
 // LEVEL 2: Four relative image sizes.
 
 // const LEVEL2_SIZE_VALUES = [30, 50, 72, 94];
 
 // const LEVEL2_SIZE_VALUES = [25, 40, 60, 85];
-const LEVEL2_SIZE_VALUES = [50, 75, 105, 140];
 
-
+const LEVEL2_SIZE_VALUES = [48, 78, 112, 158];
 
 // Automatically discover images using Webpack.
 
 // Component: src/new/current/components/
 
 // Images: src/assets/images/ascending/
-
-
 
 const imageContext = require.context(
 
@@ -47,8 +34,6 @@ const imageContext = require.context(
 
 );
 
-
-
 const ALL_IMAGES = imageContext
 
   .keys()
@@ -56,8 +41,6 @@ const ALL_IMAGES = imageContext
   .map((key) => {
 
     const imageModule = imageContext(key);
-
-
 
     return typeof imageModule === "string"
 
@@ -69,15 +52,11 @@ const ALL_IMAGES = imageContext
 
   .filter(Boolean);
 
-
-
 // Shuffle array.
 
 const shuffle = (array) => {
 
   const result = [...array];
-
-
 
   for (let i = result.length - 1; i > 0; i--) {
 
@@ -87,21 +66,15 @@ const shuffle = (array) => {
 
   }
 
-
-
   return result;
 
 };
-
-
 
 // Create random image deck.
 
 const createImageDeck = (images, previousImage = null) => {
 
   const deck = shuffle(images);
-
-
 
   if (
 
@@ -117,13 +90,9 @@ const createImageDeck = (images, previousImage = null) => {
 
   }
 
-
-
   return deck;
 
 };
-
-
 
 // Format timer.
 
@@ -133,8 +102,6 @@ const formatTime = (seconds) => {
 
   const remainingSeconds = seconds % 60;
 
-
-
   return `${String(minutes).padStart(2, "0")}:${String(
 
     remainingSeconds
@@ -143,29 +110,21 @@ const formatTime = (seconds) => {
 
 };
 
-
-
 // ======================================================
 
 // SHARED IMAGE COMPONENT
 
 // ======================================================
 
-
-
 function ObjectPhoto({ imagePath, size, compact = false }) {
 
   const [imageFailed, setImageFailed] = useState(false);
-
-
 
   useEffect(() => {
 
     setImageFailed(false);
 
   }, [imagePath]);
-
-
 
   return (
 
@@ -233,15 +192,11 @@ function ObjectPhoto({ imagePath, size, compact = false }) {
 
 }
 
-
-
 // ======================================================
 
 // LEVEL 1 QUESTION GENERATOR
 
 // ======================================================
-
-
 
 const generateQuestion = (questionNumber, imagePath) => {
 
@@ -255,17 +210,11 @@ const generateQuestion = (questionNumber, imagePath) => {
 
   };
 
-
-
   const questionType =
 
     Math.random() < 0.5 ? "smallest" : "largest";
 
-
-
   const sizes = shuffle([0, 1, 2, 3]);
-
-
 
   const options = sizes.map((sizeIndex, index) => ({
 
@@ -281,8 +230,6 @@ const generateQuestion = (questionNumber, imagePath) => {
 
   }));
 
-
-
   const correctOption = options.find((option) =>
 
     questionType === "smallest"
@@ -292,8 +239,6 @@ const generateQuestion = (questionNumber, imagePath) => {
       : option.sizeIndex === 3
 
   );
-
-
 
   return {
 
@@ -321,15 +266,11 @@ const generateQuestion = (questionNumber, imagePath) => {
 
 };
 
-
-
 // ======================================================
 
 // LEVEL 2 QUESTION GENERATOR
 
 // ======================================================
-
-
 
 const generateLevel2Question = (questionNumber, imagePath) => {
 
@@ -337,13 +278,9 @@ const generateLevel2Question = (questionNumber, imagePath) => {
 
     Math.random() < 0.5 ? "ascending" : "descending";
 
-
-
   // Randomly display the four sizes.
 
   const shuffledSizes = shuffle([0, 1, 2, 3]);
-
-
 
   const options = shuffledSizes.map((sizeIndex, index) => ({
 
@@ -356,8 +293,6 @@ const generateLevel2Question = (questionNumber, imagePath) => {
     imagePath,
 
   }));
-
-
 
   // Calculate correct order.
 
@@ -374,8 +309,6 @@ const generateLevel2Question = (questionNumber, imagePath) => {
     )
 
     .map((option) => option.id);
-
-
 
   return {
 
@@ -409,47 +342,65 @@ const generateLevel2Question = (questionNumber, imagePath) => {
 
 };
 
-
-
 // ======================================================
 
 // LEVEL 2 IMAGE COMPONENT
 
 // ======================================================
 
-
-
 function Level2Photo({ imagePath, size, compact = false }) {
+
   const [imageFailed, setImageFailed] = useState(false);
 
   useEffect(() => {
+
     setImageFailed(false);
+
   }, [imagePath]);
 
   return (
+
     <div className={`level2-photo-stage ${compact ? "compact" : ""}`}>
+
       {imageFailed ? (
+
         <span className="level2-photo-fallback">🖼️</span>
+
       ) : (
+
         <img
+
           src={imagePath}
+
           alt="Picture"
+
           className="level2-photo"
+
           style={{
+
             height: compact ? `${size * 0.5}px` : `${size}px`,
+
             width: "auto",
+
             maxWidth: "100%",
+
             maxHeight: "100%",
+
             objectFit: "contain",
+
           }}
+
           onError={() => setImageFailed(true)}
+
         />
+
       )}
+
     </div>
+
   );
+
 }
-
-
 
 // ======================================================
 
@@ -457,13 +408,9 @@ function Level2Photo({ imagePath, size, compact = false }) {
 
 // ======================================================
 
-
-
 function PictureAscendingLevel2({ onBack, onExit }) {
 
   const [selectedDuration, setSelectedDuration] = useState(2);
-
-
 
   const [quizStarted, setQuizStarted] = useState(false);
 
@@ -471,29 +418,22 @@ function PictureAscendingLevel2({ onBack, onExit }) {
 
   const [endReason, setEndReason] = useState(null);
 
-
-
   const [timeLeft, setTimeLeft] = useState(120);
 
   const [questionNumber, setQuestionNumber] = useState(1);
 
   const [question, setQuestion] = useState(null);
 
-
-
   const [selectedOrder, setSelectedOrder] = useState([]);
+  const [draggedOptionId, setDraggedOptionId] = useState(null);
 
   const [history, setHistory] = useState([]);
-
-
 
   const imageDeckRef = useRef([]);
 
   const previousImageRef = useRef(null);
 
   const advanceTimeoutRef = useRef(null);
-
-
 
   // Get next image without repeating until all are used.
 
@@ -511,29 +451,19 @@ function PictureAscendingLevel2({ onBack, onExit }) {
 
     }
 
-
-
     const nextImage = imageDeckRef.current.shift();
 
-
-
     previousImageRef.current = nextImage;
-
-
 
     return nextImage;
 
   };
-
-
 
   // Timer.
 
   useEffect(() => {
 
     if (!quizStarted || quizCompleted) return;
-
-
 
     const timer = setInterval(() => {
 
@@ -545,13 +475,9 @@ function PictureAscendingLevel2({ onBack, onExit }) {
 
     }, 1000);
 
-
-
     return () => clearInterval(timer);
 
   }, [quizStarted, quizCompleted]);
-
-
 
   // Automatically end when time expires.
 
@@ -567,8 +493,6 @@ function PictureAscendingLevel2({ onBack, onExit }) {
 
       }
 
-
-
       setEndReason("timeout");
 
       setQuizCompleted(true);
@@ -576,8 +500,6 @@ function PictureAscendingLevel2({ onBack, onExit }) {
     }
 
   }, [quizStarted, timeLeft, quizCompleted]);
-
-
 
   // Clear pending transition when component unmounts.
 
@@ -595,15 +517,11 @@ function PictureAscendingLevel2({ onBack, onExit }) {
 
   }, []);
 
-
-
   // Start Level 2.
 
   const startQuiz = () => {
 
     if (ALL_IMAGES.length === 0) return;
-
-
 
     if (advanceTimeoutRef.current) {
 
@@ -611,23 +529,18 @@ function PictureAscendingLevel2({ onBack, onExit }) {
 
     }
 
-
-
     imageDeckRef.current = createImageDeck(ALL_IMAGES);
 
     previousImageRef.current = null;
 
-
-
     const firstImage = getNextImage();
-
-
 
     setQuestionNumber(1);
 
     setQuestion(generateLevel2Question(1, firstImage));
 
     setSelectedOrder([]);
+    setDraggedOptionId(null);
 
     setHistory([]);
 
@@ -640,8 +553,6 @@ function PictureAscendingLevel2({ onBack, onExit }) {
     setQuizStarted(true);
 
   };
-
-
 
   // Select picture and arrange it.
 
@@ -665,15 +576,9 @@ function PictureAscendingLevel2({ onBack, onExit }) {
 
     }
 
-
-
     const updatedOrder = [...selectedOrder, option.id];
 
-
-
     setSelectedOrder(updatedOrder);
-
-
 
     // Once four pictures are selected, evaluate silently.
 
@@ -684,8 +589,6 @@ function PictureAscendingLevel2({ onBack, onExit }) {
         (id, index) => id === question.correctOrder[index]
 
       );
-
-
 
       const record = {
 
@@ -709,11 +612,7 @@ function PictureAscendingLevel2({ onBack, onExit }) {
 
       };
 
-
-
       setHistory((previous) => [...previous, record]);
-
-
 
       // No correct/wrong feedback is revealed.
 
@@ -721,13 +620,9 @@ function PictureAscendingLevel2({ onBack, onExit }) {
 
         if (timeLeft <= 0) return;
 
-
-
         const nextNumber = questionNumber + 1;
 
         const nextImage = getNextImage();
-
-
 
         setQuestionNumber(nextNumber);
 
@@ -738,6 +633,7 @@ function PictureAscendingLevel2({ onBack, onExit }) {
         );
 
         setSelectedOrder([]);
+    setDraggedOptionId(null);
 
         advanceTimeoutRef.current = null;
 
@@ -748,6 +644,51 @@ function PictureAscendingLevel2({ onBack, onExit }) {
   };
 
 
+  // Allow children to drag a picture directly into a numbered position.
+  const handlePictureDrop = (event, targetIndex) => {
+    event.preventDefault();
+    const optionId = draggedOptionId || event.dataTransfer.getData("text/plain");
+    const option = question?.options.find((item) => item.id === optionId);
+
+    if (!option || selectedOrder.includes(optionId) || quizCompleted || timeLeft <= 0) {
+      setDraggedOptionId(null);
+      return;
+    }
+
+    const updatedOrder = [...selectedOrder];
+    updatedOrder.splice(Math.min(targetIndex, updatedOrder.length), 0, optionId);
+    setSelectedOrder(updatedOrder);
+    setDraggedOptionId(null);
+
+    if (updatedOrder.length === 4) {
+      const isCorrect = updatedOrder.every(
+        (id, index) => id === question.correctOrder[index]
+      );
+
+      const record = {
+        questionNumber: question.questionNumber,
+        prompt: question.prompt,
+        instruction: question.instruction,
+        direction: question.direction,
+        imagePath: question.imagePath,
+        options: question.options,
+        selectedOrder: updatedOrder,
+        correctOrder: question.correctOrder,
+        status: isCorrect ? "Correct" : "Wrong",
+      };
+
+      setHistory((previous) => [...previous, record]);
+      advanceTimeoutRef.current = setTimeout(() => {
+        if (timeLeft <= 0) return;
+        const nextNumber = questionNumber + 1;
+        const nextImage = getNextImage();
+        setQuestionNumber(nextNumber);
+        setQuestion(generateLevel2Question(nextNumber, nextImage));
+        setSelectedOrder([]);
+        advanceTimeoutRef.current = null;
+      }, 700);
+    }
+  };
 
   // Undo last selected picture.
 
@@ -767,21 +708,15 @@ function PictureAscendingLevel2({ onBack, onExit }) {
 
     }
 
-
-
     setSelectedOrder((previous) => previous.slice(0, -1));
 
   };
-
-
 
   // End test.
 
   const endTest = () => {
 
     if (!quizStarted || quizCompleted) return;
-
-
 
     if (advanceTimeoutRef.current) {
 
@@ -791,15 +726,11 @@ function PictureAscendingLevel2({ onBack, onExit }) {
 
     }
 
-
-
     setEndReason("manual");
 
     setQuizCompleted(true);
 
   };
-
-
 
   // Restart.
 
@@ -812,8 +743,6 @@ function PictureAscendingLevel2({ onBack, onExit }) {
       advanceTimeoutRef.current = null;
 
     }
-
-
 
     setQuizStarted(false);
 
@@ -831,43 +760,62 @@ function PictureAscendingLevel2({ onBack, onExit }) {
 
     setTimeLeft(selectedDuration * 60);
 
-
-
     imageDeckRef.current = [];
 
     previousImageRef.current = null;
 
   };
 
-
-
   // Include unfinished current question in final analysis.
 
   const currentQuestionAlreadyRecorded =
+
     question &&
+
     history.some(
+
       (item) => item.questionNumber === question.questionNumber
+
     );
 
   const finalHistory =
+
     quizCompleted && question && !currentQuestionAlreadyRecorded
+
       ? [
+
           ...history,
+
           {
+
             questionNumber: question.questionNumber,
+
             prompt: question.prompt,
+
             instruction: question.instruction,
+
             direction: question.direction,
+
             imagePath: question.imagePath,
+
             options: question.options,
+
             selectedOrder,
+
             correctOrder: question.correctOrder,
+
             status:
+
               selectedOrder.length === 0
+
                 ? "Unanswered"
+
                 : "Incomplete",
+
           },
+
         ]
+
       : history;
 
   const correctCount = finalHistory.filter(
@@ -876,15 +824,11 @@ function PictureAscendingLevel2({ onBack, onExit }) {
 
   ).length;
 
-
-
   const incorrectCount = finalHistory.filter(
 
     (item) => item.status === "Wrong"
 
   ).length;
-
-
 
   const unansweredCount = finalHistory.filter(
 
@@ -896,11 +840,7 @@ function PictureAscendingLevel2({ onBack, onExit }) {
 
   ).length;
 
-
-
   const totalQuestions = finalHistory.length;
-
-
 
   const accuracy =
 
@@ -910,115 +850,179 @@ function PictureAscendingLevel2({ onBack, onExit }) {
 
       : 0;
 
-
-
   // Level 2 setup screen.
 
  // Level 2 setup screen
+
 if (!quizStarted) {
+
   return (
+
     <main className="picture-ascending-page">
 
       <button
+
         className="picture-back-button setup-back-button"
+
         onClick={onBack}
+
         type="button"
+
       >
+
         ← BACK
+
       </button>
 
       <section className="picture-setup-card">
 
         <h1 className="setup-heading">
+
           Picture-Based Ascending Order
+
         </h1>
 
         <p className="image-loading-message">
+
           {ALL_IMAGES.length > 0
+
             ? `${ALL_IMAGES.length} photographs available`
+
             : "No photographs found. Check your images folder."}
+
         </p>
 
         {/* LEVEL DROPDOWN */}
+
         <div className="setup-section">
 
           <label
+
             htmlFor="picture-level"
+
             className="picture-level-label"
+
           >
+
             Select Level
+
           </label>
 
           <select
+
             id="picture-level"
+
             className="picture-level-dropdown"
+
             value="level2"
+
             onChange={(event) => {
+
               if (event.target.value === "level1") {
+
                 onBack();
+
               }
+
             }}
+
           >
+
             <option value="level1">
+
               Level 1 – Smallest and Largest
+
             </option>
 
             <option value="level2">
+
               Level 2 – Arrange Pictures in Order
+
             </option>
 
             <option value="level3" disabled>
+
               Level 3 – Picture Size Sequences (Coming Soon)
+
             </option>
+
           </select>
 
         </div>
 
         {/* TIME SELECTION */}
+
         <div className="setup-section">
 
           <h3 className="picture-time-heading">
+
             Select Time Limit
+
           </h3>
 
           <div className="picture-time-options">
 
             {TIMER_OPTIONS.map((duration) => (
+
               <button
+
                 key={duration}
+
                 type="button"
+
                 className={`picture-time-option ${
+
                   selectedDuration === duration ? "active" : ""
+
                 }`}
+
                 onClick={() => setSelectedDuration(duration)}
+
                 aria-pressed={selectedDuration === duration}
+
               >
+
                 <strong>{duration}</strong>
 
                 <span>
+
                   {duration === 1 ? "Minute" : "Minutes"}
+
                 </span>
+
               </button>
+
             ))}
 
           </div>
+
         </div>
 
         {/* START BUTTON */}
+
         <button
+
           className="picture-primary-button setup-start-button"
+
           onClick={startQuiz}
+
           type="button"
+
           disabled={ALL_IMAGES.length === 0}
+
         >
+
           ▶ Start Quiz
+
         </button>
 
       </section>
-    </main>
-  );
-}
 
+    </main>
+
+  );
+
+}
 
   // Level 2 result screen.
 
@@ -1042,8 +1046,6 @@ if (!quizStarted) {
 
         </button>
 
-
-
         <section className="picture-result-card">
 
           <div className="picture-result-icon">
@@ -1051,8 +1053,6 @@ if (!quizStarted) {
             {endReason === "timeout" ? "⏰" : "🏆"}
 
           </div>
-
-
 
           <h1>
 
@@ -1064,8 +1064,6 @@ if (!quizStarted) {
 
           </h1>
 
-
-
           <p className="picture-description">
 
             {endReason === "timeout"
@@ -1075,8 +1073,6 @@ if (!quizStarted) {
               : "You have successfully ended the test. Great job!"}
 
           </p>
-
-
 
           <div className="picture-score-box">
 
@@ -1092,8 +1088,6 @@ if (!quizStarted) {
 
           </div>
 
-
-
           <div className="picture-stats">
 
             <div className="picture-stat correct">
@@ -1104,8 +1098,6 @@ if (!quizStarted) {
 
             </div>
 
-
-
             <div className="picture-stat incorrect">
 
               <strong>{incorrectCount}</strong>
@@ -1113,8 +1105,6 @@ if (!quizStarted) {
               <span>Wrong</span>
 
             </div>
-
-
 
             <div className="picture-stat unanswered">
 
@@ -1126,23 +1116,17 @@ if (!quizStarted) {
 
           </div>
 
-
-
           <p className="picture-total">
 
             Total Questions: {totalQuestions}
 
           </p>
 
-
-
           <h2 className="picture-analysis-heading">
 
             Question-wise Analysis
 
           </h2>
-
-
 
           {finalHistory.map((item) => {
 
@@ -1156,8 +1140,6 @@ if (!quizStarted) {
 
               .filter(Boolean);
 
-
-
             const correctOptions = item.correctOrder
 
               .map((id) =>
@@ -1167,8 +1149,6 @@ if (!quizStarted) {
               )
 
               .filter(Boolean);
-
-
 
             return (
 
@@ -1204,23 +1184,17 @@ if (!quizStarted) {
 
                 </div>
 
-
-
                 <p className="picture-review-prompt">
 
                   {item.prompt}
 
                 </p>
 
-
-
                 <p className="level2-analysis-label">
 
                   Your arrangement
 
                 </p>
-
-
 
                 <div className="level2-analysis-order">
 
@@ -1241,8 +1215,6 @@ if (!quizStarted) {
                           {index + 1}
 
                         </span>
-
-
 
                         <Level2Photo
 
@@ -1266,15 +1238,11 @@ if (!quizStarted) {
 
                 </div>
 
-
-
                 <p className="level2-analysis-label">
 
                   Correct arrangement
 
                 </p>
-
-
 
                 <div className="level2-analysis-order">
 
@@ -1293,8 +1261,6 @@ if (!quizStarted) {
                         {index + 1}
 
                       </span>
-
-
 
                       <Level2Photo
 
@@ -1318,8 +1284,6 @@ if (!quizStarted) {
 
           })}
 
-
-
           <button
 
             className="picture-print-button no-print"
@@ -1333,8 +1297,6 @@ if (!quizStarted) {
             🖨️ Print Analysis
 
           </button>
-
-
 
           <button
 
@@ -1350,8 +1312,6 @@ if (!quizStarted) {
 
           </button>
 
-
-
           <button
 
             className="picture-secondary-button no-print"
@@ -1365,8 +1325,6 @@ if (!quizStarted) {
             Back to Levels
 
           </button>
-
-
 
           <button
 
@@ -1390,8 +1348,6 @@ if (!quizStarted) {
 
   }
 
-
-
   // Current selected pictures.
 
   const selectedOptions = selectedOrder
@@ -1403,8 +1359,6 @@ if (!quizStarted) {
     )
 
     .filter(Boolean);
-
-
 
   // Level 2 quiz screen.
 
@@ -1428,8 +1382,6 @@ if (!quizStarted) {
 
         </button>
 
-
-
         <div>
 
           <span className="picture-eyebrow">
@@ -1444,8 +1396,6 @@ if (!quizStarted) {
 
       </header>
 
-
-
       <section className="picture-quiz-card level2-quiz-card">
 
         <div className="picture-progress">
@@ -1456,8 +1406,6 @@ if (!quizStarted) {
 
         </div>
 
-
-
         <div className="picture-timer-display">
 
           <span>⏰</span>
@@ -1466,15 +1414,11 @@ if (!quizStarted) {
 
         </div>
 
-
-
         <h2 className="picture-question">
 
           {question.prompt}
 
         </h2>
-
-
 
         <p className="picture-instruction">
 
@@ -1482,21 +1426,15 @@ if (!quizStarted) {
 
         </p>
 
-
-
         <div className="level2-arrangement-area">
 
           <h3>Your arrangement</h3>
-
-
 
           <div className="level2-answer-slots">
 
             {[0, 1, 2, 3].map((index) => {
 
               const option = selectedOptions[index];
-
-
 
               return (
 
@@ -1509,6 +1447,9 @@ if (!quizStarted) {
                   }`}
 
                   key={index}
+                  onDragOver={(event) => event.preventDefault()}
+                  onDrop={(event) => handlePictureDrop(event, index)}
+                  aria-label={`Position ${index + 1}`}
 
                 >
 
@@ -1517,8 +1458,6 @@ if (!quizStarted) {
                     {index + 1}
 
                   </span>
-
-
 
                   {option ? (
 
@@ -1550,21 +1489,15 @@ if (!quizStarted) {
 
         </div>
 
-
-
         <div className="level2-picture-area">
 
-          <h3>Click the pictures in the correct order</h3>
-
-
+          <h3>Drag a picture into a position, or click pictures in the correct order</h3>
 
           <div className="level2-picture-grid">
 
             {question.options.map((option) => {
 
               const isSelected = selectedOrder.includes(option.id);
-
-
 
               return (
 
@@ -1581,6 +1514,13 @@ if (!quizStarted) {
                   }`}
 
                   onClick={() => selectPicture(option)}
+                  draggable={!isSelected && selectedOrder.length < 4}
+                  onDragStart={(event) => {
+                    setDraggedOptionId(option.id);
+                    event.dataTransfer.setData("text/plain", option.id);
+                    event.dataTransfer.effectAllowed = "move";
+                  }}
+                  onDragEnd={() => setDraggedOptionId(null)}
 
                   disabled={
 
@@ -1604,8 +1544,6 @@ if (!quizStarted) {
 
                   </span>
 
-
-
                   <Level2Photo
 
                     imagePath={option.imagePath}
@@ -1624,8 +1562,6 @@ if (!quizStarted) {
 
         </div>
 
-
-
         <div className="level2-progress-text">
 
           {selectedOrder.length === 4
@@ -1635,8 +1571,6 @@ if (!quizStarted) {
             : `${selectedOrder.length} of 4 pictures arranged`}
 
         </div>
-
-
 
         <div className="picture-quiz-actions">
 
@@ -1662,8 +1596,6 @@ if (!quizStarted) {
 
           </button>
 
-
-
           <button
 
             className="picture-end-test-button"
@@ -1688,15 +1620,11 @@ if (!quizStarted) {
 
 }
 
-
-
 // ======================================================
 
 // MAIN PICTURE ASCENDING ORDER COMPONENT
 
 // ======================================================
-
-
 
 function PictureAscendingOrder({ onBack }) {
 
@@ -1704,15 +1632,11 @@ function PictureAscendingOrder({ onBack }) {
 
   const [selectedDuration, setSelectedDuration] = useState(2);
 
-
-
   const [quizStarted, setQuizStarted] = useState(false);
 
   const [quizCompleted, setQuizCompleted] = useState(false);
 
   const [endReason, setEndReason] = useState(null);
-
-
 
   const [timeLeft, setTimeLeft] = useState(120);
 
@@ -1720,19 +1644,13 @@ function PictureAscendingOrder({ onBack }) {
 
   const [question, setQuestion] = useState(null);
 
-
-
   const [selectedAnswer, setSelectedAnswer] = useState(null);
 
   const [history, setHistory] = useState([]);
 
-
-
   const imageDeckRef = useRef([]);
 
   const previousImageRef = useRef(null);
-
-
 
   // Get next image for Level 1.
 
@@ -1750,27 +1668,19 @@ function PictureAscendingOrder({ onBack }) {
 
     }
 
-
-
     const nextImage = imageDeckRef.current.shift();
 
     previousImageRef.current = nextImage;
 
-
-
     return nextImage;
 
   };
-
-
 
   // Timer.
 
   useEffect(() => {
 
     if (!quizStarted || quizCompleted) return;
-
-
 
     const timer = setInterval(() => {
 
@@ -1782,13 +1692,9 @@ function PictureAscendingOrder({ onBack }) {
 
     }, 1000);
 
-
-
     return () => clearInterval(timer);
 
   }, [quizStarted, quizCompleted]);
-
-
 
   // Automatically end when time expires.
 
@@ -1804,8 +1710,6 @@ function PictureAscendingOrder({ onBack }) {
 
   }, [quizStarted, timeLeft, quizCompleted]);
 
-
-
   // Start Level 1.
 
   const startQuiz = () => {
@@ -1816,17 +1720,11 @@ function PictureAscendingOrder({ onBack }) {
 
     }
 
-
-
     imageDeckRef.current = createImageDeck(ALL_IMAGES);
 
     previousImageRef.current = null;
 
-
-
     const firstImage = getNextImage();
-
-
 
     setQuestionNumber(1);
 
@@ -1846,23 +1744,17 @@ function PictureAscendingOrder({ onBack }) {
 
   };
 
-
-
   // End Level 1 manually.
 
   const endTest = () => {
 
     if (!quizStarted || quizCompleted) return;
 
-
-
     setEndReason("manual");
 
     setQuizCompleted(true);
 
   };
-
-
 
   // Final history for Level 1.
 
@@ -1902,8 +1794,6 @@ function PictureAscendingOrder({ onBack }) {
 
       : history;
 
-
-
   // Submit Level 1 answer.
 
   const submitAnswer = () => {
@@ -1924,13 +1814,9 @@ function PictureAscendingOrder({ onBack }) {
 
     }
 
-
-
     const isCorrect =
 
       selectedAnswer.id === question.correctId;
-
-
 
     const record = {
 
@@ -1952,17 +1838,11 @@ function PictureAscendingOrder({ onBack }) {
 
     };
 
-
-
     setHistory((previous) => [...previous, record]);
-
-
 
     const nextNumber = questionNumber + 1;
 
     const nextImage = getNextImage();
-
-
 
     setQuestionNumber(nextNumber);
 
@@ -1971,8 +1851,6 @@ function PictureAscendingOrder({ onBack }) {
     setSelectedAnswer(null);
 
   };
-
-
 
   // Restart Level 1.
 
@@ -1994,15 +1872,11 @@ function PictureAscendingOrder({ onBack }) {
 
     setTimeLeft(selectedDuration * 60);
 
-
-
     imageDeckRef.current = [];
 
     previousImageRef.current = null;
 
   };
-
-
 
   // Level 1 results.
 
@@ -2012,15 +1886,11 @@ function PictureAscendingOrder({ onBack }) {
 
   ).length;
 
-
-
   const incorrectCount = finalHistory.filter(
 
     (item) => item.status === "Wrong"
 
   ).length;
-
-
 
   const unansweredCount = finalHistory.filter(
 
@@ -2032,11 +1902,7 @@ function PictureAscendingOrder({ onBack }) {
 
   ).length;
 
-
-
   const totalQuestions = finalHistory.length;
-
-
 
   const accuracy =
 
@@ -2045,8 +1911,6 @@ function PictureAscendingOrder({ onBack }) {
       ? Math.round((correctCount / totalQuestions) * 100)
 
       : 0;
-
-
 
   // Open Level 2.
 
@@ -2065,8 +1929,6 @@ function PictureAscendingOrder({ onBack }) {
     );
 
   }
-
-
 
   // Setup screen.
 
@@ -2090,8 +1952,6 @@ function PictureAscendingOrder({ onBack }) {
 
         </button>
 
-
-
         <section className="picture-setup-card">
 
           <h1 className="setup-heading">
@@ -2099,8 +1959,6 @@ function PictureAscendingOrder({ onBack }) {
             Picture-Based Ascending Order
 
           </h1>
-
-
 
           <p className="image-loading-message">
 
@@ -2111,8 +1969,6 @@ function PictureAscendingOrder({ onBack }) {
               : "No photographs found. Add images to src/assets/images/ascending."}
 
           </p>
-
-
 
           <div className="setup-section">
 
@@ -2127,8 +1983,6 @@ function PictureAscendingOrder({ onBack }) {
               Select Level
 
             </label>
-
-
 
             <select
 
@@ -2152,15 +2006,11 @@ function PictureAscendingOrder({ onBack }) {
 
               </option>
 
-
-
               <option value="level2">
 
                 Level 2 – Arrange Pictures in Order
 
               </option>
-
-
 
               <option value="level3" disabled>
 
@@ -2172,8 +2022,6 @@ function PictureAscendingOrder({ onBack }) {
 
           </div>
 
-
-
           <div className="setup-section">
 
             <h3 className="picture-time-heading">
@@ -2181,8 +2029,6 @@ function PictureAscendingOrder({ onBack }) {
               Select Time Limit
 
             </h3>
-
-
 
             <div className="picture-time-options">
 
@@ -2222,8 +2068,6 @@ function PictureAscendingOrder({ onBack }) {
 
           </div>
 
-
-
           <button
 
             className="picture-primary-button setup-start-button"
@@ -2252,8 +2096,6 @@ function PictureAscendingOrder({ onBack }) {
 
   }
 
-
-
   // Level 1 result screen.
 
   if (quizCompleted) {
@@ -2276,8 +2118,6 @@ function PictureAscendingOrder({ onBack }) {
 
         </button>
 
-
-
         <section className="picture-result-card">
 
           <div className="picture-result-icon">
@@ -2285,8 +2125,6 @@ function PictureAscendingOrder({ onBack }) {
             {endReason === "timeout" ? "⏰" : "🏆"}
 
           </div>
-
-
 
           <h1>
 
@@ -2298,8 +2136,6 @@ function PictureAscendingOrder({ onBack }) {
 
           </h1>
 
-
-
           <p className="picture-description">
 
             {endReason === "timeout"
@@ -2309,8 +2145,6 @@ function PictureAscendingOrder({ onBack }) {
               : "You have successfully ended the test. Great job!"}
 
           </p>
-
-
 
           <div className="picture-score-box">
 
@@ -2326,8 +2160,6 @@ function PictureAscendingOrder({ onBack }) {
 
           </div>
 
-
-
           <div className="picture-stats">
 
             <div className="picture-stat correct">
@@ -2338,8 +2170,6 @@ function PictureAscendingOrder({ onBack }) {
 
             </div>
 
-
-
             <div className="picture-stat incorrect">
 
               <strong>{incorrectCount}</strong>
@@ -2347,8 +2177,6 @@ function PictureAscendingOrder({ onBack }) {
               <span>Wrong</span>
 
             </div>
-
-
 
             <div className="picture-stat unanswered">
 
@@ -2360,23 +2188,17 @@ function PictureAscendingOrder({ onBack }) {
 
           </div>
 
-
-
           <p className="picture-total">
 
             Total Questions: {totalQuestions}
 
           </p>
 
-
-
           <h2 className="picture-analysis-heading">
 
             Question-wise Analysis
 
           </h2>
-
-
 
           {finalHistory.map((item) => (
 
@@ -2412,15 +2234,11 @@ function PictureAscendingOrder({ onBack }) {
 
               </div>
 
-
-
               <p className="picture-review-prompt">
 
                 {item.prompt}
 
               </p>
-
-
 
               <div className="picture-review-options">
 
@@ -2448,8 +2266,6 @@ function PictureAscendingOrder({ onBack }) {
 
                     <span>{option.label}</span>
 
-
-
                     <span className="picture-review-emoji">
 
                       <ObjectPhoto
@@ -2470,8 +2286,6 @@ function PictureAscendingOrder({ onBack }) {
 
               </div>
 
-
-
               <div className="picture-review-answer">
 
                 <p>
@@ -2485,8 +2299,6 @@ function PictureAscendingOrder({ onBack }) {
                     : "Not answered"}
 
                 </p>
-
-
 
                 <p>
 
@@ -2502,8 +2314,6 @@ function PictureAscendingOrder({ onBack }) {
 
           ))}
 
-
-
           <button
 
             className="picture-print-button no-print"
@@ -2514,11 +2324,7 @@ function PictureAscendingOrder({ onBack }) {
 
           >
 
-           
-
           </button>
-
-
 
           <button
 
@@ -2533,8 +2339,6 @@ function PictureAscendingOrder({ onBack }) {
             Play Again
 
           </button>
-
-
 
           <button
 
@@ -2558,8 +2362,6 @@ function PictureAscendingOrder({ onBack }) {
 
   }
 
-
-
   // Level 1 quiz screen.
 
   return (
@@ -2582,8 +2384,6 @@ function PictureAscendingOrder({ onBack }) {
 
         </button>
 
-
-
         <div>
 
           <span className="picture-eyebrow">
@@ -2598,8 +2398,6 @@ function PictureAscendingOrder({ onBack }) {
 
       </header>
 
-
-
       <section className="picture-quiz-card">
 
         <div className="picture-progress">
@@ -2610,8 +2408,6 @@ function PictureAscendingOrder({ onBack }) {
 
         </div>
 
-
-
         <div className="picture-timer-display">
 
           <span>⏰</span>
@@ -2620,23 +2416,17 @@ function PictureAscendingOrder({ onBack }) {
 
         </div>
 
-
-
         <h2 className="picture-question">
 
           {question.prompt}
 
         </h2>
 
-
-
         <p className="picture-instruction">
 
           Look at all four pictures and choose one answer.
 
         </p>
-
-
 
         <div className="picture-options-grid">
 
@@ -2645,8 +2435,6 @@ function PictureAscendingOrder({ onBack }) {
             const isSelected =
 
               selectedAnswer?.id === option.id;
-
-
 
             return (
 
@@ -2674,8 +2462,6 @@ function PictureAscendingOrder({ onBack }) {
 
                 </span>
 
-
-
                 <span className="picture-option-image">
 
                   <ObjectPhoto
@@ -2696,8 +2482,6 @@ function PictureAscendingOrder({ onBack }) {
 
         </div>
 
-
-
         <div className="picture-quiz-actions">
 
           <button
@@ -2715,8 +2499,6 @@ function PictureAscendingOrder({ onBack }) {
             Next Question →
 
           </button>
-
-
 
           <button
 
@@ -2741,7 +2523,5 @@ function PictureAscendingOrder({ onBack }) {
   );
 
 }
-
-
 
 export default PictureAscendingOrder;

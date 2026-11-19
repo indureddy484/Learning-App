@@ -1,10 +1,12 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./AscendingOrder.css";
 
 const TIMER_OPTIONS = [2, 5, 10, 15, 20];
 const RANGE_OPTIONS = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 const DEFAULT_RANGE = 10;
+const VERY_GOOD_SOUND = "/sounds/very-good.mp3";
+const TRY_AGAIN_SOUND = "/sounds/try-again.mp3";
 
 // Generate 3 unique random numbers from 0 to selected range.
 const randomNumbers = (maxRange = DEFAULT_RANGE) => {
@@ -39,6 +41,14 @@ const formatOrder = (numbers) =>
 function AscendingOrder({ onBack }) {
   const [selectedDuration, setSelectedDuration] = useState(5);
   const [selectedRange, setSelectedRange] = useState(DEFAULT_RANGE);
+  const [mode, setMode] = useState("practice");
+
+  // Practice mode has its own question and answer state.
+  const [practiceNumbers, setPracticeNumbers] = useState(() => randomNumbers(DEFAULT_RANGE));
+  const [practiceAnswer, setPracticeAnswer] = useState([]);
+  const [practiceFeedback, setPracticeFeedback] = useState("");
+  const [practiceLocked, setPracticeLocked] = useState(false);
+  const practiceTimeoutRef = useRef(null);
 
   const [quizStarted, setQuizStarted] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
@@ -55,6 +65,7 @@ function AscendingOrder({ onBack }) {
   const [correctCount, setCorrectCount] = useState(0);
   const [incorrectCount, setIncorrectCount] = useState(0);
 
+  // Stores each submitted question and its answers.
   const [questionHistory, setQuestionHistory] = useState([]);
 
   // Countdown timer
@@ -93,6 +104,7 @@ function AscendingOrder({ onBack }) {
   // End test manually
   const endTest = () => {
     if (!quizStarted || quizCompleted) return;
+
     setQuizCompleted(true);
   };
 
@@ -118,6 +130,12 @@ function AscendingOrder({ onBack }) {
     );
   };
 
+  // Play feedback sound
+  const playSound = (file) => {
+    const audio = new Audio(file);
+    audio.play().catch(() => {});
+  };
+
   // Submit current question and move to next
   const nextQuestion = () => {
     if (
@@ -134,6 +152,7 @@ function AscendingOrder({ onBack }) {
       (number, index) => number === correctAnswer[index]
     );
 
+    // Save complete question analysis
     const historyItem = {
       questionNumber,
       questionNumbers: [...numbers],
@@ -148,11 +167,12 @@ function AscendingOrder({ onBack }) {
       historyItem,
     ]);
 
-    // Update score silently: no sound feedback.
     if (isCorrect) {
       setCorrectCount((previous) => previous + 1);
+      playSound(VERY_GOOD_SOUND);
     } else {
       setIncorrectCount((previous) => previous + 1);
+      playSound(TRY_AGAIN_SOUND);
     }
 
     setNumbers(randomNumbers(selectedRange));
@@ -175,7 +195,10 @@ function AscendingOrder({ onBack }) {
     setQuestionHistory([]);
   };
 
-  // Include the current unsubmitted question in the report.
+  /*
+   * Include the current question in the report when the quiz ends.
+   * A partially completed answer is recorded as Not Submitted.
+   */
   const currentQuestionHistory = quizCompleted
     ? [
         ...questionHistory,
@@ -192,13 +215,169 @@ function AscendingOrder({ onBack }) {
 
   const unansweredCount = quizCompleted ? 1 : 0;
 
+  const attemptedQuestions = correctCount + incorrectCount;
+
   const totalQuestions =
-    correctCount + incorrectCount + unansweredCount;
+    attemptedQuestions + unansweredCount;
+
+  const accuracy =
+    attemptedQuestions > 0
+      ? Math.round((correctCount / attemptedQuestions) * 100)
+      : 0;
 
   const scorePercentage =
     totalQuestions > 0
       ? Math.round((correctCount / totalQuestions) * 100)
       : 0;
+
+  const clearPracticeTimeout = () => {
+    if (practiceTimeoutRef.current) {
+      clearTimeout(practiceTimeoutRef.current);
+      practiceTimeoutRef.current = null;
+    }
+  };
+
+  const openPractice = () => {
+    clearPracticeTimeout();
+    setMode("practice");
+    setQuizStarted(false);
+    setQuizCompleted(false);
+    setPracticeNumbers(randomNumbers(selectedRange));
+    setPracticeAnswer([]);
+    setPracticeFeedback("");
+    setPracticeLocked(false);
+  };
+
+  const openQuizSetup = () => {
+    clearPracticeTimeout();
+    setMode("quiz");
+    setQuizStarted(false);
+    setQuizCompleted(false);
+    setAnswer([]);
+  };
+
+  const choosePracticeNumber = (number) => {
+    if (practiceLocked || practiceAnswer.includes(number) || practiceAnswer.length >= 3) return;
+
+    const nextAnswer = [...practiceAnswer, number];
+    setPracticeAnswer(nextAnswer);
+    if (nextAnswer.length !== 3) return;
+
+    const correctAnswer = getCorrectOrder(practiceNumbers);
+    const isCorrect = nextAnswer.every((value, index) => value === correctAnswer[index]);
+
+    if (isCorrect) {
+      setPracticeLocked(true);
+      setPracticeFeedback("correct");
+      playSound(VERY_GOOD_SOUND);
+      practiceTimeoutRef.current = setTimeout(() => {
+        setPracticeNumbers(randomNumbers(selectedRange));
+        setPracticeAnswer([]);
+        setPracticeFeedback("");
+        setPracticeLocked(false);
+        practiceTimeoutRef.current = null;
+      }, 1100);
+    } else {
+      setPracticeFeedback("incorrect");
+      playSound(TRY_AGAIN_SOUND);
+      practiceTimeoutRef.current = setTimeout(() => {
+        setPracticeAnswer([]);
+        setPracticeFeedback("");
+        practiceTimeoutRef.current = null;
+      }, 900);
+    }
+  };
+
+  const removePracticeNumber = (number) => {
+    if (practiceLocked || practiceFeedback === "incorrect") return;
+    setPracticeAnswer((previous) => previous.filter((value) => value !== number));
+  };
+
+  useEffect(() => () => clearPracticeTimeout(), []);
+
+  // Practice is shown first. The Quiz button opens the existing timed quiz flow.
+  if (mode === "practice") {
+    return (
+      <main className="ascending-quiz-page ascending-practice-page">
+        <div className="ascending-practice-topbar">
+          <button className="ascending-quiz-back" onClick={onBack} type="button">← BACK</button>
+
+          <div className="ascending-practice-range">
+            <label htmlFor="ascending-practice-range">Number range</label>
+            <select
+              id="ascending-practice-range"
+              className="ascending-range-dropdown"
+              value={selectedRange}
+              onChange={(event) => {
+                const range = Number(event.target.value);
+                setSelectedRange(range);
+                setPracticeNumbers(randomNumbers(range));
+                setPracticeAnswer([]);
+                setPracticeFeedback("");
+                setPracticeLocked(false);
+                clearPracticeTimeout();
+              }}
+            >
+              {RANGE_OPTIONS.map((range) => <option key={range} value={range}>0 to {range}</option>)}
+            </select>
+          </div>
+
+          <button className="ascending-practice-quiz-button" onClick={openQuizSetup} type="button">📝 Quiz</button>
+        </div>
+
+        <section className="ascending-practice-card">
+          <span className="ascending-quiz-eyebrow">NUMBER SENSE · PRACTICE</span>
+          <h1>Arrange in Ascending Order</h1>
+          <p className="ascending-practice-instruction">Arrange the numbers from smallest to biggest.</p>
+
+          <div className="ascending-practice-number-row">
+            {practiceNumbers.map((number) => (
+              <div className="ascending-practice-number" key={number}>{number}</div>
+            ))}
+          </div>
+
+          <h3>Your Answer</h3>
+          <div className="ascending-practice-answer-slots">
+            {[0, 1, 2].map((index) => {
+              const value = practiceAnswer[index];
+              return (
+                <button
+                  key={index}
+                  type="button"
+                  className={`ascending-practice-answer-slot ${value !== undefined ? "filled" : ""}`}
+                  onClick={() => value !== undefined && removePracticeNumber(value)}
+                  disabled={practiceLocked || practiceFeedback === "incorrect"}
+                  aria-label={`Answer position ${index + 1}`}
+                >
+                  {value !== undefined ? value : "?"}
+                </button>
+              );
+            })}
+          </div>
+          <p className="ascending-practice-hint">Tap the numbers in the correct order.</p>
+
+          <h3>Choose the Numbers</h3>
+          <div className="ascending-practice-choices">
+            {practiceNumbers.map((number) => (
+              <button
+                key={number}
+                type="button"
+                className={`ascending-practice-choice ${practiceAnswer.includes(number) ? "selected" : ""}`}
+                onClick={() => choosePracticeNumber(number)}
+                disabled={practiceAnswer.includes(number) || practiceLocked || practiceFeedback === "incorrect"}
+              >
+                {number}
+              </button>
+            ))}
+          </div>
+
+          <div className={`ascending-practice-feedback ${practiceFeedback ? `feedback-${practiceFeedback}` : ""}`} aria-live="polite">
+            {practiceFeedback === "correct" ? "🌟 Very Good!" : practiceFeedback === "incorrect" ? "💛 Try Again!" : " "}
+          </div>
+        </section>
+      </main>
+    );
+  }
 
   // Setup screen
   if (!quizStarted) {
@@ -206,10 +385,10 @@ function AscendingOrder({ onBack }) {
       <main className="ascending-quiz-page">
         <button
           className="ascending-quiz-back"
-          onClick={onBack}
+          onClick={openPractice}
           type="button"
         >
-          ← BACK
+          ← PRACTICE
         </button>
 
         <section className="ascending-setup-card">
@@ -317,7 +496,7 @@ function AscendingOrder({ onBack }) {
               <span>Correct</span>
             </div>
 
-            <div className="ascending-stat incorrect-stat">
+            <div className="ascending-stat wrong-stat">
               <strong>{incorrectCount}</strong>
               <span>Wrong</span>
             </div>
@@ -325,6 +504,28 @@ function AscendingOrder({ onBack }) {
             <div className="ascending-stat unanswered-stat">
               <strong>{unansweredCount}</strong>
               <span>Unanswered</span>
+            </div>
+          </div>
+
+          <div className="ascending-analysis-details">
+            <div>
+              <span>Total Questions</span>
+              <strong>{totalQuestions}</strong>
+            </div>
+
+            <div>
+              <span>Attempted Questions</span>
+              <strong>{attemptedQuestions}</strong>
+            </div>
+
+            <div>
+              <span>Accuracy</span>
+              <strong>{accuracy}%</strong>
+            </div>
+
+            <div>
+              <span>Time Remaining</span>
+              <strong>{formatTime(timeLeft)}</strong>
             </div>
           </div>
 
@@ -415,6 +616,14 @@ function AscendingOrder({ onBack }) {
 
           <button
             className="ascending-secondary-button"
+            onClick={openPractice}
+            type="button"
+          >
+            Back to Practice
+          </button>
+
+          <button
+            className="ascending-secondary-button"
             onClick={onBack}
             type="button"
           >
@@ -431,10 +640,10 @@ function AscendingOrder({ onBack }) {
       <header className="ascending-quiz-header">
         <button
           className="ascending-quiz-back"
-          onClick={onBack}
+          onClick={openPractice}
           type="button"
         >
-          ← BACK
+          ← PRACTICE
         </button>
 
         <div>

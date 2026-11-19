@@ -332,13 +332,15 @@ const displayAnswer = (answer) => {
 };
 
 function NumberSense({ onBack }) {
-  const [selectedLanguage, setSelectedLanguage] = useState(null);
+  const [selectedLanguage, setSelectedLanguage] = useState("english");
   const [selectedMaxNumber, setSelectedMaxNumber] = useState(10);
   const [selectedDuration, setSelectedDuration] = useState(5);
 
   const [showPracticeWorksheet, setShowPracticeWorksheet] =
     useState(false);
 
+  const [practiceStarted, setPracticeStarted] = useState(true);
+  const [practiceFeedback, setPracticeFeedback] = useState("");
   const [quizStarted, setQuizStarted] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
 
@@ -378,7 +380,55 @@ function NumberSense({ onBack }) {
     setQuestion(generateQuestion(language, selectedMaxNumber));
   };
 
+  // Start the untimed practice mode. The timed quiz remains separate.
+  const startPractice = () => {
+    setQuestion(generateQuestion(selectedLanguage, selectedMaxNumber));
+    setSelectedAnswer(null);
+    setQuestionNumber(1);
+    setPracticeFeedback("");
+    setPracticeStarted(true);
+  };
+
+  const playPracticeSound = (soundFile) => {
+    try {
+      const audio = new Audio(soundFile);
+      audio.play().catch(() => {});
+    } catch (error) {
+      // Practice still works if the browser blocks audio playback.
+    }
+  };
+
+  // Check the answer immediately when a learner selects an option.
+  const handlePracticeOptionSelect = (option) => {
+    if (practiceFeedback === "Very good!") return;
+
+    setSelectedAnswer(option);
+
+    if (isCorrectAnswer(option, question.correct)) {
+      setPracticeFeedback("Very good!");
+      playPracticeSound("/sounds/very-good.mp3");
+
+      window.setTimeout(() => {
+        setQuestion(generateQuestion(selectedLanguage, selectedMaxNumber));
+        setSelectedAnswer(null);
+        setPracticeFeedback("");
+        setQuestionNumber((previous) => previous + 1);
+      }, 900);
+    } else {
+      setPracticeFeedback("Try again!");
+      playPracticeSound("/sounds/try-again.mp3");
+    }
+  };
+
+  const exitPractice = () => {
+    setPracticeStarted(false);
+    setPracticeFeedback("");
+    setSelectedAnswer(null);
+  };
+
   const startQuiz = () => {
+    setPracticeStarted(false);
+    setPracticeFeedback("");
     setQuestion(generateQuestion(selectedLanguage, selectedMaxNumber));
     setSelectedAnswer(null);
     setQuestionNumber(1);
@@ -545,7 +595,7 @@ function NumberSense({ onBack }) {
   }
 
   // STEP 2: NUMBER RANGE AND TIMER SELECTION
-  if (!quizStarted) {
+  if (!quizStarted && !practiceStarted) {
     return (
       <main className="number-sense-quiz-page">
         <button
@@ -622,6 +672,16 @@ function NumberSense({ onBack }) {
 
           <button
             className="number-sense-primary-button"
+            onClick={startPractice}
+            type="button"
+          >
+            {selectedLanguage === "tenglish"
+              ? "Practice Start Cheyyandi"
+              : "▶ Start Practice"}
+          </button>
+
+          <button
+            className="number-sense-secondary-button"
             onClick={startQuiz}
             type="button"
           >
@@ -665,6 +725,169 @@ function NumberSense({ onBack }) {
             {text.changeLanguage}
           </button>
         </section>
+      </main>
+    );
+  }
+
+  // UNTIMED PRACTICE SCREEN
+  if (practiceStarted) {
+    return (
+      <main className="number-sense-quiz-page">
+        <header className="number-sense-practice-topbar">
+          <div className="number-sense-practice-left">
+            <button
+              className="number-sense-back"
+              onClick={onBack}
+              type="button"
+            >
+              {text.back}
+            </button>
+
+            <div className="number-sense-practice-heading">
+              <span className="number-sense-eyebrow">NUMBER SENSE</span>
+              <h1>Practice Questions</h1>
+              <p>Take your time and choose the correct answer.</p>
+            </div>
+          </div>
+
+          <div className="number-sense-practice-filters">
+            <label className="number-sense-filter-field">
+              <span>Number range</span>
+              <select
+                value={selectedMaxNumber}
+                onChange={(event) => {
+                  const nextRange = Number(event.target.value);
+                  setSelectedMaxNumber(nextRange);
+                  setQuestion(generateQuestion(selectedLanguage, nextRange));
+                  setSelectedAnswer(null);
+                  setPracticeFeedback("");
+                  setQuestionNumber(1);
+                }}
+                aria-label="Select number range"
+              >
+                {NUMBER_RANGE_OPTIONS.map((maxNumber) => (
+                  <option key={maxNumber} value={maxNumber}>0 to {maxNumber}</option>
+                ))}
+              </select>
+            </label>
+
+            <label className="number-sense-filter-field">
+              <span>Language</span>
+              <select
+                value={selectedLanguage}
+                onChange={(event) => {
+                  const nextLanguage = event.target.value;
+                  setSelectedLanguage(nextLanguage);
+                  setQuestion(generateQuestion(nextLanguage, selectedMaxNumber));
+                  setSelectedAnswer(null);
+                  setPracticeFeedback("");
+                  setQuestionNumber(1);
+                }}
+                aria-label="Select language"
+              >
+                <option value="english">English</option>
+                <option value="tenglish">తెలుగు (Tenglish)</option>
+              </select>
+            </label>
+          </div>
+
+          <div className="number-sense-practice-actions">
+            <button
+              className="number-sense-practice-action number-sense-quiz-action"
+              type="button"
+              onClick={exitPractice}
+            >
+              <span aria-hidden="true">📝</span>
+              <span>Quiz</span>
+            </button>
+          </div>
+        </header>
+
+        <section className="number-sense-quiz-card number-sense-practice-card">
+          <div className="number-sense-quiz-progress">
+            <span>Practice Question {questionNumber}</span>
+            <span>No timer</span>
+          </div>
+
+          <div className="number-sense-question-content">
+            <h2>{question.prompt}</h2>
+
+            {question.numbers && (
+              <div className="number-sense-given-numbers">
+                {question.numbers.map((number, index) => (
+                  <span key={`${number}-${index}`}>{number}</span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <p className="number-sense-instruction">
+            {text.chooseAnswer}
+          </p>
+
+          <div className="number-sense-options">
+            {question.options.map((option, index) => {
+              const isSelected = Array.isArray(option)
+                ? Array.isArray(selectedAnswer) &&
+                  option.every((number, i) => number === selectedAnswer[i])
+                : selectedAnswer === option;
+
+              return (
+                <button
+                  key={`${question.type}-practice-${index}`}
+                  type="button"
+                  className={`number-sense-option ${
+                    isSelected
+                      ? practiceFeedback === "Very good!"
+                        ? "selected practice-answer-correct"
+                        : practiceFeedback === "Try again!"
+                        ? "selected practice-answer-wrong"
+                        : "selected"
+                      : ""
+                  }`}
+                  onClick={() => handlePracticeOptionSelect(option)}
+                  aria-pressed={isSelected}
+                  disabled={practiceFeedback === "Very good!"}
+                >
+                  <span className="number-sense-option-letter">
+                    {String.fromCharCode(65 + index)}
+                  </span>
+                  <span>
+                    {Array.isArray(option) ? option.join(", ") : option}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {practiceFeedback && (
+            <p
+              className={`number-sense-practice-feedback ${
+                practiceFeedback === "Very good!" ? "feedback-correct" : "feedback-wrong"
+              }`}
+              role="status"
+              aria-live="polite"
+            >
+              {practiceFeedback}
+            </p>
+          )}
+
+          <button
+            className="number-sense-secondary-button"
+            onClick={exitPractice}
+            type="button"
+          >
+            Exit Practice
+          </button>
+        </section>
+
+        {showPracticeWorksheet && (
+          <PracticeWorksheet
+            language={selectedLanguage}
+            maxNumber={selectedMaxNumber}
+            onClose={() => setShowPracticeWorksheet(false)}
+          />
+        )}
       </main>
     );
   }

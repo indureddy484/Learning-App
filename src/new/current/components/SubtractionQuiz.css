@@ -76,3 +76,24 @@
     min-height: 80px;
   }
 }
+
+/* SUBTRACTION PRACTICE FEEDBACK */
+
+.subtraction-page .addition-practice-feedback {
+  margin: 15px 0;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 20px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.subtraction-page .addition-practice-feedback.feedback-correct {
+  color: #218344;
+  background: #e7f8eb;
+}
+
+.subtraction-page .addition-practice-feedback.feedback-wrong {
+  color: #bd5142;
+  background: #fff0ed;
+}

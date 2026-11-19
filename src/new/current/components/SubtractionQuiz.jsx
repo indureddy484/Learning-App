@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import SubtractionPracticeWorksheet from "./SubtractionPracticeWorksheet";
 import "./AdditionQuiz.css";
@@ -56,11 +55,12 @@ function SubtractionQuiz({ onBack }) {
   const [selectedDuration, setSelectedDuration] = useState(5);
 
   const [quizStarted, setQuizStarted] = useState(false);
+  const [practiceStarted, setPracticeStarted] = useState(true);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [showWorksheet, setShowWorksheet] = useState(false);
+  const [practiceFeedback, setPracticeFeedback] = useState("");
 
   const [timeLeft, setTimeLeft] = useState(5 * 60);
-
   const [question, setQuestion] = useState(() =>
     generateQuestion(10)
   );
@@ -87,8 +87,55 @@ function SubtractionQuiz({ onBack }) {
     }
   }, [quizStarted, timeLeft]);
 
-  // START QUIZ
+  // START PRACTICE
+  const startPractice = () => {
+    setPracticeStarted(true);
+    setQuizStarted(false);
+    setQuizCompleted(false);
+    setQuestion(generateQuestion(selectedRange));
+    setSelectedAnswer(null);
+    setQuestionNumber(1);
+    setPracticeFeedback("");
+  };
+
+  // CHECK PRACTICE ANSWER
+  const handlePracticeOptionSelect = (option) => {
+    if (practiceFeedback === "Very good!") return;
+
+    setSelectedAnswer(option);
+
+    if (option === question.answer) {
+      setPracticeFeedback("Very good!");
+
+      const audio = new Audio("/sounds/very-good.mp3");
+      audio.play().catch(() => {});
+
+      window.setTimeout(() => {
+        setQuestion(generateQuestion(selectedRange));
+        setSelectedAnswer(null);
+        setPracticeFeedback("");
+        setQuestionNumber((previous) => previous + 1);
+      }, 900);
+    } else {
+      setPracticeFeedback("Try again!");
+
+      const audio = new Audio("/sounds/try-again.mp3");
+      audio.play().catch(() => {});
+    }
+  };
+
+  // RETURN TO PRACTICE FROM QUIZ / ANALYSIS
+  const backToPractice = () => {
+    setQuizStarted(false);
+    setQuizCompleted(false);
+    setPracticeStarted(true);
+    setSelectedAnswer(null);
+    setPracticeFeedback("");
+  };
+
+  // START TIMED QUIZ
   const startQuiz = () => {
+    setPracticeStarted(false);
     setQuestion(generateQuestion(selectedRange));
     setSelectedAnswer(null);
     setQuestionNumber(1);
@@ -96,9 +143,10 @@ function SubtractionQuiz({ onBack }) {
     setTimeLeft(selectedDuration * 60);
     setQuizCompleted(false);
     setQuizStarted(true);
+    setPracticeFeedback("");
   };
 
-  // SUBMIT ANSWER
+  // SUBMIT TIMED QUIZ ANSWER
   const submitAnswer = () => {
     if (
       selectedAnswer === null ||
@@ -132,6 +180,7 @@ function SubtractionQuiz({ onBack }) {
   const restartQuiz = () => {
     setQuizStarted(false);
     setQuizCompleted(false);
+    setPracticeStarted(false);
     setSelectedAnswer(null);
     setQuestionNumber(1);
     setHistory([]);
@@ -171,15 +220,153 @@ function SubtractionQuiz({ onBack }) {
       : 0;
 
   // =========================================
-  // SETUP SCREEN
+  // PRACTICE MODE - STARTS IMMEDIATELY
   // =========================================
 
-  if (!quizStarted) {
+  if (practiceStarted && !quizCompleted) {
+    return (
+      <main className="addition-page subtraction-page addition-practice-page">
+        <header className="addition-practice-topbar">
+          <div className="addition-practice-left">
+            <button
+              className="addition-back-button"
+              onClick={onBack}
+              type="button"
+            >
+              ← BACK
+            </button>
+
+            <div className="addition-practice-heading">
+              <span className="addition-eyebrow">NUMBER SENSE</span>
+              <h1>Subtraction Practice</h1>
+              <p>Take your time and choose the correct answer.</p>
+            </div>
+          </div>
+
+          <div className="addition-practice-range">
+            <label htmlFor="subtraction-practice-range">
+              Difference range
+            </label>
+
+            <select
+              id="subtraction-practice-range"
+              value={selectedRange}
+              onChange={(event) => {
+                const nextRange = Number(event.target.value);
+                setSelectedRange(nextRange);
+                setQuestion(generateQuestion(nextRange));
+                setSelectedAnswer(null);
+                setQuestionNumber(1);
+                setPracticeFeedback("");
+              }}
+            >
+              {RANGES.map((range) => (
+                <option key={range} value={range}>
+                  0 to {range}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="addition-practice-actions">
+            <button
+              className="addition-practice-quiz-button"
+              type="button"
+              onClick={() => {
+                setPracticeStarted(false);
+                setQuizStarted(false);
+                setQuizCompleted(false);
+                setPracticeFeedback("");
+                setSelectedAnswer(null);
+              }}
+            >
+              📝 Quiz
+            </button>
+          </div>
+        </header>
+
+        <section className="addition-quiz-card addition-practice-card">
+          <div className="addition-quiz-info">
+            <span>Practice Question {questionNumber}</span>
+            <span>No timer</span>
+          </div>
+
+          <div className="addition-question">
+            <span>{question.first}</span>
+            <span className="subtraction-minus">−</span>
+            <span>{question.second}</span>
+            <span className="addition-equals">=</span>
+            <span className="addition-question-mark">?</span>
+          </div>
+
+          <p className="addition-instruction">
+            Select the correct answer.
+          </p>
+
+          <div className="addition-answer-options">
+            {question.options.map((option, index) => {
+              const selected = selectedAnswer === option;
+
+              const answerClass = selected
+                ? practiceFeedback === "Very good!"
+                  ? "selected addition-practice-correct"
+                  : practiceFeedback === "Try again!"
+                  ? "selected addition-practice-wrong"
+                  : "selected"
+                : "";
+
+              return (
+                <button
+                  type="button"
+                  key={option}
+                  className={answerClass}
+                  onClick={() => handlePracticeOptionSelect(option)}
+                  disabled={practiceFeedback === "Very good!"}
+                  aria-pressed={selected}
+                >
+                  <span>{String.fromCharCode(65 + index)}</span>
+                  {option}
+                </button>
+              );
+            })}
+          </div>
+
+          {practiceFeedback && (
+            <p
+              className={`addition-practice-feedback ${
+                practiceFeedback === "Very good!"
+                  ? "feedback-correct"
+                  : "feedback-wrong"
+              }`}
+              role="status"
+              aria-live="polite"
+            >
+              {practiceFeedback}
+            </p>
+          )}
+
+          <button
+            className="addition-secondary-button addition-practice-exit"
+            type="button"
+            onClick={onBack}
+          >
+            Exit Practice
+          </button>
+        </section>
+      </main>
+    );
+  }
+
+  // =========================================
+  // SETUP SCREEN FOR TIMED QUIZ
+  // =========================================
+
+  if (!quizStarted && !practiceStarted && !quizCompleted) {
     return (
       <main className="addition-page subtraction-page">
         <button
           className="addition-back-button"
-          onClick={onBack}
+          onClick={backToPractice}
           type="button"
         >
           ← BACK
@@ -279,7 +466,7 @@ function SubtractionQuiz({ onBack }) {
       <main className="addition-page subtraction-page">
         <button
           className="addition-back-button"
-          onClick={onBack}
+          onClick={backToPractice}
           type="button"
         >
           ← BACK
@@ -380,10 +567,10 @@ function SubtractionQuiz({ onBack }) {
 
           <button
             className="addition-secondary-button"
-            onClick={onBack}
+            onClick={backToPractice}
             type="button"
           >
-            Back to Number Sense Menu
+            Back to Practice
           </button>
         </section>
       </main>
@@ -391,37 +578,23 @@ function SubtractionQuiz({ onBack }) {
   }
 
   // =========================================
-  // ACTIVE QUIZ SCREEN
+  // ACTIVE TIMED QUIZ SCREEN
   // =========================================
 
   return (
     <main className="addition-page subtraction-page">
       <header className="addition-quiz-header">
-        <div className="addition-quiz-navigation">
-          <button
-            className="addition-active-back-button"
-            onClick={onBack}
-            type="button"
-          >
-            ← BACK
-          </button>
+        <button
+          className="addition-back-button"
+          onClick={endTest}
+          type="button"
+        >
+          End Test
+        </button>
 
-          <button
-            className="addition-active-end-button"
-            onClick={endTest}
-            type="button"
-          >
-            End Test
-          </button>
-        </div>
-
-        <div className="addition-quiz-heading">
-          <span className="addition-eyebrow">
-            SUBTRACTION QUIZ
-          </span>
-
+        <div>
+          <span className="addition-eyebrow">SUBTRACTION QUIZ</span>
           <h1>Let's Subtract!</h1>
-
           <p>Choose the correct answer.</p>
         </div>
       </header>
@@ -473,6 +646,14 @@ function SubtractionQuiz({ onBack }) {
           type="button"
         >
           ➡ Next
+        </button>
+
+        <button
+          className="addition-end-button"
+          onClick={endTest}
+          type="button"
+        >
+          ⛔ End Test
         </button>
       </section>
     </main>

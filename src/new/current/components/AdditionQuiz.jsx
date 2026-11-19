@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import AdditionPracticeWorksheet from "./AdditionPracticeWorksheet";
 import "./AdditionQuiz.css";
@@ -59,11 +58,12 @@ function AdditionQuiz({ onBack }) {
   const [selectedDuration, setSelectedDuration] = useState(5);
 
   const [quizStarted, setQuizStarted] = useState(false);
+  const [practiceStarted, setPracticeStarted] = useState(true);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [showWorksheet, setShowWorksheet] = useState(false);
+  const [practiceFeedback, setPracticeFeedback] = useState("");
 
   const [timeLeft, setTimeLeft] = useState(5 * 60);
-
   const [question, setQuestion] = useState(() =>
     generateQuestion(10)
   );
@@ -72,7 +72,7 @@ function AdditionQuiz({ onBack }) {
   const [questionNumber, setQuestionNumber] = useState(1);
   const [history, setHistory] = useState([]);
 
-  // TIMER
+  // Timer
   useEffect(() => {
     if (!quizStarted || quizCompleted) return;
 
@@ -83,15 +83,56 @@ function AdditionQuiz({ onBack }) {
     return () => clearInterval(timer);
   }, [quizStarted, quizCompleted]);
 
-  // AUTOMATICALLY FINISH WHEN TIME REACHES ZERO
+  // Automatically finish when time reaches zero.
   useEffect(() => {
     if (quizStarted && timeLeft === 0) {
       setQuizCompleted(true);
     }
   }, [quizStarted, timeLeft]);
 
-  // START QUIZ
+  const startPractice = () => {
+    setPracticeStarted(true);
+    setQuizStarted(false);
+    setQuizCompleted(false);
+    setQuestion(generateQuestion(selectedRange));
+    setSelectedAnswer(null);
+    setQuestionNumber(1);
+    setPracticeFeedback("");
+  };
+
+  const handlePracticeOptionSelect = (option) => {
+    if (practiceFeedback === "Very good!") return;
+
+    setSelectedAnswer(option);
+
+    if (option === question.answer) {
+      setPracticeFeedback("Very good!");
+      const audio = new Audio("/sounds/very-good.mp3");
+      audio.play().catch(() => {});
+
+      window.setTimeout(() => {
+        setQuestion(generateQuestion(selectedRange));
+        setSelectedAnswer(null);
+        setPracticeFeedback("");
+        setQuestionNumber((previous) => previous + 1);
+      }, 900);
+    } else {
+      setPracticeFeedback("Try again!");
+      const audio = new Audio("/sounds/try-again.mp3");
+      audio.play().catch(() => {});
+    }
+  };
+
+  const backToPractice = () => {
+    setQuizStarted(false);
+    setQuizCompleted(false);
+    setPracticeStarted(true);
+    setSelectedAnswer(null);
+    setPracticeFeedback("");
+  };
+
   const startQuiz = () => {
+    setPracticeStarted(false);
     setQuestion(generateQuestion(selectedRange));
     setSelectedAnswer(null);
     setQuestionNumber(1);
@@ -101,13 +142,8 @@ function AdditionQuiz({ onBack }) {
     setQuizStarted(true);
   };
 
-  // SUBMIT ANSWER
   const submitAnswer = () => {
-    if (
-      selectedAnswer === null ||
-      quizCompleted ||
-      timeLeft === 0
-    ) {
+    if (selectedAnswer === null || quizCompleted || timeLeft === 0) {
       return;
     }
 
@@ -121,19 +157,15 @@ function AdditionQuiz({ onBack }) {
     };
 
     setHistory((previous) => [...previous, record]);
-
     setQuestion(generateQuestion(selectedRange));
     setSelectedAnswer(null);
-
     setQuestionNumber((previous) => previous + 1);
   };
 
-  // END TEST AND SHOW ANALYSIS
   const endTest = () => {
     setQuizCompleted(true);
   };
 
-  // RESTART QUIZ
   const restartQuiz = () => {
     setQuizStarted(false);
     setQuizCompleted(false);
@@ -144,7 +176,7 @@ function AdditionQuiz({ onBack }) {
     setQuestion(generateQuestion(selectedRange));
   };
 
-  // RESULT HISTORY INCLUDING CURRENT UNANSWERED QUESTION
+  // Include the current unanswered question in the result.
   const resultHistory = quizCompleted
     ? [
         ...history,
@@ -176,16 +208,144 @@ function AdditionQuiz({ onBack }) {
       ? Math.round((correctCount / totalQuestions) * 100)
       : 0;
 
-  // =========================================
-  // SETUP SCREEN
-  // =========================================
+  // PRACTICE MODE - starts immediately by default.
+  if (practiceStarted && !quizCompleted) {
+    return (
+      <main className="addition-page addition-practice-page">
+        <header className="addition-practice-topbar">
+          <div className="addition-practice-left">
+            <button
+              className="addition-back-button"
+              onClick={onBack}
+              type="button"
+            >
+              ← BACK
+            </button>
 
-  if (!quizStarted) {
+            <div className="addition-practice-heading">
+              <span className="addition-eyebrow">NUMBER SENSE</span>
+              <h1>Addition Practice</h1>
+              <p>Take your time and choose the correct answer.</p>
+            </div>
+          </div>
+
+          <div className="addition-practice-range">
+            <label htmlFor="addition-practice-range">Sum range</label>
+            <select
+              id="addition-practice-range"
+              value={selectedRange}
+              onChange={(event) => {
+                const nextRange = Number(event.target.value);
+                setSelectedRange(nextRange);
+                setQuestion(generateQuestion(nextRange));
+                setSelectedAnswer(null);
+                setQuestionNumber(1);
+                setPracticeFeedback("");
+              }}
+            >
+              {RANGES.map((range) => (
+                <option key={range} value={range}>
+                  0 to {range}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="addition-practice-actions">
+            <button
+              className="addition-practice-quiz-button"
+              type="button"
+              onClick={() => {
+                setPracticeStarted(false);
+                setQuizStarted(false);
+                setPracticeFeedback("");
+                setSelectedAnswer(null);
+              }}
+            >
+              📝 Quiz
+            </button>
+          </div>
+        </header>
+
+        <section className="addition-quiz-card addition-practice-card">
+          <div className="addition-quiz-info">
+            <span>Practice Question {questionNumber}</span>
+            <span>No timer</span>
+          </div>
+
+          <div className="addition-question">
+            <span>{question.first}</span>
+            <span className="addition-plus">+</span>
+            <span>{question.second}</span>
+            <span className="addition-equals">=</span>
+            <span className="addition-question-mark">?</span>
+          </div>
+
+          <p className="addition-instruction">
+            Select the correct answer.
+          </p>
+
+          <div className="addition-answer-options">
+            {question.options.map((option, index) => {
+              const selected = selectedAnswer === option;
+              const answerClass = selected
+                ? practiceFeedback === "Very good!"
+                  ? "selected addition-practice-correct"
+                  : practiceFeedback === "Try again!"
+                  ? "selected addition-practice-wrong"
+                  : "selected"
+                : "";
+
+              return (
+                <button
+                  type="button"
+                  key={option}
+                  className={answerClass}
+                  onClick={() => handlePracticeOptionSelect(option)}
+                  disabled={practiceFeedback === "Very good!"}
+                  aria-pressed={selected}
+                >
+                  <span>{String.fromCharCode(65 + index)}</span>
+                  {option}
+                </button>
+              );
+            })}
+          </div>
+
+          {practiceFeedback && (
+            <p
+              className={`addition-practice-feedback ${
+                practiceFeedback === "Very good!"
+                  ? "feedback-correct"
+                  : "feedback-wrong"
+              }`}
+              role="status"
+              aria-live="polite"
+            >
+              {practiceFeedback}
+            </p>
+          )}
+
+          <button
+            className="addition-secondary-button addition-practice-exit"
+            type="button"
+            onClick={onBack}
+          >
+            Exit Practice
+          </button>
+        </section>
+
+      </main>
+    );
+  }
+
+  // SETUP SCREEN FOR TIMED QUIZ
+  if (!quizStarted && !practiceStarted) {
     return (
       <main className="addition-page">
         <button
           className="addition-back-button"
-          onClick={onBack}
+          onClick={backToPractice}
           type="button"
         >
           ← BACK
@@ -275,16 +435,13 @@ function AdditionQuiz({ onBack }) {
     );
   }
 
-  // =========================================
   // RESULT AND ANALYSIS SCREEN
-  // =========================================
-
   if (quizCompleted) {
     return (
       <main className="addition-page">
         <button
           className="addition-back-button"
-          onClick={onBack}
+          onClick={backToPractice}
           type="button"
         >
           ← BACK
@@ -301,11 +458,9 @@ function AdditionQuiz({ onBack }) {
 
           <div className="addition-score">
             <span>Your Score</span>
-
             <strong>
               {correctCount} / {totalQuestions}
             </strong>
-
             <span>{accuracy}% Accuracy</span>
           </div>
 
@@ -344,7 +499,6 @@ function AdditionQuiz({ onBack }) {
               >
                 <div className="addition-analysis-question">
                   <strong>Q{item.number}.</strong>
-
                   <span>
                     {item.first} + {item.second} = ?
                   </span>
@@ -385,57 +539,36 @@ function AdditionQuiz({ onBack }) {
 
           <button
             className="addition-secondary-button"
-            onClick={onBack}
+            onClick={backToPractice}
             type="button"
           >
-            Back to Number Sense Menu
+            Back to Practice
           </button>
         </section>
       </main>
     );
   }
 
-  // =========================================
   // ACTIVE QUIZ SCREEN
-  // =========================================
-
   return (
     <main className="addition-page">
-
-      {/* BACK AND END TEST BUTTONS */}
       <header className="addition-quiz-header">
+        <button
+          className="addition-back-button"
+          onClick={endTest}
+          type="button"
+        >
+          End Test
+        </button>
 
-        <div className="addition-quiz-navigation">
-          <button
-            className="addition-active-back-button"
-            onClick={onBack}
-            type="button"
-          >
-            ← BACK
-          </button>
-
-          <button
-            className="addition-active-end-button"
-            onClick={endTest}
-            type="button"
-          >
-            End Test
-          </button>
-        </div>
-
-        <div className="addition-quiz-heading">
-          <span className="addition-eyebrow">
-            ADDITION QUIZ
-          </span>
-
+        <div>
+          <span className="addition-eyebrow">ADDITION QUIZ</span>
           <h1>Let's Add!</h1>
-
           <p>Choose the correct answer.</p>
         </div>
       </header>
 
       <section className="addition-quiz-card">
-
         <div className="addition-quiz-info">
           <span>Question {questionNumber}</span>
           <span>Correct: {correctCount}</span>
@@ -448,13 +581,9 @@ function AdditionQuiz({ onBack }) {
 
         <div className="addition-question">
           <span>{question.first}</span>
-
           <span className="addition-plus">+</span>
-
           <span>{question.second}</span>
-
           <span className="addition-equals">=</span>
-
           <span className="addition-question-mark">?</span>
         </div>
 
@@ -488,6 +617,13 @@ function AdditionQuiz({ onBack }) {
           ➡ Next
         </button>
 
+        <button
+          className="addition-end-button"
+          onClick={endTest}
+          type="button"
+        >
+          ⛔ End Test
+        </button>
       </section>
     </main>
   );
