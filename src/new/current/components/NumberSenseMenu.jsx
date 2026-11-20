@@ -34,7 +34,7 @@ function NumberSenseMenu({ onBack, onSelectActivity }) {
           <span>Compare Numbers</span>
         </button>
 
-        {/* ASCENDING ORDER */}
+        {/* EXISTING ASCENDING ORDER */}
         <button
           className="game-card"
           onClick={() => onSelectActivity("ascending")}
@@ -55,7 +55,7 @@ function NumberSenseMenu({ onBack, onSelectActivity }) {
         </button>
 
         {/* PICTURE-BASED ASCENDING ORDER */}
-        <button
+        {/* <button
           className="game-card picture-ascending-card"
           onClick={() => onSelectActivity("pictureAscending")}
           type="button"
@@ -64,6 +64,16 @@ function NumberSenseMenu({ onBack, onSelectActivity }) {
             🍎
           </div>
           <span>Picture-Based Ascending Order</span>
+        </button> */}
+
+        {/* NEW ASCENDING ORDER */}
+        <button
+          className="game-card"
+          onClick={() => onSelectActivity("ascendingNew")}
+          type="button"
+        >
+          <div className="game-icon">📈</div>
+          <span>Ascending Order</span>
         </button>
 
         {/* ADDITION */}

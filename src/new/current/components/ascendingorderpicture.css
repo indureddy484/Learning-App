@@ -1,0 +1,501 @@
+
+/* =====================================
+   MAIN PAGE
+===================================== */
+
+.aop-page {
+  max-width: 1180px;
+  margin: auto;
+  padding: 22px clamp(10px, 3vw, 28px) 45px;
+  color: #263247;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.aop-page * {
+  box-sizing: border-box;
+}
+
+/* =====================================
+   HEADER
+===================================== */
+
+.aop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.aop-header h1 {
+  font-size: clamp(24px, 4vw, 36px);
+  color: #263b70;
+  margin: 8px 0 5px;
+}
+
+.aop-header p {
+  margin: 0;
+  color: #64748b;
+}
+
+.aop-back,
+.aop-clear {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #334155;
+  border-radius: 9px;
+  padding: 9px 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.aop-check {
+  background: #6544b8;
+  color: white;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 19px;
+  font-weight: 800;
+  cursor: pointer;
+  min-height: 43px;
+}
+
+/* =====================================
+   PROGRESS BAR
+===================================== */
+
+.aop-progress-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #64748b;
+  font-weight: 700;
+  font-size: 13px;
+  margin: 18px 0 7px;
+}
+
+.aop-progress {
+  height: 8px;
+  background: #e8eaf0;
+  border-radius: 30px;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.aop-progress span {
+  display: block;
+  height: 100%;
+  background: #7654c8;
+  transition: width 0.25s ease;
+}
+
+/* =====================================
+   QUESTION CARD
+===================================== */
+
+.aop-question {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(16px, 3vw, 28px);
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px #0f172a0c;
+  min-width: 0;
+}
+
+.aop-question-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.aop-question-title h2 {
+  margin: 0 0 4px;
+  color: #263b70;
+  font-size: clamp(20px, 3vw, 26px);
+}
+
+.aop-question-title p {
+  margin: 0;
+  color: #64748b;
+}
+
+.aop-question-number {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #eee8ff;
+  color: #5b3ca5;
+  font-weight: 900;
+  font-size: 19px;
+}
+
+.aop-help {
+  margin: 18px 0 8px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* =====================================
+   SOURCE PICTURE AREA
+===================================== */
+
+.aop-pictures {
+  min-height: 190px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 12px;
+  padding: 16px 10px 12px;
+  border-radius: 12px;
+  background: #f8fafc;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Individual picture cards */
+
+.aop-pic {
+  flex: 1 1 0;
+  max-width: 150px;
+  min-width: 0;
+  min-height: 170px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+
+  padding: 8px 5px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+
+  background: #fff;
+  color: #334155;
+
+  font-weight: 800;
+  cursor: grab;
+  touch-action: manipulation;
+
+  overflow: hidden;
+}
+
+.aop-pic.selected {
+  border-color: #7654c8;
+  background: #f4f0ff;
+}
+
+.aop-pic:active {
+  cursor: grabbing;
+}
+
+/* =====================================
+   IMAGE RENDERING
+===================================== */
+
+/* Image wrapper: respect the inline height from JSX */
+
+.aop-photo-wrap,
+.aop-slot-photo {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+
+  flex: 0 0 auto;
+  flex-shrink: 0;
+
+  overflow: hidden;
+}
+
+/* Image itself */
+
+.aop-photo-wrap img,
+.aop-slot-photo img {
+  display: block;
+
+  height: 100%;
+  width: auto;
+
+  max-width: 100%;
+  max-height: 100%;
+
+  object-fit: contain;
+  object-position: center bottom;
+
+  flex-shrink: 1;
+}
+
+.aop-image-error {
+  color: #dc2626;
+  font-size: 10px;
+  text-align: center;
+}
+
+.aop-pic-label {
+  font-size: 12px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* =====================================
+   ANSWER HEADING
+===================================== */
+
+.aop-answer-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0 9px;
+  font-weight: 800;
+  color: #334155;
+}
+
+.aop-answer-heading span:last-child {
+  font-size: 12px;
+  color: #7654c8;
+}
+
+/* =====================================
+   ANSWER SLOTS
+===================================== */
+
+.aop-slots {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+  width: 100%;
+}
+
+.aop-slot {
+  position: relative;
+
+  min-width: 0;
+  min-height: 170px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+
+  padding: 22px 4px 8px;
+
+  border: 2px dashed #b8c4d4;
+  border-radius: 11px;
+
+  background: #fbfdff;
+  color: #334155;
+
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.aop-slot.filled {
+  border-style: solid;
+  border-color: #a7c9b4;
+  background: #f5fbf6;
+}
+
+.aop-slot small {
+  position: absolute;
+  top: 7px;
+  left: 9px;
+  color: #7c8798;
+  font-weight: 900;
+}
+
+/* Answer image wrapper */
+
+.aop-slot-photo {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.aop-slot b {
+  font-size: 11px;
+  text-align: center;
+  overflow-wrap: anywhere;
+  flex-shrink: 0;
+}
+
+.aop-empty {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* =====================================
+   SELECTED PICTURE HINT
+===================================== */
+
+.aop-selected-hint {
+  color: #6544b8;
+  font-size: 13px;
+  margin: 10px 0 0;
+}
+
+/* =====================================
+   ACTION BUTTONS
+===================================== */
+
+.aop-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.aop-actions .aop-check {
+  min-width: 150px;
+}
+
+/* =====================================
+   FEEDBACK
+===================================== */
+
+.aop-good,
+.aop-retry {
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-weight: 800;
+  text-align: center;
+  margin: 14px 0 0;
+}
+
+.aop-good {
+  background: #eaf8ef;
+  color: #17633d;
+}
+
+.aop-retry {
+  background: #fff7e7;
+  color: #92530d;
+}
+
+/* =====================================
+   COMPLETION SCREEN
+===================================== */
+
+.aop-result {
+  max-width: 650px;
+  margin: 40px auto;
+  text-align: center;
+  padding: 36px 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  background: #fff;
+}
+
+.aop-trophy {
+  font-size: 58px;
+}
+
+.aop-result h1 {
+  color: #263b70;
+}
+
+.aop-result p {
+  color: #64748b;
+  font-size: 18px;
+}
+
+.aop-score {
+  font-weight: 900;
+  color: #6544b8 !important;
+}
+
+.aop-result button {
+  margin: 8px;
+}
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media (max-width: 760px) {
+  .aop-pictures {
+    gap: 6px;
+    padding: 10px 5px;
+  }
+
+  .aop-pic {
+    min-height: 155px;
+    padding: 5px 3px;
+  }
+
+  .aop-slots {
+    gap: 5px;
+  }
+}
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 600px) {
+  .aop-header {
+    align-items: flex-start;
+  }
+
+  .aop-pictures {
+    gap: 4px;
+    padding: 8px 3px;
+  }
+
+  .aop-pic {
+    min-height: 145px;
+    padding: 5px 2px;
+  }
+
+  .aop-slot {
+    min-height: 145px;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
+  .aop-slot b {
+    font-size: 9px;
+  }
+
+  .aop-actions {
+    justify-content: stretch;
+  }
+
+  .aop-actions button {
+    flex: 1;
+  }
+}
+
+/* =====================================
+   SMALL MOBILE
+===================================== */
+
+@media (max-width: 360px) {
+  .aop-header {
+    flex-direction: column;
+  }
+
+  .aop-pic-label {
+    font-size: 10px;
+  }
+
+  .aop-slot {
+    min-height: 120px;
+  }
+
+  .aop-answer-heading span:last-child {
+    font-size: 10px;
+  }
+}

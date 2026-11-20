@@ -27,6 +27,7 @@ import AscendingOrder from "../components/AscendingOrder";
 import CompareNumbers from "../components/CompareNumbers";
 import NumberSense from "../components/NumberSense";
 import PictureAscendingOrder from "../components/PictureAscendingOrder";
+import AscendingOrderPicture from "../components/ascendingorderpicture";
 import AdditionQuiz from "../components/AdditionQuiz";
 import SubtractionQuiz from "../components/SubtractionQuiz";
 
@@ -86,15 +87,7 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (selectedGame === "animals") {
-    return (
-      <Animals
-        onBack={() => setSelectedGame(null)}
-        onQuiz={() => {
-          setSelectedGame("quiz");
-          setSelectedEvsQuizTopic("animals");
-        }}
-      />
-    );
+    return <Animals onBack={() => setSelectedGame(null)} />;
   }
 
   /* =========================
@@ -102,15 +95,7 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (selectedGame === "plants") {
-    return (
-      <Plants
-        onBack={() => setSelectedGame(null)}
-        onQuiz={() => {
-          setSelectedGame("quiz");
-          setSelectedEvsQuizTopic("plants");
-        }}
-      />
-    );
+    return <Plants onBack={() => setSelectedGame(null)} />;
   }
 
   /* =========================
@@ -208,10 +193,7 @@ function NewHome({ onBack }) {
   ) {
     return (
       <AnimalsQuiz
-        onBack={() => {
-          setSelectedEvsQuizTopic(null);
-          setSelectedGame("animals");
-        }}
+        onBack={() => setSelectedEvsQuizTopic(null)}
       />
     );
   }
@@ -229,10 +211,7 @@ function NewHome({ onBack }) {
       <div className="new-page">
         <button
           className="top-back-button"
-          onClick={() => {
-            setSelectedEvsQuizTopic(null);
-            setSelectedGame("plants");
-          }}
+          onClick={() => setSelectedEvsQuizTopic(null)}
           type="button"
         >
           ← BACK
@@ -566,6 +545,21 @@ function NewHome({ onBack }) {
   }
 
   /* =========================
+     NUMBER SENSE - NEW ASCENDING ORDER WORKSHEET
+  ========================= */
+
+  if (
+    selectedNumberSenseMenu &&
+    selectedNumberSenseActivity === "ascendingNew"
+  ) {
+    return (
+      <AscendingOrderPicture
+        onBack={() => setSelectedNumberSenseActivity(null)}
+      />
+    );
+  }
+
+  /* =========================
      NUMBER SENSE - WORD PROBLEMS
   ========================= */
 
@@ -609,20 +603,21 @@ function NewHome({ onBack }) {
       />
     );
   }
-  /* =========================
-   NUMBER SENSE - SUBTRACTION QUIZ
-========================= */
 
-if (
-  selectedNumberSenseMenu &&
-  selectedNumberSenseActivity === "subtraction"
-) {
-  return (
-    <SubtractionQuiz
-      onBack={() => setSelectedNumberSenseActivity(null)}
-    />
-  );
-}
+  /* =========================
+     NUMBER SENSE - SUBTRACTION QUIZ
+  ========================= */
+
+  if (
+    selectedNumberSenseMenu &&
+    selectedNumberSenseActivity === "subtraction"
+  ) {
+    return (
+      <SubtractionQuiz
+        onBack={() => setSelectedNumberSenseActivity(null)}
+      />
+    );
+  }
 
   /* =========================
      ENGLISH - TENALI RAMA STORY / QUIZ MENU
@@ -818,6 +813,19 @@ if (
               <span>Miscellaneous</span>
             </button>
 
+            {/* EVS QUIZ OPTION */}
+
+            <button
+              className="game-card"
+              onClick={() => {
+                setSelectedGame("quiz");
+                setSelectedEvsQuizTopic(null);
+              }}
+              type="button"
+            >
+              <div className="game-icon">📝</div>
+              <span>Quiz</span>
+            </button>
           </div>
         ) : selectedSubject === "Maths" ? (
           /* MATHS */
