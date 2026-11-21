@@ -1,0 +1,174 @@
+/* Question-wise analysis styling - matches Ascending/Descending review cards */
+.mixed-review-section {
+  margin-top: 28px;
+  text-align: left;
+}
+
+.mixed-review-section .aop-review-title {
+  margin-bottom: 17px;
+}
+
+.mixed-review-section .aop-review-title h2 {
+  margin: 0 0 5px;
+  color: #263b70;
+  font-size: 22px;
+}
+
+.mixed-review-section .aop-review-title p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.mixed-review-section .aop-review-item {
+  margin: 14px 0;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  border-left: 5px solid #94a3b8;
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.mixed-review-section .aop-review-correct { border-left-color: #16a34a; }
+.mixed-review-section .aop-review-wrong { border-left-color: #e11d48; }
+.mixed-review-section .aop-review-unanswered { border-left-color: #94a3b8; }
+
+.mixed-review-section .aop-review-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  color: #334155;
+}
+
+.mixed-review-section .aop-review-heading span {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.mixed-review-section .mixed-review-question-text {
+  margin: 14px 0 8px;
+  color: #263b70;
+  font-size: 17px;
+}
+
+.mixed-review-section .aop-review-caption {
+  margin: 15px 0 8px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.mixed-review-section .aop-review-images {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  padding: 10px 5px;
+  border-radius: 10px;
+  background: #f8fafc;
+  overflow: hidden;
+}
+
+.mixed-review-section .aop-review-picture {
+  min-width: 0;
+  min-height: 115px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 2px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #fff;
+  position: relative;
+}
+
+.mixed-review-section .aop-review-photo {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.mixed-review-section .aop-review-photo img {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.mixed-review-section .aop-review-picture small {
+  color: #64748b;
+  font-weight: 900;
+  text-align: center;
+}
+
+.mixed-review-section .aop-review-missing,
+.mixed-review-section .aop-review-not-answered {
+  color: #94a3b8;
+  font-size: 12px;
+  text-align: center;
+}
+
+.mixed-review-section .aop-review-not-answered {
+  grid-column: 1 / -1;
+  margin: 15px;
+}
+
+.mixed-review-section .mixed-review-single-images {
+  grid-template-columns: minmax(130px, 190px);
+  justify-content: start;
+  min-height: 125px;
+}
+
+.mixed-review-section .mixed-review-single-picture {
+  min-height: 105px;
+  width: 100%;
+}
+
+@media (max-width: 700px) {
+  .mixed-review-section .aop-review-item { padding: 10px 7px; }
+  .mixed-review-section .aop-review-images { gap: 4px; padding: 6px 2px; }
+  .mixed-review-section .aop-review-picture { min-height: 95px; }
+  .mixed-review-section .aop-review-picture small { font-size: 10px; }
+  .mixed-review-section .mixed-review-single-images { grid-template-columns: minmax(110px, 160px); }
+}
+
+@media print {
+  .mixed-review-section { display: block !important; overflow: visible !important; }
+  .mixed-review-section .aop-review-item {
+    display: block !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin: 12px 0 !important;
+    color: #263247 !important;
+    background: #fff !important;
+  }
+  .mixed-review-section .aop-review-images {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    overflow: visible !important;
+    background: #f8fafc !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .mixed-review-section .mixed-review-single-images {
+    grid-template-columns: minmax(130px, 190px) !important;
+  }
+  .mixed-review-section .aop-review-photo,
+  .mixed-review-section .aop-review-picture { overflow: visible !important; }
+  .mixed-review-section .aop-review-photo img {
+    max-width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}

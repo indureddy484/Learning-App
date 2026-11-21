@@ -28,6 +28,8 @@ import CompareNumbers from "../components/CompareNumbers";
 import NumberSense from "../components/NumberSense";
 import PictureAscendingOrder from "../components/PictureAscendingOrder";
 import AscendingOrderPicture from "../components/ascendingorderpicture";
+import DescendingOrderPicture from "../components/descendingorderpicture";
+import MixedOrderPicture from "../components/MixedOrderPicture";
 import AdditionQuiz from "../components/AdditionQuiz";
 import SubtractionQuiz from "../components/SubtractionQuiz";
 
@@ -554,6 +556,36 @@ function NewHome({ onBack }) {
   ) {
     return (
       <AscendingOrderPicture
+        onBack={() => setSelectedNumberSenseActivity(null)}
+      />
+    );
+  }
+
+  /* =========================
+     NUMBER SENSE - DESCENDING ORDER
+  ========================= */
+
+  if (
+    selectedNumberSenseMenu &&
+    selectedNumberSenseActivity === "descending"
+  ) {
+    return (
+      <DescendingOrderPicture
+        onBack={() => setSelectedNumberSenseActivity(null)}
+      />
+    );
+  }
+
+  /* =========================
+     NUMBER SENSE - MIXED
+  ========================= */
+
+  if (
+    selectedNumberSenseMenu &&
+    selectedNumberSenseActivity === "mixed"
+  ) {
+    return (
+      <MixedOrderPicture
         onBack={() => setSelectedNumberSenseActivity(null)}
       />
     );

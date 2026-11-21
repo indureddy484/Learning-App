@@ -1,0 +1,240 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #eef3f9;
+  color: #263b5c;
+  font-family: Arial, sans-serif;
+}
+
+/* Print button toolbar */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 14px;
+  background: #fff;
+  border-bottom: 1px solid #dce5f0;
+  text-align: center;
+}
+
+.toolbar button {
+  background: #3288ca;
+  color: #fff;
+  border: 0;
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* A4 page */
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 20px auto;
+  padding: 14mm;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  color: #245d91;
+  font-size: 27px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #71809a;
+  margin: 7px 0 22px;
+}
+
+/* Student details */
+.student-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+.worksheet-info {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  margin-bottom: 15px;
+  border-top: 1px solid #b6c7da;
+  border-bottom: 1px solid #b6c7da;
+  font-size: 13px;
+}
+
+/* Question and answer cards */
+.question-card,
+.answer-card {
+  border: 1px solid #d9e4f0;
+  border-radius: 9px;
+  padding: 12px;
+  margin-bottom: 12px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.question-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.question-heading strong {
+  color: #3288ca;
+}
+
+.question-heading span {
+  color: #536782;
+  font-size: 12px;
+}
+
+/* Picture options */
+.picture-choices {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.picture-choice,
+.answer-picture {
+  min-width: 0;
+  border: 1px solid #dce5f0;
+  border-radius: 7px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.picture-stage {
+  width: 100%;
+  height: 105px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.picture-stage img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+.picture-choice > span,
+.answer-picture > span {
+  display: block;
+  padding-top: 4px;
+  font-weight: 700;
+  color: #245d91;
+  font-size: 13px;
+}
+
+/* Answer boxes */
+.answer-heading {
+  margin: 11px 0 7px;
+  color: #536782;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.answer-slots {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.answer-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.answer-number {
+  font-size: 14px;
+  font-weight: 700;
+  color: #3288ca;
+}
+
+.answer-slot {
+  width: 100%;
+  height: 35px;
+  border: 1px dashed #9fb1c8;
+  border-radius: 6px;
+  background: #fff;
+}
+
+/* Answer key */
+.answer-key {
+  break-before: page;
+  page-break-before: always;
+}
+
+.answer-card .picture-stage {
+  height: 115px;
+}
+
+/* A4 printing */
+@page {
+  size: A4;
+  margin: 10mm;
+}
+
+@media print {
+  body {
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .toolbar {
+    display: none !important;
+  }
+
+  .page {
+    width: auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .answer-key {
+    break-before: page;
+    page-break-before: always;
+  }
+}
+
+/* Mobile preview */
+@media screen and (max-width: 850px) {
+  .page {
+    width: 100%;
+    min-height: 0;
+    padding: 18px;
+    margin: 10px 0;
+  }
+
+  .question-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

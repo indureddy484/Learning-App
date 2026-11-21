@@ -1,0 +1,171 @@
+/* =====================================
+   WORKSHEET POPUP
+===================================== */
+
+.aop-worksheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(25, 40, 65, 0.48);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+
+.aop-worksheet-modal {
+  width: 100%;
+  max-width: 440px;
+  padding: 30px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 15px 45px rgba(20, 40, 80, 0.2);
+  text-align: center;
+}
+
+.aop-worksheet-icon {
+  font-size: 43px;
+  margin-bottom: 10px;
+}
+
+.aop-worksheet-modal h2 {
+  color: #294a7c;
+  margin: 0 0 10px;
+  font-size: 23px;
+}
+
+.aop-worksheet-description {
+  color: #71809a;
+  line-height: 1.5;
+  font-size: 14px;
+  margin: 0 0 18px;
+}
+
+.aop-worksheet-range {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 9px;
+  background: #eff7ff;
+  color: #287cb9;
+  font-weight: 800;
+}
+
+.aop-worksheet-modal label {
+  display: block;
+  text-align: left;
+  color: #405273;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 9px;
+}
+
+.aop-worksheet-modal input {
+  width: 100%;
+  padding: 13px;
+  border: 2px solid #dce5f3;
+  border-radius: 10px;
+  font-size: 17px;
+  outline: none;
+}
+
+.aop-worksheet-modal input:focus {
+  border-color: #3989cc;
+}
+
+.aop-worksheet-hint {
+  text-align: left;
+  color: #8792a6;
+  font-size: 12px;
+  margin: 8px 0 18px;
+}
+
+.aop-worksheet-error {
+  color: #c43d3d;
+  font-size: 13px;
+  margin: 0 0 14px;
+}
+
+.aop-worksheet-generate,
+.aop-worksheet-cancel {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.aop-worksheet-generate {
+  background: #3288ca;
+  color: #fff;
+}
+
+.aop-worksheet-generate:hover {
+  background: #2475b5;
+}
+
+.aop-worksheet-cancel {
+  margin-top: 10px;
+  background: #edf2fa;
+  color: #40577e;
+}
+
+.aop-worksheet-cancel:hover {
+  background: #e1e9f6;
+}
+
+/* =====================================
+   WORKSHEET BUTTON BESIDE QUIZ
+===================================== */
+
+.aop-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.aop-worksheet-button {
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 17px;
+  min-height: 42px;
+  background: #3288ca;
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.aop-worksheet-button:hover {
+  background: #2475b5;
+}
+
+/* =====================================
+   RESPONSIVE DESIGN
+===================================== */
+
+@media (max-width: 600px) {
+  .aop-header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 440px) {
+  .aop-worksheet-modal {
+    padding: 24px 20px;
+  }
+
+  .aop-header-actions {
+    gap: 7px;
+  }
+
+  .aop-worksheet-button,
+  .aop-quiz-button {
+    padding: 9px 11px;
+    font-size: 12px;
+  }
+}

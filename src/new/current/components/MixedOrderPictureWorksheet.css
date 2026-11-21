@@ -1,0 +1,162 @@
+
+/* =====================================
+   MIXED ORDER WORKSHEET POPUP
+===================================== */
+
+.aop-worksheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.55);
+  font-family: Arial, sans-serif;
+}
+
+.aop-worksheet-modal {
+  width: 100%;
+  max-width: 480px;
+  padding: 28px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: mixedWorksheetPopup 0.2s ease-out;
+}
+
+@keyframes mixedWorksheetPopup {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.aop-worksheet-modal h2 {
+  margin: 10px 0;
+  color: #222;
+  font-size: 23px;
+  font-weight: 700;
+}
+
+/* Icon */
+
+.aop-worksheet-icon {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+/* Description */
+
+.aop-worksheet-description {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 12px 0 22px;
+}
+
+/* Question count */
+
+.aop-worksheet-range {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+  margin-bottom: 16px;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.aop-worksheet-range input {
+  width: 100%;
+  height: 43px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  outline: none;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.aop-worksheet-range input:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.12);
+}
+
+/* Hint */
+
+.aop-worksheet-hint {
+  color: #777;
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 12px 0 18px;
+}
+
+/* Error */
+
+.aop-worksheet-error {
+  color: #d32f2f;
+  background: #fff0f0;
+  border-radius: 6px;
+  padding: 9px;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+/* Buttons */
+
+.aop-worksheet-generate,
+.aop-worksheet-cancel {
+  min-height: 42px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.aop-worksheet-generate {
+  background: #1976d2;
+  color: #fff;
+}
+
+.aop-worksheet-generate:hover {
+  background: #125ca7;
+}
+
+.aop-worksheet-cancel {
+  margin-left: 10px;
+  background: #eee;
+  color: #333;
+}
+
+.aop-worksheet-cancel:hover {
+  background: #ddd;
+}
+
+/* Mobile */
+
+@media (max-width: 500px) {
+  .aop-worksheet-modal {
+    padding: 20px;
+  }
+
+  .aop-worksheet-modal h2 {
+    font-size: 20px;
+  }
+
+  .aop-worksheet-generate,
+  .aop-worksheet-cancel {
+    width: 100%;
+    margin: 5px 0;
+  }
+}

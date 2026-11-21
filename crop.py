@@ -2,7 +2,7 @@
 from PIL import Image, ImageChops, ImageOps
 from pathlib import Path
 
-folder = Path(r"C:\Users\shruthi\Downloads\full_uncropped_images_40_png")
+folder = Path(r"C:\Users\shruthi\Downloads\broom_rope_car_bike_auto_20_images_renamed (1)")
 
 for file in folder.glob("*.png"):
     image = Image.open(file).convert("RGB")
