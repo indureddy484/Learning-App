@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 
 import MatchingGame from "../components/MatchingGame";
@@ -23,6 +24,7 @@ import VisualLengthLevel2 from "../components/VisualLengthLevel2";
 
 // NUMBER SENSE
 import NumberSenseMenu from "../components/NumberSenseMenu";
+import PictureBasedOrderingMenu from "../components/PictureBasedOrderingMenu";
 import AscendingOrder from "../components/AscendingOrder";
 import CompareNumbers from "../components/CompareNumbers";
 import NumberSense from "../components/NumberSense";
@@ -32,6 +34,8 @@ import DescendingOrderPicture from "../components/descendingorderpicture";
 import MixedOrderPicture from "../components/MixedOrderPicture";
 import AdditionQuiz from "../components/AdditionQuiz";
 import SubtractionQuiz from "../components/SubtractionQuiz";
+import ClockLevel1 from "../components/ClockLevel1";
+import ClockLevel2 from "../components/ClockLevel2";
 
 // ENGLISH - TENALI RAMA
 import TenaliRamaGreedyFarmer from "../components/TenaliRamaGreedyFarmer";
@@ -83,6 +87,9 @@ function NewHome({ onBack }) {
   const [selectedNumberSenseMenu, setSelectedNumberSenseMenu] = useState(false);
   const [selectedNumberSenseActivity, setSelectedNumberSenseActivity] =
     useState(null);
+
+  // Clock navigation state
+  const [selectedClockLevel, setSelectedClockLevel] = useState(null);
 
   /* =========================
      EVS - ANIMALS
@@ -502,6 +509,91 @@ function NewHome({ onBack }) {
   }
 
   /* =========================
+     CLOCK - LEVEL SELECTION
+  ========================= */
+
+  if (
+    selectedNumberSenseMenu &&
+    selectedNumberSenseActivity === "clock" &&
+    selectedClockLevel === null
+  ) {
+    return (
+      <div className="new-page">
+        <button
+          className="top-back-button"
+          onClick={() => {
+            setSelectedNumberSenseActivity(null);
+            setSelectedClockLevel(null);
+          }}
+          type="button"
+        >
+          ← BACK
+        </button>
+
+        <h1>Clock</h1>
+
+        <p className="number-sense-subtitle">
+          Choose a level
+        </p>
+
+        <div className="game-tabs">
+          <button
+            className="game-card"
+            onClick={() => setSelectedClockLevel("level1")}
+            type="button"
+          >
+            <div className="game-icon">🕒</div>
+            <span>Level 1</span>
+            <span>Read the Clock</span>
+          </button>
+
+          <button
+            className="game-card"
+            onClick={() => setSelectedClockLevel("level2")}
+            type="button"
+          >
+            <div className="game-icon">⏰</div>
+            <span>Level 2</span>
+            <span>Set the Time</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  /* =========================
+     CLOCK - LEVEL 1
+  ========================= */
+
+  if (
+    selectedNumberSenseMenu &&
+    selectedNumberSenseActivity === "clock" &&
+    selectedClockLevel === "level1"
+  ) {
+    return (
+      <ClockLevel1
+        onBack={() => setSelectedClockLevel(null)}
+      />
+    );
+  }
+
+  /* =========================
+     CLOCK - LEVEL 2
+  ========================= */
+
+  if (
+    selectedNumberSenseMenu &&
+    selectedNumberSenseActivity === "clock" &&
+    selectedClockLevel === "level2"
+  ) {
+    return (
+      <ClockLevel2
+        onBack={() => setSelectedClockLevel(null)}
+      />
+    );
+  }
+
+  /* =========================
      NUMBER SENSE - MENU
   ========================= */
 
@@ -509,6 +601,24 @@ function NewHome({ onBack }) {
     return (
       <NumberSenseMenu
         onBack={() => setSelectedNumberSenseMenu(false)}
+        onSelectActivity={(activity) => {
+          setSelectedNumberSenseActivity(activity);
+        }}
+      />
+    );
+  }
+
+  /* =========================
+     NUMBER SENSE - PICTURE-BASED ORDERING MENU
+  ========================= */
+
+  if (
+    selectedNumberSenseMenu &&
+    selectedNumberSenseActivity === "pictureOrdering"
+  ) {
+    return (
+      <PictureBasedOrderingMenu
+        onBack={() => setSelectedNumberSenseActivity(null)}
         onSelectActivity={(activity) => {
           setSelectedNumberSenseActivity(activity);
         }}
@@ -806,6 +916,7 @@ function NewHome({ onBack }) {
             setSelectedMeasureLevel(null);
             setSelectedNumberSenseMenu(false);
             setSelectedNumberSenseActivity(null);
+            setSelectedClockLevel(null);
           }}
           type="button"
         >

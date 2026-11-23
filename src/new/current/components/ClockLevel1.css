@@ -1,0 +1,273 @@
+.clock-level-page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 24px;
+  background: linear-gradient(
+    135deg,
+    #f4f8ff 0%,
+    #eef7ff 52%,
+    #f8f5ff 100%
+  );
+  color: #20304a;
+}
+
+.clock-back-button {
+  border: 0;
+  background: #ffffff;
+  color: #263b59;
+  border-radius: 12px;
+  padding: 11px 18px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(36, 61, 99, 0.09);
+}
+
+.clock-level-content {
+  width: min(100%, 760px);
+  margin: 20px auto 40px;
+}
+
+.clock-level-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.clock-level-eyebrow {
+  margin: 0 0 6px;
+  color: #6480a8;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.8px;
+}
+
+.clock-level-header h1 {
+  margin: 0;
+  color: #1e3150;
+  font-size: clamp(27px, 4vw, 36px);
+}
+
+.clock-level-subtitle {
+  margin: 8px 0 0;
+  color: #687b96;
+  font-size: 15px;
+}
+
+.clock-level-badge {
+  flex-shrink: 0;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: #e1edff;
+  color: #315d9b;
+  font-weight: 800;
+}
+
+/* Question card */
+
+.clock-question-card {
+  padding: clamp(20px, 4vw, 34px);
+  border: 1px solid #e5edf7;
+  border-radius: 26px;
+  background: #ffffff;
+  box-shadow: 0 12px 35px rgba(42, 68, 105, 0.09);
+  text-align: center;
+}
+
+.clock-question-card h2 {
+  margin: 0;
+  color: #253957;
+  font-size: clamp(21px, 3vw, 27px);
+}
+
+.clock-question-hint {
+  margin: 8px 0 18px;
+  color: #7a8ba2;
+  font-size: 14px;
+}
+
+/* Analogue clock */
+
+.clock-visual-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 8px auto 22px;
+}
+
+.clock-face {
+  display: block;
+  width: min(100%, 310px);
+  height: auto;
+  filter: drop-shadow(
+    0 7px 10px rgba(31, 55, 86, 0.10)
+  );
+}
+
+.clock-outer-ring {
+  fill: #ffffff;
+  stroke: #d8e4f2;
+  stroke-width: 5;
+}
+
+.clock-inner-face {
+  fill: #fffefa;
+  stroke: #edf1f6;
+  stroke-width: 1.5;
+}
+
+.clock-major-tick {
+  stroke: #52647b;
+  stroke-width: 2.1;
+  stroke-linecap: round;
+}
+
+.clock-minor-tick {
+  stroke: #aab7c7;
+  stroke-width: 1;
+  stroke-linecap: round;
+}
+
+.clock-number {
+  fill: #263a56;
+  font-size: 17px;
+  font-weight: 800;
+  font-family: Arial, sans-serif;
+}
+
+/* Clock hands */
+
+.clock-hour-hand {
+  stroke: #315d9b;
+  stroke-width: 4.2;
+  stroke-linecap: round;
+}
+
+.clock-minute-hand {
+  stroke: #e05c54;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+}
+
+.clock-center-pin {
+  fill: #243b5b;
+  stroke: #ffffff;
+  stroke-width: 1.5;
+}
+
+/* Answer options */
+
+.clock-options-heading {
+  margin: 8px 0 13px;
+  color: #415773;
+  font-weight: 800;
+}
+
+.clock-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: min(100%, 470px);
+  margin: 0 auto;
+}
+
+.clock-option {
+  min-height: 58px;
+  border: 2px solid #dce6f2;
+  border-radius: 15px;
+  background: #f9fbff;
+  color: #2d4260;
+  font-size: 20px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 150ms ease;
+}
+
+.clock-option:hover:not(:disabled) {
+  border-color: #7ca9ec;
+  background: #eef5ff;
+  transform: translateY(-1px);
+}
+
+.clock-option.selected {
+  border-color: #4d87df;
+  background: #eaf2ff;
+  color: #245aab;
+}
+
+/* Correct answer */
+
+.clock-option.correct {
+  border-color: #31a66a;
+  background: #e8f8ef;
+  color: #187747;
+}
+
+/* Wrong answer */
+
+.clock-option.incorrect {
+  border-color: #df6a6a;
+  background: #fff0f0;
+  color: #b63737;
+}
+
+/* Immediate feedback */
+
+.clock-feedback {
+  width: min(100%, 470px);
+  box-sizing: border-box;
+  margin: 16px auto 0;
+  padding: 12px 14px;
+  border-radius: 13px;
+  font-weight: 800;
+}
+
+.feedback-correct {
+  background: #e8f8ef;
+  color: #187747;
+}
+
+.feedback-incorrect {
+  background: #fff2e8;
+  color: #a65320;
+}
+
+/* Live score */
+
+.clock-live-score {
+  margin-top: 22px;
+  color: #526985;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+/* Mobile responsiveness */
+
+@media (max-width: 560px) {
+  .clock-level-page {
+    padding: 16px;
+  }
+
+  .clock-level-header {
+    align-items: flex-start;
+  }
+
+  .clock-level-badge {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .clock-question-card {
+    border-radius: 20px;
+  }
+
+  .clock-options-grid {
+    gap: 9px;
+  }
+
+  .clock-option {
+    min-height: 54px;
+    font-size: 18px;
+  }
+}
