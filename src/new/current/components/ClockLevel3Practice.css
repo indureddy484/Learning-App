@@ -1,0 +1,155 @@
+
+.clock-worksheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.6);
+  overflow-y: auto;
+}
+
+.clock-worksheet-modal {
+  width: 100%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 30px;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.clock-worksheet-icon {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.clock-worksheet-modal h2 {
+  margin: 0 0 10px;
+  color: #263b5c;
+  font-size: 23px;
+}
+
+.clock-worksheet-description {
+  color: #71809a;
+  margin: 10px 0 16px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.clock-worksheet-range {
+  display: inline-block;
+  padding: 10px 15px;
+  margin-bottom: 22px;
+  border-radius: 20px;
+  background: #eaf3ff;
+  color: #2563a6;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.clock-worksheet-modal label {
+  display: block;
+  margin-bottom: 10px;
+  color: #263b5c;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.clock-worksheet-modal input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px;
+  border: 2px solid #dce6f2;
+  border-radius: 10px;
+  outline: none;
+  color: #263b5c;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.clock-worksheet-modal input:focus {
+  border-color: #3288ca;
+}
+
+.clock-worksheet-hint {
+  margin: 8px 0 16px;
+  color: #8492a7;
+  font-size: 12px;
+  text-align: left;
+}
+
+.clock-worksheet-error {
+  margin: 10px 0;
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.clock-worksheet-generate,
+.clock-worksheet-cancel {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.clock-worksheet-generate {
+  margin-top: 12px;
+  background: #3288ca;
+  color: #ffffff;
+}
+
+.clock-worksheet-generate:hover {
+  background: #256da8;
+}
+
+.clock-worksheet-cancel {
+  margin-top: 10px;
+  background: #edf1f6;
+  color: #334155;
+}
+
+.clock-worksheet-cancel:hover {
+  background: #dce4ed;
+}
+
+/* Practice button beside Quiz */
+.clock-worksheet-button {
+  padding: 11px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.clock-worksheet-button:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+  .clock-worksheet-modal {
+    padding: 23px 18px;
+  }
+
+  .clock-worksheet-button {
+    padding: 9px 13px;
+    font-size: 13px;
+  }
+}

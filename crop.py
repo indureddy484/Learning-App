@@ -2,9 +2,9 @@
 from PIL import Image, ImageChops, ImageOps
 from pathlib import Path
 
-folder = Path(r"C:\Users\shruthi\Downloads\broom_rope_car_bike_auto_20_images_renamed (1)")
+folder = Path(r"C:\Users\shruthi\Downloads\app")
 
-for file in folder.glob("*.png"):
+for file in folder.glob("*.jpeg"):
     image = Image.open(file).convert("RGB")
 
     # Find the object by detecting pixels that differ from white.

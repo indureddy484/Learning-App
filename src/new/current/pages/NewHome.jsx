@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 import MatchingGame from "../components/MatchingGame";
@@ -36,6 +35,8 @@ import AdditionQuiz from "../components/AdditionQuiz";
 import SubtractionQuiz from "../components/SubtractionQuiz";
 import ClockLevel1 from "../components/ClockLevel1";
 import ClockLevel2 from "../components/ClockLevel2";
+import ClockLevel3 from "../components/ClockLevel3";
+import ClockLevel4 from "../components/ClockLevel4";
 
 // ENGLISH - TENALI RAMA
 import TenaliRamaGreedyFarmer from "../components/TenaliRamaGreedyFarmer";
@@ -556,6 +557,26 @@ function NewHome({ onBack }) {
             <span>Level 2</span>
             <span>Set the Time</span>
           </button>
+
+          <button
+            className="game-card"
+            onClick={() => setSelectedClockLevel("level3")}
+            type="button"
+          >
+            <div className="game-icon">🕰️</div>
+            <span>Level 3</span>
+            <span>Read Every Minute (00–59)</span>
+          </button>
+
+          <button
+            className="game-card"
+            onClick={() => setSelectedClockLevel("level4")}
+            type="button"
+          >
+            <div className="game-icon">⏱️</div>
+            <span>Level 4</span>
+            <span>Set Every Minute (00–59)</span>
+          </button>
         </div>
       </div>
     );
@@ -588,6 +609,38 @@ function NewHome({ onBack }) {
   ) {
     return (
       <ClockLevel2
+        onBack={() => setSelectedClockLevel(null)}
+      />
+    );
+  }
+
+  /* =========================
+     CLOCK - LEVEL 3
+  ========================= */
+
+  if (
+    selectedNumberSenseMenu &&
+    selectedNumberSenseActivity === "clock" &&
+    selectedClockLevel === "level3"
+  ) {
+    return (
+      <ClockLevel3
+        onBack={() => setSelectedClockLevel(null)}
+      />
+    );
+  }
+
+  /* =========================
+     CLOCK - LEVEL 4
+  ========================= */
+
+  if (
+    selectedNumberSenseMenu &&
+    selectedNumberSenseActivity === "clock" &&
+    selectedClockLevel === "level4"
+  ) {
+    return (
+      <ClockLevel4
         onBack={() => setSelectedClockLevel(null)}
       />
     );

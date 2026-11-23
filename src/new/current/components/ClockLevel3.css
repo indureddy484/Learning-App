@@ -1,0 +1,453 @@
+
+/* =====================================================
+   CLOCK LEVEL 3
+   Base styles from Clock Level 1
+===================================================== */
+
+@import "./ClockLevel1.css";
+
+/* =====================================================
+   TOP BAR
+===================================================== */
+
+.clock-page-topbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.clock-mode-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.clock-mode-button {
+  border: none;
+  border-radius: 10px;
+  padding: 11px 24px;
+  background: #6c63ff;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.clock-mode-button:hover {
+  background: #554bd8;
+  transform: translateY(-2px);
+}
+
+/* =====================================================
+   QUIZ TIMER
+===================================================== */
+
+.clock-timer-display {
+  background: #fff3cd;
+  color: #8a5a00;
+  border: 1px solid #ffe08a;
+  border-radius: 10px;
+  padding: 11px 20px;
+  font-size: 17px;
+  font-weight: 800;
+  min-width: 110px;
+  text-align: center;
+}
+
+/* =====================================================
+   QUESTION INFORMATION
+===================================================== */
+
+.clock-question-top-info {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 12px;
+  min-height: 24px;
+}
+
+.clock-question-top-info span {
+  background: #eeeaff;
+  color: #554bd8;
+  border-radius: 20px;
+  padding: 7px 15px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* =====================================================
+   QUIZ SETUP
+===================================================== */
+
+.clock-setup-card {
+  width: 100%;
+  max-width: 650px;
+  margin: 35px auto;
+  padding: 35px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.clock-setup-card h2 {
+  color: #29234d;
+  font-size: 26px;
+  margin: 0 0 12px;
+}
+
+.clock-setup-card p {
+  color: #777;
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+
+.clock-duration-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 25px 0 30px;
+}
+
+.clock-duration-button {
+  min-width: 105px;
+  padding: 13px 16px;
+  border: 2px solid #e4e1ff;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #554bd8;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.clock-duration-button:hover {
+  background: #f2f0ff;
+  border-color: #6c63ff;
+}
+
+.clock-duration-button.active {
+  background: #6c63ff;
+  border-color: #6c63ff;
+  color: #ffffff;
+}
+
+.clock-start-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 170px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 12px;
+  background: #27ae60;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.clock-start-button:hover {
+  background: #219653;
+  transform: translateY(-2px);
+}
+
+/* =====================================================
+   QUIZ ACTION BUTTONS
+===================================================== */
+
+.clock-quiz-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 28px;
+}
+
+.clock-next-button,
+.clock-end-test-button {
+  min-width: 145px;
+  padding: 13px 25px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.clock-next-button {
+  background: #6c63ff;
+  color: #ffffff;
+}
+
+.clock-next-button:hover:not(:disabled) {
+  background: #554bd8;
+  transform: translateY(-2px);
+}
+
+.clock-end-test-button {
+  background: #ffeded;
+  color: #d63031;
+  border: 1px solid #ffd1d1;
+}
+
+.clock-end-test-button:hover:not(:disabled) {
+  background: #ffdada;
+}
+
+.clock-next-button:disabled,
+.clock-end-test-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* =====================================================
+   RESULT SUMMARY
+===================================================== */
+
+.clock-result-card {
+  width: 100%;
+  max-width: 850px;
+  margin: 25px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.clock-result-card > h2 {
+  color: #29234d;
+  font-size: 25px;
+  text-align: center;
+  margin: 0 0 25px;
+}
+
+.clock-result-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+  margin: 25px 0 35px;
+}
+
+.clock-result-stats > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px 10px;
+  background: #f7f6ff;
+  border: 1px solid #eceaff;
+  border-radius: 14px;
+  text-align: center;
+}
+
+.clock-result-stats span {
+  font-size: 25px;
+}
+
+.clock-result-stats strong {
+  color: #554bd8;
+  font-size: 27px;
+  font-weight: 800;
+}
+
+.clock-result-stats p {
+  color: #777;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* =====================================================
+   QUESTION ANALYSIS
+===================================================== */
+
+.clock-analysis-heading {
+  margin: 25px 0 18px !important;
+  text-align: left !important;
+  font-size: 21px !important;
+}
+
+.clock-analysis-list {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.clock-analysis-item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 17px 20px;
+  background: #fafaff;
+  border: 1px solid #e9e7f7;
+  border-radius: 12px;
+}
+
+.clock-analysis-question {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: #555;
+  font-size: 14px;
+}
+
+.clock-analysis-question strong {
+  color: #29234d;
+  font-size: 16px;
+}
+
+.clock-analysis-status {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.analysis-correct {
+  color: #219653;
+}
+
+.analysis-incorrect {
+  color: #e74c3c;
+}
+
+.analysis-unanswered {
+  color: #d18b00;
+}
+
+.clock-analysis-correct-answer {
+  width: 100%;
+  margin: 0;
+  color: #219653;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* =====================================================
+   RESULT ACTIONS
+===================================================== */
+
+.clock-result-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.clock-practice-secondary {
+  min-width: 170px;
+  padding: 14px 22px;
+  border: 2px solid #6c63ff;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #554bd8;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.clock-practice-secondary:hover {
+  background: #f2f0ff;
+}
+
+/* =====================================================
+   RESPONSIVE DESIGN
+===================================================== */
+
+@media (max-width: 768px) {
+  .clock-page-topbar {
+    align-items: flex-start;
+  }
+
+  .clock-setup-card {
+    padding: 25px 18px;
+    margin: 20px auto;
+  }
+
+  .clock-result-card {
+    padding: 22px 15px;
+  }
+
+  .clock-result-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .clock-analysis-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .clock-analysis-status {
+    margin-top: 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  .clock-page-topbar {
+    gap: 8px;
+  }
+
+  .clock-mode-buttons {
+    gap: 6px;
+  }
+
+  .clock-mode-button {
+    padding: 9px 15px;
+    font-size: 14px;
+  }
+
+  .clock-timer-display {
+    min-width: 90px;
+    padding: 9px 12px;
+    font-size: 15px;
+  }
+
+  .clock-duration-options {
+    gap: 8px;
+  }
+
+  .clock-duration-button {
+    min-width: 90px;
+    padding: 11px 10px;
+    font-size: 13px;
+  }
+
+  .clock-quiz-actions {
+    flex-direction: column;
+  }
+
+  .clock-next-button,
+  .clock-end-test-button {
+    width: 100%;
+  }
+
+  .clock-result-actions {
+    flex-direction: column;
+  }
+
+  .clock-result-actions button {
+    width: 100%;
+  }
+
+  .clock-result-stats strong {
+    font-size: 23px;
+  }
+}
