@@ -1,12 +1,20 @@
 
+/* =========================================
+   MONEY LEVEL 3 - MAIN SCREEN
+========================================= */
+
 .money-level3-screen {
   width: 100%;
   min-height: 100vh;
-  padding: 24px;
+  padding: 20px;
   box-sizing: border-box;
   background: linear-gradient(135deg, #f8fafc, #fffaf0);
   font-family: Arial, sans-serif;
 }
+
+/* =========================================
+   TOOLBAR
+========================================= */
 
 .money-level3-toolbar {
   display: flex;
@@ -54,11 +62,54 @@
   font-weight: 700;
 }
 
+.money-level3-toolbar button:hover,
+.money-level3-print-button:hover,
+.money-level3-next:hover,
+.money-print-actions button:hover {
+  background: #12548a;
+}
+
+.money-level3-toolbar .money-back-button:hover {
+  background: #edf4ff;
+}
+
+/* =========================================
+   LANGUAGE SELECTOR
+========================================= */
+
+.money-level3-language-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.money-level3-language-selector button {
+  padding: 8px 14px;
+  border: 2px solid #2563eb;
+  border-radius: 10px;
+  background: white;
+  color: #1d4ed8;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.money-level3-language-selector button.active {
+  background: #2563eb;
+  color: white;
+}
+
+/* =========================================
+   MAIN QUESTION CARD
+========================================= */
+
 .money-level3-card {
-  width: min(100%, 950px);
-  min-height: 330px;
+  width: 100%;
+  max-width: none;
+  min-height: 60vh;
   margin: 20px auto;
-  padding: 30px;
+  padding: 35px 25px;
   border-radius: 22px;
   background: #ffffff;
   box-shadow: 0 5px 22px rgba(0, 0, 0, 0.1);
@@ -73,14 +124,18 @@
   text-align: center;
 }
 
-/* Entire question stays in one flowing row */
+/* =========================================
+   QUESTION LAYOUT
+========================================= */
+
 .money-level3-question {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  margin: 28px auto;
+  gap: 14px;
+  margin: 30px auto;
   color: #172554;
   font-size: clamp(22px, 2.8vw, 30px);
   line-height: 1.5;
@@ -88,16 +143,22 @@
   text-align: center;
 }
 
-/* Small product image beside the question */
+/* =========================================
+   PRODUCT IMAGE - INCREASED SIZE
+========================================= */
+
 .money-level3-inline-object {
   display: inline-block;
   flex: 0 0 auto;
-  width: 58px;
-  height: 58px;
+  width: 180px;
+  height: 160px;
+  max-width: 100%;
   object-fit: contain;
+  object-position: center;
 }
 
-/* Emoji product images */
+/* Old emoji support, if needed */
+
 .money-level3-inline-emoji {
   display: inline-flex;
   align-items: center;
@@ -107,42 +168,47 @@
   line-height: 1;
 }
 
-/* ₹10 note appears inside the question */
+/* =========================================
+   CURRENCY NOTE
+========================================= */
+
 .money-level3-inline-note {
   display: inline-block;
   flex: 0 0 auto;
-  width: 105px;
-  height: 58px;
+  width: 180px;
+  height: 90px;
   object-fit: contain;
+  object-position: center;
   vertical-align: middle;
 }
 
-/* Four number-only options */
+/* =========================================
+   ANSWER OPTIONS
+========================================= */
+
 .money-level3-options {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 18px;
   width: 100%;
-  max-width: 600px;
-  margin: 30px auto;
+  max-width: 800px;
+  margin: 35px auto;
 }
 
 .money-level3-option {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 86px;
+  min-height: 90px;
   padding: 15px;
   border: 2px solid #b8cce8;
   border-radius: 15px;
   background: #f8fbff;
   color: #39216f;
-  font-size: 30px;
+  font-size: 32px;
   font-weight: 800;
   cursor: pointer;
-  transition:
-    background 0.2s ease,
-    border-color 0.2s ease,
+  transition: background 0.2s ease, border-color 0.2s ease,
     transform 0.2s ease;
 }
 
@@ -157,18 +223,22 @@
 }
 
 .money-level3-option.correct {
-  border-color: #16a34a;
-  background: #dcfce7;
-  color: #166534;
+  background: #97d1ac;
+  border: 2px solid #799b84;
+  color: white;
 }
 
 .money-level3-option.incorrect {
-  border-color: #dc2626;
-  background: #fee2e2;
-  color: #991b1b;
+  background: #f0b7b7 !important;
+  border: 2px solid #edadad !important;
+  color: #ffffff !important;
+  transition: none !important;
 }
 
-/* Feedback message */
+/* =========================================
+   FEEDBACK
+========================================= */
+
 .money-level3-feedback {
   margin: 20px 0;
   font-size: 26px;
@@ -184,24 +254,19 @@
   color: #dc2626;
 }
 
-/* Next question */
+/* =========================================
+   NEXT QUESTION BUTTON
+========================================= */
+
 .money-level3-next {
   display: block;
   margin: 24px auto 0;
 }
 
-.money-level3-toolbar button:hover,
-.money-level3-print-button:hover,
-.money-level3-next:hover,
-.money-print-actions button:hover {
-  background: #12548a;
-}
+/* =========================================
+   PRINT BUTTON
+========================================= */
 
-.money-level3-toolbar .money-back-button:hover {
-  background: #edf4ff;
-}
-
-/* Print button */
 .money-level3-print-area {
   display: flex;
   justify-content: center;
@@ -213,7 +278,10 @@
   font-size: 18px;
 }
 
-/* Print popup */
+/* =========================================
+   PRINT POPUP
+========================================= */
+
 .money-print-overlay {
   position: fixed;
   inset: 0;
@@ -286,7 +354,10 @@
   background: #e2e8f0;
 }
 
-/* Keyboard focus */
+/* =========================================
+   KEYBOARD FOCUS
+========================================= */
+
 .money-level3-option:focus-visible,
 .money-level3-toolbar button:focus-visible,
 .money-level3-toolbar select:focus-visible,
@@ -296,10 +367,43 @@
   outline-offset: 3px;
 }
 
-/* Mobile */
+/* =========================================
+   TABLETS
+========================================= */
+
+@media (max-width: 900px) {
+  .money-level3-card {
+    padding: 25px 15px;
+  }
+
+  .money-level3-inline-object {
+    width: 150px;
+    height: 135px;
+  }
+
+  .money-level3-inline-note {
+    width: 150px;
+    height: 75px;
+  }
+
+  .money-level3-question {
+    gap: 10px;
+    font-size: 24px;
+  }
+
+  .money-level3-option {
+    min-height: 75px;
+    font-size: 27px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
 @media (max-width: 600px) {
   .money-level3-screen {
-    padding: 12px;
+    padding: 10px;
   }
 
   .money-level3-toolbar {
@@ -312,39 +416,40 @@
   }
 
   .money-level3-card {
-    min-height: 300px;
-    padding: 20px 14px;
+    min-height: auto;
+    padding: 22px 10px;
   }
 
   .money-level3-question {
-    gap: 6px;
+    gap: 8px;
     margin: 22px auto;
-    font-size: 21px;
+    font-size: 20px;
   }
 
   .money-level3-inline-object {
-    width: 45px;
-    height: 45px;
+    width: 130px;
+    height: 120px;
+  }
+
+  .money-level3-inline-note {
+    width: 120px;
+    height: 60px;
   }
 
   .money-level3-inline-emoji {
     font-size: 34px;
   }
 
-  .money-level3-inline-note {
-    width: 78px;
-    height: 44px;
-  }
-
   .money-level3-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
-    margin-top: 24px;
+    margin: 25px auto;
   }
 
   .money-level3-option {
-    min-height: 70px;
-    padding: 12px;
-    font-size: 27px;
+    min-height: 65px;
+    padding: 10px;
+    font-size: 24px;
   }
 
   .money-level3-feedback {
@@ -361,6 +466,10 @@
   }
 }
 
+/* =========================================
+   SMALL PHONES
+========================================= */
+
 @media (max-width: 360px) {
   .money-level3-question {
     font-size: 19px;
@@ -368,13 +477,13 @@
   }
 
   .money-level3-inline-object {
-    width: 38px;
-    height: 38px;
+    width: 110px;
+    height: 100px;
   }
 
   .money-level3-inline-note {
-    width: 68px;
-    height: 40px;
+    width: 100px;
+    height: 55px;
   }
 
   .money-level3-options {
@@ -384,172 +493,5 @@
   .money-level3-option {
     min-height: 62px;
     font-size: 24px;
-  }
-}
-
-.money-level3-language-selector {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.money-level3-language-selector button {
-  padding: 8px 14px;
-  border: 2px solid #2563eb;
-  border-radius: 10px;
-  background: white;
-  color: #1d4ed8;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.money-level3-language-selector button.active {
-  background: #2563eb;
-  color: white;
-}
-
-
-.money-level3-option.incorrect {
-  background-color: #f0b7b7 !important;
-  border: 2px solid #edadad !important;
-  color: #ffffff !important;
-  transition: none !important;
-}
-
-
-.money-level3-option.correct {
-  background: #97d1ac;
-  border-color: #799b84;
-  color: white;
-}
-
-/* =========================================
-   MONEY LEVEL 3 - BIG NOTES AND FULL WIDTH
-========================================= */
-
-.money-level3-screen {
-  width: 100% !important;
-  min-height: 100vh !important;
-  padding: 20px !important;
-  box-sizing: border-box !important;
-}
-
-/* Make the question card use the full page width */
-.money-level3-screen .money-level3-card {
-  width: 100% !important;
-  max-width: none !important;
-  min-height: 60vh !important;
-  margin: 20px auto !important;
-  padding: 35px 25px !important;
-  box-sizing: border-box !important;
-}
-
-/* Enlarge the money note to match the printed worksheet */
-.money-level3-screen .money-level3-inline-note {
-  display: inline-block !important;
-  width: 180px !important;
-  min-width: 180px !important;
-  max-width: none !important;
-  height: 90px !important;
-  min-height: 90px !important;
-  object-fit: contain !important;
-  flex-shrink: 0 !important;
-}
-
-/* Give the question more room */
-.money-level3-screen .money-level3-question {
-  width: 100% !important;
-  max-width: none !important;
-  display: flex !important;
-  flex-wrap: wrap !important;
-  justify-content: center !important;
-  align-items: center !important;
-  gap: 12px !important;
-  margin: 30px auto !important;
-  line-height: 1.6 !important;
-}
-
-/* Larger product images */
-.money-level3-screen .money-level3-inline-object {
-  width: 65px !important;
-  height: 65px !important;
-}
-
-/* Keep answer options comfortably sized */
-.money-level3-screen .money-level3-options {
-  width: 100% !important;
-  max-width: 800px !important;
-  gap: 18px !important;
-  margin: 35px auto !important;
-}
-
-.money-level3-screen .money-level3-option {
-  min-height: 90px !important;
-  font-size: 32px !important;
-}
-
-/* =========================================
-   TABLETS
-========================================= */
-@media (max-width: 900px) {
-  .money-level3-screen .money-level3-card {
-    padding: 25px 15px !important;
-  }
-
-  .money-level3-screen .money-level3-inline-note {
-    width: 150px !important;
-    min-width: 150px !important;
-    height: 75px !important;
-    min-height: 75px !important;
-  }
-
-  .money-level3-screen .money-level3-question {
-    gap: 8px !important;
-    font-size: 24px !important;
-  }
-
-  .money-level3-screen .money-level3-option {
-    min-height: 75px !important;
-    font-size: 27px !important;
-  }
-}
-
-/* =========================================
-   PHONES
-========================================= */
-@media (max-width: 600px) {
-  .money-level3-screen {
-    padding: 10px !important;
-  }
-
-  .money-level3-screen .money-level3-card {
-    min-height: auto !important;
-    padding: 22px 10px !important;
-  }
-
-  .money-level3-screen .money-level3-inline-note {
-    width: 120px !important;
-    min-width: 120px !important;
-    height: 60px !important;
-    min-height: 60px !important;
-  }
-
-  .money-level3-screen .money-level3-question {
-    gap: 6px !important;
-    font-size: 20px !important;
-  }
-
-  .money-level3-screen .money-level3-options {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 10px !important;
-    margin: 25px auto !important;
-  }
-
-  .money-level3-screen .money-level3-option {
-    min-height: 65px !important;
-    padding: 10px !important;
-    font-size: 24px !important;
   }
 }

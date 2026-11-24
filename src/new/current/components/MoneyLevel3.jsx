@@ -2,30 +2,42 @@
 import { useEffect, useRef, useState } from "react";
 import "./MoneyLevel3.css";
 
+// Automatically discover images using Create React App / Webpack.
+// Assumes this file is in src/new/current/components/
+const imageContext = require.context(
+  "../../../assets/money-items",
+  false,
+  /\.(png|jpe?g|webp)$/i
+);
+
+// Extract price from filenames such as 20_01.png, 40_02.png.
+const ITEMS = imageContext
+  .keys()
+  .map((key) => {
+    const filename = key.split("/").pop();
+    const match = filename.match(/^(\d+)_\d+\.(png|jpe?g|webp)$/i);
+
+    if (!match) return null;
+
+    const price = Number(match[1]);
+
+    if (!Number.isFinite(price) || price <= 0 || price % 10 !== 0) {
+      return null;
+    }
+
+    return {
+      image: imageContext(key),
+      price,
+      filename,
+    };
+  })
+  .filter(Boolean)
+  .sort((a, b) => a.filename.localeCompare(b.filename));
+
 const NOTE_IMAGES = {
   10: "/money-notes/ten-rupee-note.png",
   20: "/money-notes/20-rupee-note.png",
 };
-
-const NUMBER_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-const QUESTION_AMOUNTS = {
-  10: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-  20: [20, 40, 60, 80, 100, 120],
-};
-
-const ITEMS = [
-  { name: "Lays packet", image: "lays" },
-  { name: "Biscuit packet", image: "🍪" },
-  { name: "Chocolate", image: "🍫" },
-  { name: "Pencil", image: "✏️" },
-  { name: "Juice packet", image: "🧃" },
-  { name: "Ice cream", image: "🍦" },
-  { name: "Notebook", image: "📒" },
-  { name: "Toy", image: "🧸" },
-  { name: "Eraser", image: "🩷" },
-  { name: "Chips packet", image: "🍟" },
-];
 
 const SOUND_PATHS = {
   success: "/sounds/success-1-6297.mp3",
@@ -45,62 +57,92 @@ function shuffle(array) {
   return result;
 }
 
+// Generate four different answer choices around the correct answer.
 function createOptions(correctAnswer) {
-  const wrongOptions = NUMBER_OPTIONS.filter(
-    (number) => number !== correctAnswer
-  );
+  const options = new Set([correctAnswer]);
 
-  return shuffle([
-    correctAnswer,
-    ...shuffle(wrongOptions).slice(0, 3),
-  ]);
+  let distance = 1;
+
+  while (options.size < 4) {
+    options.add(correctAnswer + distance);
+    
+    if (correctAnswer - distance > 0) {
+      options.add(correctAnswer - distance);
+    }
+
+    distance++;
+  }
+
+  return shuffle([...options]).slice(0, 4);
 }
 
-function buildQuestion(item, denomination, price) {
+function buildQuestion(item, denomination) {
+  const correctAnswer = item.price / denomination;
+
   return {
     item,
-    price,
+    price: item.price,
     denomination,
-    correctAnswer: price / denomination,
-    options: createOptions(price / denomination),
+    correctAnswer,
+    options: createOptions(correctAnswer),
   };
+}
+
+function getEligibleItems(denomination) {
+  return ITEMS.filter(
+    (item) =>
+      item.price % denomination === 0 &&
+      item.price / denomination >= 1
+  );
 }
 
 function createQuestion(method, previousQuestion = null) {
   let denomination;
 
   if (method === "both") {
-    denomination = previousQuestion
-      ? previousQuestion.denomination === 10
-        ? 20
-        : 10
-      : Math.random() < 0.5
-        ? 10
-        : 20;
+    const availableDenominations = [10, 20].filter(
+      (value) => getEligibleItems(value).length > 0
+    );
+
+    if (availableDenominations.length === 0) return null;
+
+    if (
+      previousQuestion &&
+      availableDenominations.includes(
+        previousQuestion.denomination === 10 ? 20 : 10
+      )
+    ) {
+      denomination =
+        previousQuestion.denomination === 10 ? 20 : 10;
+    } else {
+      denomination =
+        availableDenominations[
+          Math.floor(Math.random() * availableDenominations.length)
+        ];
+    }
   } else {
     denomination = Number(method);
   }
 
-  const amounts = QUESTION_AMOUNTS[denomination];
+  let availableItems = getEligibleItems(denomination);
 
-  let availableAmounts = amounts.filter(
-    (amount) =>
-      amount !== previousQuestion?.price ||
-      denomination !== previousQuestion?.denomination
-  );
+  if (availableItems.length === 0) return null;
 
-  if (availableAmounts.length === 0) {
-    availableAmounts = amounts;
+  // Avoid showing the same image twice in a row when possible.
+  if (previousQuestion && availableItems.length > 1) {
+    const differentItems = availableItems.filter(
+      (item) => item.filename !== previousQuestion.item.filename
+    );
+
+    if (differentItems.length > 0) {
+      availableItems = differentItems;
+    }
   }
 
-  const price =
-    availableAmounts[
-      Math.floor(Math.random() * availableAmounts.length)
-    ];
+  const item =
+    availableItems[Math.floor(Math.random() * availableItems.length)];
 
-  const item = ITEMS[Math.floor(Math.random() * ITEMS.length)];
-
-  return buildQuestion(item, denomination, price);
+  return buildQuestion(item, denomination);
 }
 
 function MoneyLevel3({ onBack = () => {} }) {
@@ -140,6 +182,7 @@ function MoneyLevel3({ onBack = () => {} }) {
 
   function playSound(name) {
     const audio = audioRefs.current[name];
+
     if (!audio) return;
 
     audio.pause();
@@ -181,13 +224,18 @@ function MoneyLevel3({ onBack = () => {} }) {
   }
 
   function handleAnswer(option) {
-    // Lock the options after a correct answer.
-    if (selectedAnswer === question.correctAnswer) return;
+    if (
+      !question ||
+      selectedAnswer === question.correctAnswer
+    ) {
+      return;
+    }
 
     clearTimers();
 
     if (option === question.correctAnswer) {
       setSelectedAnswer(option);
+
       setFeedback(
         language === "te"
           ? "Correct! Chaala baagundi!"
@@ -209,9 +257,8 @@ function MoneyLevel3({ onBack = () => {} }) {
         setFeedback("");
       }, 1600);
     } else {
-      // Keep a wrong answer red for 3 seconds.
-      // Do not reveal the correct answer.
       setSelectedAnswer(option);
+
       setFeedback(
         language === "te"
           ? "Malli try cheyyi!"
@@ -244,6 +291,14 @@ function MoneyLevel3({ onBack = () => {} }) {
 
     for (let i = 0; i < total; i++) {
       const next = createQuestion(method, previousQuestion);
+
+      if (!next) {
+        alert(
+          "No suitable product images are available for the selected notes. Please add images with matching prices."
+        );
+        return;
+      }
+
       printQuestions.push(next);
       previousQuestion = next;
     }
@@ -257,15 +312,10 @@ function MoneyLevel3({ onBack = () => {} }) {
 
     const questionHtml = printQuestions
       .map((q, index) => {
-        const productHtml =
-          q.item.image === "lays"
-            ? `<img class="product-image" src="/money-items/lays-packet.png" alt="Lays packet" />`
-            : `<span class="product-emoji">${q.item.image}</span>`;
-
         const questionText =
           language === "te"
-            ? `${q.item.name} Rs ${q.price}, enni Rs ${q.denomination} notes ivvali?`
-            : `${q.item.name} costs Rs ${q.price}. How many Rs ${q.denomination} notes are needed?`;
+            ? `Enni Rs ${q.denomination} notes ivvali?`
+            : `How many Rs ${q.denomination} notes are needed?`;
 
         const optionsHtml = q.options
           .map(
@@ -283,15 +333,21 @@ function MoneyLevel3({ onBack = () => {} }) {
           }">
             <h2>Question ${index + 1}</h2>
 
-            <p class="print-question-line">
-              ${productHtml}
+            <div class="print-question-line">
+              <img
+                class="product-image"
+                src="${q.item.image}"
+                alt="Product priced at Rs ${q.price}"
+              />
+
               <span>${questionText}</span>
+
               <img
                 class="inline-note"
                 src="${NOTE_IMAGES[q.denomination]}"
                 alt="Rs ${q.denomination} note"
               />
-            </p>
+            </div>
 
             <div class="print-options">${optionsHtml}</div>
           </section>
@@ -348,7 +404,7 @@ function MoneyLevel3({ onBack = () => {} }) {
               flex-wrap: wrap;
               align-items: center;
               justify-content: center;
-              gap: 10px;
+              gap: 15px;
               font-size: 20px;
               font-weight: bold;
               text-align: center;
@@ -356,17 +412,12 @@ function MoneyLevel3({ onBack = () => {} }) {
             }
 
             .product-image {
-              width: 55px;
-              height: 55px;
+              width: 160px;
+              height: 150px;
               object-fit: contain;
               flex-shrink: 0;
             }
 
-            .product-emoji {
-              font-size: 38px;
-            }
-
-            /* Enlarged currency note for printing */
             .inline-note {
               width: 180px;
               height: 90px;
@@ -449,7 +500,34 @@ function MoneyLevel3({ onBack = () => {} }) {
     setPrintPopupOpen(false);
   }
 
-  const displayedItemName = question.item.name;
+  // Handle an empty image folder or missing denomination images.
+  if (ITEMS.length === 0 || !question) {
+    return (
+      <div className="money-level3-screen">
+        <button
+          type="button"
+          className="money-back-button"
+          onClick={onBack}
+        >
+          ← BACK
+        </button>
+
+        <div className="money-level3-card">
+          <h2>No suitable product images found.</h2>
+
+          <p>
+            Add images named like 20_01.png, 40_02.png
+            inside src/assets/money-items/.
+          </p>
+
+          <p>
+            For Rs 20 questions, make sure you have images
+            whose prices are divisible by 20.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="money-level3-screen">
@@ -489,17 +567,9 @@ function MoneyLevel3({ onBack = () => {} }) {
           value={method}
           onChange={handleMethodChange}
         >
-          <option value="10">
-            {language === "te" ? "Rs. 10 Notes" : "Rs. 10 Notes"}
-          </option>
-
-          <option value="20">
-            {language === "te" ? "Rs. 20 Notes" : "Rs. 20 Notes"}
-          </option>
-
-          <option value="both">
-            Rs. 10 / Rs. 20 Notes
-          </option>
+          <option value="10">Rs. 10 Notes</option>
+          <option value="20">Rs. 20 Notes</option>
+          <option value="both">Rs. 10 / Rs. 20 Notes</option>
         </select>
       </div>
 
@@ -509,29 +579,17 @@ function MoneyLevel3({ onBack = () => {} }) {
         </div>
 
         <div className="money-level3-question">
-          {question.item.image === "lays" ? (
-            <img
-              className="money-level3-inline-object"
-              src="/money-items/lays-packet.png"
-              alt="Lays packet"
-            />
-          ) : (
-            <span className="money-level3-inline-emoji">
-              {question.item.image}
-            </span>
-          )}
+          <img
+            className="money-level3-inline-object"
+            src={question.item.image}
+            alt={`Product priced at Rs ${question.price}`}
+          />
 
-          {language === "te" ? (
-            <span>
-              {displayedItemName} Rs {question.price}, enni Rs{" "}
-              {question.denomination}
-            </span>
-          ) : (
-            <span>
-              {displayedItemName} costs Rs {question.price}. How many Rs{" "}
-              {question.denomination}
-            </span>
-          )}
+          <span>
+            {language === "te"
+              ? `Enni Rs ${question.denomination}`
+              : `How many Rs ${question.denomination}`}
+          </span>
 
           <img
             className="money-level3-inline-note"
@@ -594,7 +652,7 @@ function MoneyLevel3({ onBack = () => {} }) {
           className="money-level3-next"
           onClick={() => loadNextQuestion()}
         >
-          {language === "te" ? "Next Question →" : "Next Question →"}
+          Next Question →
         </button>
       </div>
 

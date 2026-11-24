@@ -27,10 +27,14 @@ function formatTime(seconds) {
 // =====================================
 // LOAD IMAGES
 // =====================================
+// =====================================
+// LOAD IMAGES (PNG, JPG, JPEG)
+// =====================================
+
 const imageFiles = require.context(
   "../../../assets/images/ascending-order",
   false,
-  /\.png$/i
+  /\.(png|jpe?g)$/i
 );
 
 // =====================================
@@ -78,7 +82,9 @@ function generateQuestions() {
   const collections = {};
 
   imageFiles.keys().forEach((path) => {
-    const filename = path.replace("./", "").replace(/\.png$/i, "");
+    const filename = path
+  .replace("./", "")
+  .replace(/\.(png|jpe?g)$/i, "");
     const match = filename.match(
       /^(.*)_(\d+)_(smallest|small|medium|largest)$/i
     );

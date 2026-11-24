@@ -266,3 +266,11 @@
   text-align: center;
   color: #321078;
 }
+.maths-tabs{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Forces exactly 4 buttons per row */
+  gap: 40px;                             /* Space between the buttons */
+  max-width: 1100px;                     /* Keeps the grid neatly centered */
+  margin: 0 auto;                        /* Centers the container on the page */
+  padding: 20px;
+}

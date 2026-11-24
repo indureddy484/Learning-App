@@ -13,6 +13,7 @@ import Level5SpecialDays from "../components/Level5SpecialDays";
 import MixedLevel from "../components/MixedLevel";
 
 import LevelScreen from "../components/LevelScreen";
+import InteractiveCalendar from "../components/InteractiveCalendar";
 
 import MoneyLevel1 from "../components/MoneyLevel1";
 import MoneyLevel2 from "../components/MoneyLevel2";
@@ -37,6 +38,7 @@ import ClockLevel1 from "../components/ClockLevel1";
 import ClockLevel2 from "../components/ClockLevel2";
 import ClockLevel3 from "../components/ClockLevel3";
 import ClockLevel4 from "../components/ClockLevel4";
+import ClockPlay from "../components/ClockPlay";
 
 // ENGLISH - TENALI RAMA
 import TenaliRamaGreedyFarmer from "../components/TenaliRamaGreedyFarmer";
@@ -61,6 +63,9 @@ function NewHome({ onBack }) {
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedMathsGame, setSelectedMathsGame] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(null);
+
+  // Calendar navigation: menu, existing levels, or interactive calendar
+  const [selectedCalendarActivity, setSelectedCalendarActivity] = useState(null);
 
   // English navigation
   const [selectedEnglishTopic, setSelectedEnglishTopic] = useState(null);
@@ -87,6 +92,12 @@ function NewHome({ onBack }) {
   // Number Sense navigation state
   const [selectedNumberSenseMenu, setSelectedNumberSenseMenu] = useState(false);
   const [selectedNumberSenseActivity, setSelectedNumberSenseActivity] =
+    useState(null);
+
+  // Foundational Numeracy navigation state
+  const [selectedFoundationalNumeracy, setSelectedFoundationalNumeracy] =
+    useState(false);
+  const [selectedFoundationalActivity, setSelectedFoundationalActivity] =
     useState(null);
 
   // Clock navigation state
@@ -265,10 +276,74 @@ function NewHome({ onBack }) {
      MATHS - DAY QUIZ LEVEL SCREEN
   ========================= */
 
-  if (selectedMathsGame === "levels" && selectedLevel === null) {
+  if (
+    selectedMathsGame === "levels" &&
+    selectedCalendarActivity === null &&
+    selectedLevel === null
+  ) {
+    return (
+      <div className="new-page">
+        <button
+          className="top-back-button"
+          onClick={() => setSelectedMathsGame(null)}
+          type="button"
+        >
+          ← BACK
+        </button>
+
+        <h1>Calendar</h1>
+        <p className="number-sense-subtitle">Choose an activity</p>
+
+        <div className="game-tabs">
+          <button
+            className="game-card"
+            onClick={() => setSelectedCalendarActivity("play")}
+            type="button"
+          >
+            <div className="game-icon">📅</div>
+            <span>Play with Calendar</span>
+          </button>
+
+          <button
+            className="game-card"
+            onClick={() => setSelectedCalendarActivity("levels")}
+            type="button"
+          >
+            <div className="game-icon">📝</div>
+            <span>Calendar Levels</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  /* =========================
+     CALENDAR - PLAY WITH CALENDAR
+  ========================= */
+
+  if (
+    selectedMathsGame === "levels" &&
+    selectedCalendarActivity === "play"
+  ) {
+    return (
+      <InteractiveCalendar
+        onBack={() => setSelectedCalendarActivity(null)}
+      />
+    );
+  }
+
+  /* =========================
+     CALENDAR - EXISTING LEVELS
+  ========================= */
+
+  if (
+    selectedMathsGame === "levels" &&
+    selectedCalendarActivity === "levels" &&
+    selectedLevel === null
+  ) {
     return (
       <LevelScreen
-        onBack={() => setSelectedMathsGame(null)}
+        onBack={() => setSelectedCalendarActivity(null)}
         onSelectLevel={(level) => setSelectedLevel(level)}
       />
     );
@@ -283,7 +358,7 @@ function NewHome({ onBack }) {
       <Level1Today
         onBack={() => {
           setSelectedLevel(null);
-          setSelectedMathsGame("levels");
+          setSelectedCalendarActivity("levels");
         }}
       />
     );
@@ -298,7 +373,7 @@ function NewHome({ onBack }) {
       <Level2NinnaToday
         onBack={() => {
           setSelectedLevel(null);
-          setSelectedMathsGame("levels");
+          setSelectedCalendarActivity("levels");
         }}
       />
     );
@@ -313,7 +388,7 @@ function NewHome({ onBack }) {
       <Level3DaysBeforeAfter
         onBack={() => {
           setSelectedLevel(null);
-          setSelectedMathsGame("levels");
+          setSelectedCalendarActivity("levels");
         }}
       />
     );
@@ -328,7 +403,7 @@ function NewHome({ onBack }) {
       <Level4DaysMonths
         onBack={() => {
           setSelectedLevel(null);
-          setSelectedMathsGame("levels");
+          setSelectedCalendarActivity("levels");
         }}
       />
     );
@@ -343,7 +418,7 @@ function NewHome({ onBack }) {
       <Level5SpecialDays
         onBack={() => {
           setSelectedLevel(null);
-          setSelectedMathsGame("levels");
+          setSelectedCalendarActivity("levels");
         }}
       />
     );
@@ -358,7 +433,7 @@ function NewHome({ onBack }) {
       <MixedLevel
         onBack={() => {
           setSelectedLevel(null);
-          setSelectedMathsGame("levels");
+          setSelectedCalendarActivity("levels");
         }}
       />
     );
@@ -514,8 +589,7 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (
-    selectedNumberSenseMenu &&
-    selectedNumberSenseActivity === "clock" &&
+    selectedMathsGame === "clock" &&
     selectedClockLevel === null
   ) {
     return (
@@ -523,7 +597,7 @@ function NewHome({ onBack }) {
         <button
           className="top-back-button"
           onClick={() => {
-            setSelectedNumberSenseActivity(null);
+            setSelectedMathsGame(null);
             setSelectedClockLevel(null);
           }}
           type="button"
@@ -577,8 +651,33 @@ function NewHome({ onBack }) {
             <span>Level 4</span>
             <span>Set Every Minute (00–59)</span>
           </button>
+
+          {/* PLAY WITH CLOCK */}
+          <button
+            className="game-card"
+            onClick={() => setSelectedClockLevel("play")}
+            type="button"
+          >
+            <div className="game-icon">🎮</div>
+            <span>Play with Clock</span>
+          </button>
         </div>
       </div>
+    );
+  }
+
+  /* =========================
+     PLAY WITH CLOCK
+  ========================= */
+
+  if (
+    selectedMathsGame === "clock" &&
+    selectedClockLevel === "play"
+  ) {
+    return (
+      <ClockPlay
+        onBack={() => setSelectedClockLevel(null)}
+      />
     );
   }
 
@@ -587,8 +686,7 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (
-    selectedNumberSenseMenu &&
-    selectedNumberSenseActivity === "clock" &&
+    selectedMathsGame === "clock" &&
     selectedClockLevel === "level1"
   ) {
     return (
@@ -603,8 +701,7 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (
-    selectedNumberSenseMenu &&
-    selectedNumberSenseActivity === "clock" &&
+    selectedMathsGame === "clock" &&
     selectedClockLevel === "level2"
   ) {
     return (
@@ -619,8 +716,7 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (
-    selectedNumberSenseMenu &&
-    selectedNumberSenseActivity === "clock" &&
+    selectedMathsGame === "clock" &&
     selectedClockLevel === "level3"
   ) {
     return (
@@ -635,13 +731,70 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (
-    selectedNumberSenseMenu &&
-    selectedNumberSenseActivity === "clock" &&
+    selectedMathsGame === "clock" &&
     selectedClockLevel === "level4"
   ) {
     return (
       <ClockLevel4
         onBack={() => setSelectedClockLevel(null)}
+      />
+    );
+  }
+
+  /* =========================
+     FOUNDATIONAL NUMERACY - MENU
+  ========================= */
+
+  if (
+    selectedFoundationalNumeracy &&
+    selectedFoundationalActivity === null
+  ) {
+    return (
+      <div className="new-page foundational-numeracy-page">
+        <button
+          className="top-back-button"
+          onClick={() => setSelectedFoundationalNumeracy(false)}
+          type="button"
+        >
+          ← BACK
+        </button>
+
+        <h1>Foundational Numeracy</h1>
+
+        <p className="number-sense-subtitle">
+          Choose an activity
+        </p>
+
+        <div className="game-tabs">
+          <button
+            className="game-card"
+            onClick={() =>
+              setSelectedFoundationalActivity("pictureOrdering")
+            }
+            type="button"
+          >
+            <div className="game-icon">🖼️</div>
+            <span>Picture Based Ordering</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  /* =========================
+     FOUNDATIONAL NUMERACY - PICTURE ORDERING MENU
+  ========================= */
+
+  if (
+    selectedFoundationalNumeracy &&
+    selectedFoundationalActivity === "pictureOrdering"
+  ) {
+    return (
+      <PictureBasedOrderingMenu
+        onBack={() => setSelectedFoundationalActivity(null)}
+        onSelectActivity={(activity) => {
+          setSelectedFoundationalActivity(activity);
+        }}
       />
     );
   }
@@ -654,24 +807,6 @@ function NewHome({ onBack }) {
     return (
       <NumberSenseMenu
         onBack={() => setSelectedNumberSenseMenu(false)}
-        onSelectActivity={(activity) => {
-          setSelectedNumberSenseActivity(activity);
-        }}
-      />
-    );
-  }
-
-  /* =========================
-     NUMBER SENSE - PICTURE-BASED ORDERING MENU
-  ========================= */
-
-  if (
-    selectedNumberSenseMenu &&
-    selectedNumberSenseActivity === "pictureOrdering"
-  ) {
-    return (
-      <PictureBasedOrderingMenu
-        onBack={() => setSelectedNumberSenseActivity(null)}
         onSelectActivity={(activity) => {
           setSelectedNumberSenseActivity(activity);
         }}
@@ -714,12 +849,12 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (
-    selectedNumberSenseMenu &&
-    selectedNumberSenseActivity === "ascendingNew"
+    selectedFoundationalNumeracy &&
+    selectedFoundationalActivity === "ascendingNew"
   ) {
     return (
       <AscendingOrderPicture
-        onBack={() => setSelectedNumberSenseActivity(null)}
+        onBack={() => setSelectedFoundationalActivity(null)}
       />
     );
   }
@@ -729,12 +864,12 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (
-    selectedNumberSenseMenu &&
-    selectedNumberSenseActivity === "descending"
+    selectedFoundationalNumeracy &&
+    selectedFoundationalActivity === "descending"
   ) {
     return (
       <DescendingOrderPicture
-        onBack={() => setSelectedNumberSenseActivity(null)}
+        onBack={() => setSelectedFoundationalActivity(null)}
       />
     );
   }
@@ -744,12 +879,12 @@ function NewHome({ onBack }) {
   ========================= */
 
   if (
-    selectedNumberSenseMenu &&
-    selectedNumberSenseActivity === "mixed"
+    selectedFoundationalNumeracy &&
+    selectedFoundationalActivity === "mixed"
   ) {
     return (
       <MixedOrderPicture
-        onBack={() => setSelectedNumberSenseActivity(null)}
+        onBack={() => setSelectedFoundationalActivity(null)}
       />
     );
   }
@@ -957,6 +1092,7 @@ function NewHome({ onBack }) {
             setSelectedGame(null);
             setSelectedEvsQuizTopic(null);
             setSelectedMathsGame(null);
+            setSelectedCalendarActivity(null);
             setSelectedLevel(null);
             setSelectedEnglishTopic(null);
             setSelectedTenaliOption(null);
@@ -969,6 +1105,8 @@ function NewHome({ onBack }) {
             setSelectedMeasureLevel(null);
             setSelectedNumberSenseMenu(false);
             setSelectedNumberSenseActivity(null);
+            setSelectedFoundationalNumeracy(false);
+            setSelectedFoundationalActivity(null);
             setSelectedClockLevel(null);
           }}
           type="button"
@@ -1026,11 +1164,12 @@ function NewHome({ onBack }) {
         ) : selectedSubject === "Maths" ? (
           /* MATHS */
 
-          <div className="game-tabs">
+          <div className="game-tabs maths-tabs">
             <button
               className="game-card"
               onClick={() => {
                 setSelectedMathsGame("levels");
+                setSelectedCalendarActivity(null);
                 setSelectedLevel(null);
                 setSelectedMoneyGame(false);
                 setSelectedMoneyLevel(null);
@@ -1081,6 +1220,27 @@ function NewHome({ onBack }) {
               <span>Length</span>
             </button>
 
+            {/* CLOCK */}
+
+            <button
+              className="game-card"
+              onClick={() => {
+                setSelectedMathsGame("clock");
+                setSelectedClockLevel(null);
+                setSelectedLevel(null);
+                setSelectedMoneyGame(false);
+                setSelectedMoneyLevel(null);
+                setSelectedMeasureGame(false);
+                setSelectedMeasureLevel(null);
+                setSelectedNumberSenseMenu(false);
+                setSelectedNumberSenseActivity(null);
+              }}
+              type="button"
+            >
+              <div className="game-icon">🕒</div>
+              <span>Clock</span>
+            </button>
+
             {/* NUMBER SENSE */}
 
             <button
@@ -1099,6 +1259,28 @@ function NewHome({ onBack }) {
             >
               <div className="game-icon">🔢</div>
               <span>Number Sense</span>
+            </button>
+
+            {/* FOUNDATIONAL NUMERACY */}
+            <button
+              className="game-card"
+              onClick={() => {
+                setSelectedFoundationalNumeracy(true);
+                setSelectedFoundationalActivity(null);
+                setSelectedNumberSenseMenu(false);
+                setSelectedNumberSenseActivity(null);
+                setSelectedMathsGame(null);
+                setSelectedLevel(null);
+                setSelectedMoneyGame(false);
+                setSelectedMoneyLevel(null);
+                setSelectedMeasureGame(false);
+                setSelectedMeasureLevel(null);
+                setSelectedClockLevel(null);
+              }}
+              type="button"
+            >
+              <div className="game-icon">🧮</div>
+              <span>Foundational Numeracy</span>
             </button>
           </div>
         ) : selectedSubject === "English" ? (
