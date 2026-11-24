@@ -327,8 +327,8 @@ function NewHome({ onBack }) {
   ) {
     return (
       <InteractiveCalendar
-        onBack={() => setSelectedCalendarActivity(null)}
-      />
+  onBack={() => setSelectedCalendarActivity(null)}
+/>
     );
   }
 

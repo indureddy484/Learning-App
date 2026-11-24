@@ -46,6 +46,7 @@ function InteractiveCalendar({
     0
   ).getDate();
 
+  // Previous Month
   const previousMonth = () => {
     setSelectedDate(null);
 
@@ -57,6 +58,7 @@ function InteractiveCalendar({
     }
   };
 
+  // Next Month
   const nextMonth = () => {
     setSelectedDate(null);
 
@@ -68,18 +70,18 @@ function InteractiveCalendar({
     }
   };
 
+  // Go to Today
   const goToToday = () => {
-    setCurrentMonth(today.getMonth());
-    setCurrentYear(today.getFullYear());
-    setSelectedDate(today.getDate());
+    const currentDate = new Date();
 
-    onDateSelect(new Date(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate()
-    ));
+    setCurrentMonth(currentDate.getMonth());
+    setCurrentYear(currentDate.getFullYear());
+    setSelectedDate(currentDate.getDate());
+
+    onDateSelect(currentDate);
   };
 
+  // Select Date
   const handleDateClick = (day) => {
     setSelectedDate(day);
 
@@ -92,11 +94,13 @@ function InteractiveCalendar({
     onDateSelect(date);
   };
 
+  // Check Today
   const isToday = (day) =>
     day === today.getDate() &&
     currentMonth === today.getMonth() &&
     currentYear === today.getFullYear();
 
+  // Selected Full Date
   const selectedFullDate = selectedDate
     ? new Date(currentYear, currentMonth, selectedDate)
     : null;
@@ -106,9 +110,20 @@ function InteractiveCalendar({
 
       <div className="interactive-calendar-container">
 
+        {/* Back Button */}
+
+        <button
+          type="button"
+          className="calendar-back-button"
+          onClick={onBack}
+        >
+          ← Back
+        </button>
+
         {/* Calendar Heading */}
 
         <div className="calendar-heading">
+
           <div>
             <h1>My Calendar</h1>
             <p>Explore the days and dates!</p>
@@ -121,6 +136,7 @@ function InteractiveCalendar({
           >
             Today
           </button>
+
         </div>
 
         {/* Month Navigation with Selected Date */}
@@ -138,7 +154,10 @@ function InteractiveCalendar({
 
           <div className="calendar-month-title">
 
+            {/* Selected Date Display */}
+
             <div className="calendar-selected-date-display">
+
               {selectedFullDate ? (
                 <>
                   <span className="selected-date-number">
@@ -154,7 +173,10 @@ function InteractiveCalendar({
                   Select a date
                 </span>
               )}
+
             </div>
+
+            {/* Month and Year */}
 
             <h2>
               {MONTHS[currentMonth]} {currentYear}
@@ -177,7 +199,7 @@ function InteractiveCalendar({
 
         <div className="calendar-grid">
 
-          {/* Weekday headings */}
+          {/* Weekday Headings */}
 
           {WEEKDAYS.map((day, index) => (
             <div
@@ -194,7 +216,7 @@ function InteractiveCalendar({
             </div>
           ))}
 
-          {/* Empty spaces before first date */}
+          {/* Empty Spaces Before First Date */}
 
           {Array.from(
             { length: firstDay },
@@ -206,7 +228,7 @@ function InteractiveCalendar({
             )
           )}
 
-          {/* Actual dates */}
+          {/* Actual Dates */}
 
           {Array.from(
             { length: daysInMonth },
@@ -244,6 +266,7 @@ function InteractiveCalendar({
                   {todayDate && (
                     <small>Today</small>
                   )}
+
                 </button>
               );
             }
@@ -254,6 +277,7 @@ function InteractiveCalendar({
         {/* Calendar Legend */}
 
         <div className="calendar-legend">
+
           <div>
             <span className="legend-dot today-dot" />
             <span>Today</span>
@@ -263,6 +287,7 @@ function InteractiveCalendar({
             <span className="legend-dot selected-dot" />
             <span>Selected Date</span>
           </div>
+
         </div>
 
       </div>
