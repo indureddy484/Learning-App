@@ -110,11 +110,13 @@ function Festivals({ onBack }) {
     ],
   };
 
+  // Change selected category
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setSelectedCelebration(null);
   };
 
+  // Open selected celebration video
   const handleCelebrationClick = (celebration) => {
     setSelectedCelebration(celebration);
   };
@@ -132,19 +134,32 @@ function Festivals({ onBack }) {
     }
   };
 
+  // Open Festivals Quiz
+  const handleOpenQuiz = () => {
+    setSelectedCelebration(null);
+    setShowQuiz(true);
+  };
+
+  // Return from Quiz to Festivals
+  const handleCloseQuiz = () => {
+    setShowQuiz(false);
+  };
+
+  // Show Festivals Quiz separately
   if (showQuiz) {
     return (
-      <FestivalsQuiz
-        onBack={() => setShowQuiz(false)}
-      />
+      <FestivalsQuiz onBack={handleCloseQuiz} />
     );
   }
 
   return (
     <div className="festivals-layout">
 
-      {/* HEADER */}
+      {/* =========================
+          HEADER
+      ========================= */}
       <div className="festivals-header">
+
         <button
           className="festivals-back-button"
           onClick={onBack}
@@ -156,6 +171,8 @@ function Festivals({ onBack }) {
         <h1>Festivals</h1>
 
         <div className="festivals-header-actions">
+
+          {/* MUTE / UNMUTE BUTTON */}
           <button
             className="festivals-global-mute-button"
             onClick={() => setIsMuted((previous) => !previous)}
@@ -170,26 +187,34 @@ function Festivals({ onBack }) {
             {isMuted ? "Unmute 🔊" : "Mute 🔇"}
           </button>
 
+          {/* FESTIVALS QUIZ BUTTON */}
           <button
             className="festivals-quiz-button"
-            onClick={() => setShowQuiz(true)}
+            onClick={handleOpenQuiz}
             type="button"
           >
             📝 Festivals Quiz
           </button>
+
         </div>
       </div>
 
-      {/* MAIN CONTENT */}
+      {/* =========================
+          MAIN CONTENT
+      ========================= */}
       <div className="festivals-main">
 
-        {/* LEFT SIDEBAR */}
+        {/* =========================
+            LEFT SIDEBAR
+        ========================= */}
         <div className="festivals-sidebar">
+
           <h2 className="festivals-sidebar-title">
             Festivals
           </h2>
 
           <div className="festivals-category-list">
+
             {categories.map((category, index) => (
               <button
                 key={category}
@@ -198,19 +223,26 @@ function Festivals({ onBack }) {
                 }`}
                 onClick={() => handleCategoryChange(category)}
                 type="button"
+                aria-pressed={selectedCategory === category}
               >
                 <span>{index + 1}.</span>
                 <span>{category}</span>
               </button>
             ))}
+
           </div>
         </div>
 
-        {/* RIGHT CONTENT */}
+        {/* =========================
+            RIGHT CONTENT
+        ========================= */}
         <div className="festivals-content">
+
           <h2>{selectedCategory}</h2>
 
-          {/* VIDEO PLAYER */}
+          {/* =========================
+              VIDEO PLAYER
+          ========================= */}
           {selectedCelebration && (
             <div className="festival-video-section">
 
@@ -240,12 +272,16 @@ function Festivals({ onBack }) {
 
                 Your browser does not support video playback.
               </video>
+
             </div>
           )}
 
-          {/* CELEBRATION CARDS */}
+          {/* =========================
+              CELEBRATION CARDS
+          ========================= */}
           {!selectedCelebration && (
             <div className="festivals-grid">
+
               {celebrationData[selectedCategory].map(
                 (celebration, index) => (
                   <div
@@ -266,7 +302,9 @@ function Festivals({ onBack }) {
                       }
                     }}
                   >
+
                     <div className="festival-thumbnail">
+
                       <img
                         src={`${celebration.imageBase}.jpg`}
                         data-image-base={celebration.imageBase}
@@ -275,16 +313,20 @@ function Festivals({ onBack }) {
                         loading="lazy"
                         onError={handleImageError}
                       />
+
                     </div>
 
                     <h3>{celebration.name}</h3>
 
                     <p>▶ Watch Video</p>
+
                   </div>
                 )
               )}
+
             </div>
           )}
+
         </div>
       </div>
     </div>
