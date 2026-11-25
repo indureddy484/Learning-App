@@ -1,0 +1,121 @@
+
+.festivals-quiz-page {
+  min-height: 100vh;
+  padding: 20px;
+  background: #f5f7fc;
+  color: #30345b;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.festivals-quiz-page * {
+  box-sizing: border-box;
+}
+
+/* Quiz Header */
+.festivals-quiz-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.festivals-quiz-header h1 {
+  margin: 0;
+  color: #30345b;
+  font-size: 30px;
+}
+
+/* Back Button */
+.festivals-quiz-back-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #5936a8;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.festivals-quiz-back-button:hover {
+  background: #48258f;
+  transform: translateY(-1px);
+}
+
+/* Level Container */
+.festivals-quiz-levels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(200px, 250px));
+  justify-content: center;
+  gap: 25px;
+  margin: 60px auto;
+}
+
+/* Level Button */
+.festivals-level-button {
+  min-height: 190px;
+  padding: 25px;
+  border: 1px solid #e9e3f8;
+  border-radius: 18px;
+  background: #ffffff;
+  color: #30345b;
+  box-shadow: 0 5px 18px rgba(35, 43, 80, 0.08);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+  cursor: pointer;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.festivals-level-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(35, 43, 80, 0.13);
+}
+
+.festivals-level-icon {
+  font-size: 50px;
+}
+
+.festivals-level-title {
+  font-size: 21px;
+  font-weight: 700;
+  color: #5936a8;
+}
+
+/* Responsive Design */
+@media (max-width: 800px) {
+  .festivals-quiz-levels {
+    grid-template-columns: repeat(2, minmax(180px, 250px));
+  }
+}
+
+@media (max-width: 600px) {
+  .festivals-quiz-page {
+    padding: 14px;
+  }
+
+  .festivals-quiz-header {
+    gap: 12px;
+  }
+
+  .festivals-quiz-header h1 {
+    font-size: 25px;
+  }
+
+  .festivals-quiz-levels {
+    grid-template-columns: 1fr;
+    margin: 30px auto;
+  }
+
+  .festivals-level-button {
+    min-height: 150px;
+  }
+}

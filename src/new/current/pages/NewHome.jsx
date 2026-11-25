@@ -4,6 +4,7 @@ import MatchingGame from "../components/MatchingGame";
 import VideoGame from "../components/VideoGame";
 import Animals from "../components/Animals";
 import Plants from "../components/Plants";
+import Festivals from "../components/Festivals";
 
 import Level1Today from "../components/Level1Today";
 import Level2NinnaToday from "../components/Level2NinnaToday";
@@ -117,6 +118,14 @@ function NewHome({ onBack }) {
 
   if (selectedGame === "plants") {
     return <Plants onBack={() => setSelectedGame(null)} />;
+  }
+
+  /* =========================
+     EVS - FESTIVALS
+  ========================= */
+
+  if (selectedGame === "festivals") {
+    return <Festivals onBack={() => setSelectedGame(null)} />;
   }
 
   /* =========================
@@ -1136,6 +1145,15 @@ function NewHome({ onBack }) {
             >
               <div className="game-icon">🌳</div>
               <span>Plants</span>
+            </button>
+
+            <button
+              className="game-card"
+              onClick={() => setSelectedGame("festivals")}
+              type="button"
+            >
+              <div className="game-icon">🎉</div>
+              <span>Festivals</span>
             </button>
 
             <button
