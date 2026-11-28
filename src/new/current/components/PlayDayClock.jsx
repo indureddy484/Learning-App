@@ -7,6 +7,10 @@ const CENTER = 150;
 
 const pad = (value) => String(value).padStart(2, "0");
 
+/* =========================================
+   DAY PHASE
+========================================= */
+
 function getDayPhase(hour) {
   if (hour < 5) {
     return {
@@ -77,6 +81,10 @@ function getDayPhase(hour) {
   };
 }
 
+/* =========================================
+   TIME HELPERS
+========================================= */
+
 function formatDigitalTime(date) {
   let hours = date.getHours();
   const minutes = date.getMinutes();
@@ -120,7 +128,7 @@ function getAngleDifference(current, previous) {
 }
 
 /* =========================================
-   SMOOTH SKY COLOUR TRANSITIONS
+   SKY COLOUR TRANSITIONS
 ========================================= */
 
 function hexToRgb(hex) {
@@ -145,7 +153,6 @@ function mixColor(color1, color2, amount) {
 }
 
 function getSkyColors(minutes) {
-  // Each point represents a gradual sky colour during the day.
   const stops = [
     { time: 0, top: "#111b3b", middle: "#27375f", bottom: "#4a527b" },
     { time: 270, top: "#202b50", middle: "#765d79", bottom: "#d18b7d" },
@@ -182,14 +189,18 @@ function getSkyColors(minutes) {
 }
 
 /* =========================================
-   CONTINUOUS SUN AND NIGHT SCENE
+   SUN, MOON AND SKY
 ========================================= */
 
 function getSceneData(date) {
+  // IMPORTANT: Include seconds and milliseconds.
+  // This allows the scene to respond to fractional minutes.
   const minutes =
-    date.getHours() * 60 + date.getMinutes() + date.getSeconds() / 60;
+    date.getHours() * 60 +
+    date.getMinutes() +
+    date.getSeconds() / 60 +
+    date.getMilliseconds() / 60000;
 
-  // Sunrise begins at 5 AM and sunset completes at 7 PM.
   const sunrise = 5 * 60;
   const sunset = 19 * 60;
 
@@ -198,20 +209,12 @@ function getSceneData(date) {
     Math.min(1, (minutes - sunrise) / (sunset - sunrise))
   );
 
-  // Smooth horizontal movement from left to right.
   const sunX = 4 + daylightProgress * 92;
-
-  // Curved path: below horizon -> highest point -> below horizon.
   const arc = Math.sin(Math.PI * daylightProgress);
   const sunY = 91 - arc * 73;
 
-  // Fade the sun in and out near the horizon.
-  const sunOpacity = Math.max(
-    0,
-    Math.min(1, arc * 5)
-  );
+  const sunOpacity = Math.max(0, Math.min(1, arc * 5));
 
-  // A warm glow appears around sunrise and sunset.
   const sunriseGlow = Math.max(
     0,
     1 - Math.abs(minutes - 360) / 110
@@ -224,30 +227,24 @@ function getSceneData(date) {
 
   const warmGlow = Math.max(sunriseGlow, sunsetGlow);
 
-  // Stars gradually disappear as daylight increases.
   const starOpacity = Math.max(
     0,
     Math.min(0.85, 1 - arc * 2.8)
   );
 
-  // Moon is visible mostly at night.
   const moonOpacity = Math.max(
     0,
     Math.min(0.9, 1 - arc * 3.5)
   );
 
-  const colors = getSkyColors(minutes);
-
   return {
-    minutes,
     sunX,
     sunY,
     sunOpacity,
     warmGlow,
     starOpacity,
     moonOpacity,
-    colors,
-    daylightProgress,
+    colors: getSkyColors(minutes),
   };
 }
 
@@ -259,10 +256,13 @@ function AnalogClock({ date, onTimeChange }) {
   const svgRef = useRef(null);
   const dragRef = useRef(null);
 
-  const hour24 = date.getHours();
-  const minute = date.getMinutes();
+  const hour12 = date.getHours() % 12 || 12;
 
-  const hour12 = hour24 % 12 || 12;
+  // Include seconds so the minute hand moves continuously.
+  const minute =
+    date.getMinutes() +
+    date.getSeconds() / 60 +
+    date.getMilliseconds() / 60000;
 
   const hourAngle = (hour12 % 12) * 30 + minute * 0.5;
   const minuteAngle = minute * 6;
@@ -277,11 +277,9 @@ function AnalogClock({ date, onTimeChange }) {
     const svg = svgRef.current;
     if (!svg) return;
 
-    const angle = getAngleFromPointer(event, svg);
-
     dragRef.current = {
       hand,
-      lastAngle: angle,
+      lastAngle: getAngleFromPointer(event, svg),
       fraction: 0,
     };
 
@@ -295,7 +293,6 @@ function AnalogClock({ date, onTimeChange }) {
     if (!drag || !svg) return;
 
     const currentAngle = getAngleFromPointer(event, svg);
-
     const difference = getAngleDifference(
       currentAngle,
       drag.lastAngle
@@ -316,13 +313,12 @@ function AnalogClock({ date, onTimeChange }) {
       return;
     }
 
-    drag.fraction += difference / 6;
+    // NEW: Update continuously instead of waiting for a full minute.
+    // Every 6 degrees represents one minute.
+    const minuteChange = difference / 6;
 
-    const wholeMinutes = Math.trunc(drag.fraction);
-
-    if (wholeMinutes !== 0) {
-      drag.fraction -= wholeMinutes;
-      onTimeChange(wholeMinutes);
+    if (minuteChange !== 0) {
+      onTimeChange(minuteChange);
     }
   };
 
@@ -339,13 +335,9 @@ function AnalogClock({ date, onTimeChange }) {
   return (
     <div className="pdc-analog-wrapper">
       <div className="pdc-clock-heading">
-        <span className="pdc-clock-eyebrow">
-          LEARN TO READ TIME
-        </span>
-
+        <span className="pdc-clock-eyebrow">LEARN TO READ TIME</span>
         <h2>Analogue Clock</h2>
-
-        <p>Drag the hour hand or minute hand to change the time.</p>
+        <p>Drag either hand to change the time.</p>
       </div>
 
       <div className="pdc-clock-face-wrap">
@@ -354,7 +346,7 @@ function AnalogClock({ date, onTimeChange }) {
           className="clock-play-analog-face"
           viewBox="0 0 300 300"
           role="img"
-          aria-label="Interactive analogue clock. Drag either hand to change the time."
+          aria-label="Interactive analogue clock"
           onPointerMove={handlePointerMove}
           onPointerUp={stopDragging}
           onPointerCancel={stopDragging}
@@ -378,12 +370,7 @@ function AnalogClock({ date, onTimeChange }) {
 
           {Array.from({ length: 60 }, (_, index) => {
             const major = index % 5 === 0;
-
-            const start = getPoint(
-              index * 6,
-              major ? 115 : 122
-            );
-
+            const start = getPoint(index * 6, major ? 115 : 122);
             const end = getPoint(index * 6, 129);
 
             return (
@@ -472,21 +459,87 @@ function AnalogClock({ date, onTimeChange }) {
       </div>
 
       <div className="pdc-clock-help">
-        <span>
-          <i className="pdc-hour-dot" />
-          Hour hand
-        </span>
-
-        <span>
-          <i className="pdc-minute-dot" />
-          Minute hand
-        </span>
+        <span><i className="pdc-hour-dot" />Hour hand</span>
+        <span><i className="pdc-minute-dot" />Minute hand</span>
       </div>
 
       <p className="pdc-clock-tip">
-        💡 The short hand shows hours. The long hand shows minutes.
+        💡 Short hand = hours. Long hand = minutes.
       </p>
     </div>
+  );
+}
+
+/* =========================================
+   DAY AND NIGHT SCENE
+========================================= */
+
+function DayNightScene({ phase, scene }) {
+  const sceneStyle = {
+    "--sky-top": scene.colors.top,
+    "--sky-middle": scene.colors.middle,
+    "--sky-bottom": scene.colors.bottom,
+    "--sun-x": `${scene.sunX}%`,
+    "--sun-y": `${scene.sunY}%`,
+    "--sun-opacity": scene.sunOpacity,
+    "--star-opacity": scene.starOpacity,
+    "--moon-opacity": scene.moonOpacity,
+    "--warm-glow": scene.warmGlow,
+  };
+
+  return (
+    <section className="pdc-day-scene" style={sceneStyle}>
+      <div className="pdc-sky-glow" />
+
+      <div className="pdc-scene-stars" aria-hidden="true">
+        {Array.from({ length: 18 }, (_, index) => (
+          <span
+            key={index}
+            className={`pdc-star pdc-star-${index + 1}`}
+          >
+            ✦
+          </span>
+        ))}
+      </div>
+
+      <div className="pdc-moon" aria-hidden="true">🌙</div>
+
+      <div className="pdc-sun-track" aria-hidden="true">
+        <div className="pdc-sun-glow" />
+        <div className="pdc-sun">
+          <div className="pdc-sun-core" />
+        </div>
+      </div>
+
+      <div className="pdc-cloud pdc-cloud-one" aria-hidden="true">
+        ☁️
+      </div>
+
+      <div className="pdc-cloud pdc-cloud-two" aria-hidden="true">
+        ☁️
+      </div>
+
+      <div className="pdc-scene-content">
+        <div className="pdc-scene-text">
+          <span>LOOK OUTSIDE!</span>
+          <h2>{phase.icon} {phase.title}</h2>
+          <p>{phase.message}</p>
+          <strong className="pdc-scene-period">
+            {phase.period}
+          </strong>
+        </div>
+      </div>
+
+      <div className="pdc-horizon-glow" />
+
+      <div className="pdc-scene-landscape" aria-hidden="true">
+        <span>🌳</span>
+        <span>🏠</span>
+        <span>🌲</span>
+        <span>🏡</span>
+        <span>🌳</span>
+      </div>
+    </section>
   );
 }
 
@@ -503,23 +556,21 @@ function PlayDayClock({ onBack }) {
 
   const [elapsedMinutes, setElapsedMinutes] = useState(0);
 
-  const currentDate = useMemo(() => {
-    return new Date(
-      baseDate.getTime() + elapsedMinutes * 60 * 1000
-    );
-  }, [baseDate, elapsedMinutes]);
+  const currentDate = useMemo(
+    () =>
+      new Date(
+        baseDate.getTime() + elapsedMinutes * 60000
+      ),
+    [baseDate, elapsedMinutes]
+  );
 
   const handleTimeChange = (minuteChange) => {
     setElapsedMinutes((previous) => previous + minuteChange);
   };
 
-  const resetTime = () => {
-    setElapsedMinutes(0);
-  };
+  const resetTime = () => setElapsedMinutes(0);
 
-  const hours = currentDate.getHours();
-  const phase = getDayPhase(hours);
-  const formattedTime = formatDigitalTime(currentDate);
+  const phase = getDayPhase(currentDate.getHours());
   const scene = getSceneData(currentDate);
 
   const dateText = currentDate.toLocaleDateString("en-IN", {
@@ -542,18 +593,6 @@ function PlayDayClock({ onBack }) {
           Math.abs(dayOffset) === 1 ? "day" : "days"
         } earlier`;
 
-  const sceneStyle = {
-    "--sky-top": scene.colors.top,
-    "--sky-middle": scene.colors.middle,
-    "--sky-bottom": scene.colors.bottom,
-    "--sun-x": `${scene.sunX}%`,
-    "--sun-y": `${scene.sunY}%`,
-    "--sun-opacity": scene.sunOpacity,
-    "--star-opacity": scene.starOpacity,
-    "--moon-opacity": scene.moonOpacity,
-    "--warm-glow": scene.warmGlow,
-  };
-
   return (
     <main className="pdc-page">
       <header className="pdc-header">
@@ -569,10 +608,10 @@ function PlayDayClock({ onBack }) {
           <span className="pdc-eyebrow">
             CALENDAR AND TIME
           </span>
-
           <h1>Play with Day and Clock</h1>
-
-          <p>See how time, date and day change together!</p>
+          <p>
+            Change the clock and watch the whole day transform!
+          </p>
         </div>
 
         <button
@@ -584,20 +623,8 @@ function PlayDayClock({ onBack }) {
         </button>
       </header>
 
-      <section className="pdc-main-card">
-        <div className="pdc-digital-section">
-          <div className="pdc-section-heading">
-            <span className="pdc-section-icon">📅</span>
-
-            <div>
-              <span className="pdc-section-kicker">
-                CALENDAR
-              </span>
-
-              <h2>Date and Day</h2>
-            </div>
-          </div>
-
+      <section className="pdc-dashboard">
+        <div className="pdc-clock-panel">
           <div className="pdc-date-display">
             <div className="pdc-date-calendar">
               <span className="pdc-calendar-month">
@@ -605,143 +632,104 @@ function PlayDayClock({ onBack }) {
                   month: "short",
                 })}
               </span>
-
               <strong>{currentDate.getDate()}</strong>
             </div>
 
             <div className="pdc-date-details">
+              <span className="pdc-section-kicker">
+                DATE AND DAY
+              </span>
               <strong>{dateText}</strong>
               <span>{dayDescription}</span>
             </div>
           </div>
 
-          <div className="pdc-section-heading pdc-digital-heading">
-            <span className="pdc-section-icon">🕒</span>
-
-            <div>
-              <span className="pdc-section-kicker">
-                DIGITAL DISPLAY
-              </span>
-
-              <h2>Digital Clock</h2>
-            </div>
-          </div>
-
           <div className="pdc-digital-clock" aria-live="polite">
+            <div className="pdc-digital-topline">
+              <span>🕒 DIGITAL CLOCK</span>
+              <span className="pdc-power-dot" />
+            </div>
+
             <div className="pdc-digital-screen">
               <span className="pdc-digital-time">
-                {formattedTime}
+                {formatDigitalTime(currentDate)}
               </span>
-
               <span className="pdc-digital-caption">
                 HOURS : MINUTES
               </span>
             </div>
-
-            <div className="pdc-digital-footer">
-              <span className="pdc-power-dot" />
-              CLOCK IS RUNNING
-            </div>
           </div>
 
-          <div className={`pdc-time-description phase-card-${phase.key}`}>
-            <span className="pdc-phase-icon">
-              {phase.icon}
-            </span>
-
+          <div
+            className={`pdc-time-description phase-card-${phase.key}`}
+          >
+            <span className="pdc-phase-icon">{phase.icon}</span>
             <div>
               <span className="pdc-phase-label">
                 CURRENT TIME OF DAY
               </span>
-
               <strong>{phase.title}</strong>
               <p>{phase.message}</p>
             </div>
           </div>
+
+          <div className="pdc-analog-section">
+            <AnalogClock
+              date={currentDate}
+              onTimeChange={handleTimeChange}
+            />
+          </div>
         </div>
 
-        <div className="pdc-analog-section">
-          <AnalogClock
-            date={currentDate}
-            onTimeChange={handleTimeChange}
-          />
-        </div>
-      </section>
+        <div className="pdc-sky-panel">
+          <div className="pdc-sky-panel-heading">
+            <div>
+              <span className="pdc-section-kicker">
+                24-HOUR SKY JOURNEY
+              </span>
+              <h2>Watch the Day Change</h2>
+            </div>
 
-      {/* CONTINUOUS SUNRISE, DAYTIME AND SUNSET SCENE */}
-      <section
-        className="pdc-day-scene"
-        style={sceneStyle}
-      >
-        <div className="pdc-sky-glow" />
-
-        <div className="pdc-scene-stars" aria-hidden="true">
-          {Array.from({ length: 18 }, (_, index) => (
-            <span
-              key={index}
-              className={`pdc-star pdc-star-${index + 1}`}
-            >
-              ✦
+            <span className="pdc-live-indicator">
+              <i /> LIVE
             </span>
-          ))}
-        </div>
-
-        <div className="pdc-moon" aria-hidden="true">
-          🌙
-        </div>
-
-        <div className="pdc-sun-track" aria-hidden="true">
-          <div className="pdc-sun-glow" />
-          <div className="pdc-sun">
-            <div className="pdc-sun-core" />
           </div>
-        </div>
 
-        <div className="pdc-cloud pdc-cloud-one" aria-hidden="true">
-          ☁️
-        </div>
+          <DayNightScene
+            phase={phase}
+            scene={scene}
+          />
 
-        <div className="pdc-cloud pdc-cloud-two" aria-hidden="true">
-          ☁️
-        </div>
+          <div className="pdc-sky-footer">
+            <div>
+              <span className="pdc-sky-footer-icon">🌅</span>
+              <span>Sunrise</span>
+              <strong>5:00 AM</strong>
+            </div>
 
-        <div className="pdc-scene-content">
-          <div className="pdc-scene-text">
-            <span>LOOK OUTSIDE!</span>
+            <div>
+              <span className="pdc-sky-footer-icon">☀️</span>
+              <span>Daytime</span>
+              <strong>12:00 PM</strong>
+            </div>
 
-            <h2>{phase.title}</h2>
+            <div>
+              <span className="pdc-sky-footer-icon">🌇</span>
+              <span>Sunset</span>
+              <strong>7:00 PM</strong>
+            </div>
 
-            <p>{phase.message}</p>
-
-            <strong className="pdc-scene-period">
-              {phase.period}
-            </strong>
+            <div>
+              <span className="pdc-sky-footer-icon">🌙</span>
+              <span>Night</span>
+              <strong>9:00 PM</strong>
+            </div>
           </div>
-        </div>
 
-        <div className="pdc-horizon-glow" />
-
-        <div className="pdc-scene-landscape" aria-hidden="true">
-          <span>🌳</span>
-          <span>🏠</span>
-          <span>🌲</span>
-          <span>🏡</span>
-          <span>🌳</span>
-        </div>
-      </section>
-
-      <section className="pdc-learning-tip">
-        <span className="pdc-tip-icon">💡</span>
-
-        <div>
-          <strong>Did you know?</strong>
-
-          <p>
-            One full day has 24 hours. After 11:59 PM comes
-            12:00 AM. The date and day change, and a new day begins!
-            Watch how the sun rises in the morning, moves across
-            the sky, and sets in the evening.
-          </p>
+          <div className="pdc-sky-instruction">
+            💡 Drag either clock hand. The date, digital time and
+            sky will all change together.
+          </div>
         </div>
       </section>
     </main>
