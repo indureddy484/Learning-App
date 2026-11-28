@@ -1,0 +1,151 @@
+
+.mental-math-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 25px;
+  box-sizing: border-box;
+  background: #f5f8fc;
+  color: #263b50;
+  font-family: Arial, sans-serif;
+}
+
+.mental-math-back-button {
+  border: 1px solid #d8e3ee;
+  background: #ffffff;
+  color: #285b78;
+  padding: 11px 19px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.mental-math-back-button:hover {
+  background: #285b78;
+  color: #ffffff;
+  transform: translateX(-3px);
+}
+
+.mental-math-header {
+  text-align: center;
+  margin: 35px auto 45px;
+}
+
+.mental-math-header h1 {
+  font-size: 34px;
+  color: #245878;
+  margin-bottom: 10px;
+}
+
+.mental-math-header p {
+  color: #718397;
+  font-size: 16px;
+}
+
+.mental-math-section {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.mental-math-section h2 {
+  color: #304d68;
+  font-size: 22px;
+  margin-bottom: 22px;
+}
+
+.mental-math-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(230px, 280px)
+  );
+  gap: 22px;
+}
+
+.mental-math-card {
+  background: #ffffff;
+  border: 1px solid #e0e9f1;
+  border-radius: 18px;
+  padding: 25px 20px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.25s ease;
+  box-shadow: 0 4px 12px rgba(42, 74, 99, 0.06);
+}
+
+.mental-math-card:hover {
+  transform: translateY(-7px);
+  border-color: #8bb9d0;
+  box-shadow: 0 12px 25px rgba(42, 74, 99, 0.12);
+}
+
+.mental-math-card-icon {
+  width: 75px;
+  height: 75px;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  background: #e8f2fb;
+  font-size: 38px;
+  margin-bottom: 17px;
+}
+
+.mental-math-card h3 {
+  color: #285b78;
+  font-size: 21px;
+  margin: 0 0 10px;
+}
+
+.mental-math-card p {
+  color: #78899b;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+
+.mental-math-start {
+  color: #247b76;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.mental-math-coming-soon {
+  max-width: 550px;
+  margin: 55px auto;
+  padding: 45px 25px;
+  background: #ffffff;
+  border: 1px solid #e0e9f1;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 5px 18px rgba(42, 74, 99, 0.06);
+}
+
+.mental-math-coming-soon span {
+  font-size: 55px;
+}
+
+.mental-math-coming-soon h2 {
+  color: #285b78;
+}
+
+.mental-math-coming-soon p {
+  color: #78899b;
+}
+
+@media (max-width: 600px) {
+  .mental-math-container {
+    padding: 15px;
+  }
+
+  .mental-math-header h1 {
+    font-size: 26px;
+  }
+
+  .mental-math-grid {
+    grid-template-columns: 1fr;
+  }
+}

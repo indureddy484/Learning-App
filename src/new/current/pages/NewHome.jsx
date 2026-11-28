@@ -1,4 +1,6 @@
+
 import { useState } from "react";
+import MentalMath from "../components/MentalMath";
 
 import MatchingGame from "../components/MatchingGame";
 import VideoGame from "../components/VideoGame";
@@ -15,10 +17,12 @@ import MixedLevel from "../components/MixedLevel";
 
 import LevelScreen from "../components/LevelScreen";
 import InteractiveCalendar from "../components/InteractiveCalendar";
+import PlayDayClock from "../components/PlayDayClock";
 
 import MoneyLevel1 from "../components/MoneyLevel1";
 import MoneyLevel2 from "../components/MoneyLevel2";
 import MoneyLevel3 from "../components/MoneyLevel3";
+import MoneyLevel4 from "../components/MoneyLevel4";
 
 import VisualLengthLevel1 from "../components/VisualLengthLevel1";
 import VisualLengthLevel2 from "../components/VisualLengthLevel2";
@@ -35,6 +39,7 @@ import DescendingOrderPicture from "../components/descendingorderpicture";
 import MixedOrderPicture from "../components/MixedOrderPicture";
 import AdditionQuiz from "../components/AdditionQuiz";
 import SubtractionQuiz from "../components/SubtractionQuiz";
+
 import ClockLevel1 from "../components/ClockLevel1";
 import ClockLevel2 from "../components/ClockLevel2";
 import ClockLevel3 from "../components/ClockLevel3";
@@ -54,7 +59,7 @@ import LionMouseVideo from "../components/LionMouseVideo";
 // TELUGU
 import PrepositionQuiz from "../components/PrepositionQuiz";
 
-// EVS - ANIMALS QUIZ
+// EVS
 import AnimalsQuiz from "../components/AnimalsQuiz";
 
 import "./NewHome.css";
@@ -65,72 +70,76 @@ function NewHome({ onBack }) {
   const [selectedMathsGame, setSelectedMathsGame] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(null);
 
-  // Calendar navigation: menu, existing levels, or interactive calendar
-  const [selectedCalendarActivity, setSelectedCalendarActivity] = useState(null);
+  // Calendar navigation
+  const [selectedCalendarActivity, setSelectedCalendarActivity] =
+    useState(null);
 
   // English navigation
   const [selectedEnglishTopic, setSelectedEnglishTopic] = useState(null);
   const [selectedTenaliOption, setSelectedTenaliOption] = useState(null);
 
   // Lion and the Mouse navigation
-  const [selectedLionMouseOption, setSelectedLionMouseOption] = useState(null);
+  const [selectedLionMouseOption, setSelectedLionMouseOption] =
+    useState(null);
 
   // Telugu navigation
   const [selectedTeluguOption, setSelectedTeluguOption] = useState(null);
-  const [selectedTeluguQuizTopic, setSelectedTeluguQuizTopic] = useState(null);
+  const [selectedTeluguQuizTopic, setSelectedTeluguQuizTopic] =
+    useState(null);
 
-  // EVS - Quiz navigation
+  // EVS quiz navigation
   const [selectedEvsQuizTopic, setSelectedEvsQuizTopic] = useState(null);
 
-  // Money navigation state
+  // Money navigation
   const [selectedMoneyGame, setSelectedMoneyGame] = useState(false);
   const [selectedMoneyLevel, setSelectedMoneyLevel] = useState(null);
 
-  // Length navigation state
+  // Length navigation
   const [selectedMeasureGame, setSelectedMeasureGame] = useState(false);
   const [selectedMeasureLevel, setSelectedMeasureLevel] = useState(null);
 
-  // Number Sense navigation state
-  const [selectedNumberSenseMenu, setSelectedNumberSenseMenu] = useState(false);
+  // Number Sense navigation
+  const [selectedNumberSenseMenu, setSelectedNumberSenseMenu] =
+    useState(false);
   const [selectedNumberSenseActivity, setSelectedNumberSenseActivity] =
     useState(null);
 
-  // Foundational Numeracy navigation state
+  // Foundational Numeracy navigation
   const [selectedFoundationalNumeracy, setSelectedFoundationalNumeracy] =
     useState(false);
   const [selectedFoundationalActivity, setSelectedFoundationalActivity] =
     useState(null);
 
-  // Clock navigation state
+  // Clock navigation
   const [selectedClockLevel, setSelectedClockLevel] = useState(null);
 
-  /* =========================
+  /* =========================================
      EVS - ANIMALS
-  ========================= */
+  ========================================= */
 
   if (selectedGame === "animals") {
     return <Animals onBack={() => setSelectedGame(null)} />;
   }
 
-  /* =========================
+  /* =========================================
      EVS - PLANTS
-  ========================= */
+  ========================================= */
 
   if (selectedGame === "plants") {
     return <Plants onBack={() => setSelectedGame(null)} />;
   }
 
-  /* =========================
+  /* =========================================
      EVS - FESTIVALS
-  ========================= */
+  ========================================= */
 
   if (selectedGame === "festivals") {
     return <Festivals onBack={() => setSelectedGame(null)} />;
   }
 
-  /* =========================
+  /* =========================================
      EVS - MISCELLANEOUS MENU
-  ========================= */
+  ========================================= */
 
   if (selectedGame === "miscellaneous") {
     return (
@@ -168,9 +177,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      EVS - QUIZ TOPICS
-  ========================= */
+  ========================================= */
 
   if (
     selectedSubject === "EVS" &&
@@ -212,9 +221,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      EVS - ANIMALS QUIZ
-  ========================= */
+  ========================================= */
 
   if (
     selectedSubject === "EVS" &&
@@ -228,9 +237,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      EVS - PLANTS QUIZ
-  ========================= */
+  ========================================= */
 
   if (
     selectedSubject === "EVS" &&
@@ -257,9 +266,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      EVS - MATCHING GAME
-  ========================= */
+  ========================================= */
 
   if (selectedGame === "match") {
     return (
@@ -269,9 +278,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      EVS - VIDEO GAME
-  ========================= */
+  ========================================= */
 
   if (selectedGame === "video") {
     return (
@@ -281,9 +290,21 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
-     MATHS - DAY QUIZ LEVEL SCREEN
-  ========================= */
+  /* =========================================
+     MATHS - MENTAL MATH
+  ========================================= */
+
+  if (selectedMathsGame === "mentalMath") {
+    return (
+      <MentalMath
+        onBack={() => setSelectedMathsGame(null)}
+      />
+    );
+  }
+
+  /* =========================================
+     MATHS - CALENDAR MENU
+  ========================================= */
 
   if (
     selectedMathsGame === "levels" &&
@@ -321,14 +342,24 @@ function NewHome({ onBack }) {
             <div className="game-icon">📝</div>
             <span>Calendar Levels</span>
           </button>
+
+          {/* NEW: PLAY WITH DAY AND CLOCK */}
+          <button
+            className="game-card"
+            onClick={() => setSelectedCalendarActivity("dayClock")}
+            type="button"
+          >
+            <div className="game-icon">🗓️ 🕒</div>
+            <span>Play with Day and Clock</span>
+          </button>
         </div>
       </div>
     );
   }
 
-  /* =========================
+  /* =========================================
      CALENDAR - PLAY WITH CALENDAR
-  ========================= */
+  ========================================= */
 
   if (
     selectedMathsGame === "levels" &&
@@ -336,14 +367,29 @@ function NewHome({ onBack }) {
   ) {
     return (
       <InteractiveCalendar
-  onBack={() => setSelectedCalendarActivity(null)}
-/>
+        onBack={() => setSelectedCalendarActivity(null)}
+      />
     );
   }
 
-  /* =========================
+  /* =========================================
+     CALENDAR - PLAY WITH DAY AND CLOCK
+  ========================================= */
+
+  if (
+    selectedMathsGame === "levels" &&
+    selectedCalendarActivity === "dayClock"
+  ) {
+    return (
+      <PlayDayClock
+        onBack={() => setSelectedCalendarActivity(null)}
+      />
+    );
+  }
+
+  /* =========================================
      CALENDAR - EXISTING LEVELS
-  ========================= */
+  ========================================= */
 
   if (
     selectedMathsGame === "levels" &&
@@ -358,9 +404,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      DAY QUIZ - LEVEL 1
-  ========================= */
+  ========================================= */
 
   if (selectedLevel === "level1") {
     return (
@@ -373,9 +419,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      DAY QUIZ - LEVEL 2
-  ========================= */
+  ========================================= */
 
   if (selectedLevel === "level2") {
     return (
@@ -388,9 +434,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      DAY QUIZ - LEVEL 3
-  ========================= */
+  ========================================= */
 
   if (selectedLevel === "level3") {
     return (
@@ -403,9 +449,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      DAY QUIZ - LEVEL 4
-  ========================= */
+  ========================================= */
 
   if (selectedLevel === "level4") {
     return (
@@ -418,9 +464,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      DAY QUIZ - LEVEL 5
-  ========================= */
+  ========================================= */
 
   if (selectedLevel === "level5") {
     return (
@@ -433,9 +479,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      DAY QUIZ - MIXED LEVEL
-  ========================= */
+  ========================================= */
 
   if (selectedLevel === "mixed") {
     return (
@@ -448,9 +494,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      MONEY - LEVEL SELECTION
-  ========================= */
+  ========================================= */
 
   if (selectedMoneyGame && selectedMoneyLevel === null) {
     return (
@@ -495,38 +541,55 @@ function NewHome({ onBack }) {
             <div className="game-icon">🛍️</div>
             <span>Level 3</span>
           </button>
+
+          <button
+            className="game-card"
+            onClick={() => setSelectedMoneyLevel("level4")}
+            type="button"
+          >
+            <div className="game-icon">💳</div>
+            <span>Level 4</span>
+          </button>
         </div>
       </div>
     );
   }
 
-  /* =========================
+  /* =========================================
      MONEY - LEVEL 1
-  ========================= */
+  ========================================= */
 
   if (selectedMoneyGame && selectedMoneyLevel === "level1") {
     return <MoneyLevel1 onBack={() => setSelectedMoneyLevel(null)} />;
   }
 
-  /* =========================
+  /* =========================================
      MONEY - LEVEL 2
-  ========================= */
+  ========================================= */
 
   if (selectedMoneyGame && selectedMoneyLevel === "level2") {
     return <MoneyLevel2 onBack={() => setSelectedMoneyLevel(null)} />;
   }
 
-  /* =========================
+  /* =========================================
      MONEY - LEVEL 3
-  ========================= */
+  ========================================= */
 
   if (selectedMoneyGame && selectedMoneyLevel === "level3") {
     return <MoneyLevel3 onBack={() => setSelectedMoneyLevel(null)} />;
   }
 
-  /* =========================
+  /* =========================================
+     MONEY - LEVEL 4
+  ========================================= */
+
+  if (selectedMoneyGame && selectedMoneyLevel === "level4") {
+    return <MoneyLevel4 onBack={() => setSelectedMoneyLevel(null)} />;
+  }
+
+  /* =========================================
      LENGTH - LEVEL SELECTION
-  ========================= */
+  ========================================= */
 
   if (selectedMeasureGame && selectedMeasureLevel === null) {
     return (
@@ -569,9 +632,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
-     LENGTH - VISUAL LENGTH LEVEL 1
-  ========================= */
+  /* =========================================
+     LENGTH - LEVEL 1
+  ========================================= */
 
   if (selectedMeasureGame && selectedMeasureLevel === "visualLength") {
     return (
@@ -581,9 +644,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
-     LENGTH - VISUAL LENGTH LEVEL 2
-  ========================= */
+  /* =========================================
+     LENGTH - LEVEL 2
+  ========================================= */
 
   if (selectedMeasureGame && selectedMeasureLevel === "visualLength2") {
     return (
@@ -593,9 +656,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      CLOCK - LEVEL SELECTION
-  ========================= */
+  ========================================= */
 
   if (
     selectedMathsGame === "clock" &&
@@ -661,7 +724,6 @@ function NewHome({ onBack }) {
             <span>Set Every Minute (00–59)</span>
           </button>
 
-          {/* PLAY WITH CLOCK */}
           <button
             className="game-card"
             onClick={() => setSelectedClockLevel("play")}
@@ -675,9 +737,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      PLAY WITH CLOCK
-  ========================= */
+  ========================================= */
 
   if (
     selectedMathsGame === "clock" &&
@@ -690,9 +752,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      CLOCK - LEVEL 1
-  ========================= */
+  ========================================= */
 
   if (
     selectedMathsGame === "clock" &&
@@ -705,9 +767,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      CLOCK - LEVEL 2
-  ========================= */
+  ========================================= */
 
   if (
     selectedMathsGame === "clock" &&
@@ -720,9 +782,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      CLOCK - LEVEL 3
-  ========================= */
+  ========================================= */
 
   if (
     selectedMathsGame === "clock" &&
@@ -735,9 +797,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      CLOCK - LEVEL 4
-  ========================= */
+  ========================================= */
 
   if (
     selectedMathsGame === "clock" &&
@@ -750,9 +812,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      FOUNDATIONAL NUMERACY - MENU
-  ========================= */
+  ========================================= */
 
   if (
     selectedFoundationalNumeracy &&
@@ -790,9 +852,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
-     FOUNDATIONAL NUMERACY - PICTURE ORDERING MENU
-  ========================= */
+  /* =========================================
+     FOUNDATIONAL NUMERACY - PICTURE ORDERING
+  ========================================= */
 
   if (
     selectedFoundationalNumeracy &&
@@ -808,9 +870,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      NUMBER SENSE - MENU
-  ========================= */
+  ========================================= */
 
   if (selectedNumberSenseMenu && selectedNumberSenseActivity === null) {
     return (
@@ -823,9 +885,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      NUMBER SENSE - COMPARE NUMBERS
-  ========================= */
+  ========================================= */
 
   if (
     selectedNumberSenseMenu &&
@@ -838,9 +900,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
-     NUMBER SENSE - ASCENDING ORDER QUIZ
-  ========================= */
+  /* =========================================
+     NUMBER SENSE - ASCENDING ORDER
+  ========================================= */
 
   if (
     selectedNumberSenseMenu &&
@@ -853,9 +915,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
-     NUMBER SENSE - NEW ASCENDING ORDER WORKSHEET
-  ========================= */
+  /* =========================================
+     NUMBER SENSE - NEW ASCENDING ORDER
+  ========================================= */
 
   if (
     selectedFoundationalNumeracy &&
@@ -868,9 +930,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      NUMBER SENSE - DESCENDING ORDER
-  ========================= */
+  ========================================= */
 
   if (
     selectedFoundationalNumeracy &&
@@ -883,9 +945,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
-     NUMBER SENSE - MIXED
-  ========================= */
+  /* =========================================
+     NUMBER SENSE - MIXED ORDER
+  ========================================= */
 
   if (
     selectedFoundationalNumeracy &&
@@ -898,9 +960,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      NUMBER SENSE - WORD PROBLEMS
-  ========================= */
+  ========================================= */
 
   if (
     selectedNumberSenseMenu &&
@@ -913,9 +975,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
-     NUMBER SENSE - PICTURE-BASED ASCENDING ORDER
-  ========================= */
+  /* =========================================
+     NUMBER SENSE - PICTURE ASCENDING ORDER
+  ========================================= */
 
   if (
     selectedNumberSenseMenu &&
@@ -928,9 +990,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      NUMBER SENSE - ADDITION QUIZ
-  ========================= */
+  ========================================= */
 
   if (
     selectedNumberSenseMenu &&
@@ -943,9 +1005,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      NUMBER SENSE - SUBTRACTION QUIZ
-  ========================= */
+  ========================================= */
 
   if (
     selectedNumberSenseMenu &&
@@ -958,9 +1020,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
-     ENGLISH - TENALI RAMA STORY / QUIZ MENU
-  ========================= */
+  /* =========================================
+     ENGLISH - TENALI RAMA
+  ========================================= */
 
   if (selectedEnglishTopic === "tenali") {
     if (selectedTenaliOption === "story") {
@@ -991,9 +1053,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      ENGLISH - LION AND THE MOUSE
-  ========================= */
+  ========================================= */
 
   if (selectedEnglishTopic === "lionMouse") {
     if (selectedLionMouseOption === "video") {
@@ -1037,9 +1099,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      TELUGU - PREPOSITION QUIZ PAGE
-  ========================= */
+  ========================================= */
 
   if (
     selectedSubject === "Telugu" &&
@@ -1053,9 +1115,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      TELUGU - QUIZ TOPICS
-  ========================= */
+  ========================================= */
 
   if (
     selectedSubject === "Telugu" &&
@@ -1087,9 +1149,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      SUBJECT PAGE
-  ========================= */
+  ========================================= */
 
   if (selectedSubject) {
     return (
@@ -1165,8 +1227,6 @@ function NewHome({ onBack }) {
               <span>Miscellaneous</span>
             </button>
 
-            {/* EVS QUIZ OPTION */}
-
             <button
               className="game-card"
               onClick={() => {
@@ -1183,6 +1243,8 @@ function NewHome({ onBack }) {
           /* MATHS */
 
           <div className="game-tabs maths-tabs">
+
+            {/* CALENDAR */}
             <button
               className="game-card"
               onClick={() => {
@@ -1195,6 +1257,9 @@ function NewHome({ onBack }) {
                 setSelectedMeasureLevel(null);
                 setSelectedNumberSenseMenu(false);
                 setSelectedNumberSenseActivity(null);
+                setSelectedFoundationalNumeracy(false);
+                setSelectedFoundationalActivity(null);
+                setSelectedClockLevel(null);
               }}
               type="button"
             >
@@ -1202,6 +1267,7 @@ function NewHome({ onBack }) {
               <span>Calendar</span>
             </button>
 
+            {/* MONEY */}
             <button
               className="game-card"
               onClick={() => {
@@ -1213,6 +1279,9 @@ function NewHome({ onBack }) {
                 setSelectedMeasureLevel(null);
                 setSelectedNumberSenseMenu(false);
                 setSelectedNumberSenseActivity(null);
+                setSelectedFoundationalNumeracy(false);
+                setSelectedFoundationalActivity(null);
+                setSelectedClockLevel(null);
               }}
               type="button"
             >
@@ -1220,6 +1289,7 @@ function NewHome({ onBack }) {
               <span>Money</span>
             </button>
 
+            {/* LENGTH */}
             <button
               className="game-card"
               onClick={() => {
@@ -1231,6 +1301,9 @@ function NewHome({ onBack }) {
                 setSelectedMoneyLevel(null);
                 setSelectedNumberSenseMenu(false);
                 setSelectedNumberSenseActivity(null);
+                setSelectedFoundationalNumeracy(false);
+                setSelectedFoundationalActivity(null);
+                setSelectedClockLevel(null);
               }}
               type="button"
             >
@@ -1239,7 +1312,6 @@ function NewHome({ onBack }) {
             </button>
 
             {/* CLOCK */}
-
             <button
               className="game-card"
               onClick={() => {
@@ -1252,6 +1324,8 @@ function NewHome({ onBack }) {
                 setSelectedMeasureLevel(null);
                 setSelectedNumberSenseMenu(false);
                 setSelectedNumberSenseActivity(null);
+                setSelectedFoundationalNumeracy(false);
+                setSelectedFoundationalActivity(null);
               }}
               type="button"
             >
@@ -1260,7 +1334,6 @@ function NewHome({ onBack }) {
             </button>
 
             {/* NUMBER SENSE */}
-
             <button
               className="game-card"
               onClick={() => {
@@ -1272,6 +1345,9 @@ function NewHome({ onBack }) {
                 setSelectedMoneyLevel(null);
                 setSelectedMeasureGame(false);
                 setSelectedMeasureLevel(null);
+                setSelectedFoundationalNumeracy(false);
+                setSelectedFoundationalActivity(null);
+                setSelectedClockLevel(null);
               }}
               type="button"
             >
@@ -1300,6 +1376,30 @@ function NewHome({ onBack }) {
               <div className="game-icon">🧮</div>
               <span>Foundational Numeracy</span>
             </button>
+
+            {/* MENTAL MATH */}
+            <button
+              className="game-card"
+              onClick={() => {
+                setSelectedMathsGame("mentalMath");
+                setSelectedCalendarActivity(null);
+                setSelectedLevel(null);
+                setSelectedClockLevel(null);
+                setSelectedMoneyGame(false);
+                setSelectedMoneyLevel(null);
+                setSelectedMeasureGame(false);
+                setSelectedMeasureLevel(null);
+                setSelectedNumberSenseMenu(false);
+                setSelectedNumberSenseActivity(null);
+                setSelectedFoundationalNumeracy(false);
+                setSelectedFoundationalActivity(null);
+              }}
+              type="button"
+            >
+              <div className="game-icon">🧠</div>
+              <span>Mental Math</span>
+            </button>
+
           </div>
         ) : selectedSubject === "English" ? (
           /* ENGLISH */
@@ -1356,9 +1456,9 @@ function NewHome({ onBack }) {
     );
   }
 
-  /* =========================
+  /* =========================================
      MAIN NEW HOME
-  ========================= */
+  ========================================= */
 
   return (
     <div className="new-home">
@@ -1373,8 +1473,8 @@ function NewHome({ onBack }) {
       <h1 className="new-title">Learning App</h1>
 
       <div className="subject-grid">
-        {/* TELUGU */}
 
+        {/* TELUGU */}
         <button
           className="subject-card"
           onClick={() => setSelectedSubject("Telugu")}
@@ -1385,7 +1485,6 @@ function NewHome({ onBack }) {
         </button>
 
         {/* ENGLISH */}
-
         <button
           className="subject-card"
           onClick={() => setSelectedSubject("English")}
@@ -1396,7 +1495,6 @@ function NewHome({ onBack }) {
         </button>
 
         {/* MATHS */}
-
         <button
           className="subject-card"
           onClick={() => setSelectedSubject("Maths")}
@@ -1407,7 +1505,6 @@ function NewHome({ onBack }) {
         </button>
 
         {/* EVS */}
-
         <button
           className="subject-card"
           onClick={() => setSelectedSubject("EVS")}
@@ -1416,6 +1513,7 @@ function NewHome({ onBack }) {
           <span className="subject-icon">🌱</span>
           <span className="subject-name">EVS</span>
         </button>
+
       </div>
     </div>
   );

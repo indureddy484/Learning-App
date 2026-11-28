@@ -1,0 +1,1632 @@
+
+/* ==========================================
+   MONEY LEVEL 4 - HAPPY MART
+========================================== */
+
+.money4-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 22px;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #293a55;
+  background: linear-gradient(145deg, #f3f7ff, #fffaf0);
+}
+
+.money4-container * {
+  box-sizing: border-box;
+}
+
+/* ==========================================
+   SHOPPING SCREEN
+========================================== */
+
+.money4-store-header {
+  max-width: 1600px;
+  margin: 0 auto 25px;
+  padding: 24px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  text-align: center;
+  color: white;
+  background: linear-gradient(120deg, #176b45, #32a66b);
+  box-shadow: 0 6px 0 #105637;
+}
+
+.money4-store-logo {
+  font-size: 48px;
+}
+
+.money4-store-header h1 {
+  color: white;
+  font-size: 34px;
+  margin: 0 0 7px;
+}
+
+.money4-store-header p {
+  margin: 0;
+  color: #eafff1;
+  font-size: 15px;
+}
+
+.money4-store-sign {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 22px auto;
+  text-align: center;
+}
+
+.money4-store-sign > span {
+  font-size: 30px;
+}
+
+.money4-store-sign h2 {
+  color: #73501f;
+  margin: 0 0 5px;
+  font-size: 22px;
+}
+
+.money4-store-sign p {
+  color: #8a7858;
+  margin: 0;
+  font-size: 14px;
+}
+
+.money4-shelf {
+  max-width: 1650px;
+  margin: auto;
+  padding: 20px 18px 28px;
+  border: 9px solid #bd9863;
+  border-radius: 15px;
+  background: repeating-linear-gradient(
+    180deg,
+    #fffdf5 0px,
+    #fffdf5 270px,
+    #e5c99d 270px,
+    #e5c99d 278px,
+    #c7a474 278px,
+    #c7a474 284px,
+    #fff8e9 284px,
+    #fff8e9 310px
+  );
+  box-shadow: 0 8px 20px rgba(83, 62, 28, .13);
+}
+
+.money4-item-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 24px 20px;
+}
+
+.money4-item-card {
+  min-width: 0;
+  min-height: 265px;
+  padding: 12px;
+  border: 2px solid #e9e0d0;
+  border-radius: 13px;
+  background: white;
+  box-shadow: 0 5px 0 #d3c0a0, 0 8px 13px rgba(80, 62, 35, .1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  transition: .25s ease;
+}
+
+.money4-item-card:hover {
+  transform: translateY(-8px) scale(1.025);
+  border-color: #eab34c;
+  box-shadow: 0 7px 0 #d5b16c, 0 15px 25px rgba(80, 62, 35, .18);
+  z-index: 2;
+}
+
+.money4-product-display {
+  width: 100%;
+  height: 195px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.money4-product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform .3s ease;
+}
+
+.money4-item-card:hover .money4-product-image {
+  transform: scale(1.07);
+}
+
+.money4-item-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 94%;
+  padding: 11px 7px;
+  border-radius: 9px;
+  background: linear-gradient(180deg, #ffbd45, #f39a16);
+  border-bottom: 4px solid #cf7608;
+  color: #583400;
+  font-size: 14px;
+  font-weight: 800;
+  transition: .2s;
+}
+
+.money4-item-card:hover .money4-item-select {
+  background: linear-gradient(180deg, #35b96d, #16834b);
+  border-bottom-color: #0e6237;
+  color: white;
+}
+
+.money4-empty {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 35px;
+  text-align: center;
+  background: white;
+  border: 2px dashed #d7bd91;
+  border-radius: 18px;
+}
+
+/* ==========================================
+   CHECKOUT HEADER - COMPACT
+========================================== */
+
+.money4-checkout-page {
+  background: linear-gradient(145deg, #f1f5ff, #fffaf0);
+}
+
+.money4-checkout-header {
+  position: relative;
+  max-width: 1600px;
+  min-height: 92px;
+  margin: 0 auto 24px;
+  padding: 14px 25px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background: linear-gradient(110deg, #24518d, #347dc2);
+  box-shadow: 0 5px 0 #1b426f, 0 9px 18px rgba(0, 0, 0, .1);
+}
+
+.money4-checkout-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+}
+
+.money4-checkout-brand > span,
+.money4-checkout-icon {
+  font-size: 34px;
+}
+
+.money4-checkout-brand h1 {
+  color: white;
+  font-size: 27px;
+  margin: 0;
+}
+
+.money4-checkout-brand p {
+  color: #eaf3ff;
+  font-size: 13px;
+  margin: 3px 0 0;
+}
+
+.money4-back-to-shop {
+  position: absolute;
+  left: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 9px 14px;
+  border: 1px solid rgba(255,255,255,.4);
+  border-radius: 9px;
+  color: white;
+  background: rgba(255,255,255,.13);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.money4-back-to-shop:hover {
+  background: rgba(255,255,255,.25);
+}
+
+.money4-checkout-icon {
+  position: absolute;
+  right: 28px;
+}
+
+/* ==========================================
+   MAIN CHECKOUT CONTENT
+========================================== */
+
+.money4-activity {
+  max-width: 1450px;
+  margin: auto;
+}
+
+/* PRODUCT BILL STRIP */
+
+.money4-product-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  padding: 17px 25px;
+  margin: 0 auto 22px;
+  max-width: 1150px;
+  border: 1px solid #f0d28d;
+  border-radius: 16px;
+  background: linear-gradient(110deg, #fff3d5, #fffdf6);
+  box-shadow: 0 5px 14px rgba(113, 80, 29, .07);
+}
+
+.money4-selected-product-wrap {
+  width: 125px;
+  height: 105px;
+  flex-shrink: 0;
+  padding: 5px;
+  border: 1px solid #eadfca;
+  border-radius: 12px;
+  background: white;
+}
+
+.money4-selected-product {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.money4-product-info {
+  min-width: 140px;
+}
+
+.money4-bill-label {
+  color: #a47b37;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.3px;
+}
+
+.money4-product-info h2 {
+  color: #42536b;
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.money4-product-info p {
+  color: #8b806b;
+  font-size: 12px;
+  margin: 0;
+}
+
+.money4-price {
+  margin-left: auto;
+  text-align: right;
+}
+
+.money4-price span {
+  display: block;
+  color: #987642;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .8px;
+}
+
+.money4-price strong {
+  display: block;
+  color: #16834b;
+  font-size: 34px;
+  margin-top: 3px;
+}
+
+/* TASK HEADING */
+
+.money4-task-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  margin: 20px auto 24px;
+  text-align: left;
+}
+
+.money4-task-icon {
+  font-size: 34px;
+}
+
+.money4-task-heading h2 {
+  color: #294c83;
+  font-size: 23px;
+  margin: 0 0 5px;
+}
+
+.money4-task-heading p {
+  color: #788397;
+  font-size: 13px;
+  margin: 0;
+}
+
+/* ==========================================
+   WALLET + CASHIER LAYOUT
+========================================== */
+
+.money4-workspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.money4-wallet,
+.money4-payment {
+  min-width: 0;
+  padding: 22px;
+  border-radius: 18px;
+  background: white;
+  border: 1px solid #dfe7f5;
+  box-shadow: 0 7px 20px rgba(39, 67, 115, .08);
+}
+
+.money4-wallet {
+  background: linear-gradient(160deg, #ffffff, #f6f9ff);
+}
+
+.money4-payment {
+  background: linear-gradient(160deg, #ffffff, #f4f8ff);
+  border-color: #d4e1f7;
+}
+
+/* PANEL HEADINGS */
+
+.money4-panel-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e9edf5;
+}
+
+.money4-panel-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #eaf0ff;
+  font-size: 25px;
+}
+
+.money4-panel-heading h3 {
+  color: #294b82;
+  font-size: 19px;
+  margin: 0 0 4px;
+}
+
+.money4-panel-heading p {
+  color: #8792a5;
+  font-size: 12px;
+  margin: 0;
+}
+
+.money4-money-group {
+  margin-top: 18px;
+}
+
+.money4-money-group h4 {
+  color: #435875;
+  font-size: 14px;
+  margin: 0 0 12px;
+}
+
+/* NOTES AND COINS */
+
+.money4-money-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.money4-money-button {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #e1e8f4;
+  border-radius: 13px;
+  background: #f8faff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: grab;
+  transition: .2s ease;
+}
+
+.money4-money-button:hover {
+  background: #edf3ff;
+  border-color: #8da9e8;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 12px rgba(43, 76, 135, .1);
+}
+
+.money4-money-button:active {
+  cursor: grabbing;
+}
+
+.money4-money-button img {
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.money4-note-button img {
+  width: 100%;
+  height: 66px;
+}
+
+.money4-coin-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.money4-coin-button img {
+  width: 72px;
+  height: 72px;
+}
+
+.money4-money-button span {
+  color: #304c7d;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.money4-image-fallback {
+  display: inline-block;
+  padding: 15px;
+  border-radius: 9px;
+  background: #e6edff;
+  color: #294b9a;
+  font-size: 22px !important;
+}
+
+.money4-unlimited {
+  margin-top: 20px;
+  padding: 13px;
+  border-radius: 12px;
+  background: #e7f8ee;
+  color: #168044;
+  text-align: center;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.money4-unlimited span {
+  font-size: 23px;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+/* ==========================================
+   CASHIER PAYMENT TRAY
+========================================== */
+
+.money4-payment-box {
+  min-height: 300px;
+  padding: 18px;
+  border: 3px dashed #9bb2e9;
+  border-radius: 17px;
+  background:
+    radial-gradient(circle at 50% 45%, #ffffff, transparent 65%),
+    repeating-linear-gradient(
+      45deg,
+      #f6f8ff,
+      #f6f8ff 13px,
+      #edf2ff 13px,
+      #edf2ff 26px
+    );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .2s;
+}
+
+.money4-payment-box:has(.money4-selected-money) {
+  background: #f4f9ff;
+  border-color: #6e91d8;
+}
+
+.money4-drop-message {
+  text-align: center;
+  color: #8290a6;
+}
+
+.money4-drop-message > span {
+  font-size: 45px;
+}
+
+.money4-drop-message h3 {
+  color: #617797;
+  font-size: 18px;
+  margin: 8px 0;
+}
+
+.money4-drop-message p {
+  font-size: 13px;
+  margin: 5px 0;
+}
+
+.money4-drop-message small {
+  font-size: 11px;
+}
+
+.money4-selected-money {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.money4-selected-token {
+  min-width: 85px;
+  padding: 8px;
+  border: 1px solid #dce3ee;
+  border-radius: 11px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .06);
+}
+
+.money4-selected-token:hover {
+  border-color: #df7777;
+  background: #fff8f8;
+}
+
+.money4-selected-token img {
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.money4-selected-note img {
+  width: 105px;
+  height: 55px;
+}
+
+.money4-selected-coin img {
+  width: 65px;
+  height: 65px;
+}
+
+.money4-selected-token span {
+  font-weight: 800;
+  color: #2d477f;
+}
+
+.money4-selected-token small {
+  color: #d34c4c;
+  font-size: 10px;
+}
+
+/* TOTAL */
+
+.money4-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 13px;
+  border: 1px solid #dce6ff;
+  background: #edf2ff;
+  color: #344b78;
+  font-weight: 800;
+}
+
+.money4-total strong {
+  color: #16834b;
+  font-size: 27px;
+}
+
+.money4-total-status {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  color: #6e7786;
+  background: #f1f3f7;
+  font-size: 13px;
+}
+
+.money4-status-correct {
+  color: #147a3e;
+  background: #e5f8eb;
+  font-weight: 800;
+}
+
+.money4-status-over {
+  color: #bd3c3c;
+  background: #fff0ed;
+  font-weight: 800;
+}
+
+/* COUNTER BUTTONS */
+
+.money4-payment-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.money4-payment-actions button {
+  flex: 1;
+  padding: 13px 10px;
+  border: none;
+  border-radius: 11px;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 13px;
+  transition: .2s;
+}
+
+.money4-payment-actions button:hover {
+  transform: translateY(-2px);
+}
+
+.money4-reset-button {
+  color: #4e5c70;
+  background: #edf0f5;
+}
+
+.money4-save-button {
+  color: white;
+  background: linear-gradient(110deg, #2875ce, #438de0);
+  box-shadow: 0 3px 0 #1e5ca5;
+}
+
+.money4-save-button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ==========================================
+   SAVED COMBINATIONS
+========================================== */
+
+.money4-attempts {
+  margin-top: 25px;
+  padding: 20px;
+  border: 1px solid #e2e8f2;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 4px 14px rgba(39, 67, 115, .05);
+}
+
+.money4-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.money4-section-heading h3 {
+  color: #293d73;
+  font-size: 17px;
+}
+
+.money4-section-heading > span {
+  padding: 7px 12px;
+  border-radius: 20px;
+  color: #294b9a;
+  background: #eaf0ff;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.money4-no-attempts {
+  color: #8791a1;
+  text-align: center;
+  padding: 18px;
+  font-size: 13px;
+}
+
+.money4-attempt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.money4-attempt {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 12px;
+  border-radius: 11px;
+  border: 1px solid #e1e6ed;
+  background: white;
+}
+
+.money4-attempt-correct {
+  border-left: 5px solid #36a66a;
+}
+
+.money4-attempt-wrong {
+  border-left: 5px solid #e36b62;
+}
+
+.money4-attempt-number {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #eaf0ff;
+  color: #294b9a;
+  font-weight: 800;
+}
+
+.money4-attempt-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.money4-attempt-details strong {
+  color: #344b78;
+  font-size: 13px;
+}
+
+.money4-attempt-details span {
+  color: #778293;
+  font-size: 12px;
+}
+
+.money4-duplicate-label,
+.money4-wrong-label {
+  color: #c14c43;
+  font-size: 11px;
+}
+
+.money4-attempt-result {
+  color: #239354;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.money4-attempt-wrong .money4-attempt-result {
+  color: #d34c4c;
+}
+
+/* ==========================================
+   SUBMIT BUTTON
+========================================== */
+
+.money4-submit-section {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0;
+}
+
+.money4-submit-button {
+  min-width: 260px;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(110deg, #16834b, #2da969);
+  box-shadow: 0 4px 0 #10653a;
+  color: white;
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.money4-submit-button:hover {
+  transform: translateY(-2px);
+}
+
+/* ==========================================
+   PROGRESS ANALYSIS
+========================================== */
+
+.money4-analysis {
+  max-width: 1050px;
+  margin: 25px auto;
+  padding: 24px;
+  border: 1px solid #dce6f6;
+  border-radius: 18px;
+  background: white;
+  box-shadow: 0 7px 20px rgba(39, 67, 115, .08);
+}
+
+.money4-analysis-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.money4-analysis-heading > span {
+  font-size: 36px;
+}
+
+.money4-analysis-heading h2 {
+  color: #294b82;
+  font-size: 22px;
+  margin: 0 0 5px;
+}
+
+.money4-analysis-heading p {
+  color: #8290a2;
+  font-size: 13px;
+  margin: 0;
+}
+
+/* PROGRESS BAR */
+
+.money4-progress-bar {
+  width: 100%;
+  height: 13px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #edf1f8;
+  margin: 20px 0;
+}
+
+.money4-progress-fill {
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #32a66b, #8bd45f);
+  transition: width .4s ease;
+}
+
+/* STATISTICS */
+
+.money4-analysis-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.money4-stat-card {
+  padding: 15px 10px;
+  border: 1px solid #e3e9f2;
+  border-radius: 12px;
+  background: #f8faff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.money4-stat-card span {
+  color: #758096;
+  font-size: 12px;
+}
+
+.money4-stat-card strong {
+  color: #294b9a;
+  font-size: 25px;
+}
+
+/* TRY AGAIN MESSAGE */
+
+.money4-try-message,
+.money4-success-message {
+  margin-top: 20px;
+  padding: 22px;
+  border-radius: 15px;
+  text-align: center;
+  background: #fff8e8;
+  border: 1px solid #f0d99f;
+}
+
+.money4-try-message > span,
+.money4-success-message > span {
+  font-size: 38px;
+}
+
+.money4-try-message h3,
+.money4-success-message h3 {
+  color: #76501f;
+  font-size: 19px;
+  margin: 8px 0;
+}
+
+.money4-try-message p,
+.money4-success-message p {
+  max-width: 650px;
+  margin: 8px auto 17px;
+  color: #806d4d;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.money4-success-message {
+  background: #eaf8ef;
+  border-color: #bde6ca;
+}
+
+.money4-success-message h3 {
+  color: #187b43;
+}
+
+.money4-success-message p {
+  color: #4d8060;
+}
+
+.money4-try-again-button {
+  padding: 13px 25px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  background: linear-gradient(110deg, #2875ce, #438de0);
+  box-shadow: 0 3px 0 #1e5ca5;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.money4-try-again-button:hover {
+  transform: translateY(-2px);
+}
+
+/* ==========================================
+   REVEAL MISSED COMBINATIONS
+========================================== */
+
+.money4-reveal-section {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.money4-reveal-button {
+  padding: 12px 22px;
+  border: 2px solid #8da8df;
+  border-radius: 10px;
+  background: #f0f4ff;
+  color: #315997;
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.money4-reveal-button:hover {
+  background: #e0eaff;
+}
+
+.money4-missed-list {
+  margin-top: 17px;
+  padding: 18px;
+  border: 1px solid #f0d9a8;
+  border-radius: 13px;
+  background: #fffaf0;
+  text-align: left;
+}
+
+.money4-missed-list h3 {
+  color: #80591f;
+  margin: 0 0 6px;
+  font-size: 17px;
+}
+
+.money4-missed-list > p {
+  color: #927b57;
+  font-size: 12px;
+  margin: 0 0 14px;
+}
+
+.money4-missed-combination {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  padding: 11px;
+  border: 1px solid #f0e2c4;
+  border-radius: 9px;
+  background: white;
+  color: #80591f;
+  font-size: 13px;
+}
+
+.money4-missed-combination > span {
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff0ce;
+  font-weight: 900;
+}
+
+.money4-analysis-extra {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid #e8edf5;
+  color: #758096;
+  text-align: center;
+  font-size: 12px;
+}
+
+.money4-analysis-extra strong {
+  color: #294b82;
+}
+
+.money4-extra-divider {
+  margin: 0 12px;
+  color: #c3cad6;
+}
+
+/* BOTTOM NAVIGATION */
+
+.money4-bottom-actions {
+  display: flex;
+  justify-content: center;
+  margin: 25px 0;
+}
+
+.money4-back-button {
+  padding: 11px 20px;
+  border: 1px solid #dce3ef;
+  border-radius: 10px;
+  background: white;
+  color: #4d5e78;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.money4-back-button:hover {
+  background: #edf2ff;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
+
+@media (max-width: 1200px) {
+  .money4-item-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 950px) {
+  .money4-item-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .money4-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .money4-analysis-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .money4-container {
+    padding: 12px;
+  }
+
+  .money4-store-header {
+    padding: 18px 10px;
+  }
+
+  .money4-store-header h1 {
+    font-size: 23px;
+  }
+
+  .money4-store-header p {
+    font-size: 12px;
+  }
+
+  .money4-store-logo {
+    font-size: 35px;
+  }
+
+  .money4-shelf {
+    padding: 12px;
+    border-width: 5px;
+  }
+
+  .money4-item-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 10px;
+  }
+
+  .money4-item-card {
+    min-height: 205px;
+    padding: 9px;
+  }
+
+  .money4-product-display {
+    height: 135px;
+  }
+
+  .money4-item-select {
+    font-size: 11px;
+  }
+
+  .money4-checkout-header {
+    min-height: 76px;
+    padding: 12px 65px;
+  }
+
+  .money4-checkout-brand {
+    gap: 8px;
+  }
+
+  .money4-checkout-brand h1 {
+    font-size: 20px;
+  }
+
+  .money4-checkout-brand p {
+    font-size: 11px;
+  }
+
+  .money4-checkout-brand > span,
+  .money4-checkout-icon {
+    font-size: 24px;
+  }
+
+  .money4-back-to-shop {
+    left: 8px;
+    padding: 7px;
+    font-size: 10px;
+  }
+
+  .money4-checkout-icon {
+    right: 10px;
+  }
+
+  .money4-product-section {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .money4-selected-product-wrap {
+    width: 95px;
+    height: 85px;
+  }
+
+  .money4-product-info h2 {
+    font-size: 15px;
+  }
+
+  .money4-price strong {
+    font-size: 25px;
+  }
+
+  .money4-price span {
+    font-size: 9px;
+  }
+
+  .money4-task-heading {
+    gap: 8px;
+  }
+
+  .money4-task-heading h2 {
+    font-size: 18px;
+  }
+
+  .money4-task-heading p {
+    font-size: 11px;
+  }
+
+  .money4-wallet,
+  .money4-payment {
+    padding: 14px;
+  }
+
+  .money4-note-button img {
+    height: 55px;
+  }
+
+  .money4-coin-button img {
+    width: 58px;
+    height: 58px;
+  }
+
+  .money4-payment-box {
+    min-height: 230px;
+  }
+
+  .money4-payment-actions {
+    flex-direction: column;
+  }
+
+  .money4-section-heading h3 {
+    font-size: 14px;
+  }
+
+  .money4-analysis {
+    padding: 15px;
+  }
+
+  .money4-analysis-heading h2 {
+    font-size: 18px;
+  }
+
+  .money4-analysis-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ==========================================
+   HAPPY MART - MODERN SUPERMARKET THEME
+========================================== */
+
+/* Main store background */
+.money4-store-page {
+  background: #f5f7f5;
+  color: #263b4a;
+  padding: 24px;
+}
+
+/* Store header */
+.money4-store-header {
+  max-width: 1550px;
+  min-height: 125px;
+  margin: 0 auto 32px;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+
+  background: linear-gradient(120deg, #145e5b, #21847b);
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 7px 18px rgba(23, 85, 79, 0.16);
+}
+
+.money4-store-logo {
+  font-size: 43px;
+  background: rgba(255,255,255,0.13);
+  width: 65px;
+  height: 65px;
+  border-radius: 17px;
+  display: grid;
+  place-items: center;
+}
+
+.money4-store-header h1 {
+  color: #ffffff;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 0 0 7px;
+}
+
+.money4-store-header p {
+  color: #e1f2ef;
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Section heading */
+.money4-store-sign {
+  margin: 30px auto 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+}
+
+.money4-store-sign > span {
+  font-size: 30px;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  background: #e4f0ed;
+  border-radius: 14px;
+}
+
+.money4-store-sign h2 {
+  color: #244b4a;
+  font-size: 23px;
+  font-weight: 750;
+  margin: 0 0 5px;
+}
+
+.money4-store-sign p {
+  color: #788b8a;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Shelf - remove heavy brown border */
+.money4-shelf {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 22px;
+  background: #eaf0ed;
+  border: 1px solid #dce6e1;
+  border-radius: 20px;
+  box-shadow: inset 0 2px 5px rgba(40, 70, 60, 0.04);
+}
+
+/* Product grid */
+.money4-item-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 22px;
+}
+
+/* Product cards */
+.money4-item-card {
+  min-width: 0;
+  min-height: 260px;
+  padding: 13px;
+  background: #ffffff;
+  border: 1px solid #e2e9e5;
+  border-radius: 16px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  cursor: pointer;
+  box-shadow: 0 3px 9px rgba(36, 65, 56, 0.055);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.money4-item-card:hover {
+  transform: translateY(-7px);
+  border-color: #78aaa0;
+  box-shadow: 0 12px 25px rgba(36, 90, 78, 0.13);
+  background: #ffffff;
+}
+
+/* Product image area */
+.money4-product-display {
+  width: 100%;
+  height: 185px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 11px;
+  overflow: hidden;
+}
+
+.money4-product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.money4-item-card:hover .money4-product-image {
+  transform: scale(1.055);
+}
+
+/* Add to basket button */
+.money4-item-select {
+  width: 100%;
+  min-height: 43px;
+  padding: 11px 8px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #e5f1ee;
+  color: #176b67;
+  border: 1px solid #d4e7e1;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 750;
+  transition: all 0.2s ease;
+}
+
+.money4-item-card:hover .money4-item-select {
+  background: #176b67;
+  border-color: #176b67;
+  color: #ffffff;
+}
+
+/* Empty state */
+.money4-empty {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 35px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px dashed #a9c6bd;
+  border-radius: 16px;
+  color: #526c67;
+}
+
+/* ==========================================
+   MATCH THE CHECKOUT PAGE COLOURS
+========================================== */
+
+.money4-checkout-page {
+  background: #f5f7f5;
+}
+
+.money4-checkout-header {
+  background: linear-gradient(120deg, #145e5b, #21847b);
+  box-shadow: 0 5px 14px rgba(23, 85, 79, 0.15);
+}
+
+.money4-panel-heading h3,
+.money4-task-heading h2 {
+  color: #245c57;
+}
+
+.money4-wallet,
+.money4-payment {
+  border-color: #dce7e2;
+  box-shadow: 0 5px 17px rgba(36, 65, 56, 0.06);
+}
+
+.money4-wallet {
+  background: #ffffff;
+}
+
+.money4-payment {
+  background: #fbfdfc;
+}
+
+.money4-save-button {
+  background: #176b67;
+  box-shadow: 0 3px 0 #10534f;
+}
+
+.money4-save-button:hover {
+  background: #21847b;
+}
+
+.money4-submit-button {
+  background: #176b67;
+  box-shadow: 0 4px 0 #10534f;
+}
+
+.money4-submit-button:hover {
+  background: #21847b;
+}
+
+/* Responsive layout */
+@media (max-width: 1200px) {
+  .money4-item-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .money4-item-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .money4-store-page {
+    padding: 12px;
+  }
+
+  .money4-store-header {
+    min-height: 100px;
+    padding: 16px 10px;
+    gap: 10px;
+  }
+
+  .money4-store-header h1 {
+    font-size: 22px;
+  }
+
+  .money4-store-header p {
+    font-size: 11px;
+  }
+
+  .money4-store-logo {
+    width: 48px;
+    height: 48px;
+    font-size: 30px;
+  }
+
+  .money4-store-sign h2 {
+    font-size: 18px;
+  }
+
+  .money4-shelf {
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  .money4-item-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .money4-item-card {
+    min-height: 205px;
+    padding: 9px;
+  }
+
+  .money4-product-display {
+    height: 135px;
+  }
+
+  .money4-item-select {
+    font-size: 11px;
+  }
+}
+/* ==========================================
+   SUPERMARKET BACK BUTTON
+========================================== */
+
+.money4-store-back-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  margin: 0 0 18px 5px;
+  padding: 11px 20px;
+
+  background: #ffffff;
+  color: #176b67;
+
+  border: 1px solid #cfe3dc;
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 750;
+
+  cursor: pointer;
+
+  box-shadow: 0 3px 9px rgba(36, 65, 56, 0.08);
+  transition: all 0.25s ease;
+}
+
+.money4-store-back-button:hover {
+  background: #176b67;
+  color: #ffffff;
+  border-color: #176b67;
+  transform: translateX(-3px);
+  box-shadow: 0 5px 12px rgba(23, 107, 103, 0.18);
+}
+
+.money4-store-back-button:active {
+  transform: scale(0.97);
+}
